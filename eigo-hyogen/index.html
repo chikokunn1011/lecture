@@ -1,0 +1,1120 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>英語表現 試験対策ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+<style>
+/* 英語ノート風：深緑の見出し帯＋マスタード色アクセント。1タブ1週で表示 */
+:root {
+  --bg: #f4f3ee;
+  --card: #ffffff;
+  --ink: #1d2420;
+  --muted: #5f6862;
+  --line: #d9dbd2;
+  --accent: #b0740c;
+  --accent-soft: #f8efdc;
+  --head: #1f3b33;
+  --head-ink: #f1f5f2;
+  --key: #fff1bf;
+  --good: #22764a;
+  --good-soft: #e5f4ec;
+  --bad: #b3332b;
+  --bad-soft: #fbe9e7;
+  --blank: #e9ece4;
+  --f-body: "Zen Kaku Gothic New", "Hiragino Sans", "Yu Gothic", "Meiryo", sans-serif;
+  --f-en: "Source Serif 4", Georgia, "Times New Roman", serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121614; --card: #1a201d; --ink: #e6ebe7; --muted: #a2aca5; --line: #2e3732;
+    --accent: #f0b955; --accent-soft: #33291a; --head: #0d1915; --head-ink: #e6ebe7;
+    --key: #3d3410; --good: #6fd39f; --good-soft: #17301f; --bad: #ff8b80; --bad-soft: #3a1d1a;
+    --blank: #2a322d; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #121614; --card: #1a201d; --ink: #e6ebe7; --muted: #a2aca5; --line: #2e3732;
+  --accent: #f0b955; --accent-soft: #33291a; --head: #0d1915; --head-ink: #e6ebe7;
+  --key: #3d3410; --good: #6fd39f; --good-soft: #17301f; --bad: #ff8b80; --bad-soft: #3a1d1a;
+  --blank: #2a322d; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 15.5px; line-height: 1.8; }
+.wrap { max-width: 880px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+a { color: var(--accent); }
+
+.top { background: var(--head); color: var(--head-ink); }
+.top .wrap { padding-block: 14px 26px; }
+.back { color: var(--head-ink); opacity: .8; font-size: 14px; text-decoration: none; }
+.back:hover { opacity: 1; text-decoration: underline; }
+.top h1 { font-weight: 900; font-size: clamp(26px, 5vw, 38px); line-height: 1.25; margin: 14px 0 8px; letter-spacing: .01em; }
+.top h1 span { color: var(--accent); }
+.top p { margin: 0; opacity: .85; max-width: 60ch; }
+
+nav.tabs { position: sticky; top: 0; z-index: 5; background: var(--card); border-bottom: 1px solid var(--line); }
+nav.tabs .wrap { display: flex; gap: 6px; overflow-x: auto; padding-block: 8px; scrollbar-width: thin; }
+nav.tabs button { flex: none; font: inherit; font-size: 13.5px; font-weight: 700; color: var(--muted); background: transparent; border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px; cursor: pointer; white-space: nowrap; }
+nav.tabs button:hover { color: var(--ink); border-color: var(--ink); }
+nav.tabs button[aria-selected="true"] { background: var(--head); color: var(--head-ink); border-color: var(--head); }
+nav.tabs button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+nav.tabs button .src { font-weight: 400; opacity: .75; font-size: 11.5px; margin-left: 4px; }
+
+main { padding-block: 24px 60px; }
+section.tab > h2 { font-weight: 900; font-size: 26px; line-height: 1.35; margin: 0 0 4px; }
+.srcline { color: var(--muted); font-size: 13.5px; margin: 0 0 18px; }
+h3 { font-weight: 900; font-size: 19px; margin: 34px 0 10px; padding-left: 10px; border-left: 5px solid var(--accent); line-height: 1.4; }
+h3 .cat { display: inline-block; font-size: 11.5px; font-weight: 700; vertical-align: 3px; margin-left: 6px; padding: 0 8px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); }
+h4 { font-weight: 700; font-size: 16px; margin: 22px 0 6px; }
+p { margin: 0 0 12px; }
+ul, ol { margin: 0 0 12px; padding-left: 1.4em; }
+li { margin-bottom: 4px; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; margin: 0 0 14px; }
+.key { background: var(--key); border-radius: 10px; padding: 12px 16px; margin: 0 0 14px; }
+.key b:first-child { display: block; font-size: 13px; letter-spacing: .05em; margin-bottom: 2px; }
+.warn { background: var(--bad-soft); border-left: 4px solid var(--bad); border-radius: 6px; padding: 10px 14px; margin: 0 0 14px; font-size: 14.5px; }
+.warn b:first-child { color: var(--bad); }
+.tip { background: var(--good-soft); border-left: 4px solid var(--good); border-radius: 6px; padding: 10px 14px; margin: 0 0 14px; font-size: 14.5px; }
+.tip b:first-child { color: var(--good); }
+table { border-collapse: collapse; width: 100%; font-size: 14.5px; margin: 0 0 14px; }
+.tw { overflow-x: auto; }
+th, td { border: 1px solid var(--line); padding: 6px 10px; text-align: left; vertical-align: top; }
+th { background: var(--accent-soft); font-weight: 700; }
+.en { font-family: var(--f-en); font-size: 1.04em; }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 12px; margin-bottom: 14px; }
+.grid2 .card { margin: 0; }
+
+/* 穴埋め：タップで答えを表示 */
+.bl { display: inline-block; min-width: 4.5em; padding: 0 6px; margin: 0 1px; border-bottom: 2px solid var(--accent); background: var(--blank); color: transparent; border-radius: 3px 3px 0 0; cursor: pointer; user-select: none; line-height: 1.5; text-align: center; font-family: var(--f-en); font-weight: 600; }
+.bl:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.bl.show { color: var(--ink); background: var(--key); cursor: default; user-select: text; }
+.fill { list-style: none; padding: 0; counter-reset: q; }
+.fill > li { counter-increment: q; position: relative; padding-left: 2em; margin-bottom: 10px; font-family: var(--f-en); font-size: 1.04em; }
+.fill > li::before { content: counter(q) "."; position: absolute; left: 0; font-family: var(--f-body); font-weight: 700; color: var(--accent); font-size: .95em; }
+.fill .ja { display: block; font-family: var(--f-body); font-size: 13px; color: var(--muted); }
+.ctrl { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 12px; }
+.ctrl button, .btn { font: inherit; font-size: 13.5px; font-weight: 700; padding: 4px 12px; border-radius: 8px; border: 1px solid var(--line); background: var(--card); color: var(--ink); cursor: pointer; }
+.ctrl button:hover, .btn:hover { border-color: var(--ink); }
+.ctrl button[aria-pressed="true"] { background: var(--head); color: var(--head-ink); border-color: var(--head); }
+
+/* 単語表 */
+table.vocab td:first-child { font-family: var(--f-en); font-weight: 600; white-space: nowrap; width: 34%; }
+table.vocab td.ex { font-family: var(--f-en); font-size: 13.5px; color: var(--muted); }
+table.vocab.hide td.ja { color: transparent; background: var(--blank); cursor: pointer; }
+table.vocab.hide td.ja.show { color: var(--ink); background: transparent; }
+@media (max-width: 560px) { table.vocab td.ex, table.vocab th.ex { display: none; } table.vocab td:first-child { white-space: normal; } }
+
+/* 長文 */
+.passage { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; margin: 0 0 12px; font-family: var(--f-en); font-size: 16.5px; line-height: 1.75; }
+.passage p { margin: 0 0 12px; }
+.passage h4 { font-family: var(--f-body); margin: 18px 0 6px; }
+.passage h4:first-child { margin-top: 0; }
+.passage .sp { font-family: var(--f-body); font-weight: 700; font-size: 13px; color: var(--accent); margin-right: 6px; }
+.passage .tipline { font-size: 15px; color: var(--muted); }
+.passage mark { background: linear-gradient(transparent 58%, var(--key) 58%); color: inherit; padding: 0 1px; }
+.passage .note { font-family: var(--f-body); font-size: 13px; color: var(--muted); }
+details.ja { background: var(--card); border: 1px dashed var(--line); border-radius: 10px; margin: 0 0 16px; }
+details.ja summary, .ex summary { cursor: pointer; padding: 8px 14px; font-weight: 700; color: var(--accent); list-style: none; font-size: 14.5px; }
+details.ja summary::-webkit-details-marker, .ex summary::-webkit-details-marker { display: none; }
+details.ja summary::before, .ex summary::before { content: "▶ "; font-size: 12px; }
+details.ja[open] summary::before, .ex details[open] summary::before { content: "▼ "; }
+details.ja > div { padding: 0 16px 10px; font-size: 14.5px; }
+
+/* 問題カード */
+.ex { border: 1px solid var(--line); border-radius: 12px; background: var(--card); margin: 0 0 12px; overflow: hidden; }
+.ex > .q { padding: 12px 18px 4px; }
+.ex > .q .no { display: inline-block; font-weight: 900; color: var(--accent); margin-right: 6px; font-family: var(--f-body); }
+.ex > .q .en { display: inline; }
+.ex details { border-top: 1px dashed var(--line); }
+.ex .a { padding: 0 18px 12px; }
+.ans { display: inline-block; background: var(--key); font-weight: 700; padding: 0 6px; border-radius: 4px; }
+.ans.en { font-family: var(--f-en); }
+
+/* マッチング表 */
+.match { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 18px; font-family: var(--f-en); margin: 0 0 12px; }
+@media (max-width: 520px) { .match { grid-template-columns: 1fr; } }
+
+.pager { display: flex; justify-content: space-between; gap: 10px; margin-top: 36px; }
+.pager button { font: inherit; font-size: 14px; font-weight: 700; background: var(--card); color: var(--ink); border: 1px solid var(--line); border-radius: 10px; padding: 8px 14px; cursor: pointer; max-width: 48%; text-align: left; }
+.pager button:hover { border-color: var(--ink); }
+.pager button[hidden] { visibility: hidden; display: block !important; }
+
+#checks label { display: flex; gap: 8px; align-items: flex-start; padding: 4px 0; cursor: pointer; }
+#checks label.done span { color: var(--muted); text-decoration: line-through; }
+#checks input { margin-top: 6px; accent-color: var(--accent); }
+.prog { font-weight: 700; color: var(--accent); }
+
+/* 単語クイズ */
+.quiz { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+.quiz .opts-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 10px; }
+.quiz select { font: inherit; font-size: 14px; padding: 3px 6px; border-radius: 8px; border: 1px solid var(--line); background: var(--card); color: var(--ink); }
+.quiz .qword { font-family: var(--f-en); font-size: 26px; font-weight: 600; margin: 10px 0 2px; line-height: 1.35; }
+.quiz .qword.jp { font-family: var(--f-body); font-size: 21px; }
+.quiz .qmeta { font-size: 13px; color: var(--muted); margin-bottom: 10px; }
+.quiz .choices { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 8px; }
+.quiz .choices button { font: inherit; font-size: 15px; text-align: left; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); cursor: pointer; }
+.quiz .choices button.en { font-family: var(--f-en); font-size: 16px; }
+.quiz .choices button:hover:not(:disabled) { border-color: var(--ink); }
+.quiz .choices button.ok { background: var(--good-soft); border-color: var(--good); }
+.quiz .choices button.ng { background: var(--bad-soft); border-color: var(--bad); }
+.quiz .choices button:disabled { cursor: default; }
+.quiz .status { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 12px; font-size: 14px; }
+.quiz .score { font-weight: 700; color: var(--accent); }
+.quiz .miss { margin-top: 12px; font-size: 14px; }
+
+@media (max-width: 520px) { .card, .ex > .q, .ex .a, .passage { padding-left: 12px; padding-right: 12px; } .passage { font-size: 16px; } }
+@media print {
+  nav.tabs, .pager, .ctrl, #quizbox { display: none; }
+  section.tab[hidden] { display: block !important; }
+  .bl { color: var(--ink); }
+  table.vocab.hide td.ja { color: var(--ink); }
+  details > * { display: block; }
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="back" href="../">← 講義一覧</a>
+    <h1>英語表現<br><span>試験対策ノート</span></h1>
+    <p>講義プリント（ユーモア・音楽・エンタメ・鉄道の旅・恐怖症）の穴埋め、ピックアップ単語、長文と長文設問を週ごとにまとめたノート。グレーの空欄はタップすると答えが出る。</p>
+  </div>
+</header>
+
+<nav class="tabs" aria-label="週の切り替え">
+  <div class="wrap" role="tablist" id="tablist"></div>
+</nav>
+
+<main class="wrap">
+
+<!-- ================= はじめに ================= -->
+<section class="tab" id="home" data-title="試験対策の進め方" data-short="はじめに">
+  <h2>試験対策の進め方</h2>
+  <p class="srcline">試験に出ると言われている範囲：講義プリントの穴埋め・ピックアップ単語・長文・長文設問</p>
+
+  <div class="grid2">
+    <div class="card">
+      <b>出るところ（3つ）</b>
+      <ol>
+        <li><b>穴埋め</b>：プリントの Complete / Choose / Match 系の問題</li>
+        <li><b>ピックアップ単語</b>：マッチングや語彙問題で出てきた単語・熟語</li>
+        <li><b>長文と長文設問</b>：各週の本文と、その Read and answer の問い</li>
+      </ol>
+    </div>
+    <div class="card">
+      <b>このノートの使い方</b>
+      <ul>
+        <li>各週のタブは「単語 → 長文 → 長文設問 → 穴埋め → 練習問題」の順</li>
+        <li>グレーの空欄・単語表の意味は <b>タップで答えが出る</b>。「全部表示」ボタンもある</li>
+        <li>最後の <a href="#quiz" data-go="quiz">単語クイズ</a> で全週の単語を4択でランダム出題</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>おすすめの勉強手順</h3>
+  <ol>
+    <li><b>単語表</b>を「意味を隠す」にして、言えるかチェック（言えなかった単語に印）</li>
+    <li><b>長文</b>を音読 → 和訳を開いて意味を確認 → もう一度英語だけで読む</li>
+    <li><b>長文設問</b>を答えを見ずに英語で答えてみる（本文のどの文が根拠か言えればOK）</li>
+    <li><b>穴埋め</b>をタップせずに頭の中で埋める → タップで答え合わせ</li>
+    <li><b>練習問題</b>（プリントにない類題）で、本文の細かいところまで確認</li>
+    <li>最後に <a href="#quiz" data-go="quiz">単語クイズ</a> を「英→日」「日→英」の両方で</li>
+  </ol>
+
+  <h3>週ごとの範囲</h3>
+  <div class="tw"><table>
+    <tr><th>タブ</th><th>テーマ</th><th>長文</th><th>主な穴埋め・単語</th></tr>
+    <tr><td><a href="#w2" data-go="w2">Week 2</a></td><td>Jokes and humour</td><td>イギリスのユーモアについての対話</td><td>コメディの種類、one-liner / punchline / butt、動詞＋名詞</td></tr>
+    <tr><td><a href="#w3" data-go="w3">Music</a></td><td>Language for … Music</td><td>ミュージシャンへのインタビュー</td><td>楽器名、eclectic / catchy / venue / lyrics</td></tr>
+    <tr><td><a href="#w4" data-go="w4">Week 4</a></td><td>Entertainment</td><td>Entertainment in London</td><td>動詞→名詞、genuine / venues / take place、2語フレーズ</td></tr>
+    <tr><td><a href="#w5" data-go="w5">Week 5</a></td><td>Train travel</td><td>駅で切符を買う会話</td><td>切符の種類、valid / aisle / coach / destination</td></tr>
+    <tr><td><a href="#w6" data-go="w6">Week 6</a></td><td>Phobias</td><td>Andrew・Anna・Evan の恐怖症</td><td>〜phobia、anxious / premonition / overcome、2語フレーズ</td></tr>
+  </table></div>
+  <p style="font-size:13.5px;color:var(--muted)">Music のプリントには週番号が書いてないけど、順番的に Week 3 の回。</p>
+
+  <h3>チェックリスト</h3>
+  <p class="prog" id="prog"></p>
+  <div class="card" id="checks">
+    <label><input type="checkbox" id="ck-w2"><span>Week 2 Humour：単語・長文・設問・穴埋めを一周した</span></label>
+    <label><input type="checkbox" id="ck-w3"><span>Music：単語・長文・設問・穴埋めを一周した</span></label>
+    <label><input type="checkbox" id="ck-w4"><span>Week 4 Entertainment：単語・長文・設問・穴埋めを一周した</span></label>
+    <label><input type="checkbox" id="ck-w5"><span>Week 5 Train travel：単語・長文・設問・穴埋めを一周した</span></label>
+    <label><input type="checkbox" id="ck-w6"><span>Week 6 Phobias：単語・長文・設問・穴埋めを一周した</span></label>
+    <label><input type="checkbox" id="ck-pr"><span>全週の練習問題を答えを見ずに解いた</span></label>
+    <label><input type="checkbox" id="ck-q1"><span>単語クイズ（全週・英→日）で 9割以上</span></label>
+    <label><input type="checkbox" id="ck-q2"><span>単語クイズ（全週・日→英）で 9割以上</span></label>
+  </div>
+  <p style="font-size:13px;color:var(--muted)">チェックはこの端末のブラウザにだけ保存される。</p>
+</section>
+
+<!-- ================= Week 2 ================= -->
+<section class="tab" id="w2" data-title="Week 2 Jokes and humour" data-short="Week 2" data-src="Humour">
+  <h2>Week 2 — Jokes and humour</h2>
+  <p class="srcline">出典：Week 2 Assignment - jokes and humour（プリントは空欄のままだったので、答えは本文から確定させた）</p>
+
+  <h3>ピックアップ単語 <span class="cat">単語</span></h3>
+  <div class="ctrl"><button type="button" data-hide="v2" aria-pressed="false">意味を隠す</button></div>
+  <div class="tw"><table class="vocab" id="v2">
+    <tr><th>英語</th><th>意味</th><th class="ex">本文・プリントでの使われ方</th></tr>
+    <tr data-w="w2"><td>sitcom</td><td class="ja">シットコム（決まった登場人物の連続コメディ番組）</td><td class="ex">An example is the US show, Friends.</td></tr>
+    <tr data-w="w2"><td>satire</td><td class="ja">風刺（ユーモアで人や物事を批判する）</td><td class="ex">Have I Got News For You</td></tr>
+    <tr data-w="w2"><td>slapstick comedy</td><td class="ja">ドタバタ喜劇（体を使った笑い）</td><td class="ex">Mr Bean, Laurel and Hardy</td></tr>
+    <tr data-w="w2"><td>stand-up comedy</td><td class="ja">スタンダップ・コメディ（舞台で客の前でネタを話す）</td><td class="ex">tells jokes on a stage</td></tr>
+    <tr data-w="w2"><td>black comedy</td><td class="ja">ブラックコメディ（病気や死など嫌な面を笑いにする）</td><td class="ex">illness and death</td></tr>
+    <tr data-w="w2"><td>sense of humour</td><td class="ja">ユーモアのセンス</td><td class="ex">a special sense of humour</td></tr>
+    <tr data-w="w2"><td>crack a joke</td><td class="ja">冗談を言う</td><td class="ex">you could crack the same joke in any language</td></tr>
+    <tr data-w="w2"><td>pessimist</td><td class="ja">悲観主義者</td><td class="ex">borrow money from a pessimist</td></tr>
+    <tr data-w="w2"><td>interest</td><td class="ja">①興味 ②利子（投資したお金に付く割合）</td><td class="ex">I lost interest.</td></tr>
+    <tr data-w="w2"><td>double meaning</td><td class="ja">二重の意味</td><td class="ex">the joke is in the double meaning</td></tr>
+    <tr data-w="w2"><td>literal</td><td class="ja">文字通りの（いちばん基本的な意味の）</td><td class="ex">literal meaning</td></tr>
+    <tr data-w="w2"><td>idiomatic</td><td class="ja">慣用的な（単語ごとの意味とは違う意味の）</td><td class="ex">idiomatic meaning</td></tr>
+    <tr data-w="w2"><td>look into</td><td class="ja">①〜を調査する ②〜の中を覗き込む</td><td class="ex">Police are looking into it.</td></tr>
+    <tr data-w="w2"><td>homophone</td><td class="ja">同音異義語（音が同じで綴りと意味が違う語）</td><td class="ex">why / y</td></tr>
+    <tr data-w="w2"><td>pun</td><td class="ja">駄洒落（似た音の語を使う言葉遊び）</td><td class="ex">a huge missed steak (= mistake)</td></tr>
+    <tr data-w="w2"><td>hilarious</td><td class="ja">ものすごく面白い</td><td class="ex">It's not exactly hilarious though!</td></tr>
+    <tr data-w="w2"><td>wordplay</td><td class="ja">言葉遊び（言葉を巧みに・面白く使うこと）</td><td class="ex">apart from wordplay</td></tr>
+    <tr data-w="w2"><td>intentional</td><td class="ja">意図的な、わざとの</td><td class="ex">It wasn't an intentional joke.</td></tr>
+    <tr data-w="w2"><td>take oneself seriously</td><td class="ja">自分のことを深刻に考える</td><td class="ex">we don't take ourselves too seriously</td></tr>
+    <tr data-w="w2"><td>laugh at oneself</td><td class="ja">自分を笑いものにする（自虐）</td><td class="ex">we like to laugh at ourselves</td></tr>
+    <tr data-w="w2"><td>target</td><td class="ja">（ジョークの）標的、ネタにされる対象</td><td class="ex">particular targets of British jokes</td></tr>
+    <tr data-w="w2"><td>butt (of jokes)</td><td class="ja">（ジョークの）笑いの的</td><td class="ex">partners are often the butt of jokes</td></tr>
+    <tr data-w="w2"><td>one-liner</td><td class="ja">一文で完結するジョーク</td><td class="ex">One-liners are the best.</td></tr>
+    <tr data-w="w2"><td>punchline</td><td class="ja">オチ（ジョークの最後の一言）</td><td class="ex">If you have to explain the punchline …</td></tr>
+    <tr data-w="w2"><td>translate</td><td class="ja">翻訳する</td><td class="ex">impossible to translate jokes</td></tr>
+  </table></div>
+
+  <h3>長文：Reading Transcript <span class="cat">長文</span></h3>
+  <div class="passage">
+    <p><span class="sp">A</span>OK, so you think the British have a special <mark>sense of humour</mark>. Go on, then. Tell me a joke.</p>
+    <p><span class="sp">B</span>Why should you always borrow money from a <mark>pessimist</mark>?</p>
+    <p><span class="sp">A</span>I don't know.</p>
+    <p><span class="sp">B</span>Because he won't expect it back.</p>
+    <p><span class="sp">A</span>That's not funny, and anyway, you could <mark>crack</mark> the same joke in any language with the same meaning. What's so special about British humour?</p>
+    <p><span class="sp">B</span>I think it's connected with the language. We have lots of words with more than one meaning and that can be funny.</p>
+    <p><span class="sp">A</span>Can you think of an example?</p>
+    <p><span class="sp">B</span>Well, I wanted to be a banker but then I lost <mark>interest</mark>.</p>
+    <p><span class="sp">A</span>Hmm. I see. 'Interest' can also mean a percentage paid on money people invest.</p>
+    <p><span class="sp">B</span>That's right, so the joke is in the <mark>double meaning</mark>. We also make jokes based on <mark>literal</mark> meaning as opposed to <mark>idiomatic</mark> meaning. For example: a hole appeared in the middle of the road yesterday. Police are <mark>looking into</mark> it.</p>
+    <p><span class="sp">A</span>OK. I understand that one. Literally standing there and looking into the hole, or investigating it.</p>
+    <p><span class="sp">B</span>Yes. Then we have <mark>homophones</mark>. We make jokes using them too.</p>
+    <p><span class="sp">A</span>What are homophones?</p>
+    <p><span class="sp">B</span>Words with exactly the same sounds but different spellings and meanings. For example: I only know twenty-five letters of the alphabet. I don't know why.</p>
+    <p><span class="sp">A</span>OK, I get that one. The question word 'why' and the letter 'y'.</p>
+    <p><span class="sp">B</span>Then there are <mark>puns</mark>. These can be homophones but they can also use words which sound almost the same but not quite. There are thousands of jokes based on these. For instance, some people say that being a vegetarian is a huge missed steak.</p>
+    <p><span class="sp">A</span>Yes. It's not exactly <mark>hilarious</mark> though!</p>
+    <p><span class="sp">B</span>I'm trying to show you how the language influences our humour. We can even play with grammar to produce double meanings. One of my favourites is the newspaper headline 'Police found drunk in shop window'. If 'found' is past simple, it means they discovered a drunk person in the shop window. If it's a past participle, it means the police themselves were drunk. It wasn't an <mark>intentional</mark> joke though!</p>
+    <p><span class="sp">A</span>Right, but apart from <mark>wordplay</mark>, what are some other features of British humour?</p>
+    <p><span class="sp">B</span>Well, I think we like to <mark>laugh at ourselves</mark> and, in general, we don't <mark>take ourselves too seriously</mark>. I mean, I'm pretty pleased with myself. I bought a jigsaw puzzle that said 'three to five years' on the box. I finished it in three months!</p>
+    <p><span class="sp">A</span>Right. I understand that one. Are there any particular <mark>targets</mark> of British jokes?</p>
+    <p><span class="sp">B</span>I guess one of the favourite subjects is relationships, and partners are often the <mark>butt</mark> of jokes. For example, 'my partner's cooking is so bad we usually pray after our food', or 'My husband hasn't stopped looking through the window since it started snowing. If it gets any worse, I'll have to let him in.'</p>
+    <p><span class="sp">A</span>I don't know whether to laugh or cry. OK, come on. What's the secret of a good joke?</p>
+    <p><span class="sp">B</span>It should be short and easy to understand. <mark>One-liners</mark> are the best. If you have to explain the <mark>punchline</mark>, the joke hasn't worked. That's why it's sometimes impossible to translate jokes into other languages.</p>
+  </div>
+  <details class="ja"><summary>和訳を見る</summary><div>
+    <p>A：じゃあ、イギリス人には特別なユーモアのセンスがあると思うんだね。じゃあどうぞ、ジョークを言ってみて。</p>
+    <p>B：お金はいつも悲観主義者から借りるべきなのはなぜ？／A：わからない。／B：返ってくると思ってないから。</p>
+    <p>A：面白くないよ。それにそのジョークは、どの言語でも同じ意味で言えるでしょ。イギリスのユーモアの何が特別なの？</p>
+    <p>B：言葉と関係があると思う。英語には意味が複数ある単語がたくさんあって、それが面白くなるんだ。／A：例は？</p>
+    <p>B：「銀行員になりたかったけど、興味（interest）をなくした」。／A：なるほど。interest は投資したお金に支払われる割合（利子）の意味もあるね。</p>
+    <p>B：そう、二重の意味にジョークがあるんだ。慣用的な意味じゃなくて文字通りの意味をネタにすることもある。例えば「昨日、道の真ん中に穴が開いた。警察が調べている（looking into）」。／A：わかった。文字通りそこに立って穴を覗き込んでいるのか、捜査しているのか、だね。</p>
+    <p>B：それから同音異義語（homophone）もジョークに使う。／A：同音異義語って？／B：音がまったく同じで、綴りと意味が違う単語。例えば「アルファベットは25文字しか知らない。なぜ（why）かわからない」。／A：わかった。疑問詞の why と文字の y だね。</p>
+    <p>B：それから駄洒落（pun）。同音異義語のこともあるけど、ほぼ同じだけど完全には同じでない音の単語を使うこともある。これを使ったジョークは何千もある。例えば「ベジタリアンになるのは大きな missed steak（＝mistake 間違い）だ」と言う人もいる。／A：うん、でも大爆笑ってほどじゃないね！</p>
+    <p>B：言葉がユーモアにどう影響するかを見せようとしてるんだよ。文法で遊んで二重の意味を作ることもできる。好きなのは新聞の見出し「Police found drunk in shop window」。found が過去形なら「警察が店のショーウィンドウで酔っ払いを発見した」、過去分詞なら「警察自身が酔っ払った状態で見つかった」。これはわざとのジョークじゃなかったけどね！</p>
+    <p>A：なるほど。でも言葉遊び以外に、イギリスのユーモアの特徴は？／B：自分たちを笑うのが好きで、自分たちのことをあまり深刻に考えないと思う。例えば、僕はかなり自慢なんだけど、箱に「3〜5年」と書いてあるジグソーパズルを買って、3か月で完成させたんだ！（※対象年齢を所要期間と勘違いしているボケ）</p>
+    <p>A：わかった。イギリスのジョークで特によくネタにされる対象はある？／B：好まれるテーマのひとつは人間関係で、パートナーがよく笑いの的になる。例えば「パートナーの料理がひどすぎて、食後に祈るのが普通」とか、「雪が降り始めてから夫がずっと窓から（外から）覗いている。これ以上ひどくなったら家に入れてあげなきゃ」とか。</p>
+    <p>A：笑えばいいのか泣けばいいのか。じゃあ、いいジョークの秘訣は？／B：短くてわかりやすいこと。一言ジョークが一番。オチを説明しなきゃいけないなら、そのジョークは失敗。だからジョークを他の言語に訳すのは時々不可能なんだ。</p>
+  </div></details>
+
+  <h4>本文のジョークの仕組み（長文設問で聞かれやすい）</h4>
+  <div class="tw"><table>
+    <tr><th>ジョーク</th><th>種類</th><th>仕組み</th></tr>
+    <tr><td class="en">I lost interest.</td><td>double meaning</td><td>interest＝「興味」と「利子」</td></tr>
+    <tr><td class="en">Police are looking into it.</td><td>literal vs idiomatic</td><td>「穴を覗き込む」（文字通り）と「調査する」（慣用）</td></tr>
+    <tr><td class="en">I don't know why.</td><td>homophone</td><td>why と y が同じ音</td></tr>
+    <tr><td class="en">a huge missed steak</td><td>pun</td><td>missed steak ≒ mistake（ほぼ同じ音）</td></tr>
+    <tr><td class="en">Police found drunk in shop window</td><td>grammar（文法）</td><td>found が過去形か過去分詞かで意味が変わる</td></tr>
+    <tr><td class="en">'three to five years' … in three months</td><td>laugh at ourselves</td><td>自虐（対象年齢を所要時間と勘違い）</td></tr>
+    <tr><td class="en">pray after our food / let him in</td><td>butt of jokes</td><td>パートナーがネタの対象</td></tr>
+  </table></div>
+
+  <h3>長文設問 <span class="cat">長文設問</span></h3>
+  <p style="font-size:14px;color:var(--muted)">Skim and scan the transcript to find the answers.</p>
+  <div class="ex"><div class="q"><span class="no">Q1</span><span class="en">Why should you always borrow money from a pessimist?</span></div><details><summary>答え</summary><div class="a"><span class="ans en">Because he won't expect it back.</span>（プリントの例題）</div></details></div>
+  <div class="ex"><div class="q"><span class="no">Q2</span><span class="en">What is the word for the percentage paid on money people invest?</span></div><details><summary>答え</summary><div class="a"><span class="ans en">Interest.</span>　banker のジョーク（I lost interest）で出てくる。</div></details></div>
+  <div class="ex"><div class="q"><span class="no">Q3</span><span class="en">What are homophones?</span></div><details><summary>答え</summary><div class="a"><span class="ans en">Words with exactly the same sounds but different spellings and meanings.</span><br>例：why と y</div></details></div>
+  <div class="ex"><div class="q"><span class="no">Q4</span><span class="en">What are puns?</span></div><details><summary>答え</summary><div class="a"><span class="ans en">Jokes that use homophones, or words which sound almost the same but not quite.</span><br>例：missed steak ≒ mistake</div></details></div>
+  <div class="ex"><div class="q"><span class="no">Q5</span><span class="en">Who do the British like to laugh at?</span></div><details><summary>答え</summary><div class="a"><span class="ans en">Themselves.</span>（They like to laugh at themselves and don't take themselves too seriously.）</div></details></div>
+  <div class="ex"><div class="q"><span class="no">Q6</span><span class="en">Which particular target of British humour is mentioned?</span></div><details><summary>答え</summary><div class="a"><span class="ans en">Relationships — partners are often the butt of jokes.</span></div></details></div>
+
+  <h3>穴埋め・マッチング <span class="cat">穴埋め</span></h3>
+  <div class="ctrl"><button type="button" data-reveal="w2">答えを全部表示</button><button type="button" data-unreveal="w2">全部隠す</button></div>
+
+  <h4>① コメディの種類と説明（Match up）</h4>
+  <ol class="fill">
+    <li><b class="bl">sitcom</b> — A series about a particular group of characters who deal with situations in a humorous way. (e.g. Friends)</li>
+    <li><b class="bl">satire</b> — A show which uses humour to criticize someone or something and make them seem silly. (e.g. Have I Got News For You)</li>
+    <li><b class="bl">slapstick comedy</b> — Humour that is based on physical actions such as people hitting each other or falling over. (e.g. Mr Bean)</li>
+    <li><b class="bl">stand-up comedy</b> — A comedian that tells jokes on a stage in front of an audience.</li>
+    <li><b class="bl">black comedy</b> — A story that deals in a humorous way with unpleasant aspects of life such as illness and death.</li>
+  </ol>
+  <p style="font-size:13.5px;color:var(--muted)">プリントの記号で言うと 1 sitcom – e、2 satire – b、3 slapstick – c、4 stand-up – a、5 black comedy – d。</p>
+
+  <h4>② ユーモアに関する単語の綴り（Complete the spelling）</h4>
+  <ol class="fill">
+    <li>f u _ _ y → <b class="bl">funny</b></li>
+    <li>s _ ns _ of h _ _ o _ r → <b class="bl">sense of humour</b></li>
+    <li>c _ _ c k → <b class="bl">crack</b>（crack a joke）</li>
+    <li>a j _ _ _ → <b class="bl">a joke</b></li>
+    <li>l _ _ _ h → <b class="bl">laugh</b></li>
+  </ol>
+  <p style="font-size:13.5px;color:var(--muted)">humour はイギリス綴り（米 humor）。u を落とさないように。</p>
+
+  <h4>③ Complete the sentences</h4>
+  <p class="en" style="font-size:14px;color:var(--muted)">literal / hilarious / wordplay / one-liner / double / punchline / butt / idiomatic</p>
+  <ol class="fill">
+    <li>A <b class="bl">one-liner</b> is a joke that consists of a single sentence.</li>
+    <li>Many words in English have <b class="bl">double</b> meanings.</li>
+    <li>The <b class="bl">punchline</b> is the last line of a joke.</li>
+    <li><b class="bl">Wordplay</b> is using words in a clever or funny way.</li>
+    <li>The <b class="bl">literal</b> meaning of a word is its most basic meaning.</li>
+    <li>The <b class="bl">idiomatic</b> meaning of an expression is different from the meaning of individual words.</li>
+    <li>If something is described as <b class="bl">hilarious</b>, it is extremely funny.</li>
+    <li>If you are the <b class="bl">butt</b> of jokes, people often make jokes about you.</li>
+  </ol>
+
+  <h4>④ 動詞＋名詞（Match the verbs with noun phrases）</h4>
+  <ol class="fill">
+    <li>get <b class="bl">a joke</b><span class="ja">ジョークがわかる（I get that one.）</span></li>
+    <li>explain <b class="bl">a punchline</b><span class="ja">オチを説明する</span></li>
+    <li>lose <b class="bl">interest</b><span class="ja">興味をなくす</span></li>
+    <li>take <b class="bl">oneself seriously</b><span class="ja">自分を深刻に考える</span></li>
+    <li>borrow <b class="bl">money</b><span class="ja">お金を借りる</span></li>
+    <li>laugh at <b class="bl">oneself</b><span class="ja">自分を笑う</span></li>
+  </ol>
+  <p style="font-size:13.5px;color:var(--muted)">記号：1-d、2-f、3-e、4-a、5-c、6-b</p>
+
+  <h3>練習問題（類題） <span class="cat">練習</span></h3>
+  <div class="ex"><div class="q"><span class="no">P1</span>本文の内容と合っていれば T、違えば F。<br><span class="en">(a) Speaker A thinks the pessimist joke is very funny. (b) The 'Police found drunk' headline was an intentional joke. (c) Speaker B finished the jigsaw puzzle in three months. (d) According to B, a good joke should be long and detailed.</span></div><details><summary>答え</summary><div class="a">(a) <span class="ans">F</span>（That's not funny）　(b) <span class="ans">F</span>（It wasn't an intentional joke）　(c) <span class="ans">T</span>　(d) <span class="ans">F</span>（short and easy to understand）</div></details></div>
+  <div class="ex"><div class="q"><span class="no">P2</span><span class="en">Why does Speaker A say the pessimist joke is not special to British humour?</span></div><details><summary>答え</summary><div class="a"><span class="ans en">Because you could crack the same joke in any language with the same meaning.</span></div></details></div>
+  <div class="ex"><div class="q"><span class="no">P3</span><span class="en">What are the two meanings of 'looking into it' in the joke about the hole?</span></div><details><summary>答え</summary><div class="a"><span class="ans en">Literally looking into the hole, or investigating it.</span>（文字通り覗き込む／調査する）</div></details></div>
+  <div class="ex"><div class="q"><span class="no">P4</span><span class="en">In 'Police found drunk in shop window', what does it mean if 'found' is a past participle?</span></div><details><summary>答え</summary><div class="a"><span class="ans en">It means the police themselves were drunk.</span>（過去形なら「警察が酔っ払いを発見した」）</div></details></div>
+  <div class="ex"><div class="q"><span class="no">P5</span><span class="en">According to B, why is it sometimes impossible to translate jokes into other languages?</span></div><details><summary>答え</summary><div class="a"><span class="ans en">Because many jokes depend on wordplay (double meanings, homophones, puns), and if you have to explain the punchline, the joke hasn't worked.</span></div></details></div>
+  <div class="ex"><div class="q"><span class="no">P6</span>次のジョークは homophone / pun / double meaning のどれ？<br><span class="en">(a) I wanted to be a banker but I lost interest. (b) I only know twenty-five letters of the alphabet. I don't know why. (c) Being a vegetarian is a huge missed steak.</span></div><details><summary>答え</summary><div class="a">(a) <span class="ans">double meaning</span>　(b) <span class="ans">homophone</span>（why / y）　(c) <span class="ans">pun</span>（missed steak / mistake）</div></details></div>
+</section>
+
+<!-- ================= Music ================= -->
+<section class="tab" id="w3" data-title="Language for … Music" data-short="Music" data-src="Week 3">
+  <h2>Language for … Music</h2>
+  <p class="srcline">出典：Language for … Music（プリントに週番号なし）</p>
+
+  <h3>ピックアップ単語 <span class="cat">単語</span></h3>
+  <div class="ctrl"><button type="button" data-hide="v3" aria-pressed="false">意味を隠す</button></div>
+  <div class="tw"><table class="vocab" id="v3">
+    <tr><th>英語</th><th>意味</th><th class="ex">本文・プリントでの使われ方</th></tr>
+    <tr data-w="w3"><td>keyboard</td><td class="ja">キーボード（電子ピアノ）</td><td class="ex">an electronic piano</td></tr>
+    <tr data-w="w3"><td>saxophone</td><td class="ja">サックス</td><td class="ex">I love the sound of the saxophone.</td></tr>
+    <tr data-w="w3"><td>electric guitar</td><td class="ja">エレキギター</td><td class="ex">I bought my first electric guitar.</td></tr>
+    <tr data-w="w3"><td>mandolin</td><td class="ja">マンドリン</td><td class="ex">the banjo and the mandolin</td></tr>
+    <tr data-w="w3"><td>violin</td><td class="ja">バイオリン</td><td class="ex">The violin and guitar are stringed instruments.</td></tr>
+    <tr data-w="w3"><td>vocalist</td><td class="ja">ボーカル、歌手</td><td class="ex">You're best known as a vocalist</td></tr>
+    <tr data-w="w3"><td>stringed instrument</td><td class="ja">弦楽器</td><td class="ex">other stringed instruments like the banjo</td></tr>
+    <tr data-w="w3"><td>acoustic</td><td class="ja">アコースティックの（電気で音を大きくしない）</td><td class="ex">an acoustic guitar</td></tr>
+    <tr data-w="w3"><td>take up</td><td class="ja">（趣味・楽器などを）始める</td><td class="ex">I took it up soon after.</td></tr>
+    <tr data-w="w3"><td>chord</td><td class="ja">コード、和音（指の押さえ方で出る音）</td><td class="ex">I learnt some basic chords</td></tr>
+    <tr data-w="w3"><td>eclectic</td><td class="ja">多彩な、いろいろな種類からなる</td><td class="ex">my musical tastes are quite eclectic</td></tr>
+    <tr data-w="w3"><td>tastes</td><td class="ja">好み（芸術・音楽・服などで好きなもの）</td><td class="ex">musical tastes</td></tr>
+    <tr data-w="w3"><td>be keen on</td><td class="ja">〜が大好きだ、〜に熱心だ</td><td class="ex">I'm very keen on classical music</td></tr>
+    <tr data-w="w3"><td>composer</td><td class="ja">作曲家（特にクラシック）</td><td class="ex">composers like Mahler and Bruckner</td></tr>
+    <tr data-w="w3"><td>admit</td><td class="ja">認める</td><td class="ex">I have to admit I'm not so keen on …</td></tr>
+    <tr data-w="w3"><td>experimental</td><td class="ja">実験的な</td><td class="ex">modern, experimental jazz</td></tr>
+    <tr data-w="w3"><td>genre</td><td class="ja">ジャンル（特徴で見分けられる音楽のスタイル）</td><td class="ex">other musical genres</td></tr>
+    <tr data-w="w3"><td>be influenced by</td><td class="ja">〜の影響を受けている</td><td class="ex">rock music is influenced by blues</td></tr>
+    <tr data-w="w3"><td>traditional</td><td class="ja">伝統的な</td><td class="ex">traditional English and Irish folk music</td></tr>
+    <tr data-w="w3"><td>tune</td><td class="ja">曲、メロディー</td><td class="ex">Some of the tunes are brilliant</td></tr>
+    <tr data-w="w3"><td>lyrics</td><td class="ja">歌詞</td><td class="ex">the lyrics often tell stories</td></tr>
+    <tr data-w="w3"><td>rhythm</td><td class="ja">リズム</td><td class="ex">The rhythms of reggae music</td></tr>
+    <tr data-w="w3"><td>catchy</td><td class="ja">覚えやすい、キャッチーな</td><td class="ex">a catchy tune</td></tr>
+    <tr data-w="w3"><td>be into</td><td class="ja">〜にハマっている、〜が好きだ</td><td class="ex">I'm not really into that sort of music</td></tr>
+    <tr data-w="w3"><td>memorable</td><td class="ja">記憶に残る</td><td class="ex">a tune that's memorable</td></tr>
+    <tr data-w="w3"><td>recognise</td><td class="ja">（聞いて）それとわかる、認識する</td><td class="ex">people will instantly recognise</td></tr>
+    <tr data-w="w3"><td>venue</td><td class="ja">会場（イベントが行われる場所）</td><td class="ex">the small venues</td></tr>
+    <tr data-w="w3"><td>in touch with</td><td class="ja">〜とつながって、〜と身近に感じて</td><td class="ex">feel in touch with the musicians</td></tr>
+  </table></div>
+
+  <h3>長文：An extract from an interview with a musician <span class="cat">長文</span></h3>
+  <div class="passage">
+    <p><span class="sp">Q</span>You're best known as a <mark>vocalist</mark>, but do you also play an instrument?</p>
+    <p><span class="sp">A</span>Yes. In fact I can play several instruments.</p>
+    <p><span class="sp">Q</span>Really? Which ones?</p>
+    <p><span class="sp">A</span>Well. I play the guitar, of course, but I can also play other <mark>stringed instruments</mark> like the banjo and the mandolin.</p>
+    <p><span class="sp">Q</span>How old were you when you learnt to play the guitar?</p>
+    <p><span class="sp">A</span>My parents gave me an <mark>acoustic</mark> guitar as a birthday present when I was thirteen, so I <mark>took it up</mark> soon after. I learnt some basic <mark>chords</mark> and then, when I was about seventeen, I bought my first electric guitar.</p>
+    <p><span class="sp">Q</span>Is the guitar your favourite instrument?</p>
+    <p><span class="sp">A</span>I don't think I have a favourite instrument. I like all kinds of instruments for different reasons. I like the piano, for example, and, obviously, the keyboard. I love the sound of the saxophone. That's an instrument I'd really like to <mark>take up</mark> one day.</p>
+    <p><span class="sp">Q</span>You sing in a rock band, but how would you describe your musical <mark>tastes</mark>?</p>
+    <p><span class="sp">A</span>I think my musical tastes are quite <mark>eclectic</mark>. I like many different kinds of music for many different reasons. I'm very <mark>keen on</mark> classical music, for example, especially <mark>composers</mark> like Mahler and Bruckner.</p>
+    <p><span class="sp">Q</span>How about jazz?</p>
+    <p><span class="sp">A</span>I like traditional jazz, but I have to admit I'm not so keen on some of the more modern, <mark>experimental</mark> jazz you sometimes hear these days.</p>
+    <p><span class="sp">Q</span>What about other musical <mark>genres</mark>?</p>
+    <p><span class="sp">A</span>I love rock music, of course. I sing in a rock band, after all. And as a rock singer I love the blues because so much rock music is <mark>influenced by</mark> blues. I also like some <mark>traditional</mark> English and Irish folk music. Some of the <mark>tunes</mark> are brilliant and the <mark>lyrics</mark> often tell stories. I like reggae too. The rhythms of reggae music are really <mark>catchy</mark> so they are easy to remember.</p>
+    <p><span class="sp">Q</span>Are there any musical genres you're not into?</p>
+    <p><span class="sp">A</span>It's difficult to think of a genre that I actually dislike but, as I said, I don't listen to modern jazz much so I'm not really <mark>into</mark> that sort of music.</p>
+    <p><span class="sp">Q</span>What makes a good song in your opinion?</p>
+    <p><span class="sp">A</span>Well, firstly it has to have a catchy tune: a tune that's <mark>memorable</mark> and that people will instantly <mark>recognise</mark>. It also needs to be a bit complex and not just based on three or four simple chords. The lyrics of the song should also be interesting and, as I said before, if they can tell a story, that will make the song itself more memorable.</p>
+    <p><span class="sp">Q</span>Where do you like to listen to music?</p>
+    <p><span class="sp">A</span>Everywhere! But I guess my favorite places are the small <mark>venues</mark> because they are friendlier and the audience can feel <mark>in touch with</mark> the musicians. Big venues like stadiums and festivals don't have that connection, in my opinion.</p>
+  </div>
+  <details class="ja"><summary>和訳を見る</summary><div>
+    <p>Q：ボーカルとして一番知られていますが、楽器も演奏しますか？／A：はい。実はいくつか楽器を弾けます。／Q：本当ですか？どれを？</p>
+    <p>A：ギターはもちろん、バンジョーやマンドリンのような他の弦楽器も弾けます。</p>
+    <p>Q：ギターを習ったのは何歳のときですか？／A：13歳のとき、両親が誕生日プレゼントにアコースティックギターをくれたので、すぐに始めました。基本的なコードを覚えて、17歳くらいのときに初めてエレキギターを買いました。</p>
+    <p>Q：ギターが一番好きな楽器ですか？／A：一番好きな楽器はないと思います。いろいろな理由でどんな楽器も好きです。例えばピアノ、それにもちろんキーボードも好き。サックスの音が大好きで、いつか本当に始めてみたい楽器です。</p>
+    <p>Q：ロックバンドで歌っていますが、音楽の好みはどう表現しますか？／A：かなり幅広い（eclectic）と思います。いろいろな理由でいろいろな種類の音楽が好きです。例えばクラシックがとても好きで、特にマーラーやブルックナーのような作曲家が好きです。</p>
+    <p>Q：ジャズはどうですか？／A：トラディショナル・ジャズは好きですが、正直、最近ときどき耳にするもっと現代的で実験的なジャズはそれほど好きではありません。</p>
+    <p>Q：他のジャンルは？／A：もちろんロックは大好き。何しろロックバンドで歌っているので。ロック歌手としてブルースも大好きです。ロックの多くがブルースの影響を受けているから。イングランドやアイルランドの伝統的なフォーク音楽も好きです。素晴らしい曲もあるし、歌詞がよく物語を語っています。レゲエも好き。レゲエのリズムはとてもキャッチーなので覚えやすいです。</p>
+    <p>Q：好きではないジャンルはありますか？／A：本当に嫌いなジャンルは思いつきにくいけど、さっき言ったようにモダンジャズはあまり聴かないので、ああいう音楽にはあまりハマっていません。</p>
+    <p>Q：いい曲の条件は何だと思いますか？／A：まず、キャッチーなメロディーがあること。記憶に残って、人がすぐにそれとわかるメロディー。それに少し複雑で、3つか4つの簡単なコードだけでできていないこと。歌詞も面白くあるべきで、さっきも言ったように物語を語れれば、曲自体がより記憶に残るものになります。</p>
+    <p>Q：どこで音楽を聴くのが好きですか？／A：どこでも！でも一番好きなのは小さな会場かな。アットホームだし、観客がミュージシャンを身近に感じられるから。スタジアムやフェスのような大きな会場にはそのつながりがないと思います。</p>
+  </div></details>
+
+  <h3>長文設問 <span class="cat">長文設問</span></h3>
+  <p style="font-size:14px;color:var(--muted)">A) Read the text and answer the questions.</p>
+  <div class="ex"><div class="q"><span class="no">Q1</span><span class="en">How old was the musician when she was given an acoustic guitar as a birthday present?</span></div><details><summary>答え</summary><div class="a"><span class="ans en">She was thirteen (13).</span></div></details></div>
+  <div class="ex"><div class="q"><span class="no">Q2</span><span class="en">Which three instruments does she say she can play?</span></div><details><summary>答え</summary><div class="a"><span class="ans en">The guitar, the banjo and the mandolin.</span></div></details></div>
+  <div class="ex"><div class="q"><span class="no">Q3</span><span class="en">When did she buy her first electric guitar?</span></div><details><summary>答え</summary><div class="a"><span class="ans en">When she was about seventeen (17).</span></div></details></div>
+  <div class="ex"><div class="q"><span class="no">Q4</span><span class="en">Which adjective does she use to describe her musical tastes?</span></div><details><summary>答え</summary><div class="a"><span class="ans en">Eclectic.</span></div></details></div>
+  <div class="ex"><div class="q"><span class="no">Q5</span><span class="en">According to her, which type of music influences rock music?</span></div><details><summary>答え</summary><div class="a"><span class="ans en">The blues.</span></div></details></div>
+  <div class="ex"><div class="q"><span class="no">Q6</span><span class="en">In her opinion, which type of music has catchy rhythms?</span></div><details><summary>答え</summary><div class="a"><span class="ans en">Reggae.</span></div></details></div>
+  <div class="ex"><div class="q"><span class="no">Q7</span><span class="en">Which genre of music is she not so keen on?</span></div><details><summary>答え</summary><div class="a"><span class="ans en">Modern, experimental jazz.</span>（traditional jazz は好き、という対比に注意）</div></details></div>
+  <div class="ex"><div class="q"><span class="no">Q8</span><span class="en">Where does she like to listen to music?</span></div><details><summary>答え</summary><div class="a"><span class="ans en">Everywhere, but her favourite places are small venues.</span><br>理由まで聞かれたら：they are friendlier and the audience can feel in touch with the musicians.</div></details></div>
+
+  <h3>穴埋め・マッチング <span class="cat">穴埋め</span></h3>
+  <div class="ctrl"><button type="button" data-reveal="w3">答えを全部表示</button><button type="button" data-unreveal="w3">全部隠す</button></div>
+
+  <h4>① 文字を並べ替えて楽器名に（Rearrange the letters）</h4>
+  <ol class="fill">
+    <li>Bdyekoar → <b class="bl">keyboard</b></li>
+    <li>Psxaooehn → <b class="bl">saxophone</b></li>
+    <li>ectricel tragiu → <b class="bl">electric guitar</b></li>
+    <li>Lodinman → <b class="bl">mandolin</b></li>
+    <li>Oilvin → <b class="bl">violin</b></li>
+  </ol>
+
+  <h4>② B) Find words in the text to complete these sentences.</h4>
+  <ol class="fill">
+    <li>The violin and guitar are <b class="bl">stringed</b> instruments.</li>
+    <li>An <b class="bl">acoustic</b> guitar does not use electronic equipment to make its sound louder.</li>
+    <li>The singer says she has eclectic musical <b class="bl">tastes</b>.</li>
+    <li>She likes <b class="bl">traditional</b> English and Irish folk music.</li>
+    <li>A successful song usually has a <b class="bl">catchy</b> tune.</li>
+    <li>She's a singer in a rock <b class="bl">band</b>.</li>
+    <li>She's not really <b class="bl">into</b> modern jazz.</li>
+    <li>She wants to <b class="bl">take</b> up the saxophone one day.</li>
+  </ol>
+
+  <h4>③ C) Match the words with definitions.</h4>
+  <ol class="fill">
+    <li><b class="bl">composer</b> — someone who writes music, especially classical music</li>
+    <li><b class="bl">genre</b> — a particular style used in music which can be recognised by certain features</li>
+    <li><b class="bl">keyboard</b> — an electronic piano</li>
+    <li><b class="bl">eclectic</b> — consisting of many different types</li>
+    <li><b class="bl">chord</b> — a particular position of the fingers on the guitar producing a particular sound</li>
+    <li><b class="bl">lyrics</b> — the words of a song</li>
+    <li><b class="bl">venue</b> — a place where an event takes place</li>
+    <li><b class="bl">tastes</b> — the types of thing you like in art, music or clothes</li>
+  </ol>
+  <p style="font-size:13.5px;color:var(--muted)">プリントの記号：1-e、2-h、3-d、4-a、5-g、6-c、7-f、8-b</p>
+
+  <h3>練習問題（類題） <span class="cat">練習</span></h3>
+  <div class="ex"><div class="q"><span class="no">P1</span>T / F：<span class="en">(a) Her favourite instrument is the guitar. (b) She already plays the saxophone. (c) She likes traditional jazz. (d) She thinks big venues have a strong connection with the audience.</span></div><details><summary>答え</summary><div class="a">(a) <span class="ans">F</span>（I don't think I have a favourite instrument）　(b) <span class="ans">F</span>（いつか始めたい）　(c) <span class="ans">T</span>　(d) <span class="ans">F</span>（don't have that connection）</div></details></div>
+  <div class="ex"><div class="q"><span class="no">P2</span><span class="en">Which composers does she mention?</span></div><details><summary>答え</summary><div class="a"><span class="ans en">Mahler and Bruckner.</span></div></details></div>
+  <div class="ex"><div class="q"><span class="no">P3</span><span class="en">Why does she love the blues?</span></div><details><summary>答え</summary><div class="a"><span class="ans en">Because so much rock music is influenced by blues (and she is a rock singer).</span></div></details></div>
+  <div class="ex"><div class="q"><span class="no">P4</span><span class="en">What does she like about English and Irish folk music?</span></div><details><summary>答え</summary><div class="a"><span class="ans en">Some of the tunes are brilliant and the lyrics often tell stories.</span></div></details></div>
+  <div class="ex"><div class="q"><span class="no">P5</span><span class="en">According to her, what makes a good song? Give three points.</span></div><details><summary>答え</summary><div class="a">① <span class="ans en">a catchy tune (memorable, instantly recognised)</span><br>② <span class="ans en">a bit complex, not just three or four simple chords</span><br>③ <span class="ans en">interesting lyrics (that tell a story)</span></div></details></div>
+  <div class="ex"><div class="q"><span class="no">P6</span>空欄に入る語は？　<span class="en">I'm very ( ) on classical music. / I'm not really ( ) that sort of music. / I'd really like to ( ) up the saxophone.</span></div><details><summary>答え</summary><div class="a"><span class="ans en">keen</span> / <span class="ans en">into</span> / <span class="ans en">take</span></div></details></div>
+</section>
+
+<!-- ================= Week 4 ================= -->
+<section class="tab" id="w4" data-title="Week 4 Entertainment" data-short="Week 4" data-src="Entertainment">
+  <h2>Week 4 — Language for Entertainment</h2>
+  <p class="srcline">出典：Week 4 assignment - Language for ~ Entertainment</p>
+
+  <h3>ピックアップ単語 <span class="cat">単語</span></h3>
+  <div class="ctrl"><button type="button" data-hide="v4" aria-pressed="false">意味を隠す</button></div>
+  <div class="tw"><table class="vocab" id="v4">
+    <tr><th>英語</th><th>意味</th><th class="ex">本文・プリントでの使われ方</th></tr>
+    <tr data-w="w4"><td>perform → performance</td><td class="ja">上演する → 公演、演奏</td><td class="ex">classical performances</td></tr>
+    <tr data-w="w4"><td>produce → production</td><td class="ja">制作する → 作品、上演作品</td><td class="ex">modern productions</td></tr>
+    <tr data-w="w4"><td>serve → service</td><td class="ja">提供する → サービス</td><td class="ex">a drinks service to your seat</td></tr>
+    <tr data-w="w4"><td>entertain → entertainment</td><td class="ja">楽しませる → 娯楽</td><td class="ex">night time tours to entertain …</td></tr>
+    <tr data-w="w4"><td>sightseeing</td><td class="ja">観光</td><td class="ex">spend their days sightseeing</td></tr>
+    <tr data-w="w4"><td>monument</td><td class="ja">記念碑、歴史的建造物</td><td class="ex">museums, monuments and buildings</td></tr>
+    <tr data-w="w4"><td>souvenir</td><td class="ja">お土産</td><td class="ex">shopping for souvenirs</td></tr>
+    <tr data-w="w4"><td>bargain hunting</td><td class="ja">掘り出し物探し（安い物を探して買い物）</td><td class="ex">bargain hunting in one of London's markets</td></tr>
+    <tr data-w="w4"><td>landmark</td><td class="ja">名所、ランドマーク</td><td class="ex">London's famous landmarks</td></tr>
+    <tr data-w="w4"><td>nightlife</td><td class="ja">夜の娯楽、ナイトライフ</td><td class="ex">enjoy the nightlife</td></tr>
+    <tr data-w="w4"><td>capital city</td><td class="ja">首都</td><td class="ex">the UK's capital city</td></tr>
+    <tr data-w="w4"><td>be renowned for</td><td class="ja">〜で有名だ</td><td class="ex">London is renowned for its theatres.</td></tr>
+    <tr data-w="w4"><td>a wide range of</td><td class="ja">幅広い〜</td><td class="ex">a wide range of shows</td></tr>
+    <tr data-w="w4"><td>audience</td><td class="ja">観客</td><td class="ex">popular with audiences</td></tr>
+    <tr data-w="w4"><td>sold out</td><td class="ja">売り切れの</td><td class="ex">regularly sold out</td></tr>
+    <tr data-w="w4"><td>book (a ticket)</td><td class="ja">（チケットを）予約する</td><td class="ex">book a ticket as soon as you can</td></tr>
+    <tr data-w="w4"><td>tout</td><td class="ja">ダフ屋（劇場の外でチケットを高く売る人）</td><td class="ex">Don't buy tickets from touts</td></tr>
+    <tr data-w="w4"><td>genuine</td><td class="ja">本物の</td><td class="ex">may not be genuine</td></tr>
+    <tr data-w="w4"><td>reconstruction</td><td class="ja">復元（したもの）、再建</td><td class="ex">a reconstruction of a round theatre</td></tr>
+    <tr data-w="w4"><td>entire</td><td class="ja">全体の、まるごとの</td><td class="ex">stand for the entire play</td></tr>
+    <tr data-w="w4"><td>venue</td><td class="ja">会場</td><td class="ex">bigger music venues</td></tr>
+    <tr data-w="w4"><td>live music</td><td class="ja">生演奏、ライブ音楽</td><td class="ex">free live music</td></tr>
+    <tr data-w="w4"><td>solo artist</td><td class="ja">ソロアーティスト</td><td class="ex">groups or solo artists</td></tr>
+    <tr data-w="w4"><td>music scene</td><td class="ja">音楽シーン、音楽界</td><td class="ex">a huge modern music scene</td></tr>
+    <tr data-w="w4"><td>take place</td><td class="ja">行われる、開催される</td><td class="ex">These often take place in churches</td></tr>
+    <tr data-w="w4"><td>multiplex cinema</td><td class="ja">シネコン（複数スクリーンの映画館）</td><td class="ex">many multiplex cinemas</td></tr>
+    <tr data-w="w4"><td>blockbuster movie</td><td class="ja">大ヒット映画</td><td class="ex">the latest blockbuster movies</td></tr>
+    <tr data-w="w4"><td>grab a bite (to eat)</td><td class="ja">軽く腹ごしらえする</td><td class="ex">rushing to grab a bite to eat</td></tr>
+    <tr data-w="w4"><td>make a reservation</td><td class="ja">予約する</td><td class="ex">You don't always need to make a reservation</td></tr>
+    <tr data-w="w4"><td>be suitable for</td><td class="ja">〜に適している</td><td class="ex">may not be suitable for young children</td></tr>
+    <tr data-w="w4"><td>scare</td><td class="ja">怖がらせる</td><td class="ex">to entertain, inform or even scare you</td></tr>
+    <tr data-w="w4"><td>best known</td><td class="ja">最もよく知られた</td><td class="ex">some of the best known shows</td></tr>
+  </table></div>
+
+  <h3>長文：ENTERTAINMENT IN LONDON <span class="cat">長文</span></h3>
+  <div class="passage">
+    <p>London is one of the world's great cities. Millions of tourists visit each year and spend their days <mark>sightseeing</mark>: visiting London's historical museums, monuments and buildings, shopping for <mark>souvenirs</mark> in Oxford Street or Bond Street, or <mark>bargain hunting</mark> in one of London's markets. But what can they do when it's night and too dark to take selfies in front of another of London's famous <mark>landmarks</mark>? Here are a few tips to help tourists enjoy the <mark>nightlife</mark> in the UK's <mark>capital city</mark>.</p>
+    <h4>Go to the theatre</h4>
+    <p>London is <mark>renowned for</mark> its theatres. There are about forty theatres in the West End of London alone. London theatres offer <mark>a wide range of</mark> shows – from classical <mark>performances</mark> to modern <mark>productions</mark>. Musicals are often popular with <mark>audiences</mark> and some of the <mark>best known</mark> shows are regularly <mark>sold out</mark>, so it's a good idea to <mark>book</mark> a ticket as soon as you can. Don't buy tickets from <mark>touts</mark> outside the theatre though. They will be extremely expensive and may not be <mark>genuine</mark>. The Shakespeare Globe Theatre is a <mark>reconstruction</mark> of a round theatre from Shakespeare's time and watching a play there is an incredible experience!</p>
+    <p class="tipline"><b>Tip –</b> If you go to the Globe Theatre, remember that over half the audience has to stand for the <mark>entire</mark> play, just as in Shakespeare's time, so you may not want to buy the cheapest ticket!</p>
+    <h4>Go to a concert</h4>
+    <p>Whether you are a fan of classical or modern music, London has a lot to offer you. There are classical concerts at the Albert Hall, the Royal Festival Hall, the Barbican and many others. The English National Ballet and the Royal Opera House also have regular performances. London has a huge modern <mark>music scene</mark> (pop, rock, reggae, blues and many others). As well as the bigger music <mark>venues</mark>, there are hundreds of smaller venues offering free <mark>live music</mark> from groups or <mark>solo artists</mark>. Whatever your taste in music, you are sure to find a concert somewhere.</p>
+    <p class="tipline"><b>Tip –</b> Look out for free classical music performances. These often <mark>take place</mark> in churches in central London.</p>
+    <h4>Go and watch a film</h4>
+    <p>Central London has many <mark>multiplex cinemas</mark> showing the latest <mark>blockbuster movies</mark>. Many cinemas show films in 3D and some also offer sofas and a drinks <mark>service</mark> to your seat. So no more rushing to <mark>grab a bite</mark> to eat before the movie!</p>
+    <p class="tipline"><b>Tip –</b> Tickets are more expensive at the weekend so it is a good idea to plan your cinema visit for earlier in the week, especially Monday or Tuesday.</p>
+    <h4>Go on a tour</h4>
+    <p>If you have read the guidebook and are bored of the usual daytime tours, why not learn about the city at night? Whether you would prefer to walk or relax on a bus, London has lots of different night time tours to <mark>entertain</mark>, inform or even <mark>scare</mark> you! Whichever you choose, you will get a different view of the city.</p>
+    <p class="tipline"><b>Tip –</b> You don't always need to <mark>make a reservation</mark> for these tours. However, some of the scary tours may not be <mark>suitable for</mark> young children.</p>
+  </div>
+  <details class="ja"><summary>和訳を見る</summary><div>
+    <p>ロンドンは世界有数の大都市だ。毎年何百万人もの観光客が訪れ、日中は観光をして過ごす。歴史ある博物館・記念碑・建物を訪ねたり、オックスフォード・ストリートやボンド・ストリートでお土産を買ったり、市場で掘り出し物を探したり。でも夜になって、また別の有名な名所の前で自撮りするには暗すぎるとき、何ができるだろう？ ここでは、イギリスの首都でナイトライフを楽しむためのヒントをいくつか紹介する。</p>
+    <p><b>劇場に行こう</b>：ロンドンは劇場で有名だ。ウエストエンドだけで約40の劇場がある。古典的な公演から現代的な作品まで、幅広いショーがある。ミュージカルは観客に人気のことが多く、有名なショーの中にはいつも売り切れになるものもあるので、できるだけ早くチケットを予約するといい。ただし劇場の外のダフ屋からは買わないこと。とても高いうえに、本物でないかもしれない。シェイクスピア・グローブ座はシェイクスピアの時代の円形劇場を復元したもので、そこで劇を観るのはすごい体験だ！<br>ヒント：グローブ座では、シェイクスピアの時代と同じように観客の半分以上が劇の間ずっと立っていなければならないので、一番安いチケットは買わないほうがいいかも！</p>
+    <p><b>コンサートに行こう</b>：クラシック好きでも現代音楽好きでも、ロンドンにはたくさんの選択肢がある。ロイヤル・アルバート・ホール、ロイヤル・フェスティバル・ホール、バービカンなどでクラシックのコンサートがある。イングリッシュ・ナショナル・バレエやロイヤル・オペラ・ハウスも定期公演をしている。ロンドンには巨大な現代音楽シーン（ポップ、ロック、レゲエ、ブルースなど）がある。大きな会場だけでなく、グループやソロアーティストの生演奏を無料で聴ける小さな会場も何百とある。どんな音楽の好みでも、きっとどこかでコンサートが見つかる。<br>ヒント：無料のクラシック公演を探してみよう。ロンドン中心部の教会で行われることが多い。</p>
+    <p><b>映画を観に行こう</b>：ロンドン中心部には最新の大ヒット映画を上映するシネコンがたくさんある。3D上映をする映画館も多く、ソファや座席へのドリンクサービスがあるところも。だから映画の前に急いで軽食をとる必要はもうない！<br>ヒント：週末はチケットが高いので、週の前半、特に月曜か火曜に行く計画を立てるといい。</p>
+    <p><b>ツアーに参加しよう</b>：ガイドブックを読んで、いつもの昼間のツアーに飽きたなら、夜の街について知ってみては？ 歩きたくても、バスでくつろぎたくても、ロンドンには楽しませたり、情報をくれたり、怖がらせたりさえする夜のツアーがたくさんある！ どれを選んでも、いつもと違う街の姿が見られる。<br>ヒント：これらのツアーは必ずしも予約は要らない。ただし怖いツアーの中には小さな子どもに向かないものもある。</p>
+  </div></details>
+
+  <h3>長文設問 <span class="cat">長文設問</span></h3>
+  <p style="font-size:14px;color:var(--muted)">2 Text — Choose the correct word. Then read the text and check your answers.</p>
+  <div class="ctrl"><button type="button" data-reveal="w4q">答えを全部表示</button><button type="button" data-unreveal="w4q">全部隠す</button></div>
+  <ol class="fill" data-group="w4q">
+    <li>The Globe Theatre is a (rebuilding / reconstruction) of a theatre from Shakespeare's time. → <b class="bl">reconstruction</b></li>
+    <li>At the Globe theatre more than half the (audience / people) will have to stand for the entire play. → <b class="bl">audience</b></li>
+    <li>Some shows are regularly (sold / sold out). → <b class="bl">sold out</b></li>
+    <li>Tickets bought from people outside the theatre may not be (genuine / true). → <b class="bl">genuine</b></li>
+    <li>There are a lot of classical music (venues / places) in London. → <b class="bl">venues</b></li>
+    <li>Classical music performances often (take part / take place) in churches. → <b class="bl">take place</b></li>
+    <li>Central London has many multiplex (cinemas / theatres). → <b class="bl">cinemas</b></li>
+  </ol>
+  <div class="warn"><b>まぎらわしい組</b>　take place（行われる）と take part（参加する）、genuine（本物の）と true（真実の）。</div>
+
+  <p style="font-size:14px;color:var(--muted)">Read the text again and fill in the missing information.</p>
+  <ol class="fill" data-group="w4q">
+    <li>London is <b class="bl">renowned</b> for its theatres.</li>
+    <li>You may not want to buy the <b class="bl">cheapest ticket</b> at the Globe Theatre!</li>
+    <li>Musicals are often popular with <b class="bl">audiences</b>.</li>
+    <li>Don't buy tickets from <b class="bl">touts</b> outside the theatre.</li>
+    <li>London has a lot to offer fans of <b class="bl">classical or modern</b> music.</li>
+    <li>The city has a huge modern <b class="bl">music scene</b>.</li>
+    <li>Whatever your <b class="bl">taste</b> in music, you are sure to find a concert somewhere.</li>
+  </ol>
+
+  <h3>穴埋め・マッチング <span class="cat">穴埋め</span></h3>
+  <div class="ctrl"><button type="button" data-reveal="w4">答えを全部表示</button><button type="button" data-unreveal="w4">全部隠す</button></div>
+  <h4>① 動詞と名詞（Complete the table）</h4>
+  <ol class="fill">
+    <li>perform → <b class="bl">performance</b></li>
+    <li>produce → <b class="bl">production</b></li>
+    <li>serve → <b class="bl">service</b></li>
+    <li>entertain → <b class="bl">entertainment</b></li>
+  </ol>
+  <h4>② 2語フレーズ（Match to make two-word phrases）</h4>
+  <ol class="fill">
+    <li>live <b class="bl">music</b></li>
+    <li>blockbuster <b class="bl">movie</b></li>
+    <li>solo <b class="bl">artist</b></li>
+    <li>music <b class="bl">scene</b></li>
+    <li>best <b class="bl">known</b></li>
+    <li>capital <b class="bl">city</b></li>
+  </ol>
+  <p style="font-size:13.5px;color:var(--muted)">記号：1-d、2-c、3-f、4-a、5-b、6-e</p>
+
+  <h3>練習問題（類題） <span class="cat">練習</span></h3>
+  <div class="ex"><div class="q"><span class="no">P1</span><span class="en">How many theatres are there in the West End of London?</span></div><details><summary>答え</summary><div class="a"><span class="ans en">About forty.</span></div></details></div>
+  <div class="ex"><div class="q"><span class="no">P2</span><span class="en">Why shouldn't you buy tickets from touts?</span></div><details><summary>答え</summary><div class="a"><span class="ans en">Because they will be extremely expensive and may not be genuine.</span></div></details></div>
+  <div class="ex"><div class="q"><span class="no">P3</span><span class="en">Why may you not want to buy the cheapest ticket at the Globe Theatre?</span></div><details><summary>答え</summary><div class="a"><span class="ans en">Because over half the audience has to stand for the entire play.</span></div></details></div>
+  <div class="ex"><div class="q"><span class="no">P4</span><span class="en">Where can you often find free classical music performances?</span></div><details><summary>答え</summary><div class="a"><span class="ans en">In churches in central London.</span></div></details></div>
+  <div class="ex"><div class="q"><span class="no">P5</span><span class="en">What do some cinemas offer, and when is it best to go?</span></div><details><summary>答え</summary><div class="a"><span class="ans en">Sofas and a drinks service to your seat (and 3D films). It's best to go earlier in the week, especially Monday or Tuesday, because tickets are more expensive at the weekend.</span></div></details></div>
+  <div class="ex"><div class="q"><span class="no">P6</span>T / F：<span class="en">(a) You always need to make a reservation for night tours. (b) All the night tours are suitable for young children. (c) There are only big music venues in London.</span></div><details><summary>答え</summary><div class="a">(a) <span class="ans">F</span>（don't always need）　(b) <span class="ans">F</span>（some scary tours may not be suitable）　(c) <span class="ans">F</span>（hundreds of smaller venues）</div></details></div>
+</section>
+
+<!-- ================= Week 5 ================= -->
+<section class="tab" id="w5" data-title="Week 5 Train travel" data-short="Week 5" data-src="Train travel">
+  <h2>Week 5 — Language for (Train) travel</h2>
+  <p class="srcline">出典：Week 5 assignment - Language for (Train) travel</p>
+
+  <h3>ピックアップ単語 <span class="cat">単語</span></h3>
+  <div class="ctrl"><button type="button" data-hide="v5" aria-pressed="false">意味を隠す</button></div>
+  <div class="tw"><table class="vocab" id="v5">
+    <tr><th>英語</th><th>意味</th><th class="ex">分類・使われ方</th></tr>
+    <tr data-w="w5"><td>motorway</td><td class="ja">高速道路（英）</td><td class="ex">Car travel</td></tr>
+    <tr data-w="w5"><td>traffic jam</td><td class="ja">交通渋滞</td><td class="ex">Car travel</td></tr>
+    <tr data-w="w5"><td>roadworks</td><td class="ja">道路工事</td><td class="ex">Car travel</td></tr>
+    <tr data-w="w5"><td>service station</td><td class="ja">サービスエリア、ガソリンスタンド</td><td class="ex">Car travel</td></tr>
+    <tr data-w="w5"><td>boarding pass</td><td class="ja">搭乗券</td><td class="ex">Air travel</td></tr>
+    <tr data-w="w5"><td>gate</td><td class="ja">搭乗口、ゲート</td><td class="ex">Air travel</td></tr>
+    <tr data-w="w5"><td>departure lounge</td><td class="ja">出発ロビー（搭乗待合室）</td><td class="ex">Air travel</td></tr>
+    <tr data-w="w5"><td>check in</td><td class="ja">搭乗手続き（をする）</td><td class="ex">Air travel</td></tr>
+    <tr data-w="w5"><td>ticket office</td><td class="ja">切符売り場</td><td class="ex">Train travel</td></tr>
+    <tr data-w="w5"><td>platform</td><td class="ja">（駅の）ホーム、〜番線</td><td class="ex">Train travel</td></tr>
+    <tr data-w="w5"><td>waiting room</td><td class="ja">待合室</td><td class="ex">Train travel</td></tr>
+    <tr data-w="w5"><td>off-peak</td><td class="ja">オフピークの（利用者が少ない時間帯で安い）</td><td class="ex">an off-peak fare</td></tr>
+    <tr data-w="w5"><td>advance (ticket)</td><td class="ja">前売りの（数日〜数週間前に予約）</td><td class="ex">an advance ticket</td></tr>
+    <tr data-w="w5"><td>day return</td><td class="ja">日帰り往復（券）</td><td class="ex">An off-peak day return is £14.40.</td></tr>
+    <tr data-w="w5"><td>single (ticket)</td><td class="ja">片道（券）</td><td class="ex">two single tickets</td></tr>
+    <tr data-w="w5"><td>open (ticket)</td><td class="ja">オープン券（いつでも使える）</td><td class="ex">you'll need an open ticket</td></tr>
+    <tr data-w="w5"><td>return ticket</td><td class="ja">往復券</td><td class="ex">how much for a return ticket?</td></tr>
+    <tr data-w="w5"><td>anytime (ticket)</td><td class="ja">時間制限なしの切符</td><td class="ex">an anytime single</td></tr>
+    <tr data-w="w5"><td>fare</td><td class="ja">運賃</td><td class="ex">the money that you pay for a journey</td></tr>
+    <tr data-w="w5"><td>valid</td><td class="ja">有効な</td><td class="ex">how long is that valid?</td></tr>
+    <tr data-w="w5"><td>reserve a seat</td><td class="ja">座席を予約する</td><td class="ex">Would you like to reserve a seat?</td></tr>
+    <tr data-w="w5"><td>reservation fee</td><td class="ja">予約手数料</td><td class="ex">a reservation fee of £1</td></tr>
+    <tr data-w="w5"><td>coach</td><td class="ja">（列車の）車両</td><td class="ex">in coach D</td></tr>
+    <tr data-w="w5"><td>aisle</td><td class="ja">通路（座席の列の間）</td><td class="ex">the aisle or window?</td></tr>
+    <tr data-w="w5"><td>break the journey</td><td class="ja">途中下車する</td><td class="ex">is it possible to break the journey?</td></tr>
+    <tr data-w="w5"><td>outward journey</td><td class="ja">往路（家から出かける方向の旅）</td><td class="ex">Not the outward journey</td></tr>
+    <tr data-w="w5"><td>destination</td><td class="ja">目的地</td><td class="ex">reach your final destination</td></tr>
+    <tr data-w="w5"><td>buffet car</td><td class="ja">ビュッフェ車、食堂車</td><td class="ex">is there a buffet car?</td></tr>
+    <tr data-w="w5"><td>trolley service</td><td class="ja">車内販売（ワゴンサービス）</td><td class="ex">there is a trolley service</td></tr>
+    <tr data-w="w5"><td>restriction</td><td class="ja">制限</td><td class="ex">no restrictions on the time of day</td></tr>
+    <tr data-w="w5"><td>flexibility</td><td class="ja">柔軟性、融通</td><td class="ex">complete flexibility</td></tr>
+    <tr data-w="w5"><td>railcard</td><td class="ja">レールカード（鉄道の割引カード）</td><td class="ex">Do you have a railcard?</td></tr>
+    <tr data-w="w5"><td>standard / first class</td><td class="ja">普通席／一等席</td><td class="ex">Standard or first class?</td></tr>
+  </table></div>
+
+  <h3>穴埋め①：Car / Air / Train の分類 <span class="cat">穴埋め</span></h3>
+  <div class="tw"><table>
+    <tr><th>Car travel</th><th>Air travel</th><th>Train travel</th></tr>
+    <tr class="en"><td>motorway<br>traffic jam<br>roadworks<br>service station</td><td>boarding pass<br>gate<br>departure lounge<br>check in</td><td>ticket office<br>platform<br>waiting room</td></tr>
+  </table></div>
+
+  <h3>長文：切符売り場での会話 <span class="cat">長文</span></h3>
+  <p style="font-size:14px;color:var(--muted)">a) Patrick wants to buy a ticket at the station. How much does his ticket cost?</p>
+  <div class="passage">
+    <p><span class="sp">TA</span>Can I help you?</p>
+    <p><span class="sp">P</span>Hello, yes – I'd like a ticket to Edinburgh for tomorrow morning, please.</p>
+    <p><span class="sp">TA</span>OK – what time did you want to leave?</p>
+    <p><span class="sp">P</span>Well, I'm going up there with a friend who already has an <mark>advance ticket</mark> – I think he's booked the 09:38?</p>
+    <p><span class="sp">TA</span>[Checking computer screen] Yes, that's correct – arriving at Edinburgh Waverley at 11:32.</p>
+    <p><span class="sp">P</span>Great, yes, that's the one.</p>
+    <p><span class="sp">TA</span>Since that's after 9 o'clock, you can get an <mark>off-peak fare</mark>.</p>
+    <p><span class="sp">P</span>Oh, good.</p>
+    <p><span class="sp">TA</span>Are you returning the same day? An off-peak <mark>day return</mark> is £14.40.</p>
+    <p><span class="sp">P</span>Ah no, I'm not planning to come back until the weekend, but I'm not sure which day.</p>
+    <p><span class="sp">TA</span>Right, so you'll need an <mark>open ticket</mark> then.</p>
+    <p><span class="sp">P</span>OK – and how long is that <mark>valid</mark>?</p>
+    <p><span class="sp">TA</span>For up to a month.</p>
+    <p><span class="sp">P</span>Oh, that's fine then – I'm definitely coming back by Sunday evening. So how much for a <mark>return ticket</mark>?</p>
+    <p><span class="sp">TA</span>Actually, your cheapest option is to buy two <mark>single tickets</mark>. An off-peak single for tomorrow at £9.80, and an anytime single for the return journey at £17.00. That's £26.80.</p>
+    <p><span class="sp">P</span>Right, thank you. I'll go for that then.</p>
+    <p><span class="sp">TA</span>Would you like to <mark>reserve a seat</mark> on the train tomorrow morning?</p>
+    <p><span class="sp">P</span>Oh, yes, maybe that's a good idea.</p>
+    <p><span class="sp">TA</span>There's a <mark>reservation fee</mark> of £1, is that ok?</p>
+    <p><span class="sp">P</span>Yes, that's fine, thanks. Would it be possible to have a table seat?</p>
+    <p><span class="sp">TA</span>Let me see ... [checking screen again] ... yes, I can get you one in <mark>coach</mark> D. Do you prefer the <mark>aisle</mark> or window?</p>
+    <p><span class="sp">P</span>Aisle, please. And ah, yes, I forgot to ask – is it possible to <mark>break the journey</mark> with that ticket?</p>
+    <p><span class="sp">TA</span>Not the <mark>outward journey</mark>, but you can when you return, as long as you reach your final <mark>destination</mark> the same day.</p>
+    <p><span class="sp">P</span>Oh, great. And can I just ask – is there a <mark>buffet car</mark>?</p>
+    <p><span class="sp">TA</span>Not on that train, I'm afraid, but there is a <mark>trolley service</mark>.</p>
+    <p><span class="sp">P</span>Brilliant, thanks for your help.</p>
+    <p class="note">TA = Ticket assistant（駅員）、P = Patrick。※プリントでは座席予約のやりとり2行の話者が入れ替わって印刷されていたので、意味が通る順に直してある。</p>
+  </div>
+  <details class="ja"><summary>和訳を見る</summary><div>
+    <p>駅員：いらっしゃいませ。／P：こんにちは。明日の朝のエディンバラ行きの切符をお願いします。／駅員：何時に出発したいですか？</p>
+    <p>P：すでに前売り券を持っている友達と一緒に行くんです。たしか 9:38 発を予約したと思います。／駅員：（画面を確認して）はい、その通りです。エディンバラ・ウェイヴァリー着 11:32 ですね。／P：そう、それです。</p>
+    <p>駅員：9時以降なので、オフピーク運賃が使えます。／P：よかった。／駅員：同じ日に戻りますか？オフピークの日帰り往復は14.40ポンドです。</p>
+    <p>P：いえ、週末まで戻る予定はないんですが、何曜日かはわかりません。／駅員：では、オープン券が必要ですね。／P：それはどのくらい有効ですか？／駅員：最長1か月です。</p>
+    <p>P：それなら大丈夫。日曜の夜までには必ず戻ります。往復券はいくらですか？／駅員：実は、一番安いのは片道券を2枚買うことです。明日のオフピーク片道が9.80ポンド、帰りのエニータイム片道が17.00ポンドで、合計26.80ポンドです。／P：ありがとう。じゃあそれにします。</p>
+    <p>駅員：明日の朝の列車の座席を予約しますか？／P：ああ、そうですね、いい考えかも。／駅員：予約手数料が1ポンドかかりますが、よろしいですか？／P：はい、大丈夫です。テーブル席にできますか？</p>
+    <p>駅員：確認します…（画面を再確認）…はい、D号車で取れます。通路側と窓側、どちらがいいですか？／P：通路側でお願いします。あ、聞き忘れてた。その切符で途中下車できますか？</p>
+    <p>駅員：行き（往路）はできませんが、帰りはできます。同じ日のうちに最終目的地に着けばですが。／P：よかった。あと、ビュッフェ車はありますか？／駅員：あいにくその列車にはありませんが、車内販売はあります。／P：最高、ありがとう。</p>
+  </div></details>
+
+  <h3>長文設問 <span class="cat">長文設問</span></h3>
+  <div class="ex"><div class="q"><span class="no">Q</span><span class="en">How much does Patrick's ticket cost?</span></div><details><summary>答え</summary><div class="a"><span class="ans en">£27.80</span><br>片道2枚 £9.80 ＋ £17.00 ＝ £26.80、そこに座席予約の手数料 £1 を足して £27.80。<br><span style="font-size:13.5px;color:var(--muted)">「切符代だけ」と聞かれたら £26.80。どっちを聞かれているか問題文をよく読む。</span></div></details></div>
+
+  <p style="font-size:14px;color:var(--muted)">b) Match the ticket types to the descriptions.</p>
+  <div class="ctrl"><button type="button" data-reveal="w5">答えを全部表示</button><button type="button" data-unreveal="w5">全部隠す</button></div>
+  <ol class="fill">
+    <li><b class="bl">off-peak</b> — cheaper because not as many people want to travel</li>
+    <li><b class="bl">advance</b> — booked several days or weeks before travelling</li>
+    <li><b class="bl">day return</b> — going and coming back on the same day</li>
+    <li><b class="bl">single</b> — used for travelling to a place, but not for returning</li>
+    <li><b class="bl">open</b> — can be used at any time</li>
+  </ol>
+  <p style="font-size:13.5px;color:var(--muted)">記号：1-e、2-d、3-a、4-b、5-c</p>
+
+  <p style="font-size:14px;color:var(--muted)">c) Complete the definitions with words and phrases in bold from the conversation.</p>
+  <ol class="fill">
+    <li>A <b class="bl">destination</b> is the place where someone is going.</li>
+    <li>If a ticket is <b class="bl">valid</b>, it is accepted by officials.</li>
+    <li>A <b class="bl">fare</b> is the money that you pay for a journey.</li>
+    <li>If you <b class="bl">reserve a seat</b>, you make an arrangement so that it is kept for you to use later.</li>
+    <li>An <b class="bl">aisle</b> is a passage between rows of seats.</li>
+    <li>If you <b class="bl">break the journey</b>, you stop travelling for a period of time.</li>
+    <li>A <b class="bl">coach</b> is one of the sections of a train.</li>
+    <li>An <b class="bl">outward</b> journey is one in which you are going away from home.</li>
+    <li>The <b class="bl">buffet car</b> is part of a train where you can buy and eat food.</li>
+  </ol>
+
+  <h3>穴埋め②：Language in use <span class="cat">穴埋め</span></h3>
+  <p style="font-size:14px;color:var(--muted)">a) Anytime チケットの広告（Choose the correct options）</p>
+  <div class="passage" style="font-size:15.5px">
+    <p><b>BUY YOUR ANYTIME TICKET NOW!</b></p>
+    <p>Anytime tickets have no (1) <b class="bl">restrictions</b> on the time of (2) <b class="bl">day</b> that you can travel. With Anytime Single tickets, you can travel on any train on the date of travel (3) <b class="bl">booked</b>. You can also (4) <b class="bl">break</b> your journey at stations along your route.</p>
+    <p>Buying an Anytime Return train ticket gives you even more freedom! (5) <b class="bl">Outward</b> journeys must be made (6) <b class="bl">within</b> 5 days of the date shown on your ticket and (7) <b class="bl">return</b> journeys must be made (8) <b class="bl">within</b> one calendar month. Because they allow you complete (9) <b class="bl">flexibility</b> in terms of when you travel, Anytime tickets are more (10) <b class="bl">expensive</b> than Advance or Off-Peak.</p>
+  </div>
+  <details class="ja"><summary>和訳を見る</summary><div>
+    <p>エニータイム券を今すぐ！ エニータイム券には、乗車できる時間帯の制限がありません。エニータイム片道券なら、予約した乗車日のどの列車にも乗れます。経路上の駅で途中下車もできます。エニータイム往復券ならさらに自由！ 往路は券面の日付から5日以内、復路は1か月以内に乗車してください。いつ乗るかを完全に自由に選べるので、エニータイム券は前売り券やオフピーク券より高くなります。</p>
+  </div></details>
+
+  <p style="font-size:14px;color:var(--muted)">b) 乗客（P）と駅員（T）どっちの質問？　＋ 答え a–h とのマッチング</p>
+  <div class="tw"><table>
+    <tr><th>質問</th><th>誰</th><th>答え</th></tr>
+    <tr><td class="en">1 Do you have a railcard?</td><td><b class="bl">T</b></td><td class="en"><b class="bl">g</b> No, I don't, I'm afraid.</td></tr>
+    <tr><td class="en">2 How often do the trains run to Wimbledon?</td><td><b class="bl">P</b></td><td class="en"><b class="bl">f</b> They leave every 30 minutes.</td></tr>
+    <tr><td class="en">3 Is that the cheapest fare?</td><td><b class="bl">P</b></td><td class="en"><b class="bl">a</b> Yes, it is.</td></tr>
+    <tr><td class="en">4 What time is the next train to York?</td><td><b class="bl">P</b></td><td class="en"><b class="bl">d</b> It's at 16:35, from platform 3.</td></tr>
+    <tr><td class="en">5 When would you like to travel?</td><td><b class="bl">T</b></td><td class="en"><b class="bl">b</b> In the next hour.</td></tr>
+    <tr><td class="en">6 Standard or first class?</td><td><b class="bl">T</b></td><td class="en"><b class="bl">h</b> Standard, please.</td></tr>
+    <tr><td class="en">7 Where do I change for Aberdeen?</td><td><b class="bl">P</b></td><td class="en"><b class="bl">c</b> In Edinburgh, I think, but I'll just check.</td></tr>
+    <tr><td class="en">8 When will you be coming back?</td><td><b class="bl">T</b></td><td class="en"><b class="bl">e</b> I'm not sure, so I'd like an open ticket.</td></tr>
+  </table></div>
+
+  <h3>練習問題（類題） <span class="cat">練習</span></h3>
+  <div class="ex"><div class="q"><span class="no">P1</span><span class="en">What time does the train leave, and when does it arrive at Edinburgh Waverley?</span></div><details><summary>答え</summary><div class="a"><span class="ans en">It leaves at 09:38 and arrives at 11:32.</span></div></details></div>
+  <div class="ex"><div class="q"><span class="no">P2</span><span class="en">Why can Patrick get an off-peak fare?</span></div><details><summary>答え</summary><div class="a"><span class="ans en">Because the train leaves after 9 o'clock.</span></div></details></div>
+  <div class="ex"><div class="q"><span class="no">P3</span><span class="en">Why doesn't Patrick buy an off-peak day return?</span></div><details><summary>答え</summary><div class="a"><span class="ans en">Because he is not coming back the same day — he is coming back at the weekend, but he isn't sure which day.</span></div></details></div>
+  <div class="ex"><div class="q"><span class="no">P4</span><span class="en">How long is an open ticket valid?</span></div><details><summary>答え</summary><div class="a"><span class="ans en">For up to a month.</span></div></details></div>
+  <div class="ex"><div class="q"><span class="no">P5</span><span class="en">What kind of seat does Patrick get?</span></div><details><summary>答え</summary><div class="a"><span class="ans en">A table seat in coach D, by the aisle.</span></div></details></div>
+  <div class="ex"><div class="q"><span class="no">P6</span><span class="en">Can Patrick break the journey? / Is there a buffet car?</span></div><details><summary>答え</summary><div class="a"><span class="ans en">Not on the outward journey, but he can on the return, as long as he reaches his final destination the same day.</span><br><span class="ans en">No, but there is a trolley service.</span></div></details></div>
+  <div class="ex"><div class="q"><span class="no">P7</span>計算：<span class="en">An off-peak single is £9.80 and an anytime single is £17.00. How much more is the anytime single?</span></div><details><summary>答え</summary><div class="a"><span class="ans en">£7.20</span>（17.00 − 9.80）</div></details></div>
+</section>
+
+<!-- ================= Week 6 ================= -->
+<section class="tab" id="w6" data-title="Week 6 Phobias" data-short="Week 6" data-src="Phobias">
+  <h2>Week 6 — Language for … Phobias</h2>
+  <p class="srcline">出典：Week 6 assignment - Language for … Phobias</p>
+
+  <h3>ピックアップ単語 <span class="cat">単語</span></h3>
+  <div class="ctrl"><button type="button" data-hide="v6" aria-pressed="false">意味を隠す</button></div>
+  <div class="tw"><table class="vocab" id="v6">
+    <tr><th>英語</th><th>意味</th><th class="ex">本文・プリントでの使われ方</th></tr>
+    <tr data-w="w6"><td>phobia</td><td class="ja">恐怖症（何かをとても強く怖がること）</td><td class="ex">a very strong feeling of being afraid</td></tr>
+    <tr data-w="w6"><td>agoraphobia</td><td class="ja">広場恐怖症（人混み・広い場所が怖い）</td><td class="ex">Exercise 1</td></tr>
+    <tr data-w="w6"><td>hydrophobia</td><td class="ja">水恐怖症</td><td class="ex">Exercise 1</td></tr>
+    <tr data-w="w6"><td>haemophobia</td><td class="ja">血液恐怖症</td><td class="ex">Exercise 1</td></tr>
+    <tr data-w="w6"><td>arachnophobia</td><td class="ja">クモ恐怖症</td><td class="ex">Anna suffers from arachnophobia</td></tr>
+    <tr data-w="w6"><td>acrophobia</td><td class="ja">高所恐怖症</td><td class="ex">= vertigo（プリントのマッチング）</td></tr>
+    <tr data-w="w6"><td>aerophobia</td><td class="ja">飛行機恐怖症（飛ぶことが怖い）</td><td class="ex">Exercise 1</td></tr>
+    <tr data-w="w6"><td>anxious</td><td class="ja">不安な、心配な（= nervous, worried）</td><td class="ex">It makes me feel anxious.</td></tr>
+    <tr data-w="w6"><td>vertigo</td><td class="ja">高所でのめまい、高所恐怖（= acrophobia）</td><td class="ex">afraid of heights, sometimes called vertigo</td></tr>
+    <tr data-w="w6"><td>panic</td><td class="ja">パニックになる（= be extremely scared or worried）</td><td class="ex">I start to panic</td></tr>
+    <tr data-w="w6"><td>premonition</td><td class="ja">予感、虫の知らせ（プリントでは dream と対応）</td><td class="ex">a premonition of me drowning</td></tr>
+    <tr data-w="w6"><td>overcome</td><td class="ja">克服する（= succeed）</td><td class="ex">overcoming my phobia</td></tr>
+    <tr data-w="w6"><td>rational</td><td class="ja">理にかなった、論理的な（= logical, practical）</td><td class="ex">this is not a rational fear</td></tr>
+    <tr data-w="w6"><td>dizzy</td><td class="ja">めまいがする、くらくらする（= spinning, unsteady）</td><td class="ex">nervous and dizzy</td></tr>
+    <tr data-w="w6"><td>drown</td><td class="ja">溺れ死ぬ（= sink and die）</td><td class="ex">me drowning</td></tr>
+    <tr data-w="w6"><td>pressure</td><td class="ja">圧力（= force）</td><td class="ex">pressure on my chest</td></tr>
+    <tr data-w="w6"><td>race</td><td class="ja">（心臓が）早鐘を打つ（= go very fast）</td><td class="ex">my heart races</td></tr>
+    <tr data-w="w6"><td>compress</td><td class="ja">圧迫する、押しつぶす</td><td class="ex">the water is compressing me</td></tr>
+    <tr data-w="w6"><td>come true</td><td class="ja">（予感・夢が）実現する</td><td class="ex">It hasn't come true</td></tr>
+    <tr data-w="w6"><td>suffer from</td><td class="ja">〜に苦しむ、〜を患う</td><td class="ex">I suffer from arachnophobia</td></tr>
+    <tr data-w="w6"><td>poisonous</td><td class="ja">有毒な</td><td class="ex">poisonous spiders</td></tr>
+    <tr data-w="w6"><td>feel unwell</td><td class="ja">気分が悪い、体調が悪い</td><td class="ex">It does make me feel very unwell</td></tr>
+    <tr data-w="w6"><td>shake</td><td class="ja">震える</td><td class="ex">it takes me a while to stop shaking</td></tr>
+    <tr data-w="w6"><td>deep water</td><td class="ja">深い水（背が立たない水）</td><td class="ex">I'm afraid of deep water</td></tr>
+    <tr data-w="w6"><td>rational fear</td><td class="ja">理にかなった恐怖</td><td class="ex">two-word phrase</td></tr>
+    <tr data-w="w6"><td>give up</td><td class="ja">あきらめる、やめる</td><td class="ex">I've just had to give up</td></tr>
+    <tr data-w="w6"><td>historic</td><td class="ja">歴史的な</td><td class="ex">historic buildings</td></tr>
+  </table></div>
+
+  <h3>穴埋め①：恐怖症の名前・単語のマッチング <span class="cat">穴埋め</span></h3>
+  <div class="ctrl"><button type="button" data-reveal="w6a">答えを全部表示</button><button type="button" data-unreveal="w6a">全部隠す</button></div>
+  <p style="font-size:14px;color:var(--muted)">1. 恐怖症の名前（プリントでは絵と対応：Agoraphobia–E, Hydrophobia–F, haemophobia–B, arachnophobia–D, Acrophobia–C, Aerophobia–A）</p>
+  <ol class="fill" data-group="w6a">
+    <li>agoraphobia — fear of <b class="bl">open / crowded places</b></li>
+    <li>hydrophobia — fear of <b class="bl">water</b></li>
+    <li>haemophobia — fear of <b class="bl">blood</b></li>
+    <li>arachnophobia — fear of <b class="bl">spiders</b></li>
+    <li>acrophobia — fear of <b class="bl">heights</b></li>
+    <li>aerophobia — fear of <b class="bl">flying</b></li>
+  </ol>
+  <div class="tip"><b>覚え方</b>　agora＝広場、hydro＝水（hydrogen）、haem(o)＝血（hemoglobin）、arachn＝クモ、acro＝高い（acrobat）、aero＝空気・飛行（aeroplane）。</div>
+
+  <p style="font-size:14px;color:var(--muted)">A. Column 1 と Column 2 のマッチング</p>
+  <ol class="fill" data-group="w6a">
+    <li>anxious — <b class="bl">nervous, worried</b></li>
+    <li>vertigo — <b class="bl">acrophobia</b></li>
+    <li>panic (verb) — <b class="bl">be extremely scared or worried</b></li>
+    <li>premonition — <b class="bl">dream</b></li>
+    <li>overcome — <b class="bl">succeed</b></li>
+    <li>rational — <b class="bl">logical, practical</b></li>
+    <li>dizzy — <b class="bl">spinning, unsteady</b></li>
+    <li>drown — <b class="bl">sink and die</b></li>
+    <li>pressure — <b class="bl">force</b></li>
+    <li>race (verb) — <b class="bl">go very fast</b></li>
+  </ol>
+  <p style="font-size:13.5px;color:var(--muted)">記号：anxious-H、vertigo-E、panic-A、premonition-I、overcome-F、rational-C、dizzy-B、drown-G、pressure-D、race-J</p>
+
+  <h3>長文：Andrew / Anna / Evan <span class="cat">長文</span></h3>
+  <div class="passage">
+    <h4>Andrew</h4>
+    <p>I'm afraid of <mark>deep water</mark> – water that's twice my height or above, as well as anything that swims in it! It makes me feel <mark>anxious</mark>. I feel <mark>pressure</mark> on my chest, like the water is <mark>compressing</mark> me. I think it started because, as a child, my mother said she had a <mark>premonition</mark> of me <mark>drowning</mark>. It hasn't <mark>come true</mark>, though, luckily! That's not to say I haven't tried <mark>overcoming</mark> my phobia, however. Sometimes you have to not think about the fear and just do it, especially as a father. I can swim, but I couldn't jump into water that I know I can't stand up in. I don't mind swimming pools, but boats scare me. The idea of drowning or swimming for my life really makes me feel afraid.</p>
+    <h4>Anna</h4>
+    <p>I <mark>suffer from</mark> <mark>arachnophobia</mark> – otherwise known as a fear of spiders. The country I live in doesn't have any <mark>poisonous</mark> spiders, so this is not a <mark>rational</mark> fear, but it's something I can't help. If I see a spider inside my house, my heart <mark>races</mark> and I start to <mark>panic</mark>. If I'm on my own, I have to catch it – usually with a glass, and a piece of card underneath. I then throw the spider in the garden, as I don't like killing them – it's not their fault I'm afraid of them! It does make me <mark>feel very unwell</mark> afterwards though, and it takes me a while to stop <mark>shaking</mark>. Luckily, my husband isn't afraid of spiders, so usually he catches them for me. But even more luckily, my two cats are great spider hunters, so I very rarely see any spiders inside any more. Phew!</p>
+    <h4>Evan</h4>
+    <p>I am afraid of heights, which is sometimes called <mark>vertigo</mark>. I don't like being very high up, especially when I can see all the way down. It makes me feel nervous and <mark>dizzy</mark>, and I feel like I am going to fall. I have tried to <mark>overcome</mark> this fear by climbing up some tall places such as mountains and historic buildings, and sitting high up in the theatre. I love a great view and don't mind looking across. Sometimes I've been successful, but sometimes I've just had to <mark>give up</mark> and come down.</p>
+  </div>
+  <details class="ja"><summary>和訳を見る</summary><div>
+    <p><b>Andrew</b>：僕は深い水が怖い。身長の2倍以上の深さの水と、そこで泳いでいるものすべて！ 不安になる。水に押しつぶされるみたいに胸に圧迫感を感じる。始まりは、子どもの頃に母が「僕が溺れる予感がした」と言ったことだと思う。幸い、それは実現していないけどね！ とはいえ、恐怖症を克服しようとしなかったわけじゃない。特に父親としては、怖さを考えずにとにかくやらなきゃいけないこともある。泳げるけど、足がつかないとわかっている水には飛び込めなかった。プールは平気だけど、ボートは怖い。溺れることや、命がけで泳ぐことを想像すると本当に怖くなる。</p>
+    <p><b>Anna</b>：私はクモ恐怖症、つまりクモが怖い。住んでいる国には毒グモはいないので理にかなった恐怖ではないけど、どうしようもない。家の中でクモを見ると、心臓がドキドキしてパニックになり始める。一人のときは自分で捕まえなきゃいけない。たいていはコップと、下に敷く厚紙で。それから庭に投げる。殺すのは嫌だから。私が怖がるのはクモのせいじゃないし！ でもそのあとはすごく気分が悪くなるし、震えが止まるまでしばらくかかる。幸い夫はクモが怖くないので、普段は夫が捕まえてくれる。でももっと幸いなのは、うちの2匹の猫がクモ捕りの名人なので、家の中でクモを見ることはもうほとんどないこと。ふう！</p>
+    <p><b>Evan</b>：僕は高い所が怖い。これは vertigo と呼ばれることもある。とても高い所にいるのが嫌で、特に下までずっと見えるときがだめ。緊張してくらくらして、落ちそうな気がする。山や歴史的な建物のような高い所に登ったり、劇場の高い席に座ったりして、この恐怖を克服しようとしてきた。素晴らしい景色は大好きで、水平に（遠くを）見るのは平気。うまくいったこともあるけど、あきらめて降りてくるしかなかったこともある。</p>
+  </div></details>
+
+  <h3>長文設問 <span class="cat">長文設問</span></h3>
+  <p style="font-size:14px;color:var(--muted)">B Read the text and answer the questions.</p>
+  <div class="ex"><div class="q"><span class="no">Q1</span><span class="en">What is Andrew afraid of?</span></div><details><summary>答え</summary><div class="a"><span class="ans en">He is afraid of deep water (water that is twice his height or more) and anything that swims in it.</span></div></details></div>
+  <div class="ex"><div class="q"><span class="no">Q2</span><span class="en">What happened when he was a child?</span></div><details><summary>答え</summary><div class="a"><span class="ans en">His mother said she had a premonition of him drowning.</span></div></details></div>
+  <div class="ex"><div class="q"><span class="no">Q3</span><span class="en">What makes him feel really anxious?</span></div><details><summary>答え</summary><div class="a"><span class="ans en">Deep water makes him feel anxious, and the idea of drowning or swimming for his life really makes him feel afraid.</span></div></details></div>
+  <div class="ex"><div class="q"><span class="no">Q4</span><span class="en">How does Anna feel if she sees a spider inside her house?</span></div><details><summary>答え</summary><div class="a"><span class="ans en">Her heart races and she starts to panic.</span></div></details></div>
+  <div class="ex"><div class="q"><span class="no">Q5</span><span class="en">What does she do with them if she is at home alone?</span></div><details><summary>答え</summary><div class="a"><span class="ans en">She catches it with a glass and a piece of card, and then throws it in the garden.</span></div></details></div>
+  <div class="ex"><div class="q"><span class="no">Q6</span><span class="en">What are Anna's cats good at?</span></div><details><summary>答え</summary><div class="a"><span class="ans en">They are good at hunting spiders. (They are great spider hunters.)</span></div></details></div>
+  <div class="ex"><div class="q"><span class="no">Q7</span><span class="en">How does Evan feel when he's in a high place?</span></div><details><summary>答え</summary><div class="a"><span class="ans en">He feels nervous and dizzy, and he feels like he is going to fall.</span></div></details></div>
+  <div class="ex"><div class="q"><span class="no">Q8</span><span class="en">How has he tried to overcome this fear?</span></div><details><summary>答え</summary><div class="a"><span class="ans en">By climbing up tall places such as mountains and historic buildings, and sitting high up in the theatre.</span></div></details></div>
+
+  <h3>穴埋め②：2語フレーズ <span class="cat">穴埋め</span></h3>
+  <div class="ctrl"><button type="button" data-reveal="w6">答えを全部表示</button><button type="button" data-unreveal="w6">全部隠す</button></div>
+  <p style="font-size:14px;color:var(--muted)">c. Match to make two-word phrases（1 come-f、2 deep-c、3 poisonous-e、4 give-b、5 feel-a、6 rational-d）. Then complete the sentences.</p>
+  <ol class="fill">
+    <li>If you <b class="bl">feel unwell</b>, you feel ill.</li>
+    <li>There are a lot of <b class="bl">poisonous spiders</b> in Australia.</li>
+    <li>A <b class="bl">rational fear</b> is one that is completely logical.</li>
+    <li><b class="bl">Deep water</b> is dangerous if you can't swim.</li>
+    <li>If things <b class="bl">come true</b>, they really happen.</li>
+    <li>If you <b class="bl">give up</b> doing something, you stop doing it.</li>
+  </ol>
+
+  <h3>練習問題（類題） <span class="cat">練習</span></h3>
+  <div class="ex"><div class="q"><span class="no">P1</span>T / F：<span class="en">(a) Andrew can't swim. (b) Andrew doesn't mind swimming pools. (c) Andrew's mother's premonition came true.</span></div><details><summary>答え</summary><div class="a">(a) <span class="ans">F</span>（I can swim）　(b) <span class="ans">T</span>　(c) <span class="ans">F</span>（It hasn't come true）</div></details></div>
+  <div class="ex"><div class="q"><span class="no">P2</span>T / F：<span class="en">(a) There are poisonous spiders in Anna's country. (b) Anna kills the spiders she catches. (c) Anna's husband is also afraid of spiders.</span></div><details><summary>答え</summary><div class="a">(a) <span class="ans">F</span>（doesn't have any poisonous spiders）　(b) <span class="ans">F</span>（throws them in the garden）　(c) <span class="ans">F</span>（isn't afraid of spiders）</div></details></div>
+  <div class="ex"><div class="q"><span class="no">P3</span><span class="en">Why does Anna say her fear is not rational?</span></div><details><summary>答え</summary><div class="a"><span class="ans en">Because the country she lives in doesn't have any poisonous spiders.</span></div></details></div>
+  <div class="ex"><div class="q"><span class="no">P4</span><span class="en">Why doesn't Anna kill the spiders?</span></div><details><summary>答え</summary><div class="a"><span class="ans en">Because she doesn't like killing them — it's not their fault she is afraid of them.</span></div></details></div>
+  <div class="ex"><div class="q"><span class="no">P5</span><span class="en">How does Andrew describe the physical feeling of his fear?</span></div><details><summary>答え</summary><div class="a"><span class="ans en">He feels pressure on his chest, like the water is compressing him.</span></div></details></div>
+  <div class="ex"><div class="q"><span class="no">P6</span><span class="en">Has Evan always been successful in overcoming his fear?</span></div><details><summary>答え</summary><div class="a"><span class="ans en">No. Sometimes he has been successful, but sometimes he has had to give up and come down.</span></div></details></div>
+  <div class="ex"><div class="q"><span class="no">P7</span>どの人の恐怖症？　<span class="en">(a) arachnophobia (b) acrophobia / vertigo (c) fear of deep water（hydrophobia 系）</span></div><details><summary>答え</summary><div class="a">(a) <span class="ans">Anna</span>　(b) <span class="ans">Evan</span>　(c) <span class="ans">Andrew</span></div></details></div>
+</section>
+
+<!-- ================= 単語クイズ ================= -->
+<section class="tab" id="quiz" data-title="単語クイズ" data-short="単語クイズ">
+  <h2>単語クイズ（4択）</h2>
+  <p class="srcline">各週の「ピックアップ単語」表から自動で出題。間違えた単語は最後にまとめて表示される。</p>
+
+  <div class="quiz" id="quizbox">
+    <div class="opts-row">
+      <label>範囲 <select id="qz-range">
+        <option value="all">全部の週</option>
+        <option value="w2">Week 2 Humour</option>
+        <option value="w3">Music</option>
+        <option value="w4">Week 4 Entertainment</option>
+        <option value="w5">Week 5 Train travel</option>
+        <option value="w6">Week 6 Phobias</option>
+      </select></label>
+      <label>方向 <select id="qz-dir">
+        <option value="e2j">英 → 日</option>
+        <option value="j2e">日 → 英</option>
+      </select></label>
+      <label>問題数 <select id="qz-num">
+        <option value="10">10問</option>
+        <option value="20">20問</option>
+        <option value="0">全部</option>
+      </select></label>
+      <button type="button" class="btn" id="qz-start">スタート</button>
+    </div>
+    <div id="qz-body"><p style="color:var(--muted);margin:8px 0 0">範囲と方向を選んで「スタート」。</p></div>
+  </div>
+</section>
+
+<div class="pager"><button type="button" id="prev"></button><button type="button" id="next"></button></div>
+</main>
+
+<script>
+(function () {
+  // ---- タブ ----
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('section.tab'));
+  var list = document.getElementById('tablist');
+  var prev = document.getElementById('prev'), next = document.getElementById('next');
+  var buttons = tabs.map(function (s) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.setAttribute('role', 'tab'); b.dataset.id = s.id;
+    b.textContent = s.dataset.short;
+    if (s.dataset.src) { var sp = document.createElement('span'); sp.className = 'src'; sp.textContent = s.dataset.src; b.appendChild(sp); }
+    b.addEventListener('click', function () { show(s.id, true); });
+    list.appendChild(b);
+    return b;
+  });
+  function show(id, push) {
+    var idx = tabs.findIndex(function (s) { return s.id === id; });
+    if (idx < 0) idx = 0;
+    tabs.forEach(function (s, i) { s.hidden = i !== idx; });
+    buttons.forEach(function (b, i) { b.setAttribute('aria-selected', i === idx ? 'true' : 'false'); });
+    buttons[idx].scrollIntoView({ block: 'nearest', inline: 'center' });
+    prev.hidden = idx === 0; next.hidden = idx === tabs.length - 1;
+    if (idx > 0) { prev.textContent = '← ' + tabs[idx - 1].dataset.title; prev.onclick = function () { show(tabs[idx - 1].id, true); }; }
+    if (idx < tabs.length - 1) { next.textContent = tabs[idx + 1].dataset.title + ' →'; next.onclick = function () { show(tabs[idx + 1].id, true); }; }
+    if (push) { history.replaceState(null, '', '#' + tabs[idx].id); window.scrollTo(0, 0); }
+    document.title = (idx === 0 ? '' : tabs[idx].dataset.title + '｜') + '英語表現 試験対策ノート';
+  }
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('a[data-go]');
+    if (a) { e.preventDefault(); show(a.dataset.go, true); }
+  });
+  window.addEventListener('hashchange', function () { show(location.hash.slice(1), false); });
+  show(location.hash.slice(1), false);
+
+  // ---- 穴埋め：タップで表示 ----
+  document.querySelectorAll('.bl').forEach(function (b) {
+    b.setAttribute('tabindex', '0'); b.setAttribute('role', 'button'); b.setAttribute('aria-label', '答えを表示');
+    function reveal() { b.classList.add('show'); b.removeAttribute('aria-label'); }
+    b.addEventListener('click', reveal);
+    b.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); reveal(); } });
+  });
+  // data-reveal="w4" → その節の .bl（data-group 指定があればそのグループだけ）
+  function blanksFor(btn, key) {
+    var sec = btn.closest('section.tab');
+    var groups = sec.querySelectorAll('[data-group="' + key + '"] .bl');
+    if (groups.length) return groups;
+    return Array.prototype.filter.call(sec.querySelectorAll('.bl'), function (b) { return !b.closest('[data-group]'); });
+  }
+  document.querySelectorAll('[data-reveal]').forEach(function (btn) {
+    btn.addEventListener('click', function () { Array.prototype.forEach.call(blanksFor(btn, btn.dataset.reveal), function (b) { b.classList.add('show'); }); });
+  });
+  document.querySelectorAll('[data-unreveal]').forEach(function (btn) {
+    btn.addEventListener('click', function () { Array.prototype.forEach.call(blanksFor(btn, btn.dataset.unreveal), function (b) { b.classList.remove('show'); }); });
+  });
+
+  // ---- 単語表：意味を隠す ----
+  document.querySelectorAll('[data-hide]').forEach(function (btn) {
+    var t = document.getElementById(btn.dataset.hide);
+    btn.addEventListener('click', function () {
+      var on = !t.classList.contains('hide');
+      t.classList.toggle('hide', on);
+      t.querySelectorAll('td.ja').forEach(function (td) { td.classList.remove('show'); });
+      btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+      btn.textContent = on ? '意味を表示' : '意味を隠す';
+    });
+    t.addEventListener('click', function (e) {
+      var td = e.target.closest('td.ja');
+      if (td && t.classList.contains('hide')) td.classList.add('show');
+    });
+  });
+
+  // ---- チェックリスト（この端末のブラウザにだけ保存）----
+  var KEY = 'eigo-hyogen-checklist-v1', state = {};
+  try { state = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) { state = {}; }
+  var boxes = document.querySelectorAll('#checks input');
+  function render() {
+    var n = 0;
+    boxes.forEach(function (b) { b.parentNode.classList.toggle('done', b.checked); if (b.checked) n++; });
+    document.getElementById('prog').textContent = n + ' / ' + boxes.length + ' できた';
+  }
+  boxes.forEach(function (b) {
+    b.checked = !!state[b.id];
+    b.addEventListener('change', function () {
+      state[b.id] = b.checked;
+      try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {}
+      render();
+    });
+  });
+  render();
+
+  // ---- 単語クイズ ----
+  var WEEK = { w2: 'Week 2', w3: 'Music', w4: 'Week 4', w5: 'Week 5', w6: 'Week 6' };
+  var bank = Array.prototype.map.call(document.querySelectorAll('table.vocab tr[data-w]'), function (tr) {
+    return { w: tr.dataset.w, en: tr.cells[0].textContent.trim(), ja: tr.cells[1].textContent.trim() };
+  });
+  var body = document.getElementById('qz-body');
+  var qs = [], cur = 0, score = 0, missed = [], dir = 'e2j', pool = [];
+  function shuffle(a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+  document.getElementById('qz-start').addEventListener('click', function () {
+    var range = document.getElementById('qz-range').value;
+    var num = +document.getElementById('qz-num').value;
+    dir = document.getElementById('qz-dir').value;
+    pool = range === 'all' ? bank : bank.filter(function (x) { return x.w === range; });
+    qs = shuffle(pool); if (num) qs = qs.slice(0, num);
+    cur = 0; score = 0; missed = [];
+    ask();
+  });
+  function ask() {
+    body.innerHTML = '';
+    if (cur >= qs.length) return finish();
+    var q = qs[cur];
+    // 選択肢：同じ週から優先して3つ（足りなければ全体から）
+    var same = shuffle(bank.filter(function (x) { return x !== q && x.w === q.w; }));
+    var other = shuffle(bank.filter(function (x) { return x !== q && x.w !== q.w; }));
+    var opts = shuffle([q].concat(same.concat(other).slice(0, 3)));
+    body.appendChild(el('div', 'qword' + (dir === 'j2e' ? ' jp' : ''), dir === 'e2j' ? q.en : q.ja));
+    body.appendChild(el('div', 'qmeta', (cur + 1) + ' / ' + qs.length + '　' + WEEK[q.w]));
+    var box = el('div', 'choices');
+    opts.forEach(function (o) {
+      var b = el('button', dir === 'j2e' ? 'en' : '', dir === 'e2j' ? o.ja : o.en);
+      b.type = 'button';
+      b.addEventListener('click', function () {
+        var ok = o === q;
+        if (ok) score++; else missed.push(q);
+        Array.prototype.forEach.call(box.children, function (c, i) { c.disabled = true; if (opts[i] === q) c.classList.add('ok'); });
+        if (!ok) b.classList.add('ng');
+        nx.hidden = false; nx.focus();
+      });
+      box.appendChild(b);
+    });
+    body.appendChild(box);
+    var st = el('div', 'status');
+    st.appendChild(el('span', 'score', '正解 ' + score));
+    var nx = el('button', 'btn', cur + 1 < qs.length ? '次へ →' : '結果を見る');
+    nx.type = 'button'; nx.hidden = true;
+    nx.addEventListener('click', function () { cur++; ask(); });
+    st.appendChild(nx);
+    body.appendChild(st);
+  }
+  function finish() {
+    var pct = qs.length ? Math.round(score / qs.length * 100) : 0;
+    body.appendChild(el('div', 'qword jp', score + ' / ' + qs.length + '（' + pct + '%）'));
+    body.appendChild(el('div', 'qmeta', pct >= 90 ? 'いい感じ。方向を変えてもう一回やってみよう。' : '間違えた単語を単語表で確認して、もう一回。'));
+    if (missed.length) {
+      var m = el('div', 'miss');
+      m.appendChild(el('b', '', '間違えた単語'));
+      var t = el('table'); t.className = 'vocab';
+      missed.forEach(function (x) {
+        var tr = el('tr'); tr.appendChild(el('td', '', x.en)); tr.appendChild(el('td', 'ja', x.ja)); t.appendChild(tr);
+      });
+      m.appendChild(t);
+      body.appendChild(m);
+    }
+  }
+})();
+</script>
+</body>
+</html>
