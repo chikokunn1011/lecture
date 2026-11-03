@@ -1,0 +1,890 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>線形代数応用 中間対策ノート</title>
+<style>html{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=Zen+Kaku+Gothic+New:wght@500;900&display=swap">
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['$', '$']], displayMath: [['\\[', '\\]']] },
+  svg: { fontCache: 'global' },
+  options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'code'] }
+};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.js"></script>
+<style>
+/* Layout: 教科書＋蛍光ペン＋赤ペン。上部に章タブ（1章ずつ表示）、各章は「覚える→わかる→注意→解く」の順。
+   大胆さは1か所だけ：蛍光マーカーと赤シート。それ以外は静かに。 */
+:root {
+  --bg: #eef1f5;
+  --paper: #ffffff;
+  --ink: #1a2b4a;
+  --sub: #56657c;
+  --line: #d9e0e8;
+  --marker: #ffe45c;
+  --marker-ink: #1a2b4a;
+  --red: #d4322c;
+  --red-soft: #fdeceb;
+  --sheet: #e0453f;
+  --ok: #1e7b55;
+  --ok-soft: #e3f3ea;
+  --tab: #e3e8ef;
+  --f-head: "Zen Kaku Gothic New", "Hiragino Sans", "Yu Gothic", sans-serif;
+  --f-body: "BIZ UDPGothic", "Hiragino Sans", "Yu Gothic", "Meiryo", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #11161f; --paper: #19202c; --ink: #e5eaf2; --sub: #9daabd; --line: #2c3646;
+    --marker: #6b5a00; --marker-ink: #fff6c2; --red: #ff7d72; --red-soft: #3a1f1e; --sheet: #c8372f;
+    --ok: #63d19f; --ok-soft: #173326; --tab: #222b39; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #11161f; --paper: #19202c; --ink: #e5eaf2; --sub: #9daabd; --line: #2c3646;
+  --marker: #6b5a00; --marker-ink: #fff6c2; --red: #ff7d72; --red-soft: #3a1f1e; --sheet: #c8372f;
+  --ok: #63d19f; --ok-soft: #173326; --tab: #222b39; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: var(--f-body); font-size: 16px; line-height: 1.85;
+}
+.gut { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.inner { max-width: 880px; margin: 0 auto; }
+
+/* ---------- hero ---------- */
+.hero { background: var(--paper); border-bottom: 1px solid var(--line); padding-block: 28px 22px; }
+.hero .inner { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 28px; align-items: center; }
+.course { font-size: 13px; color: var(--sub); }
+.home-link { display: inline-block; font-size: 13px; color: var(--sub); text-decoration: none; margin-bottom: 6px; }
+.home-link:hover { color: var(--ink); text-decoration: underline; }
+h1 { font-family: var(--f-head); font-weight: 900; font-size: clamp(28px, 5vw, 40px); line-height: 1.2; margin: 4px 0 12px; text-wrap: balance; letter-spacing: .01em; }
+.lead { margin: 0 0 16px; color: var(--sub); max-width: 46ch; }
+.euler { font-size: 22px; margin: 6px 0 2px; }
+.euler-note { font-size: 13px; color: var(--sub); margin: 0; }
+#phasor { width: 100%; height: auto; display: block; }
+.status { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; margin-top: 18px; }
+.meter { flex: 1 1 220px; min-width: 0; }
+.meter .bar { height: 8px; border-radius: 4px; background: var(--tab); overflow: hidden; }
+.meter .bar i { display: block; height: 100%; width: 0; background: var(--ok); transition: width .3s; }
+.meter .txt { font-size: 13px; color: var(--sub); margin-top: 4px; font-variant-numeric: tabular-nums; }
+.sheet-btn { font: inherit; font-size: 14px; font-weight: 700; padding: 6px 14px; border-radius: 8px; border: 2px solid var(--sheet); background: var(--paper); color: var(--sheet); cursor: pointer; }
+.sheet-btn[aria-pressed="true"] { background: var(--sheet); color: #fff; }
+.sheet-btn:focus-visible, .tabs a:focus-visible, summary:focus-visible, .done input:focus-visible, .nextprev a:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
+
+/* ---------- 講義の流れ ---------- */
+.flow { padding-block: 20px 6px; }
+.flow h2 { font-family: var(--f-head); font-size: 15px; font-weight: 900; margin: 0 0 8px; }
+.flow ol { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 4px; align-items: center; }
+.flow li { display: flex; align-items: center; gap: 4px; font-size: 13.5px; }
+.flow li + li::before { content: "›"; color: var(--sub); margin-right: 2px; }
+.flow a { color: var(--ink); text-decoration: none; border-bottom: 1px dashed var(--sub); }
+.flow a:hover { border-bottom-style: solid; }
+.flow p { font-size: 13.5px; color: var(--sub); margin: 8px 0 0; max-width: 70ch; }
+
+/* ---------- tabs ---------- */
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+.tabbar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); border-bottom: 1px solid var(--line); }
+.tabs { position: relative; display: flex; gap: 4px; overflow-x: auto; padding-block: 10px; scrollbar-width: thin; }
+.tabs a { flex: none; display: flex; flex-direction: column; align-items: center; gap: 0; min-width: 62px; padding: 5px 10px 4px; border-radius: 8px; color: var(--ink); text-decoration: none; background: var(--tab); line-height: 1.3; }
+.tabs a b { font-size: 13.5px; }
+.tabs a span { font-size: 11px; color: var(--sub); font-variant-numeric: tabular-nums; }
+.tabs a[aria-current="page"] { background: var(--ink); color: var(--paper); }
+.tabs a[aria-current="page"] span { color: var(--paper); opacity: .8; }
+.tabs a.all-done span { color: var(--ok); font-weight: 700; }
+.tabs a[aria-current="page"].all-done span { color: var(--paper); }
+
+/* ---------- chapter ---------- */
+main { padding-block: 26px 80px; }
+.ch[hidden] { display: none; }
+.ch { scroll-margin-top: calc(env(safe-area-inset-top, 0px) + 90px); }
+.ch-top { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-bottom: 18px; }
+.ch-no { font-family: var(--f-head); font-weight: 900; font-size: 15px; color: var(--sub); }
+.ch-top h2 { font-family: var(--f-head); font-weight: 900; font-size: clamp(24px, 4vw, 32px); line-height: 1.25; margin: 0; text-wrap: balance; flex-basis: 100%; }
+.ch-meta { font-size: 13px; color: var(--sub); }
+.step { margin-top: 26px; }
+.step > h3 { font-family: var(--f-head); font-weight: 900; font-size: 17px; margin: 0 0 10px; display: flex; align-items: center; gap: 10px; }
+.step > h3 .n { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--ink); color: var(--paper); font-size: 13px; }
+.step > h3 small { font-family: var(--f-body); font-weight: 400; font-size: 13px; color: var(--sub); }
+
+/* 1. 覚える：蛍光ペン */
+.memo { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 14px 20px; display: grid; gap: 4px; }
+.memo .row { display: grid; grid-template-columns: 9.5em minmax(0, 1fr); gap: 12px; align-items: baseline; padding: 6px 0; border-bottom: 1px dashed var(--line); }
+.memo .row:last-child { border-bottom: 0; }
+.memo .lbl { font-size: 13.5px; font-weight: 700; color: var(--sub); }
+.memo .val { min-width: 0; overflow-x: auto; overflow-y: hidden; }
+.key { background: linear-gradient(transparent 38%, var(--marker) 38%, var(--marker) 92%, transparent 92%); color: var(--marker-ink); padding: 0 3px; border-radius: 2px; position: relative; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+body.redsheet .key { background: var(--sheet); color: transparent; cursor: pointer; }
+body.redsheet .key * { visibility: hidden; }
+body.redsheet .key.peek { background: linear-gradient(transparent 38%, var(--marker) 38%, var(--marker) 92%, transparent 92%); color: var(--marker-ink); }
+body.redsheet .key.peek * { visibility: visible; }
+.sheet-hint { display: none; font-size: 13px; color: var(--sheet); margin: 6px 0 0; }
+body.redsheet .sheet-hint { display: block; }
+
+/* 2. わかる */
+.explain { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 16px 20px; }
+.explain p, .explain li { max-width: 68ch; }
+.explain p { margin: 6px 0; }
+.explain ul, .explain ol { margin: 6px 0; padding-left: 1.3em; }
+.f { overflow-x: auto; overflow-y: hidden; padding: 2px 0; }
+.fig { margin: 12px 0 6px; display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start; }
+.fig figure { margin: 0; flex: 1 1 240px; min-width: 0; max-width: 360px; }
+.fig figure > svg { width: 100%; height: auto; display: block; }
+.fig figcaption { font-size: 12.5px; color: var(--sub); text-align: center; margin-top: 2px; }
+table.v { border-collapse: collapse; font-size: 14px; margin: 8px 0; }
+table.v th, table.v td { border: 1px solid var(--line); padding: 4px 10px; text-align: center; font-variant-numeric: tabular-nums; }
+table.v th { background: var(--tab); }
+.tbl { overflow-x: auto; }
+.block { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin: 12px 0; font-size: 14px; }
+.block .box { border: 2px solid var(--ink); border-radius: 8px; padding: 6px 14px; background: var(--bg); }
+.block .arr { color: var(--sub); }
+
+/* 3. 注意：赤ペン */
+.redpen { display: grid; gap: 8px; }
+.redpen p { margin: 0; padding: 8px 14px 8px 16px; border-left: 3px solid var(--red); background: var(--red-soft); border-radius: 0 8px 8px 0; font-size: 15px; max-width: none; }
+.redpen p b:first-child { color: var(--red); margin-right: 4px; }
+.redpen p.trap { display: none; }
+
+/* 4. 解く */
+.probs { display: grid; gap: 12px; }
+.q { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 14px 18px; }
+.q.is-done { border-color: var(--ok); }
+.q .qh { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.q .tag { font-family: var(--f-head); font-weight: 900; font-size: 15px; }
+.q .src { font-size: 12px; color: var(--sub); }
+.done { margin-left: auto; display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--sub); cursor: pointer; user-select: none; }
+.done input { width: 18px; height: 18px; accent-color: var(--ok); }
+.q.is-done .done { color: var(--ok); font-weight: 700; }
+.q .body { margin-top: 6px; }
+details { margin-top: 10px; }
+summary { cursor: pointer; font-size: 14px; font-weight: 700; color: var(--ink); width: fit-content; padding: 3px 14px; border: 1.5px solid var(--ink); border-radius: 999px; list-style: none; }
+summary::-webkit-details-marker { display: none; }
+details[open] summary { background: var(--ink); color: var(--paper); }
+.ans { margin-top: 10px; padding: 10px 14px; border-left: 3px solid var(--ok); background: var(--ok-soft); border-radius: 0 8px 8px 0; }
+.ans .fin { font-weight: 700; color: var(--ok); }
+.spec { display: flex; flex-wrap: wrap; gap: 14px; margin: 8px 0; }
+.spec figure { margin: 0; flex: 1 1 240px; min-width: 0; max-width: 340px; }
+.spec figcaption { font-size: 12.5px; color: var(--sub); text-align: center; }
+.spec figure > svg { width: 100%; height: auto; display: block; }
+.mock-intro { background: var(--paper); border: 2px solid var(--ink); border-radius: 12px; padding: 14px 20px; }
+.mock-intro p { margin: 4px 0; }
+.nextprev { display: flex; justify-content: space-between; gap: 10px; margin-top: 30px; flex-wrap: wrap; }
+.nextprev a { color: var(--ink); text-decoration: none; padding: 8px 14px; border: 1px solid var(--line); border-radius: 8px; background: var(--paper); font-size: 14px; }
+.nextprev a:hover { border-color: var(--ink); }
+.nextprev .spacer { flex: 1; }
+
+@media (max-width: 760px) {
+  .hero .inner { grid-template-columns: minmax(0, 1fr); }
+  .hero .viz { max-width: 340px; }
+  .memo { padding: 10px 14px; }
+  .memo .row { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .explain { padding: 14px; }
+  .q { padding: 12px 14px; }
+  .done { margin-left: 0; }
+}
+@media (prefers-reduced-motion: reduce) { .meter .bar i { transition: none; } }
+</style>
+<style>
+/* 線形代数応用だけの追加分：ヒーローの一次変換ビューア */
+.viz-box { background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: 10px; }
+#lt { width: 100%; height: auto; display: block; touch-action: none; }
+.viz-ctl { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; margin-top: 8px; font-size: 13px; }
+.viz-ctl .seg { display: inline-flex; border: 1.5px solid var(--ink); border-radius: 8px; overflow: hidden; }
+.viz-ctl .seg button { font: inherit; font-size: 13px; font-weight: 700; padding: 3px 10px; border: 0; background: var(--paper); color: var(--ink); cursor: pointer; }
+.viz-ctl .seg button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+.viz-ctl .seg button:focus-visible, .viz-ctl input:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
+.viz-ctl label { display: flex; align-items: center; gap: 6px; flex: 1 1 160px; min-width: 0; }
+.viz-ctl input[type=range] { flex: 1; min-width: 0; accent-color: var(--red); }
+.viz-ctl output { font-variant-numeric: tabular-nums; min-width: 3.2em; }
+.viz-mat { font-size: 13px; color: var(--sub); margin-top: 6px; font-variant-numeric: tabular-nums; }
+.viz-mat b { color: var(--ink); }
+.scope { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 12px 18px; margin-top: 14px; font-size: 14px; }
+.scope p { margin: 4px 0; max-width: 72ch; }
+.euler { font-size: 19px; line-height: 1.6; overflow-x: auto; overflow-y: hidden; }
+.badge { display: inline-block; font-size: 12px; font-weight: 700; padding: 0 8px; border-radius: 6px; background: var(--red-soft); color: var(--red); margin-left: 6px; vertical-align: middle; }
+</style>
+</head>
+<body>
+
+<header class="hero gut">
+  <div class="inner">
+    <div>
+      <a class="home-link" href="../">← 講義一覧</a>
+      <div class="course">線形代数応用 ／ 第1〜6週＋第8週（一次変換）</div>
+      <h1>中間テスト対策ノート</h1>
+      <p class="lead">教科書・板書なしなので、シラバスの各回のテーマから標準的な内容をまとめた。各回「覚える → わかる → 注意 → 解く」の順。</p>
+      <div class="euler">$\boldsymbol{a}_1,\dots,\boldsymbol{a}_k$ が1次独立<br>$\iff \operatorname{rank}(\boldsymbol{a}_1\ \cdots\ \boldsymbol{a}_k)=k$</div>
+      <p class="euler-note">前半はほぼ全部「行列を行基本変形して階段にする」で解ける。独立性・解空間・基底・次元はぜんぶ rank の言い換え。</p>
+      <div class="status">
+        <div class="meter" aria-live="polite">
+          <div class="bar"><i id="meterBar"></i></div>
+          <div class="txt" id="meterTxt">解けた問題 0 / 0</div>
+        </div>
+        <button type="button" class="sheet-btn" id="sheetBtn" aria-pressed="false">赤シートで隠す</button>
+      </div>
+    </div>
+    <div class="viz">
+      <div class="viz-box">
+        <svg id="lt" viewBox="-150 -150 300 300" role="img" aria-label="平面上の一次変換。灰色が元の旗、赤が変換後の旗"></svg>
+        <div class="viz-ctl">
+          <span class="seg" role="group" aria-label="変換の種類"><button type="button" id="mRot" aria-pressed="true">回転</button><button type="button" id="mRef" aria-pressed="false">折り返し</button></span>
+          <label><span id="angLbl">θ</span><input type="range" id="ang" min="-180" max="180" step="15" value="60"><output id="angOut">60°</output></label>
+        </div>
+        <div class="viz-mat" id="vizMat"></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="flow gut" aria-label="講義の流れ">
+  <div class="inner">
+    <h2>講義の流れ（シラバスより）</h2>
+    <ol>
+      <li><a href="#c1">1次結合・1次独立</a></li>
+      <li><a href="#c2">部分空間</a></li>
+      <li><a href="#c3">解空間</a></li>
+      <li><a href="#c4">基底と次元</a></li>
+      <li><a href="#c5">内積・正規直交基底</a></li>
+      <li><a href="#c6">一次変換（回転・折り返し）</a></li>
+    </ol>
+    <p>第6週は「これまでのまとめと演習」、第7週が中間試験。第8週の一次変換は本来は中間の後の回だけど、出るかもとのことなので入れてある。</p>
+    <div class="scope">
+      <p><b>このノートの前提</b>：教科書・板書がないので、記号や定義の書き方は一般的な線形代数の教科書に合わせた（ベクトルは列ベクトル、生成される部分空間は $\langle\ \rangle$ と書く）。授業ノートと記号が違ったら授業の方に合わせて読みかえて。</p>
+      <p>評価は「演習×0.3＋（中間＋期末）×0.7」。試験の形式（問題数・時間）はシラバスに書いてないので、模試は60分5問の想定。</p>
+    </div>
+  </div>
+</section>
+
+<nav class="tabbar gut" aria-label="章の切り替え">
+  <div class="inner tabs" id="tabs">
+    <a href="#c1" data-t="c1"><b>第1週</b><span></span></a>
+    <a href="#c2" data-t="c2"><b>第2週</b><span></span></a>
+    <a href="#c3" data-t="c3"><b>第3週</b><span></span></a>
+    <a href="#c4" data-t="c4"><b>第4週</b><span></span></a>
+    <a href="#c5" data-t="c5"><b>第5週</b><span></span></a>
+    <a href="#c6" data-t="c6"><b>第8週</b><span></span></a>
+    <a href="#mock" data-t="mock"><b>模試①</b><span></span></a>
+    <a href="#mock2" data-t="mock2"><b>模試②</b><span></span></a>
+  </div>
+</nav>
+
+<main class="gut"><div class="inner">
+<p class="sheet-hint">赤シート中：赤い部分をタップするとその式だけ見える。もう一度タップで隠れる。</p>
+
+<!-- ======================= 1 ======================= -->
+<section class="ch" id="c1" data-title="1次結合・1次独立">
+  <div class="ch-top"><span class="ch-no">第1週</span><h2>1次結合と1次独立・1次従属</h2><span class="ch-meta">前半ぜんぶの土台。判定は「行列にして rank」か「行列式」</span></div>
+  <div class="step"><h3><span class="n">1</span>覚える</h3>
+    <div class="memo">
+      <div class="row"><span class="lbl">1次結合</span><span class="val"><span class="key">$c_1\boldsymbol{a}_1+c_2\boldsymbol{a}_2+\cdots+c_k\boldsymbol{a}_k$</span>（$c_i$ はスカラー）</span></div>
+      <div class="row"><span class="lbl">1次関係式</span><span class="val">$c_1\boldsymbol{a}_1+\cdots+c_k\boldsymbol{a}_k=\boldsymbol{0}$</span></div>
+      <div class="row"><span class="lbl">1次独立</span><span class="val">1次関係式が成り立つのは <span class="key">$c_1=c_2=\cdots=c_k=0$ のときだけ</span></span></div>
+      <div class="row"><span class="lbl">1次従属</span><span class="val">独立でないこと ⇔ <span class="key">どれか1本が残りの1次結合で書ける</span></span></div>
+      <div class="row"><span class="lbl">rank で判定</span><span class="val">$A=(\boldsymbol{a}_1\ \cdots\ \boldsymbol{a}_k)$ として <span class="key">$\operatorname{rank}A=k$ ⇔ 独立</span>、$\operatorname{rank}A&lt;k$ ⇔ 従属</span></div>
+      <div class="row"><span class="lbl">$n$本の$n$次元</span><span class="val"><span class="key">$\det A\ne0$ ⇔ 独立</span>、$\det A=0$ ⇔ 従属</span></div>
+      <div class="row"><span class="lbl">すぐ従属なもの</span><span class="val"><span class="key">$\boldsymbol{0}$ を含む</span>／<span class="key">$\mathbb{R}^n$ で $n+1$ 本以上</span>／同じ（平行な）ベクトルを含む</span></div>
+    </div>
+  </div>
+  <div class="step"><h3><span class="n">2</span>わかる</h3>
+    <div class="explain">
+      <p>1次関係式 $c_1\boldsymbol{a}_1+\cdots+c_k\boldsymbol{a}_k=\boldsymbol{0}$ は、行列で書くと <b>同次連立方程式 $A\boldsymbol{c}=\boldsymbol{0}$</b>。だから</p>
+      <ul>
+        <li>独立 ⇔ $A\boldsymbol{c}=\boldsymbol{0}$ が自明な解 $\boldsymbol{c}=\boldsymbol{0}$ しか持たない ⇔ 自由に選べる未知数がない ⇔ $\operatorname{rank}A=k$</li>
+        <li>従属 ⇔ 自明でない解がある。その解をそのまま使えば「どれか1本＝残りの1次結合」が書ける</li>
+      </ul>
+      <p><b>判定の手順</b>：ベクトルを<b>列に並べて</b>行基本変形 → 階段行列の段の数（rank）を数える。行基本変形しても列どうしの1次関係は変わらないので、簡約化した行列から「どの列がどの列の1次結合か」もそのまま読める。</p>
+      <div class="f">\[ \begin{pmatrix}1&2&1\\2&1&-1\\1&0&-1\end{pmatrix}\ \longrightarrow\ \begin{pmatrix}1&0&-1\\0&1&1\\0&0&0\end{pmatrix}\quad\Rightarrow\quad \boldsymbol{a}_3=-\boldsymbol{a}_1+\boldsymbol{a}_2 \]</div>
+      <p>簡約化後の第3列 $(-1,1,0)^T$ が「$\boldsymbol{a}_3$ は $\boldsymbol{a}_1$ を $-1$ 倍、$\boldsymbol{a}_2$ を $1$ 倍」を表している。</p>
+    </div>
+  </div>
+  <div class="step"><h3><span class="n">3</span>注意</h3>
+    <div class="redpen">
+      <p><b>並べ方</b>ベクトルは<b>列</b>に並べる。行に並べても rank は同じだけど、1次結合の係数が読めなくなる。</p>
+      <p><b>証明問題</b>「独立を示せ」は必ず「$c_1(\cdots)+c_2(\cdots)+\cdots=\boldsymbol{0}$ とおく」から始めて、全部 0 になることを示す。いきなり行列式を書いても、ベクトルが文字（$\boldsymbol{a},\boldsymbol{b}$ など）なら使えない。</p>
+      <p><b>答え方</b>従属のときは「従属」だけで終わらず、具体的な1次関係式（例：$\boldsymbol{a}_1-\boldsymbol{a}_2+\boldsymbol{a}_3=\boldsymbol{0}$）まで書くと減点されにくい。</p>
+    </div>
+  </div>
+  <div class="step"><h3><span class="n">4</span>解く</h3>
+    <div class="probs">
+    <div class="q"><div class="qh"><span class="tag">1-1</span></div>
+      <div class="body">次のベクトルの組は1次独立か1次従属か。従属なら1次関係式を1つ書け。<br>(1) $\boldsymbol{a}_1=\begin{pmatrix}1\\2\\1\end{pmatrix},\ \boldsymbol{a}_2=\begin{pmatrix}2\\1\\0\end{pmatrix},\ \boldsymbol{a}_3=\begin{pmatrix}1\\-1\\-1\end{pmatrix}$　(2) $\boldsymbol{b}_1=\begin{pmatrix}1\\0\\1\end{pmatrix},\ \boldsymbol{b}_2=\begin{pmatrix}1\\1\\0\end{pmatrix},\ \boldsymbol{b}_3=\begin{pmatrix}0\\1\\2\end{pmatrix}$</div>
+      <details><summary>解答</summary><div class="ans">
+        (1) 列に並べて簡約化すると $\begin{pmatrix}1&0&-1\\0&1&1\\0&0&0\end{pmatrix}$、rank $=2&lt;3$。<span class="fin">1次従属。$\boldsymbol{a}_3=-\boldsymbol{a}_1+\boldsymbol{a}_2$、つまり $\boldsymbol{a}_1-\boldsymbol{a}_2+\boldsymbol{a}_3=\boldsymbol{0}$</span><br>
+        (2) $\det\begin{pmatrix}1&1&0\\0&1&1\\1&0&2\end{pmatrix}=1\cdot(2-0)-1\cdot(0-1)+0=3\ne0$。<span class="fin">1次独立</span>
+      </div></details></div>
+    <div class="q"><div class="qh"><span class="tag">1-2</span></div>
+      <div class="body">$\boldsymbol{b}=\begin{pmatrix}4\\5\\2\end{pmatrix}$ を $\boldsymbol{a}_1=\begin{pmatrix}1\\2\\1\end{pmatrix},\ \boldsymbol{a}_2=\begin{pmatrix}2\\1\\0\end{pmatrix}$ の1次結合で表せ。</div>
+      <details><summary>解答</summary><div class="ans">
+        $x\boldsymbol{a}_1+y\boldsymbol{a}_2=\boldsymbol{b}$：$x+2y=4,\ 2x+y=5,\ x=2$。第3式から $x=2$、第1式から $y=1$、第2式 $4+1=5$ もOK。<br>
+        <span class="fin">$\boldsymbol{b}=2\boldsymbol{a}_1+\boldsymbol{a}_2$</span>
+      </div></details></div>
+    <div class="q"><div class="qh"><span class="tag">1-3</span></div>
+      <div class="body">$\begin{pmatrix}1\\2\\1\end{pmatrix},\ \begin{pmatrix}1\\k\\2\end{pmatrix},\ \begin{pmatrix}0\\1\\1\end{pmatrix}$ が1次従属になる $k$ を求めよ。</div>
+      <details><summary>解答</summary><div class="ans">
+        $\det\begin{pmatrix}1&1&0\\2&k&1\\1&2&1\end{pmatrix}=1\cdot(k-2)-1\cdot(2-1)+0=k-3$。$=0$ で従属。<span class="fin">$k=3$</span>
+      </div></details></div>
+    <div class="q"><div class="qh"><span class="tag">1-4</span><span class="src">証明</span></div>
+      <div class="body">$\boldsymbol{a},\boldsymbol{b},\boldsymbol{c}$ が1次独立のとき、$\boldsymbol{a}+\boldsymbol{b},\ \boldsymbol{b}+\boldsymbol{c},\ \boldsymbol{c}+\boldsymbol{a}$ も1次独立であることを示せ。</div>
+      <details><summary>解答</summary><div class="ans">
+        $x(\boldsymbol{a}+\boldsymbol{b})+y(\boldsymbol{b}+\boldsymbol{c})+z(\boldsymbol{c}+\boldsymbol{a})=\boldsymbol{0}$ とおく。整理すると $(x+z)\boldsymbol{a}+(x+y)\boldsymbol{b}+(y+z)\boldsymbol{c}=\boldsymbol{0}$。<br>
+        $\boldsymbol{a},\boldsymbol{b},\boldsymbol{c}$ は独立なので $x+z=0,\ x+y=0,\ y+z=0$。3式を足すと $x+y+z=0$、各式を引いて $x=y=z=0$。<br>
+        <span class="fin">自明な解しかないので1次独立。</span>（ちなみに $\boldsymbol{a}-\boldsymbol{b},\ \boldsymbol{b}-\boldsymbol{c},\ \boldsymbol{c}-\boldsymbol{a}$ は足すと $\boldsymbol{0}$ なので従属。セットで覚える）
+      </div></details></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= 2 ======================= -->
+<section class="ch" id="c2" data-title="数ベクトル空間と部分空間">
+  <div class="ch-top"><span class="ch-no">第2週</span><h2>数ベクトル空間と、その部分空間</h2><span class="ch-meta">「部分空間かどうか判定せよ」が定番</span></div>
+  <div class="step"><h3><span class="n">1</span>覚える</h3>
+    <div class="memo">
+      <div class="row"><span class="lbl">数ベクトル空間</span><span class="val">$\mathbb{R}^n$：成分が実数の $n$ 次元列ベクトル全体（和とスカラー倍が定義されている）</span></div>
+      <div class="row"><span class="lbl">部分空間の条件</span><span class="val">$W\subset\mathbb{R}^n$ が<br>(i) <span class="key">$\boldsymbol{0}\in W$</span><br>(ii) <span class="key">$\boldsymbol{x},\boldsymbol{y}\in W\Rightarrow \boldsymbol{x}+\boldsymbol{y}\in W$</span>（和で閉じる）<br>(iii) <span class="key">$\boldsymbol{x}\in W,\ c\in\mathbb{R}\Rightarrow c\boldsymbol{x}\in W$</span>（スカラー倍で閉じる）</span></div>
+      <div class="row"><span class="lbl">生成される部分空間</span><span class="val">$\langle\boldsymbol{a}_1,\dots,\boldsymbol{a}_k\rangle=$ <span class="key">$\boldsymbol{a}_1,\dots,\boldsymbol{a}_k$ の1次結合全体</span>（span とも書く）</span></div>
+      <div class="row"><span class="lbl">部分空間になる</span><span class="val"><span class="key">$=0$ の1次式（同次式）で定義</span>された集合、$\langle\cdots\rangle$、$\{\boldsymbol{0}\}$、$\mathbb{R}^n$ 自身</span></div>
+      <div class="row"><span class="lbl">ならない典型</span><span class="val"><span class="key">定数項がある</span>（$x_1+x_2=1$）、<span class="key">2次以上</span>（$x_1x_2=0$、$x_1^2=x_2$）、<span class="key">不等式</span>（$x_1\ge0$）</span></div>
+    </div>
+  </div>
+  <div class="step"><h3><span class="n">2</span>わかる</h3>
+    <div class="explain">
+      <p>部分空間＝「原点を通る、まっすぐで平らな集合」。$\mathbb{R}^3$ なら $\{\boldsymbol{0}\}$・原点を通る直線・原点を通る平面・$\mathbb{R}^3$ 全体の4種類しかない。</p>
+      <p><b>判定のコツ</b></p>
+      <ul>
+        <li><b>部分空間だと思ったら</b>：条件 (i)(ii)(iii) を一般の $\boldsymbol{x},\boldsymbol{y},c$ で確認して証明を書く。</li>
+        <li><b>違うと思ったら</b>：<b>反例を1つ</b>具体的な数で出せば終わり。まず $\boldsymbol{0}\in W$ かを見る（定数項があるとここで落ちる）。</li>
+      </ul>
+      <p>(ii)(iii) をまとめて「$\boldsymbol{x},\boldsymbol{y}\in W,\ a,b\in\mathbb{R}\Rightarrow a\boldsymbol{x}+b\boldsymbol{y}\in W$」と書いてもいい。</p>
+    </div>
+  </div>
+  <div class="step"><h3><span class="n">3</span>注意</h3>
+    <div class="redpen">
+      <p><b>反例</b>「閉じていない」と言うだけでは不十分。「$(1,0)^T,(0,1)^T\in W$ だが和 $(1,1)^T\notin W$」のように数で示す。</p>
+      <p><b>不等式</b>$x_1\ge0$ は和では閉じるけど、$-1$ 倍で閉じない。(ii) だけ見て OK にしない。</p>
+      <p><b>(i)だけ</b>$\boldsymbol{0}\in W$ は必要条件。$x_1x_2=0$ は $\boldsymbol{0}$ を含むけど部分空間じゃない。</p>
+    </div>
+  </div>
+  <div class="step"><h3><span class="n">4</span>解く</h3>
+    <div class="probs">
+    <div class="q"><div class="qh"><span class="tag">2-1</span></div>
+      <div class="body">次の集合が部分空間かどうか判定せよ（部分空間でないものは反例を示せ）。<br>(1) $W_1=\{\boldsymbol{x}\in\mathbb{R}^3\mid x_1+2x_2-x_3=0\}$　(2) $W_2=\{\boldsymbol{x}\in\mathbb{R}^2\mid x_1+x_2=1\}$<br>(3) $W_3=\{\boldsymbol{x}\in\mathbb{R}^2\mid x_1x_2=0\}$　(4) $W_4=\{\boldsymbol{x}\in\mathbb{R}^2\mid x_1\ge0\}$</div>
+      <details><summary>解答</summary><div class="ans">
+        (1) <span class="fin">部分空間</span>（証明は 2-2）<br>
+        (2) <span class="fin">部分空間でない</span>。$0+0\ne1$ なので $\boldsymbol{0}\notin W_2$。<br>
+        (3) <span class="fin">部分空間でない</span>。$(1,0)^T,(0,1)^T\in W_3$ だが和 $(1,1)^T$ は $1\cdot1\ne0$ で $\notin W_3$。<br>
+        (4) <span class="fin">部分空間でない</span>。$(1,0)^T\in W_4$ だが $(-1)\cdot(1,0)^T=(-1,0)^T\notin W_4$。
+      </div></details></div>
+    <div class="q"><div class="qh"><span class="tag">2-2</span><span class="src">証明</span></div>
+      <div class="body">$W_1=\{\boldsymbol{x}\in\mathbb{R}^3\mid x_1+2x_2-x_3=0\}$ が $\mathbb{R}^3$ の部分空間であることを示せ。</div>
+      <details><summary>解答</summary><div class="ans">
+        (i) $0+2\cdot0-0=0$ より $\boldsymbol{0}\in W_1$。<br>
+        (ii) $\boldsymbol{x},\boldsymbol{y}\in W_1$ とすると $(x_1+y_1)+2(x_2+y_2)-(x_3+y_3)=(x_1+2x_2-x_3)+(y_1+2y_2-y_3)=0+0=0$。よって $\boldsymbol{x}+\boldsymbol{y}\in W_1$。<br>
+        (iii) $\boldsymbol{x}\in W_1,\ c\in\mathbb{R}$ とすると $cx_1+2cx_2-cx_3=c(x_1+2x_2-x_3)=0$。よって $c\boldsymbol{x}\in W_1$。<br>
+        <span class="fin">以上より $W_1$ は部分空間。</span>
+      </div></details></div>
+    <div class="q"><div class="qh"><span class="tag">2-3</span></div>
+      <div class="body">$W=\left\langle \begin{pmatrix}1\\1\\0\end{pmatrix},\begin{pmatrix}0\\1\\1\end{pmatrix}\right\rangle$ とする。(1) $\begin{pmatrix}1\\3\\2\end{pmatrix}\in W$ か。(2) $\begin{pmatrix}1\\0\\0\end{pmatrix}\in W$ か。</div>
+      <details><summary>解答</summary><div class="ans">
+        $s\begin{pmatrix}1\\1\\0\end{pmatrix}+t\begin{pmatrix}0\\1\\1\end{pmatrix}=\begin{pmatrix}s\\s+t\\t\end{pmatrix}$ の形になるかを見る。<br>
+        (1) $s=1,\ t=2$ で $s+t=3$ も合う。<span class="fin">$\in W$（$=1\cdot(\cdot)+2\cdot(\cdot)$）</span><br>
+        (2) $s=1,\ t=0$ だと $s+t=1\ne0$。<span class="fin">$\notin W$</span>
+      </div></details></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= 3 ======================= -->
+<section class="ch" id="c3" data-title="同次連立1次方程式の解空間">
+  <div class="ch-top"><span class="ch-no">第3週</span><h2>同次連立1次方程式の解空間</h2><span class="ch-meta">計算問題の本命。簡約化 → 自由変数をパラメータに</span></div>
+  <div class="step"><h3><span class="n">1</span>覚える</h3>
+    <div class="memo">
+      <div class="row"><span class="lbl">同次連立方程式</span><span class="val">$A\boldsymbol{x}=\boldsymbol{0}$（右辺がぜんぶ0）。$\boldsymbol{x}=\boldsymbol{0}$（自明解）は必ず解</span></div>
+      <div class="row"><span class="lbl">解空間</span><span class="val">$\{\boldsymbol{x}\in\mathbb{R}^n\mid A\boldsymbol{x}=\boldsymbol{0}\}$ は <span class="key">$\mathbb{R}^n$ の部分空間</span>（$A$ の核 $\operatorname{Ker}A$ とも）</span></div>
+      <div class="row"><span class="lbl">次元</span><span class="val"><span class="key">$\dim(\text{解空間})=n-\operatorname{rank}A$</span>（$n$＝未知数の個数）＝自由変数の個数</span></div>
+      <div class="row"><span class="lbl">自明解のみ</span><span class="val"><span class="key">$\operatorname{rank}A=n$</span>（正方行列なら $\det A\ne0$）</span></div>
+      <div class="row"><span class="lbl">基本解</span><span class="val">自由変数の1つを1、他を0にした解。<span class="key">基本解の組が解空間の基底</span></span></div>
+    </div>
+  </div>
+  <div class="step"><h3><span class="n">2</span>わかる</h3>
+    <div class="explain">
+      <p><b>手順</b>（例：$x_1+2x_2-x_3+x_4=0,\ 2x_1+4x_2+x_3+5x_4=0,\ x_1+2x_2+2x_3+4x_4=0$）</p>
+      <ol>
+        <li>係数行列を簡約化：$\begin{pmatrix}1&2&-1&1\\2&4&1&5\\1&2&2&4\end{pmatrix}\to\begin{pmatrix}1&2&0&2\\0&0&1&1\\0&0&0&0\end{pmatrix}$（rank 2）</li>
+        <li>段の先頭（主成分）がない列の変数 $x_2,x_4$ を自由変数にして $x_2=s,\ x_4=t$</li>
+        <li>残りを解く：$x_1=-2s-2t,\ x_3=-t$</li>
+        <li>パラメータごとにまとめる：</li>
+      </ol>
+      <div class="f">\[ \boldsymbol{x}=s\begin{pmatrix}-2\\1\\0\\0\end{pmatrix}+t\begin{pmatrix}-2\\0\\-1\\1\end{pmatrix}\qquad(s,t\in\mathbb{R}) \]</div>
+      <p>解空間の基底はこの2本、次元は $4-2=2$。「未知数4個 − 条件の実質的な本数2本 ＝ 自由度2」と考えると覚えやすい。</p>
+    </div>
+  </div>
+  <div class="step"><h3><span class="n">3</span>注意</h3>
+    <div class="redpen">
+      <p><b>検算</b>出てきた基本解を元の式に代入して 0 になるか確かめる。1本ずつやれば30秒で終わるし、符号ミスがほぼ消える。</p>
+      <p><b>n の数え間違い</b>次元は「未知数の個数 − rank」。式の本数から引かない。</p>
+      <p><b>基底は1つじゃない</b>自由変数の選び方で基本解は変わる。答えが模範解答と違っても、同じ空間を張っていて本数が合っていれば正解。</p>
+    </div>
+  </div>
+  <div class="step"><h3><span class="n">4</span>解く</h3>
+    <div class="probs">
+    <div class="q"><div class="qh"><span class="tag">3-1</span></div>
+      <div class="body">次の同次連立1次方程式の解空間の基底と次元を求めよ。<br>$\begin{cases}x_1+x_2+x_3=0\\x_1+2x_2+3x_3=0\\2x_1+3x_2+4x_3=0\end{cases}$</div>
+      <details><summary>解答</summary><div class="ans">
+        $\begin{pmatrix}1&1&1\\1&2&3\\2&3&4\end{pmatrix}\to\begin{pmatrix}1&0&-1\\0&1&2\\0&0&0\end{pmatrix}$（rank 2）。$x_3=c$ とおくと $x_1=c,\ x_2=-2c$。<br>
+        <span class="fin">基底 $\left\{\begin{pmatrix}1\\-2\\1\end{pmatrix}\right\}$、次元 $1$</span>（$3-2=1$）
+      </div></details></div>
+    <div class="q"><div class="qh"><span class="tag">3-2</span></div>
+      <div class="body">次の方程式の解空間の基底と次元を求めよ。<br>$\begin{cases}x_1+2x_2-x_3+x_4=0\\x_2+x_3-x_4=0\end{cases}$</div>
+      <details><summary>解答</summary><div class="ans">
+        簡約化：$\begin{pmatrix}1&2&-1&1\\0&1&1&-1\end{pmatrix}\to\begin{pmatrix}1&0&-3&3\\0&1&1&-1\end{pmatrix}$。$x_3=s,\ x_4=t$ で $x_1=3s-3t,\ x_2=-s+t$。<br>
+        <span class="fin">基底 $\left\{\begin{pmatrix}3\\-1\\1\\0\end{pmatrix},\begin{pmatrix}-3\\1\\0\\1\end{pmatrix}\right\}$、次元 $2$</span>
+      </div></details></div>
+    <div class="q"><div class="qh"><span class="tag">3-3</span></div>
+      <div class="body">$A=\begin{pmatrix}1&-1&2\\2&1&1\\1&2&k\end{pmatrix}$ とする。$A\boldsymbol{x}=\boldsymbol{0}$ が自明でない解をもつような $k$ と、そのときの解を求めよ。</div>
+      <details><summary>解答</summary><div class="ans">
+        $\det A=1(k-2)-(-1)(2k-1)+2(4-1)=3k+3$。自明でない解 ⇔ $\det A=0$ ⇔ <span class="fin">$k=-1$</span>。<br>
+        このとき第1・2式 $x_1-x_2+2x_3=0,\ 2x_1+x_2+x_3=0$ を足して $3x_1+3x_3=0$ → $x_1=-x_3$、$x_2=x_1+2x_3=x_3$。<br>
+        <span class="fin">$\boldsymbol{x}=c\begin{pmatrix}-1\\1\\1\end{pmatrix}$（$c$ は任意）</span>。第3式 $-1+2-1=0$ も OK。
+      </div></details></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= 4 ======================= -->
+<section class="ch" id="c4" data-title="基底と次元">
+  <div class="ch-top"><span class="ch-no">第4週</span><h2>部分空間の基底と次元</h2><span class="ch-meta">基底＝「独立」＋「生成」。次元＝基底の本数</span></div>
+  <div class="step"><h3><span class="n">1</span>覚える</h3>
+    <div class="memo">
+      <div class="row"><span class="lbl">基底</span><span class="val">$\{\boldsymbol{v}_1,\dots,\boldsymbol{v}_r\}$ が $W$ の基底 ⇔ <span class="key">(1) 1次独立 かつ (2) $W$ を生成する</span></span></div>
+      <div class="row"><span class="lbl">次元</span><span class="val">$\dim W=$ <span class="key">基底のベクトルの本数</span>（基底の取り方によらない）。$\dim\{\boldsymbol{0}\}=0$</span></div>
+      <div class="row"><span class="lbl">標準基底</span><span class="val">$\boldsymbol{e}_1=(1,0,\dots,0)^T,\dots,\boldsymbol{e}_n$。<span class="key">$\dim\mathbb{R}^n=n$</span></span></div>
+      <div class="row"><span class="lbl">生成空間の次元</span><span class="val"><span class="key">$\dim\langle\boldsymbol{a}_1,\dots,\boldsymbol{a}_k\rangle=\operatorname{rank}(\boldsymbol{a}_1\ \cdots\ \boldsymbol{a}_k)$</span></span></div>
+      <div class="row"><span class="lbl">生成空間の基底</span><span class="val">列に並べて簡約化 → <span class="key">主成分のある列に対応する元のベクトル</span></span></div>
+      <div class="row"><span class="lbl">$\mathbb{R}^n$ の基底判定</span><span class="val">$n$ 本なら <span class="key">独立でありさえすれば基底</span>（$\det\ne0$ でOK）</span></div>
+      <div class="row"><span class="lbl">座標（成分）</span><span class="val">$\boldsymbol{x}=c_1\boldsymbol{v}_1+\cdots+c_n\boldsymbol{v}_n$ の $(c_1,\dots,c_n)$。<span class="key">表し方はただ1通り</span></span></div>
+    </div>
+  </div>
+  <div class="step"><h3><span class="n">2</span>わかる</h3>
+    <div class="explain">
+      <p>基底は「その空間の座標軸のセット」。独立じゃないとムダな軸がある（表し方が1通りに決まらない）、生成しないと軸が足りない（届かない点がある）。</p>
+      <p><b>例</b>：$\boldsymbol{a}_1=(1,2,0,1)^T,\ \boldsymbol{a}_2=(2,4,1,1)^T,\ \boldsymbol{a}_3=(1,2,1,0)^T,\ \boldsymbol{a}_4=(0,1,1,1)^T$</p>
+      <div class="f">\[ (\boldsymbol{a}_1\ \boldsymbol{a}_2\ \boldsymbol{a}_3\ \boldsymbol{a}_4)\ \longrightarrow\ \begin{pmatrix}1&0&-1&0\\0&1&1&0\\0&0&0&1\\0&0&0&0\end{pmatrix} \]</div>
+      <p>主成分は第1・2・4列 → 基底 $\{\boldsymbol{a}_1,\boldsymbol{a}_2,\boldsymbol{a}_4\}$、次元 3。第3列から $\boldsymbol{a}_3=-\boldsymbol{a}_1+\boldsymbol{a}_2$ も読める。</p>
+      <p>解空間（第3週）の基本解の組も、そのまま基底になっている。</p>
+    </div>
+  </div>
+  <div class="step"><h3><span class="n">3</span>注意</h3>
+    <div class="redpen">
+      <p><b>簡約後の列を答えない</b>基底として書くのは<b>元のベクトル</b> $\boldsymbol{a}_1,\boldsymbol{a}_2,\boldsymbol{a}_4$。簡約化した行列の列 $(1,0,0,0)^T$ などを書くと別の空間になる。</p>
+      <p><b>両方示す</b>「基底であることを示せ」は独立と生成の両方が必要。ただし $\mathbb{R}^n$ に $n$ 本なら独立だけで十分、と一言書いておく。</p>
+    </div>
+  </div>
+  <div class="step"><h3><span class="n">4</span>解く</h3>
+    <div class="probs">
+    <div class="q"><div class="qh"><span class="tag">4-1</span></div>
+      <div class="body">$\boldsymbol{a}_1=\begin{pmatrix}1\\2\\0\\1\end{pmatrix},\boldsymbol{a}_2=\begin{pmatrix}2\\4\\1\\1\end{pmatrix},\boldsymbol{a}_3=\begin{pmatrix}1\\2\\1\\0\end{pmatrix},\boldsymbol{a}_4=\begin{pmatrix}0\\1\\1\\1\end{pmatrix}$ が生成する部分空間 $W$ の基底と次元を求め、基底に入らないベクトルを基底の1次結合で表せ。</div>
+      <details><summary>解答</summary><div class="ans">
+        「わかる」の簡約化より主成分は第1・2・4列。<br>
+        <span class="fin">基底 $\{\boldsymbol{a}_1,\boldsymbol{a}_2,\boldsymbol{a}_4\}$、$\dim W=3$、$\boldsymbol{a}_3=-\boldsymbol{a}_1+\boldsymbol{a}_2$</span><br>
+        検算：$-(1,2,0,1)+(2,4,1,1)=(1,2,1,0)$ ✓
+      </div></details></div>
+    <div class="q"><div class="qh"><span class="tag">4-2</span></div>
+      <div class="body">$\boldsymbol{v}_1=\begin{pmatrix}1\\1\\0\end{pmatrix},\boldsymbol{v}_2=\begin{pmatrix}1\\0\\1\end{pmatrix},\boldsymbol{v}_3=\begin{pmatrix}0\\1\\1\end{pmatrix}$ が $\mathbb{R}^3$ の基底であることを示し、$\boldsymbol{x}=\begin{pmatrix}2\\3\\5\end{pmatrix}$ のこの基底に関する座標を求めよ。</div>
+      <details><summary>解答</summary><div class="ans">
+        $\det(\boldsymbol{v}_1\ \boldsymbol{v}_2\ \boldsymbol{v}_3)=\det\begin{pmatrix}1&1&0\\1&0&1\\0&1&1\end{pmatrix}=1(0-1)-1(1-0)+0=-2\ne0$ → 1次独立。$\mathbb{R}^3$ の3本の独立なベクトルなので基底。<br>
+        $c_1\boldsymbol{v}_1+c_2\boldsymbol{v}_2+c_3\boldsymbol{v}_3=\boldsymbol{x}$：$c_1+c_2=2,\ c_1+c_3=3,\ c_2+c_3=5$。3式の和から $c_1+c_2+c_3=5$、よって $c_3=3,\ c_2=2,\ c_1=0$。<br>
+        <span class="fin">座標 $(0,\ 2,\ 3)$</span>
+      </div></details></div>
+    <div class="q"><div class="qh"><span class="tag">4-3</span></div>
+      <div class="body">$W=\{\boldsymbol{x}\in\mathbb{R}^3\mid x_1-x_2+2x_3=0\}$ の基底と次元を求めよ。</div>
+      <details><summary>解答</summary><div class="ans">
+        $x_2=s,\ x_3=t$ とおくと $x_1=s-2t$。$\boldsymbol{x}=s(1,1,0)^T+t(-2,0,1)^T$。<br>
+        <span class="fin">基底 $\left\{\begin{pmatrix}1\\1\\0\end{pmatrix},\begin{pmatrix}-2\\0\\1\end{pmatrix}\right\}$、$\dim W=2$</span>（原点を通る平面なので2次元、で直感とも合う）
+      </div></details></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= 5 ======================= -->
+<section class="ch" id="c5" data-title="内積・正規直交基底">
+  <div class="ch-top"><span class="ch-no">第5週</span><h2>ベクトルの内積、正規直交基底</h2><span class="ch-meta">グラム・シュミットの直交化は手順を体で覚える</span></div>
+  <div class="step"><h3><span class="n">1</span>覚える</h3>
+    <div class="memo">
+      <div class="row"><span class="lbl">標準内積</span><span class="val"><span class="key">$(\boldsymbol{a},\boldsymbol{b})=a_1b_1+a_2b_2+\cdots+a_nb_n$</span>（$=\boldsymbol{a}^T\boldsymbol{b}$）</span></div>
+      <div class="row"><span class="lbl">大きさ</span><span class="val"><span class="key">$\|\boldsymbol{a}\|=\sqrt{(\boldsymbol{a},\boldsymbol{a})}$</span></span></div>
+      <div class="row"><span class="lbl">なす角</span><span class="val"><span class="key">$\cos\theta=\dfrac{(\boldsymbol{a},\boldsymbol{b})}{\|\boldsymbol{a}\|\,\|\boldsymbol{b}\|}$</span>、<span class="key">直交 ⇔ $(\boldsymbol{a},\boldsymbol{b})=0$</span></span></div>
+      <div class="row"><span class="lbl">内積の性質</span><span class="val">$(\boldsymbol{a},\boldsymbol{b})=(\boldsymbol{b},\boldsymbol{a})$、$(\boldsymbol{a}+\boldsymbol{b},\boldsymbol{c})=(\boldsymbol{a},\boldsymbol{c})+(\boldsymbol{b},\boldsymbol{c})$、$(c\boldsymbol{a},\boldsymbol{b})=c(\boldsymbol{a},\boldsymbol{b})$、$(\boldsymbol{a},\boldsymbol{a})\ge0$（$=0$ ⇔ $\boldsymbol{a}=\boldsymbol{0}$）</span></div>
+      <div class="row"><span class="lbl">シュワルツ</span><span class="val"><span class="key">$|(\boldsymbol{a},\boldsymbol{b})|\le\|\boldsymbol{a}\|\,\|\boldsymbol{b}\|$</span></span></div>
+      <div class="row"><span class="lbl">三角不等式</span><span class="val"><span class="key">$\|\boldsymbol{a}+\boldsymbol{b}\|\le\|\boldsymbol{a}\|+\|\boldsymbol{b}\|$</span></span></div>
+      <div class="row"><span class="lbl">正射影</span><span class="val">$\boldsymbol{a}$ の $\boldsymbol{u}$ 方向成分：<span class="key">$\dfrac{(\boldsymbol{a},\boldsymbol{u})}{(\boldsymbol{u},\boldsymbol{u})}\,\boldsymbol{u}$</span></span></div>
+      <div class="row"><span class="lbl">正規直交基底</span><span class="val"><span class="key">$(\boldsymbol{u}_i,\boldsymbol{u}_j)=\delta_{ij}$</span>（長さ1、互いに直交）。座標は <span class="key">$c_i=(\boldsymbol{x},\boldsymbol{u}_i)$</span> で一発</span></div>
+      <div class="row"><span class="lbl">グラム・シュミット</span><span class="val">$\boldsymbol{u}_1=\dfrac{\boldsymbol{a}_1}{\|\boldsymbol{a}_1\|}$<br><span class="key">$\boldsymbol{b}_2=\boldsymbol{a}_2-(\boldsymbol{a}_2,\boldsymbol{u}_1)\boldsymbol{u}_1$</span>、$\boldsymbol{u}_2=\dfrac{\boldsymbol{b}_2}{\|\boldsymbol{b}_2\|}$<br><span class="key">$\boldsymbol{b}_3=\boldsymbol{a}_3-(\boldsymbol{a}_3,\boldsymbol{u}_1)\boldsymbol{u}_1-(\boldsymbol{a}_3,\boldsymbol{u}_2)\boldsymbol{u}_2$</span>、$\boldsymbol{u}_3=\dfrac{\boldsymbol{b}_3}{\|\boldsymbol{b}_3\|}$</span></div>
+    </div>
+  </div>
+  <div class="step"><h3><span class="n">2</span>わかる</h3>
+    <div class="explain">
+      <p><b>グラム・シュミットの気持ち</b>：$\boldsymbol{a}_2$ から「すでに作った $\boldsymbol{u}_1$ 方向の成分（正射影）」を引くと、残りは $\boldsymbol{u}_1$ に直交する。それを長さ1にする。3本目も同じで、$\boldsymbol{u}_1,\boldsymbol{u}_2$ 方向の成分を両方引く。</p>
+      <p><b>例</b>：$\boldsymbol{a}_1=(1,1,0)^T,\ \boldsymbol{a}_2=(1,0,1)^T,\ \boldsymbol{a}_3=(0,1,1)^T$</p>
+      <ul>
+        <li>$\boldsymbol{u}_1=\frac{1}{\sqrt2}(1,1,0)^T$</li>
+        <li>$(\boldsymbol{a}_2,\boldsymbol{u}_1)=\frac1{\sqrt2}$ → $\boldsymbol{b}_2=(1,0,1)^T-\frac12(1,1,0)^T=\frac12(1,-1,2)^T$ → $\boldsymbol{u}_2=\frac1{\sqrt6}(1,-1,2)^T$</li>
+        <li>$(\boldsymbol{a}_3,\boldsymbol{u}_1)=\frac1{\sqrt2},\ (\boldsymbol{a}_3,\boldsymbol{u}_2)=\frac1{\sqrt6}$ → $\boldsymbol{b}_3=(0,1,1)^T-\frac12(1,1,0)^T-\frac16(1,-1,2)^T=\frac23(-1,1,1)^T$ → $\boldsymbol{u}_3=\frac1{\sqrt3}(-1,1,1)^T$</li>
+      </ul>
+      <p><b>計算のコツ</b>：$\boldsymbol{b}_2$ は向きだけ大事なので、$\frac12(1,-1,2)^T$ の $\frac12$ は捨てて $(1,-1,2)^T$ を正規化していい。分数地獄を避けられる。</p>
+      <p><b>シュワルツの不等式の証明</b>（出るなら定番）：$\boldsymbol{b}\ne\boldsymbol{0}$ として、任意の実数 $t$ で $\|\boldsymbol{a}+t\boldsymbol{b}\|^2=\|\boldsymbol{b}\|^2t^2+2(\boldsymbol{a},\boldsymbol{b})t+\|\boldsymbol{a}\|^2\ge0$。$t$ の2次式が常に $\ge0$ なので判別式 $\le0$：$(\boldsymbol{a},\boldsymbol{b})^2-\|\boldsymbol{a}\|^2\|\boldsymbol{b}\|^2\le0$。$\boldsymbol{b}=\boldsymbol{0}$ なら両辺0で成立。</p>
+    </div>
+  </div>
+  <div class="step"><h3><span class="n">3</span>注意</h3>
+    <div class="redpen">
+      <p><b>正規化の忘れ</b>「正規直交基底を求めよ」なら最後に必ず長さ1にする。直交化だけで止めると半分しか点がない。</p>
+      <p><b>引くのは u の方</b>$\boldsymbol{b}_3$ を作るとき、引くのは正規化した $\boldsymbol{u}_1,\boldsymbol{u}_2$ 方向の成分。正規化前の $\boldsymbol{b}_2$ を使うなら $\frac{(\boldsymbol{a}_3,\boldsymbol{b}_2)}{(\boldsymbol{b}_2,\boldsymbol{b}_2)}\boldsymbol{b}_2$ と分母が要る。</p>
+      <p><b>検算</b>できた $\boldsymbol{u}_i$ どうしの内積が 0、各自の長さが 1 かを最後に確かめる。</p>
+    </div>
+  </div>
+  <div class="step"><h3><span class="n">4</span>解く</h3>
+    <div class="probs">
+    <div class="q"><div class="qh"><span class="tag">5-1</span></div>
+      <div class="body">$\boldsymbol{a}=\begin{pmatrix}1\\0\\1\end{pmatrix},\ \boldsymbol{b}=\begin{pmatrix}1\\1\\0\end{pmatrix}$ のなす角 $\theta$ を求めよ。また $\boldsymbol{a},\boldsymbol{b}$ の両方に直交する単位ベクトルを求めよ。</div>
+      <details><summary>解答</summary><div class="ans">
+        $(\boldsymbol{a},\boldsymbol{b})=1,\ \|\boldsymbol{a}\|=\|\boldsymbol{b}\|=\sqrt2$ → $\cos\theta=\frac12$。<span class="fin">$\theta=\dfrac{\pi}{3}$</span><br>
+        $\boldsymbol{x}=(x,y,z)^T$ が $x+z=0,\ x+y=0$ → $\boldsymbol{x}=c(1,-1,-1)^T$。<span class="fin">$\pm\dfrac1{\sqrt3}\begin{pmatrix}1\\-1\\-1\end{pmatrix}$</span>
+      </div></details></div>
+    <div class="q"><div class="qh"><span class="tag">5-2</span></div>
+      <div class="body">$\boldsymbol{a}=\begin{pmatrix}3\\1\\2\end{pmatrix}$ を、$\boldsymbol{u}=\begin{pmatrix}1\\1\\0\end{pmatrix}$ に平行なベクトルと垂直なベクトルの和に分解せよ。</div>
+      <details><summary>解答</summary><div class="ans">
+        正射影：$\frac{(\boldsymbol{a},\boldsymbol{u})}{(\boldsymbol{u},\boldsymbol{u})}\boldsymbol{u}=\frac{4}{2}(1,1,0)^T=(2,2,0)^T$。残り $(3,1,2)^T-(2,2,0)^T=(1,-1,2)^T$。<br>
+        <span class="fin">$\boldsymbol{a}=\begin{pmatrix}2\\2\\0\end{pmatrix}+\begin{pmatrix}1\\-1\\2\end{pmatrix}$</span>（$(1,-1,2)\cdot(1,1,0)=0$ で直交 ✓）
+      </div></details></div>
+    <div class="q"><div class="qh"><span class="tag">5-3</span></div>
+      <div class="body">$\boldsymbol{a}_1=\begin{pmatrix}1\\1\\0\end{pmatrix},\boldsymbol{a}_2=\begin{pmatrix}1\\0\\1\end{pmatrix},\boldsymbol{a}_3=\begin{pmatrix}0\\1\\1\end{pmatrix}$ からグラム・シュミットの直交化法で正規直交基底をつくれ。</div>
+      <details><summary>解答</summary><div class="ans">
+        「わかる」の計算どおり。<br>
+        <span class="fin">$\boldsymbol{u}_1=\dfrac1{\sqrt2}\begin{pmatrix}1\\1\\0\end{pmatrix},\ \boldsymbol{u}_2=\dfrac1{\sqrt6}\begin{pmatrix}1\\-1\\2\end{pmatrix},\ \boldsymbol{u}_3=\dfrac1{\sqrt3}\begin{pmatrix}-1\\1\\1\end{pmatrix}$</span><br>
+        検算：$(\boldsymbol{u}_1,\boldsymbol{u}_2)\propto1-1+0=0$、$(\boldsymbol{u}_1,\boldsymbol{u}_3)\propto-1+1+0=0$、$(\boldsymbol{u}_2,\boldsymbol{u}_3)\propto-1-1+2=0$ ✓
+      </div></details></div>
+    <div class="q"><div class="qh"><span class="tag">5-4</span></div>
+      <div class="body">5-3 の正規直交基底 $\{\boldsymbol{u}_1,\boldsymbol{u}_2,\boldsymbol{u}_3\}$ に関する $\boldsymbol{x}=\begin{pmatrix}2\\0\\1\end{pmatrix}$ の座標を求めよ。</div>
+      <details><summary>解答</summary><div class="ans">
+        正規直交基底なので $c_i=(\boldsymbol{x},\boldsymbol{u}_i)$。<br>
+        $c_1=\frac{2}{\sqrt2}=\sqrt2,\ c_2=\frac{2-0+2}{\sqrt6}=\frac4{\sqrt6},\ c_3=\frac{-2+0+1}{\sqrt3}=-\frac1{\sqrt3}$<br>
+        <span class="fin">座標 $\left(\sqrt2,\ \dfrac{4}{\sqrt6},\ -\dfrac{1}{\sqrt3}\right)$</span>（連立方程式を解かなくていいのが正規直交基底のありがたみ）
+      </div></details></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= 6 ======================= -->
+<section class="ch" id="c6" data-title="平面上の一次変換">
+  <div class="ch-top"><span class="ch-no">第8週<span class="badge">出るかも</span></span><h2>平面上の1次変換（回転、折り返し）</h2><span class="ch-meta">行列は「$\boldsymbol{e}_1,\boldsymbol{e}_2$ の行き先を並べたもの」</span></div>
+  <div class="step"><h3><span class="n">1</span>覚える</h3>
+    <div class="memo">
+      <div class="row"><span class="lbl">線形（1次変換）</span><span class="val"><span class="key">$f(\boldsymbol{x}+\boldsymbol{y})=f(\boldsymbol{x})+f(\boldsymbol{y})$、$f(c\boldsymbol{x})=cf(\boldsymbol{x})$</span></span></div>
+      <div class="row"><span class="lbl">表現行列</span><span class="val"><span class="key">$A=(f(\boldsymbol{e}_1)\ \ f(\boldsymbol{e}_2))$</span>、$f(\boldsymbol{x})=A\boldsymbol{x}$</span></div>
+      <div class="row"><span class="lbl">回転（角 $\theta$）</span><span class="val"><span class="key">$R(\theta)=\begin{pmatrix}\cos\theta&-\sin\theta\\ \sin\theta&\cos\theta\end{pmatrix}$</span>（反時計回り）</span></div>
+      <div class="row"><span class="lbl">折り返し</span><span class="val">原点を通り $x$ 軸と角 $\alpha$ の直線に関して <span class="key">$S(\alpha)=\begin{pmatrix}\cos2\alpha&\sin2\alpha\\ \sin2\alpha&-\cos2\alpha\end{pmatrix}$</span></span></div>
+      <div class="row"><span class="lbl">よく出る折り返し</span><span class="val">$x$ 軸 $\begin{pmatrix}1&0\\0&-1\end{pmatrix}$、$y$ 軸 $\begin{pmatrix}-1&0\\0&1\end{pmatrix}$、$y=x$ <span class="key">$\begin{pmatrix}0&1\\1&0\end{pmatrix}$</span>、原点対称 $=R(\pi)=-E$</span></div>
+      <div class="row"><span class="lbl">合成</span><span class="val">$f$ のあと $g$：<span class="key">$g\circ f$ の行列 $=BA$</span>（後にやる方が左）</span></div>
+      <div class="row"><span class="lbl">回転の公式</span><span class="val"><span class="key">$R(\alpha)R(\beta)=R(\alpha+\beta)$</span>、$R(\theta)^{-1}=R(-\theta)$、$R(\theta)^n=R(n\theta)$、$\det R=1$</span></div>
+      <div class="row"><span class="lbl">折り返しの公式</span><span class="val"><span class="key">$S(\alpha)^2=E$</span>、<span class="key">$S(\alpha)S(\beta)=R(2(\alpha-\beta))$</span>、$\det S=-1$</span></div>
+    </div>
+  </div>
+  <div class="step"><h3><span class="n">2</span>わかる</h3>
+    <div class="explain">
+      <p><b>行列は暗記しなくても出せる</b>：$\boldsymbol{e}_1=(1,0)^T$ を角 $\theta$ 回すと $(\cos\theta,\sin\theta)^T$、$\boldsymbol{e}_2=(0,1)^T$ を回すと $(-\sin\theta,\cos\theta)^T$。これを列に並べたのが $R(\theta)$。</p>
+      <p>折り返しも同じ。角 $\alpha$ の直線で折り返すと、$\boldsymbol{e}_1$（角0）は角 $2\alpha$ へ → $(\cos2\alpha,\sin2\alpha)^T$。$\boldsymbol{e}_2$（角 $\frac\pi2$）は角 $2\alpha-\frac\pi2$ へ → $(\sin2\alpha,-\cos2\alpha)^T$。</p>
+      <p><b>直線の傾きから</b>：$y=mx$ なら $\tan\alpha=m$。$y=\sqrt3x$ → $\alpha=\frac\pi3$、$y=\frac{x}{\sqrt3}$ → $\alpha=\frac\pi6$、$y=-x$ → $\alpha=-\frac\pi4$。</p>
+      <p><b>上の図で確認</b>：ページ上部の旗を「折り返し」にすると、旗が裏返る（向きが逆になる）。これが $\det=-1$ の意味。回転は裏返らないので $\det=+1$。折り返しを2回すると裏返りが打ち消して回転になる（$S(\alpha)S(\beta)=R(2(\alpha-\beta))$）。</p>
+    </div>
+  </div>
+  <div class="step"><h3><span class="n">3</span>注意</h3>
+    <div class="redpen">
+      <p><b>符号の位置</b>$R(\theta)$ の $-\sin\theta$ は<b>右上</b>。迷ったら $\boldsymbol{e}_1$ を回して確かめる（$\theta=\frac\pi2$ で $\boldsymbol{e}_1\to\boldsymbol{e}_2$ になるか）。</p>
+      <p><b>角度は2倍</b>折り返しの行列に入るのは直線の角 $\alpha$ じゃなくて $2\alpha$。</p>
+      <p><b>合成の順番</b>「$f$ してから $g$」は $BA$。$AB$ と書くと一般に別物（回転どうしは可換だけど、回転と折り返しは可換じゃない）。</p>
+      <p><b>線形じゃない例</b>平行移動 $f(\boldsymbol{x})=\boldsymbol{x}+\boldsymbol{b}$（$\boldsymbol{b}\ne\boldsymbol{0}$）は $f(\boldsymbol{0})\ne\boldsymbol{0}$ なので線形じゃない。</p>
+    </div>
+  </div>
+  <div class="step"><h3><span class="n">4</span>解く</h3>
+    <div class="probs">
+    <div class="q"><div class="qh"><span class="tag">6-1</span></div>
+      <div class="body">点 $(2,1)$ を原点のまわりに $\frac\pi3$ 回転した点を求めよ。</div>
+      <details><summary>解答</summary><div class="ans">
+        $R(\tfrac\pi3)=\begin{pmatrix}\frac12&-\frac{\sqrt3}2\\ \frac{\sqrt3}2&\frac12\end{pmatrix}$、$R\begin{pmatrix}2\\1\end{pmatrix}=\begin{pmatrix}1-\frac{\sqrt3}2\\ \sqrt3+\frac12\end{pmatrix}$<br>
+        <span class="fin">$\left(1-\dfrac{\sqrt3}{2},\ \sqrt3+\dfrac12\right)$</span>
+      </div></details></div>
+    <div class="q"><div class="qh"><span class="tag">6-2</span></div>
+      <div class="body">直線 $y=\sqrt3x$ に関する折り返しを表す行列を求め、点 $(2,0)$ の像を求めよ。</div>
+      <details><summary>解答</summary><div class="ans">
+        $\alpha=\frac\pi3$、$2\alpha=\frac{2\pi}3$。<span class="fin">$S=\begin{pmatrix}-\frac12&\frac{\sqrt3}2\\ \frac{\sqrt3}2&\frac12\end{pmatrix}$</span><br>
+        $S\begin{pmatrix}2\\0\end{pmatrix}=\begin{pmatrix}-1\\ \sqrt3\end{pmatrix}$。<span class="fin">$(-1,\sqrt3)$</span>（角0・長さ2の点が角 $\frac{2\pi}3$ に移る、で図とも合う）
+      </div></details></div>
+    <div class="q"><div class="qh"><span class="tag">6-3</span><span class="src">証明</span></div>
+      <div class="body">$S(\alpha)S(\beta)=R(2(\alpha-\beta))$ を示せ。</div>
+      <details><summary>解答</summary><div class="ans">
+        $S(\alpha)S(\beta)=\begin{pmatrix}\cos2\alpha&\sin2\alpha\\ \sin2\alpha&-\cos2\alpha\end{pmatrix}\begin{pmatrix}\cos2\beta&\sin2\beta\\ \sin2\beta&-\cos2\beta\end{pmatrix}$<br>
+        (1,1)成分 $\cos2\alpha\cos2\beta+\sin2\alpha\sin2\beta=\cos(2\alpha-2\beta)$<br>
+        (1,2)成分 $\cos2\alpha\sin2\beta-\sin2\alpha\cos2\beta=-\sin(2\alpha-2\beta)$<br>
+        (2,1)成分 $\sin2\alpha\cos2\beta-\cos2\alpha\sin2\beta=\sin(2\alpha-2\beta)$<br>
+        (2,2)成分 $\sin2\alpha\sin2\beta+\cos2\alpha\cos2\beta=\cos(2\alpha-2\beta)$<br>
+        <span class="fin">よって $R(2\alpha-2\beta)$。</span>折り返し2回＝直線のなす角の2倍の回転。
+      </div></details></div>
+    <div class="q"><div class="qh"><span class="tag">6-4</span></div>
+      <div class="body">直線 $y=x+1$ を原点のまわりに $\frac\pi2$ 回転した図形の方程式を求めよ。</div>
+      <details><summary>解答</summary><div class="ans">
+        $R(\tfrac\pi2)=\begin{pmatrix}0&-1\\1&0\end{pmatrix}$ なので $(x,y)\mapsto(X,Y)=(-y,x)$。<br>
+        直線上の点 $(t,t+1)$ は $(X,Y)=(-t-1,t)$ に移る。$t=Y$ を代入して $X=-Y-1$。<br>
+        <span class="fin">$y=-x-1$</span>（逆変換 $x=Y,\ y=-X$ を元の式に代入しても同じ）
+      </div></details></div>
+    <div class="q"><div class="qh"><span class="tag">6-5</span></div>
+      <div class="body">$\frac\pi2$ 回転してから $x$ 軸に関して折り返す1次変換の行列を求め、これがどんな変換か答えよ。</div>
+      <details><summary>解答</summary><div class="ans">
+        後にやる折り返しが左：$\begin{pmatrix}1&0\\0&-1\end{pmatrix}\begin{pmatrix}0&-1\\1&0\end{pmatrix}=\begin{pmatrix}0&-1\\-1&0\end{pmatrix}$<br>
+        $S(\alpha)$ の形で $\cos2\alpha=0,\ \sin2\alpha=-1$ → $\alpha=-\frac\pi4$。<span class="fin">$\begin{pmatrix}0&-1\\-1&0\end{pmatrix}$、直線 $y=-x$ に関する折り返し</span>
+      </div></details></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= 模試① ======================= -->
+<section class="ch" id="mock" data-title="模擬テスト①">
+  <div class="ch-top"><span class="ch-no">模擬テスト</span><h2>模擬テスト①</h2><span class="ch-meta">5問・目安60分（形式はシラバス非公開なので想定）</span></div>
+  <div class="mock-intro"><p>紙と時計を用意して、解答を開かずに最後まで解く。途中式もちゃんと書く練習。終わったら解けた問題にチェック。</p></div>
+  <div class="step"><div class="probs">
+    <div class="q"><div class="qh"><span class="tag">問1</span></div>
+      <div class="body">$\boldsymbol{a}_1=\begin{pmatrix}1\\0\\2\end{pmatrix},\boldsymbol{a}_2=\begin{pmatrix}2\\1\\3\end{pmatrix},\boldsymbol{a}_3=\begin{pmatrix}0\\1\\k\end{pmatrix}$ が1次従属になる $k$ を求め、そのとき $\boldsymbol{a}_3$ を $\boldsymbol{a}_1,\boldsymbol{a}_2$ の1次結合で表せ。</div>
+      <details><summary>解答</summary><div class="ans">
+        $\det\begin{pmatrix}1&2&0\\0&1&1\\2&3&k\end{pmatrix}=1(k-3)-2(0-2)+0=k+1$。<span class="fin">$k=-1$</span><br>
+        $x\boldsymbol{a}_1+y\boldsymbol{a}_2=\boldsymbol{a}_3$：$x+2y=0,\ y=1,\ 2x+3y=-1$ → $y=1,\ x=-2$（第3式 $-4+3=-1$ ✓）。<span class="fin">$\boldsymbol{a}_3=-2\boldsymbol{a}_1+\boldsymbol{a}_2$</span>
+      </div></details></div>
+    <div class="q"><div class="qh"><span class="tag">問2</span></div>
+      <div class="body">(1) $W=\{\boldsymbol{x}\in\mathbb{R}^3\mid x_1-x_2+2x_3=0\}$ が部分空間であることを示し、基底と次元を求めよ。<br>(2) $W'=\{\boldsymbol{x}\in\mathbb{R}^2\mid x_1^2=x_2\}$ は部分空間か。</div>
+      <details><summary>解答</summary><div class="ans">
+        (1) $\boldsymbol{0}$ は $0-0+0=0$ で $\in W$。$\boldsymbol{x},\boldsymbol{y}\in W$ なら $(x_1+y_1)-(x_2+y_2)+2(x_3+y_3)=0+0=0$、$c\boldsymbol{x}$ も $c(x_1-x_2+2x_3)=0$。よって部分空間。<br>
+        $x_2=s,\ x_3=t$ で $x_1=s-2t$。<span class="fin">基底 $\{(1,1,0)^T,\ (-2,0,1)^T\}$、次元 2</span><br>
+        (2) $(1,1)^T\in W'$ だが $2(1,1)^T=(2,2)^T$ は $4\ne2$ で $\notin W'$。<span class="fin">部分空間でない</span>
+      </div></details></div>
+    <div class="q"><div class="qh"><span class="tag">問3</span></div>
+      <div class="body">次の同次連立1次方程式の解空間の基底と次元を求めよ。<br>$\begin{cases}x_1-x_2+2x_3=0\\2x_1-2x_2+5x_3+x_4=0\\-x_1+x_2-x_3+x_4=0\end{cases}$</div>
+      <details><summary>解答</summary><div class="ans">
+        $\begin{pmatrix}1&-1&2&0\\2&-2&5&1\\-1&1&-1&1\end{pmatrix}\to\begin{pmatrix}1&-1&0&-2\\0&0&1&1\\0&0&0&0\end{pmatrix}$（rank 2）<br>
+        $x_2=s,\ x_4=t$ で $x_1=s+2t,\ x_3=-t$。<br>
+        <span class="fin">基底 $\left\{\begin{pmatrix}1\\1\\0\\0\end{pmatrix},\begin{pmatrix}2\\0\\-1\\1\end{pmatrix}\right\}$、次元 $4-2=2$</span>
+      </div></details></div>
+    <div class="q"><div class="qh"><span class="tag">問4</span></div>
+      <div class="body">$\boldsymbol{a}_1=\begin{pmatrix}1\\0\\1\end{pmatrix},\ \boldsymbol{a}_2=\begin{pmatrix}1\\1\\0\end{pmatrix}$ が生成する部分空間の正規直交基底を、グラム・シュミットの直交化法で求めよ。</div>
+      <details><summary>解答</summary><div class="ans">
+        $\boldsymbol{u}_1=\frac1{\sqrt2}(1,0,1)^T$。$(\boldsymbol{a}_2,\boldsymbol{u}_1)=\frac1{\sqrt2}$ → $\boldsymbol{b}_2=(1,1,0)^T-\frac12(1,0,1)^T=\frac12(1,2,-1)^T$。<br>
+        <span class="fin">$\boldsymbol{u}_1=\dfrac1{\sqrt2}\begin{pmatrix}1\\0\\1\end{pmatrix},\ \boldsymbol{u}_2=\dfrac1{\sqrt6}\begin{pmatrix}1\\2\\-1\end{pmatrix}$</span>（$1+0-1=0$ で直交 ✓）
+      </div></details></div>
+    <div class="q"><div class="qh"><span class="tag">問5</span></div>
+      <div class="body">直線 $y=\frac{1}{\sqrt3}x$ に関する折り返しを $f$、原点のまわりの $\frac\pi2$ 回転を $g$ とする。<br>(1) $f,g$ を表す行列を求めよ。(2) $f$ を行ってから $g$ を行う変換 $g\circ f$ の行列を求め、それがどんな変換か答えよ。</div>
+      <details><summary>解答</summary><div class="ans">
+        (1) $\alpha=\frac\pi6$ → <span class="fin">$F=\begin{pmatrix}\frac12&\frac{\sqrt3}2\\ \frac{\sqrt3}2&-\frac12\end{pmatrix}$、$G=\begin{pmatrix}0&-1\\1&0\end{pmatrix}$</span><br>
+        (2) $GF=\begin{pmatrix}-\frac{\sqrt3}2&\frac12\\ \frac12&\frac{\sqrt3}2\end{pmatrix}$。$\cos2\beta=-\frac{\sqrt3}2,\ \sin2\beta=\frac12$ → $2\beta=\frac{5\pi}6$。<br>
+        <span class="fin">$x$ 軸と角 $\frac{5\pi}{12}$ をなす直線（$y=\tan\frac{5\pi}{12}\,x=(2+\sqrt3)x$）に関する折り返し</span>（回転×折り返し＝折り返し。$R(\theta)S(\alpha)=S(\alpha+\frac\theta2)$）
+      </div></details></div>
+  </div></div>
+</section>
+
+<!-- ======================= 模試② ======================= -->
+<section class="ch" id="mock2" data-title="模擬テスト②">
+  <div class="ch-top"><span class="ch-no">模擬テスト</span><h2>模擬テスト②</h2><span class="ch-meta">5問・目安60分</span></div>
+  <div class="mock-intro"><p>①より証明寄り。答えだけでなく「何を示せば終わりか」を最初に書く癖をつける。</p></div>
+  <div class="step"><div class="probs">
+    <div class="q"><div class="qh"><span class="tag">問1</span><span class="src">証明</span></div>
+      <div class="body">$\boldsymbol{a},\boldsymbol{b},\boldsymbol{c}$ が1次独立のとき、$\boldsymbol{a},\ \boldsymbol{a}+\boldsymbol{b},\ \boldsymbol{a}+\boldsymbol{b}+\boldsymbol{c}$ も1次独立であることを示せ。</div>
+      <details><summary>解答</summary><div class="ans">
+        $x\boldsymbol{a}+y(\boldsymbol{a}+\boldsymbol{b})+z(\boldsymbol{a}+\boldsymbol{b}+\boldsymbol{c})=\boldsymbol{0}$ とおくと $(x+y+z)\boldsymbol{a}+(y+z)\boldsymbol{b}+z\boldsymbol{c}=\boldsymbol{0}$。<br>
+        独立性から $x+y+z=0,\ y+z=0,\ z=0$ → $z=0,\ y=0,\ x=0$。<span class="fin">自明な解のみなので1次独立。</span>
+      </div></details></div>
+    <div class="q"><div class="qh"><span class="tag">問2</span></div>
+      <div class="body">$\boldsymbol{a}_1=\begin{pmatrix}1\\1\\0\\2\end{pmatrix},\boldsymbol{a}_2=\begin{pmatrix}2\\1\\1\\3\end{pmatrix},\boldsymbol{a}_3=\begin{pmatrix}0\\1\\-1\\1\end{pmatrix},\boldsymbol{a}_4=\begin{pmatrix}1\\0\\1\\2\end{pmatrix}$ が生成する部分空間の基底と次元を求めよ。</div>
+      <details><summary>解答</summary><div class="ans">
+        列に並べて簡約化 → $\begin{pmatrix}1&0&2&0\\0&1&-1&0\\0&0&0&1\\0&0&0&0\end{pmatrix}$。主成分は第1・2・4列。<br>
+        <span class="fin">基底 $\{\boldsymbol{a}_1,\boldsymbol{a}_2,\boldsymbol{a}_4\}$、次元 3</span>（$\boldsymbol{a}_3=2\boldsymbol{a}_1-\boldsymbol{a}_2$）
+      </div></details></div>
+    <div class="q"><div class="qh"><span class="tag">問3</span></div>
+      <div class="body">$\boldsymbol{v}_1=\begin{pmatrix}1\\0\\1\end{pmatrix},\boldsymbol{v}_2=\begin{pmatrix}1\\1\\0\end{pmatrix},\boldsymbol{v}_3=\begin{pmatrix}0\\1\\1\end{pmatrix}$ が $\mathbb{R}^3$ の基底であることを示し、$\begin{pmatrix}3\\1\\2\end{pmatrix}$ のこの基底に関する座標を求めよ。</div>
+      <details><summary>解答</summary><div class="ans">
+        $\det\begin{pmatrix}1&1&0\\0&1&1\\1&0&1\end{pmatrix}=1(1-0)-1(0-1)+0=2\ne0$ → 独立な3本なので基底。<br>
+        $c_1+c_2=3,\ c_2+c_3=1,\ c_1+c_3=2$。和から $c_1+c_2+c_3=3$ → $c_3=0,\ c_1=2,\ c_2=1$。<span class="fin">座標 $(2,\ 1,\ 0)$</span>
+      </div></details></div>
+    <div class="q"><div class="qh"><span class="tag">問4</span></div>
+      <div class="body">(1) $\boldsymbol{a}=\begin{pmatrix}1\\2\\-1\end{pmatrix},\ \boldsymbol{b}=\begin{pmatrix}2\\-1\\1\end{pmatrix}$ について $\cos\theta$ を求めよ。<br>(2) $\boldsymbol{a},\boldsymbol{b}$ の両方に直交する単位ベクトルを求めよ。<br>(3) シュワルツの不等式 $|(\boldsymbol{a},\boldsymbol{b})|\le\|\boldsymbol{a}\|\|\boldsymbol{b}\|$ を証明せよ。</div>
+      <details><summary>解答</summary><div class="ans">
+        (1) $(\boldsymbol{a},\boldsymbol{b})=2-2-1=-1$、$\|\boldsymbol{a}\|=\|\boldsymbol{b}\|=\sqrt6$。<span class="fin">$\cos\theta=-\dfrac16$</span><br>
+        (2) $x+2y-z=0,\ 2x-y+z=0$。足して $3x+y=0$ → $y=-3x$、$z=x+2y=-5x$。<span class="fin">$\pm\dfrac1{\sqrt{35}}\begin{pmatrix}1\\-3\\-5\end{pmatrix}$</span><br>
+        (3) 第5週「わかる」の証明（$\|\boldsymbol{a}+t\boldsymbol{b}\|^2\ge0$ の判別式）。$\boldsymbol{b}=\boldsymbol{0}$ の場合分けも忘れずに。
+      </div></details></div>
+    <div class="q"><div class="qh"><span class="tag">問5</span></div>
+      <div class="body">$A=\dfrac12\begin{pmatrix}1&-\sqrt3\\ \sqrt3&1\end{pmatrix}$ とする。(1) $A$ はどんな1次変換を表すか。(2) $A^5$ を求め、点 $(2,0)$ の $A^5$ による像を求めよ。(3) $A^n=E$ となる最小の正の整数 $n$ を求めよ。</div>
+      <details><summary>解答</summary><div class="ans">
+        (1) $\cos\theta=\frac12,\ \sin\theta=\frac{\sqrt3}2$ → <span class="fin">原点のまわりの $\frac\pi3$ 回転 $R(\frac\pi3)$</span><br>
+        (2) $A^5=R(\frac{5\pi}3)=\begin{pmatrix}\frac12&\frac{\sqrt3}2\\ -\frac{\sqrt3}2&\frac12\end{pmatrix}$。<span class="fin">像は $(1,\ -\sqrt3)$</span><br>
+        (3) $R(\frac{n\pi}3)=E$ ⇔ $\frac{n\pi}3$ が $2\pi$ の倍数。<span class="fin">$n=6$</span>
+      </div></details></div>
+  </div></div>
+</section>
+
+<div class="nextprev" id="nextprev"></div>
+</div></main>
+<script>
+(function () {
+  var css = function (n) { return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); };
+  var NS = 'http://www.w3.org/2000/svg';
+  function el(tag, attrs, text) {
+    var e = document.createElementNS(NS, tag);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    if (text != null) e.textContent = text;
+    return e;
+  }
+
+  /* ---------- 進捗（この端末のブラウザにだけ保存） ---------- */
+  var KEY = 'linalg-mid-solved-v1', solved = {};
+  try { solved = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) { solved = {}; }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(solved)); } catch (e) {} }
+
+  var sections = Array.prototype.slice.call(document.querySelectorAll('.ch'));
+  sections.forEach(function (sec) {
+    sec.querySelectorAll('.q').forEach(function (q) {
+      var tag = q.querySelector('.tag').textContent.trim();
+      var id = sec.id + ':' + tag;
+      var lab = document.createElement('label');
+      lab.className = 'done';
+      var cb = document.createElement('input');
+      cb.type = 'checkbox'; cb.id = 'done-' + sec.id + '-' + tag.replace(/[^\w-]/g, '_');
+      cb.checked = !!solved[id];
+      lab.appendChild(cb); lab.appendChild(document.createTextNode('解けた'));
+      q.querySelector('.qh').appendChild(lab);
+      q.classList.toggle('is-done', cb.checked);
+      cb.addEventListener('change', function () {
+        if (cb.checked) solved[id] = 1; else delete solved[id];
+        q.classList.toggle('is-done', cb.checked);
+        save(); refresh();
+      });
+    });
+  });
+  function refresh() {
+    var all = 0, ok = 0;
+    sections.forEach(function (sec) {
+      var qs = sec.querySelectorAll('.q'), n = qs.length, d = sec.querySelectorAll('.q.is-done').length;
+      all += n; ok += d;
+      var a = document.querySelector('.tabs a[data-t="' + sec.id + '"]');
+      if (a) { a.querySelector('span').textContent = d + '/' + n; a.classList.toggle('all-done', n > 0 && d === n); }
+    });
+    document.getElementById('meterTxt').textContent = '解けた問題 ' + ok + ' / ' + all;
+    document.getElementById('meterBar').style.width = (all ? ok / all * 100 : 0) + '%';
+  }
+  refresh();
+
+  /* ---------- タブ ---------- */
+  var ids = sections.map(function (s) { return s.id; });
+  function show(id, scroll) {
+    if (ids.indexOf(id) < 0) id = 'c1';
+    sections.forEach(function (s) { s.hidden = s.id !== id; });
+    document.querySelectorAll('.tabs a').forEach(function (a) {
+      if (a.dataset.t === id) { a.setAttribute('aria-current', 'page'); var tb = document.getElementById('tabs'); tb.scrollLeft = a.offsetLeft - tb.clientWidth / 2 + a.offsetWidth / 2; }
+      else a.removeAttribute('aria-current');
+    });
+    var i = ids.indexOf(id), np = document.getElementById('nextprev');
+    np.innerHTML = '';
+    if (i > 0) { var p = document.createElement('a'); p.href = '#' + ids[i - 1]; p.textContent = '← ' + sections[i - 1].dataset.title; np.appendChild(p); }
+    var sp = document.createElement('span'); sp.className = 'spacer'; np.appendChild(sp);
+    if (i < ids.length - 1) { var n = document.createElement('a'); n.href = '#' + ids[i + 1]; n.textContent = sections[i + 1].dataset.title + ' →'; np.appendChild(n); }
+    if (scroll) document.querySelector('.tabbar').scrollIntoView({ block: 'start' });
+  }
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('a[href^="#"]');
+    if (!a) return;
+    var id = a.getAttribute('href').slice(1);
+    if (ids.indexOf(id) < 0) return;
+    e.preventDefault();
+    try { history.replaceState(null, '', '#' + id); } catch (err) {}
+    show(id, true);
+  });
+  show((location.hash || '#c1').slice(1), false);
+
+  /* ---------- 赤シート ---------- */
+  var btn = document.getElementById('sheetBtn');
+  btn.addEventListener('click', function () {
+    var on = !document.body.classList.contains('redsheet');
+    document.body.classList.toggle('redsheet', on);
+    btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+    btn.textContent = on ? '赤シートを外す' : '赤シートで隠す';
+    if (!on) document.querySelectorAll('.key.peek').forEach(function (k) { k.classList.remove('peek'); });
+  });
+  document.querySelectorAll('.key').forEach(function (k) {
+    k.setAttribute('tabindex', '0');
+    var t = function () { if (document.body.classList.contains('redsheet')) k.classList.toggle('peek'); };
+    k.addEventListener('click', t);
+    k.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); t(); } });
+  });
+
+  /* ---------- ヒーロー：平面上の一次変換ビューア ---------- */
+  (function () {
+    var svg = document.getElementById('lt'); if (!svg) return;
+    var mode = 'rot', U = 50; // 1 単位 = 50px
+    var ang = document.getElementById('ang'), out = document.getElementById('angOut'), lbl = document.getElementById('angLbl');
+    var bRot = document.getElementById('mRot'), bRef = document.getElementById('mRef'), mat = document.getElementById('vizMat');
+    // 旗（向きが分かる形）：竿 (0,0)-(0,2)、旗 (0,2)-(1.2,1.6)-(0,1.2)
+    var flag = [[0, 0], [0, 2], [1.2, 1.6], [0, 1.2]];
+    function P(x, y) { return (x * U).toFixed(1) + ' ' + (-y * U).toFixed(1); }
+    function f2(v) { var s = (Math.abs(v) < 5e-4 ? 0 : v).toFixed(2); return s === '-0.00' ? '0.00' : s; }
+    function draw() {
+      var d = +ang.value, t = d * Math.PI / 180, M;
+      if (mode === 'rot') M = [[Math.cos(t), -Math.sin(t)], [Math.sin(t), Math.cos(t)]];
+      else M = [[Math.cos(2 * t), Math.sin(2 * t)], [Math.sin(2 * t), -Math.cos(2 * t)]];
+      var ap = function (p) { return [M[0][0] * p[0] + M[0][1] * p[1], M[1][0] * p[0] + M[1][1] * p[1]]; };
+      while (svg.firstChild) svg.removeChild(svg.firstChild);
+      for (var i = -2; i <= 2; i++) {
+        svg.appendChild(el('line', { x1: i * U, y1: -140, x2: i * U, y2: 140, stroke: 'var(--line)', 'stroke-width': i ? 1 : 0 }));
+        svg.appendChild(el('line', { x1: -140, y1: i * U, x2: 140, y2: i * U, stroke: 'var(--line)', 'stroke-width': i ? 1 : 0 }));
+      }
+      svg.appendChild(el('line', { x1: -140, y1: 0, x2: 140, y2: 0, stroke: 'var(--sub)', 'stroke-width': 1.2 }));
+      svg.appendChild(el('line', { x1: 0, y1: -140, x2: 0, y2: 140, stroke: 'var(--sub)', 'stroke-width': 1.2 }));
+      if (mode === 'ref') {
+        var c = Math.cos(t) * 140, s = Math.sin(t) * 140;
+        svg.appendChild(el('line', { x1: -c, y1: s, x2: c, y2: -s, stroke: 'var(--ok)', 'stroke-width': 2, 'stroke-dasharray': '6 4' }));
+      }
+      function shape(pts, col, op) {
+        var g = el('g', {});
+        g.appendChild(el('path', { d: 'M' + P(pts[0][0], pts[0][1]) + 'L' + P(pts[1][0], pts[1][1]), stroke: col, 'stroke-width': 3, 'stroke-linecap': 'round', opacity: op }));
+        g.appendChild(el('path', { d: 'M' + P(pts[1][0], pts[1][1]) + 'L' + P(pts[2][0], pts[2][1]) + 'L' + P(pts[3][0], pts[3][1]) + 'Z', fill: col, 'fill-opacity': op * 0.55, stroke: col, 'stroke-width': 1.5, opacity: op }));
+        svg.appendChild(g);
+      }
+      function arrow(v, col, name) {
+        var x = v[0] * U, y = -v[1] * U, L = Math.hypot(x, y) || 1, ux = x / L, uy = y / L;
+        svg.appendChild(el('line', { x1: 0, y1: 0, x2: x - ux * 6, y2: y - uy * 6, stroke: col, 'stroke-width': 2.2 }));
+        svg.appendChild(el('path', { d: 'M' + x + ' ' + y + 'L' + (x - ux * 10 - uy * 5) + ' ' + (y - uy * 10 + ux * 5) + 'L' + (x - ux * 10 + uy * 5) + ' ' + (y - uy * 10 - ux * 5) + 'Z', fill: col }));
+        svg.appendChild(el('text', { x: x + ux * 14, y: y + uy * 14 + 4, 'font-size': 12, 'text-anchor': 'middle', fill: col, 'font-style': 'italic' }, name));
+      }
+      shape(flag, 'var(--sub)', 0.5);
+      shape(flag.map(ap), 'var(--red)', 1);
+      arrow(ap([1, 0]), 'var(--ink)', "e₁'");
+      arrow(ap([0, 1]), 'var(--ink)', "e₂'");
+      out.textContent = d + '°';
+      var det = M[0][0] * M[1][1] - M[0][1] * M[1][0];
+      mat.innerHTML = (mode === 'rot' ? '<b>R(' + d + '°)</b>' : '<b>S(' + d + '°)</b>') +
+        ' = [ ' + f2(M[0][0]) + '  ' + f2(M[0][1]) + ' ; ' + f2(M[1][0]) + '  ' + f2(M[1][1]) + ' ]　det = ' + f2(det) +
+        (mode === 'rot' ? '' : '（旗が裏返る）');
+    }
+    function setMode(m) {
+      mode = m;
+      bRot.setAttribute('aria-pressed', m === 'rot'); bRef.setAttribute('aria-pressed', m === 'ref');
+      lbl.textContent = m === 'rot' ? 'θ' : 'α';
+      ang.min = m === 'rot' ? -180 : -90; ang.max = m === 'rot' ? 180 : 90;
+      if (+ang.value > +ang.max) ang.value = 30;
+      draw();
+    }
+    bRot.addEventListener('click', function () { setMode('rot'); });
+    bRef.addEventListener('click', function () { setMode('ref'); });
+    ang.addEventListener('input', draw);
+    draw();
+  })();
+})();
+</script>
+</body>
+</html>
