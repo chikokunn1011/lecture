@@ -166,9 +166,24 @@ details.ja > div { padding: 0 16px 10px; font-size: 14.5px; }
 .quiz .score { font-weight: 700; color: var(--accent); }
 .quiz .miss { margin-top: 12px; font-size: 14px; }
 
+
+/* 読み上げ */
+.say { flex: none; display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; margin-right: 6px; padding: 0; vertical-align: middle; border-radius: 999px; border: 1px solid var(--line); background: var(--card); color: var(--accent); cursor: pointer; }
+.say:hover { border-color: var(--accent); }
+.say:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.say svg { width: 16px; height: 16px; fill: currentColor; }
+.say.on { background: var(--accent); color: var(--card); border-color: var(--accent); }
+.passage p .say { float: right; margin: 2px 0 4px 8px; }
+.quiz .qword .say { width: 36px; height: 36px; margin-left: 8px; margin-right: 0; vertical-align: 4px; }
+.voicebar { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; font-size: 14px; }
+.voicebar select { font: inherit; font-size: 14px; padding: 3px 6px; border-radius: 8px; border: 1px solid var(--line); background: var(--card); color: var(--ink); max-width: 100%; }
+.no-tts .say, .no-tts .voicebar { display: none; }
+#tts-none { display: none; }
+.no-tts #tts-none { display: block; }
+
 @media (max-width: 520px) { .card, .ex > .q, .ex .a, .passage { padding-left: 12px; padding-right: 12px; } .passage { font-size: 16px; } }
 @media print {
-  nav.tabs, .pager, .ctrl, #quizbox { display: none; }
+  nav.tabs, .pager, .ctrl, #quizbox, .say { display: none; }
   section.tab[hidden] { display: block !important; }
   .bl { color: var(--ink); }
   table.vocab.hide td.ja { color: var(--ink); }
@@ -224,6 +239,17 @@ details.ja > div { padding: 0 16px 10px; font-size: 14.5px; }
     <li><b>練習問題</b>（プリントにない類題）で、本文の細かいところまで確認</li>
     <li>最後に <a href="#quiz" data-go="quiz">単語クイズ</a> を「英→日」「日→英」の両方で</li>
   </ol>
+
+  <h3>発音を聞く</h3>
+  <div class="card">
+    <p style="margin-bottom:8px">単語表・長文・単語クイズの <b>🔊ボタン</b> を押すと英語を読み上げる（ブラウザの読み上げ機能を使うので、音が出ないときは端末のマナーモードと音量を確認）。長文は段落ごとに読める。もう一回押すと止まる。</p>
+    <div class="voicebar">
+      <label>速さ <select id="tts-rate"><option value="0.7">ゆっくり</option><option value="0.85">少しゆっくり</option><option value="1">ふつう</option></select></label>
+      <label>声 <select id="tts-voice"><option value="">端末の標準（英語）</option></select></label>
+      <button type="button" class="btn" id="tts-test">試しに聞く</button>
+    </div>
+    <p id="tts-none" class="warn" style="margin:8px 0 0"><b>このブラウザは読み上げに対応していない</b>　iPhone なら Safari、Android なら Chrome で開くと使える。</p>
+  </div>
 
   <h3>週ごとの範囲</h3>
   <div class="tw"><table>
@@ -1075,7 +1101,9 @@ details.ja > div { padding: 0 16px 10px; font-size: 14.5px; }
     var same = shuffle(bank.filter(function (x) { return x !== q && x.w === q.w; }));
     var other = shuffle(bank.filter(function (x) { return x !== q && x.w !== q.w; }));
     var opts = shuffle([q].concat(same.concat(other).slice(0, 3)));
-    body.appendChild(el('div', 'qword' + (dir === 'j2e' ? ' jp' : ''), dir === 'e2j' ? q.en : q.ja));
+    var qw = el('div', 'qword' + (dir === 'j2e' ? ' jp' : ''), dir === 'e2j' ? q.en : q.ja);
+    if (dir === 'e2j' && window.__eigoSay) qw.appendChild(window.__eigoSay(q.en));
+    body.appendChild(qw);
     body.appendChild(el('div', 'qmeta', (cur + 1) + ' / ' + qs.length + '　' + WEEK[q.w]));
     var box = el('div', 'choices');
     opts.forEach(function (o) {
@@ -1086,6 +1114,7 @@ details.ja > div { padding: 0 16px 10px; font-size: 14.5px; }
         if (ok) score++; else missed.push(q);
         Array.prototype.forEach.call(box.children, function (c, i) { c.disabled = true; if (opts[i] === q) c.classList.add('ok'); });
         if (!ok) b.classList.add('ng');
+        if (dir === 'j2e' && window.__eigoSay) { var ok2 = box.children[opts.indexOf(q)]; ok2.insertBefore(window.__eigoSay(q.en), ok2.firstChild); }
         nx.hidden = false; nx.focus();
       });
       box.appendChild(b);
@@ -1114,6 +1143,73 @@ details.ja > div { padding: 0 16px 10px; font-size: 14.5px; }
       body.appendChild(m);
     }
   }
+
+  // ---- 読み上げ（Web Speech API）----
+  var synth = window.speechSynthesis;
+  if (!synth || typeof SpeechSynthesisUtterance === 'undefined') { document.documentElement.classList.add('no-tts'); return; }
+  var TKEY = 'eigo-hyogen-tts-v1', tts = { rate: '0.85', voice: '' };
+  try { var sv = JSON.parse(localStorage.getItem(TKEY) || '{}'); if (sv && typeof sv === 'object') { if (sv.rate) tts.rate = sv.rate; if (sv.voice) tts.voice = sv.voice; } } catch (e) {}
+  function saveTts() { try { localStorage.setItem(TKEY, JSON.stringify(tts)); } catch (e) {} }
+  var rateSel = document.getElementById('tts-rate'), voiceSel = document.getElementById('tts-voice');
+  rateSel.value = tts.rate;
+  rateSel.addEventListener('change', function () { tts.rate = rateSel.value; saveTts(); });
+  var voices = [];
+  function loadVoices() {
+    var all = synth.getVoices().filter(function (v) { return /^en[-_]/i.test(v.lang); });
+    if (!all.length) return;
+    // イギリス英語 → アメリカ英語 → その他の順
+    function rank(v) { return /GB/i.test(v.lang) ? 0 : /US/i.test(v.lang) ? 1 : 2; }
+    all.sort(function (a, b) { return rank(a) - rank(b) || (b.localService - a.localService); });
+    voices = all;
+    voiceSel.innerHTML = '';
+    all.forEach(function (v) { var o = document.createElement('option'); o.value = v.name; o.textContent = v.name + '（' + v.lang + '）'; voiceSel.appendChild(o); });
+    if (tts.voice && all.some(function (v) { return v.name === tts.voice; })) voiceSel.value = tts.voice;
+  }
+  loadVoices();
+  if ('onvoiceschanged' in synth) synth.addEventListener('voiceschanged', loadVoices);
+  voiceSel.addEventListener('change', function () { tts.voice = voiceSel.value; saveTts(); });
+
+  var ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/></svg>';
+  var playing = null;
+  function clean(t) {
+    return t.replace(/\s*→\s*/g, ', ').replace(/\s*\/\s*/g, ', ').replace(/[()（）]/g, ' ').replace(/£(\d+)\.00\b/g, '$1 pounds').replace(/£(\d+)\.(\d\d)/g, '$1 pounds $2').replace(/\s+/g, ' ').trim();
+  }
+  function stop() { synth.cancel(); if (playing) playing.classList.remove('on'); playing = null; }
+  function speak(text, btn) {
+    if (btn && playing === btn) { stop(); return; }
+    stop();
+    var u = new SpeechSynthesisUtterance(clean(text));
+    u.lang = 'en-GB'; u.rate = +tts.rate;
+    var v = voices.filter(function (x) { return x.name === (voiceSel.value || tts.voice); })[0] || voices[0];
+    if (v) { u.voice = v; u.lang = v.lang; }
+    if (btn) { playing = btn; btn.classList.add('on'); }
+    u.onend = u.onerror = function () { if (btn) btn.classList.remove('on'); if (playing === btn) playing = null; };
+    synth.speak(u);
+  }
+  function sayBtn(getText, label) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'say'; b.innerHTML = ICON; b.setAttribute('aria-label', label || '読み上げ');
+    b.addEventListener('click', function (e) { e.stopPropagation(); speak(getText(), b); });
+    return b;
+  }
+  document.getElementById('tts-test').addEventListener('click', function () { speak('Hello! This is the voice for your English notes.'); });
+
+  // 単語表
+  document.querySelectorAll('table.vocab tr[data-w]').forEach(function (tr) {
+    var td = tr.cells[0], word = td.textContent.trim();
+    td.insertBefore(sayBtn(function () { return word; }, word + ' を読み上げ'), td.firstChild);
+  });
+  // 長文（空欄つきの段落と注記は除く）
+  document.querySelectorAll('.passage p').forEach(function (p) {
+    if (p.querySelector('.bl') || p.classList.contains('note')) return;
+    var c = p.cloneNode(true);
+    c.querySelectorAll('.sp').forEach(function (x) { x.remove(); });
+    var text = c.textContent.replace(/^\s*Tip\s*[–-]\s*/, 'Tip. ');
+    p.insertBefore(sayBtn(function () { return text; }, '段落を読み上げ'), p.firstChild);
+  });
+  // 単語クイズ：問題文（英→日）か、解答後の正解（日→英）
+  window.__eigoSay = function (text) { return sayBtn(function () { return text; }, text + ' を読み上げ'); };
+  window.addEventListener('hashchange', stop);
 })();
 </script>
 </body>
