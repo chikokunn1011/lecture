@@ -1,0 +1,836 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>線形代数の基礎ノート</title>
+<style>html{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=Zen+Kaku+Gothic+New:wght@500;900&display=swap">
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['$', '$']], displayMath: [['\\[', '\\]']] },
+  svg: { fontCache: 'global' },
+  options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'code'] }
+};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.js"></script>
+<style>
+/* Layout: 教科書＋蛍光ペン＋赤ペン。上部に章タブ（1章ずつ表示）、各章は「覚える→わかる→注意→解く」の順。
+   大胆さは1か所だけ：蛍光マーカーと赤シート。それ以外は静かに。 */
+:root {
+  --bg: #eef1f5;
+  --paper: #ffffff;
+  --ink: #1a2b4a;
+  --sub: #56657c;
+  --line: #d9e0e8;
+  --marker: #ffe45c;
+  --marker-ink: #1a2b4a;
+  --red: #d4322c;
+  --red-soft: #fdeceb;
+  --sheet: #e0453f;
+  --ok: #1e7b55;
+  --ok-soft: #e3f3ea;
+  --tab: #e3e8ef;
+  --f-head: "Zen Kaku Gothic New", "Hiragino Sans", "Yu Gothic", sans-serif;
+  --f-body: "BIZ UDPGothic", "Hiragino Sans", "Yu Gothic", "Meiryo", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #11161f; --paper: #19202c; --ink: #e5eaf2; --sub: #9daabd; --line: #2c3646;
+    --marker: #6b5a00; --marker-ink: #fff6c2; --red: #ff7d72; --red-soft: #3a1f1e; --sheet: #c8372f;
+    --ok: #63d19f; --ok-soft: #173326; --tab: #222b39; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #11161f; --paper: #19202c; --ink: #e5eaf2; --sub: #9daabd; --line: #2c3646;
+  --marker: #6b5a00; --marker-ink: #fff6c2; --red: #ff7d72; --red-soft: #3a1f1e; --sheet: #c8372f;
+  --ok: #63d19f; --ok-soft: #173326; --tab: #222b39; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: var(--f-body); font-size: 16px; line-height: 1.85;
+}
+.gut { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.inner { max-width: 880px; margin: 0 auto; }
+
+/* ---------- hero ---------- */
+.hero { background: var(--paper); border-bottom: 1px solid var(--line); padding-block: 28px 22px; }
+.hero .inner { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 28px; align-items: center; }
+.course { font-size: 13px; color: var(--sub); }
+.home-link { display: inline-block; font-size: 13px; color: var(--sub); text-decoration: none; margin-bottom: 6px; }
+.home-link:hover { color: var(--ink); text-decoration: underline; }
+h1 { font-family: var(--f-head); font-weight: 900; font-size: clamp(28px, 5vw, 40px); line-height: 1.2; margin: 4px 0 12px; text-wrap: balance; letter-spacing: .01em; }
+.lead { margin: 0 0 16px; color: var(--sub); max-width: 46ch; }
+.euler { font-size: 22px; margin: 6px 0 2px; }
+.euler-note { font-size: 13px; color: var(--sub); margin: 0; }
+#phasor { width: 100%; height: auto; display: block; }
+.status { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; margin-top: 18px; }
+.meter { flex: 1 1 220px; min-width: 0; }
+.meter .bar { height: 8px; border-radius: 4px; background: var(--tab); overflow: hidden; }
+.meter .bar i { display: block; height: 100%; width: 0; background: var(--ok); transition: width .3s; }
+.meter .txt { font-size: 13px; color: var(--sub); margin-top: 4px; font-variant-numeric: tabular-nums; }
+.sheet-btn { font: inherit; font-size: 14px; font-weight: 700; padding: 6px 14px; border-radius: 8px; border: 2px solid var(--sheet); background: var(--paper); color: var(--sheet); cursor: pointer; }
+.sheet-btn[aria-pressed="true"] { background: var(--sheet); color: #fff; }
+.sheet-btn:focus-visible, .tabs a:focus-visible, summary:focus-visible, .done input:focus-visible, .nextprev a:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
+
+/* ---------- 講義の流れ ---------- */
+.flow { padding-block: 20px 6px; }
+.flow h2 { font-family: var(--f-head); font-size: 15px; font-weight: 900; margin: 0 0 8px; }
+.flow ol { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 4px; align-items: center; }
+.flow li { display: flex; align-items: center; gap: 4px; font-size: 13.5px; }
+.flow li + li::before { content: "›"; color: var(--sub); margin-right: 2px; }
+.flow a { color: var(--ink); text-decoration: none; border-bottom: 1px dashed var(--sub); }
+.flow a:hover { border-bottom-style: solid; }
+.flow p { font-size: 13.5px; color: var(--sub); margin: 8px 0 0; max-width: 70ch; }
+
+/* ---------- tabs ---------- */
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+.tabbar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); border-bottom: 1px solid var(--line); }
+.tabs { position: relative; display: flex; gap: 4px; overflow-x: auto; padding-block: 10px; scrollbar-width: thin; }
+.tabs a { flex: none; display: flex; flex-direction: column; align-items: center; gap: 0; min-width: 62px; padding: 5px 10px 4px; border-radius: 8px; color: var(--ink); text-decoration: none; background: var(--tab); line-height: 1.3; }
+.tabs a b { font-size: 13.5px; }
+.tabs a span { font-size: 11px; color: var(--sub); font-variant-numeric: tabular-nums; }
+.tabs a[aria-current="page"] { background: var(--ink); color: var(--paper); }
+.tabs a[aria-current="page"] span { color: var(--paper); opacity: .8; }
+.tabs a.all-done span { color: var(--ok); font-weight: 700; }
+.tabs a[aria-current="page"].all-done span { color: var(--paper); }
+
+/* ---------- chapter ---------- */
+main { padding-block: 26px 80px; }
+.ch[hidden] { display: none; }
+.ch { scroll-margin-top: calc(env(safe-area-inset-top, 0px) + 90px); }
+.ch-top { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-bottom: 18px; }
+.ch-no { font-family: var(--f-head); font-weight: 900; font-size: 15px; color: var(--sub); }
+.ch-top h2 { font-family: var(--f-head); font-weight: 900; font-size: clamp(24px, 4vw, 32px); line-height: 1.25; margin: 0; text-wrap: balance; flex-basis: 100%; }
+.ch-meta { font-size: 13px; color: var(--sub); }
+.step { margin-top: 26px; }
+.step > h3 { font-family: var(--f-head); font-weight: 900; font-size: 17px; margin: 0 0 10px; display: flex; align-items: center; gap: 10px; }
+.step > h3 .n { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--ink); color: var(--paper); font-size: 13px; }
+.step > h3 small { font-family: var(--f-body); font-weight: 400; font-size: 13px; color: var(--sub); }
+
+/* 1. 覚える：蛍光ペン */
+.memo { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 14px 20px; display: grid; gap: 4px; }
+.memo .row { display: grid; grid-template-columns: 9.5em minmax(0, 1fr); gap: 12px; align-items: baseline; padding: 6px 0; border-bottom: 1px dashed var(--line); }
+.memo .row:last-child { border-bottom: 0; }
+.memo .lbl { font-size: 13.5px; font-weight: 700; color: var(--sub); }
+.memo .val { min-width: 0; overflow-x: auto; overflow-y: hidden; }
+.key { background: linear-gradient(transparent 38%, var(--marker) 38%, var(--marker) 92%, transparent 92%); color: var(--marker-ink); padding: 0 3px; border-radius: 2px; position: relative; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+body.redsheet .key { background: var(--sheet); color: transparent; cursor: pointer; }
+body.redsheet .key * { visibility: hidden; }
+body.redsheet .key.peek { background: linear-gradient(transparent 38%, var(--marker) 38%, var(--marker) 92%, transparent 92%); color: var(--marker-ink); }
+body.redsheet .key.peek * { visibility: visible; }
+.sheet-hint { display: none; font-size: 13px; color: var(--sheet); margin: 6px 0 0; }
+body.redsheet .sheet-hint { display: block; }
+
+/* 2. わかる */
+.explain { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 16px 20px; }
+.explain p, .explain li { max-width: 68ch; }
+.explain p { margin: 6px 0; }
+.explain ul, .explain ol { margin: 6px 0; padding-left: 1.3em; }
+.f { overflow-x: auto; overflow-y: hidden; padding: 2px 0; }
+.fig { margin: 12px 0 6px; display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start; }
+.fig figure { margin: 0; flex: 1 1 240px; min-width: 0; max-width: 360px; }
+.fig figure > svg { width: 100%; height: auto; display: block; }
+.fig figcaption { font-size: 12.5px; color: var(--sub); text-align: center; margin-top: 2px; }
+table.v { border-collapse: collapse; font-size: 14px; margin: 8px 0; }
+table.v th, table.v td { border: 1px solid var(--line); padding: 4px 10px; text-align: center; font-variant-numeric: tabular-nums; }
+table.v th { background: var(--tab); }
+.tbl { overflow-x: auto; }
+.block { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin: 12px 0; font-size: 14px; }
+.block .box { border: 2px solid var(--ink); border-radius: 8px; padding: 6px 14px; background: var(--bg); }
+.block .arr { color: var(--sub); }
+
+/* 3. 注意：赤ペン */
+.redpen { display: grid; gap: 8px; }
+.redpen p { margin: 0; padding: 8px 14px 8px 16px; border-left: 3px solid var(--red); background: var(--red-soft); border-radius: 0 8px 8px 0; font-size: 15px; max-width: none; }
+.redpen p b:first-child { color: var(--red); margin-right: 4px; }
+.redpen p.trap { display: none; }
+
+/* 4. 解く */
+.probs { display: grid; gap: 12px; }
+.q { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 14px 18px; }
+.q.is-done { border-color: var(--ok); }
+.q .qh { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.q .tag { font-family: var(--f-head); font-weight: 900; font-size: 15px; }
+.q .src { font-size: 12px; color: var(--sub); }
+.done { margin-left: auto; display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--sub); cursor: pointer; user-select: none; }
+.done input { width: 18px; height: 18px; accent-color: var(--ok); }
+.q.is-done .done { color: var(--ok); font-weight: 700; }
+.q .body { margin-top: 6px; }
+details { margin-top: 10px; }
+summary { cursor: pointer; font-size: 14px; font-weight: 700; color: var(--ink); width: fit-content; padding: 3px 14px; border: 1.5px solid var(--ink); border-radius: 999px; list-style: none; }
+summary::-webkit-details-marker { display: none; }
+details[open] summary { background: var(--ink); color: var(--paper); }
+.ans { margin-top: 10px; padding: 10px 14px; border-left: 3px solid var(--ok); background: var(--ok-soft); border-radius: 0 8px 8px 0; }
+.ans .fin { font-weight: 700; color: var(--ok); }
+.spec { display: flex; flex-wrap: wrap; gap: 14px; margin: 8px 0; }
+.spec figure { margin: 0; flex: 1 1 240px; min-width: 0; max-width: 340px; }
+.spec figcaption { font-size: 12.5px; color: var(--sub); text-align: center; }
+.spec figure > svg { width: 100%; height: auto; display: block; }
+.mock-intro { background: var(--paper); border: 2px solid var(--ink); border-radius: 12px; padding: 14px 20px; }
+.mock-intro p { margin: 4px 0; }
+.nextprev { display: flex; justify-content: space-between; gap: 10px; margin-top: 30px; flex-wrap: wrap; }
+.nextprev a { color: var(--ink); text-decoration: none; padding: 8px 14px; border: 1px solid var(--line); border-radius: 8px; background: var(--paper); font-size: 14px; }
+.nextprev a:hover { border-color: var(--ink); }
+.nextprev .spacer { flex: 1; }
+
+@media (max-width: 760px) {
+  .hero .inner { grid-template-columns: minmax(0, 1fr); }
+  .hero .viz { max-width: 340px; }
+  .memo { padding: 10px 14px; }
+  .memo .row { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .explain { padding: 14px; }
+  .q { padding: 12px 14px; }
+  .done { margin-left: 0; }
+}
+@media (prefers-reduced-motion: reduce) { .meter .bar i { transition: none; } }
+</style>
+<style>
+/* 線形代数の基礎ノートだけの追加分 */
+.road { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; font-size: 14px; }
+.road h2 { font-family: var(--f-head); font-size: 15px; font-weight: 900; margin: 0 0 8px; }
+.road table { border-collapse: collapse; width: 100%; }
+.road td { padding: 5px 4px; border-bottom: 1px dashed var(--line); vertical-align: top; line-height: 1.5; }
+.road tr:last-child td { border-bottom: 0; }
+.road td:first-child { font-weight: 700; white-space: nowrap; padding-right: 10px; }
+.road td:last-child { color: var(--sub); }
+.road a { color: var(--ink); }
+.scope a, .explain a { color: var(--ink); }
+.sweep { display: grid; gap: 6px; margin: 10px 0; }
+.sweep .st { display: grid; grid-template-columns: 11em minmax(0, 1fr); gap: 10px; align-items: center; border-bottom: 1px dashed var(--line); padding-bottom: 6px; }
+.sweep .st:last-child { border-bottom: 0; }
+.sweep .op { font-size: 13.5px; font-weight: 700; color: var(--red); }
+.sweep .op small { display: block; font-weight: 400; color: var(--sub); }
+.sweep .mx { min-width: 0; overflow-x: auto; overflow-y: hidden; }
+.mn { background: var(--bg); border: 1px dashed var(--sub); border-radius: 8px; padding: 8px 12px; margin: 10px 0; font-size: 14.5px; }
+.ch-top .back { font-size: 13px; color: var(--sub); flex-basis: 100%; }
+.ch-top .back a { color: var(--sub); }
+@media (max-width: 760px) {
+  .sweep .st { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+}
+</style>
+</head>
+<body>
+
+<header class="hero gut">
+  <div class="inner">
+    <div>
+      <a class="home-link" href="../">← 線形代数応用ノートへ</a>
+      <div class="course">線形代数応用の前提 ／ 基礎の総復習</div>
+      <h1>線形代数の基礎ノート</h1>
+      <p class="lead">応用の授業についていくのに必要な「ベクトル・行列・掃き出し法・ランク・行列式・逆行列」を、ゼロから順番にまとめた。上のタブを左から順に進めればOK。</p>
+      <div class="euler">連立方程式 $\iff A\boldsymbol{x}=\boldsymbol{b}$</div>
+      <p class="euler-note">線形代数は結局「連立方程式を行列で整理して、機械的に解く」学問。このノートの6章はぜんぶこの1行のための道具。</p>
+      <div class="status">
+        <div class="meter" aria-live="polite">
+          <div class="bar"><i id="meterBar"></i></div>
+          <div class="txt" id="meterTxt">解けた問題 0 / 0</div>
+        </div>
+        <button type="button" class="sheet-btn" id="sheetBtn" aria-pressed="false">赤シートで隠す</button>
+      </div>
+    </div>
+    <div class="viz">
+      <div class="road">
+        <h2>応用ノートのどこで使う？</h2>
+        <table>
+          <tr><td><a href="#b1">ベクトル</a></td><td>第1週 1次結合、第2週 部分空間</td></tr>
+          <tr><td><a href="#b2">行列の積</a></td><td>第1週（$A\boldsymbol{c}$＝列の1次結合）、第8週 合成変換</td></tr>
+          <tr><td><a href="#b3">掃き出し法</a></td><td>第1・3・4週ほぼ全部</td></tr>
+          <tr><td><a href="#b4">ランク</a></td><td>第1週 独立判定、第3週 解空間の次元、第4週 次元</td></tr>
+          <tr><td><a href="#b5">行列式</a></td><td>第1週・第4週の判定、第8週</td></tr>
+          <tr><td><a href="#b6">逆行列</a></td><td>第4週 座標、第8週 逆変換</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="flow gut" aria-label="進め方">
+  <div class="inner">
+    <h2>おすすめの進め方</h2>
+    <ol>
+      <li><a href="#b1">ベクトル</a></li>
+      <li><a href="#b2">行列と積</a></li>
+      <li><a href="#b3">掃き出し法</a></li>
+      <li><a href="#b4">ランク</a></li>
+      <li><a href="#b5">行列式</a></li>
+      <li><a href="#b6">逆行列</a></li>
+      <li><a href="#bt">まとめテスト</a></li>
+    </ol>
+    <p>各章は「覚える → わかる → 注意 → 解く」の順。いちばん大事なのは<b>掃き出し法（第3章）</b>。応用の計算問題はほぼ全部これで解くので、ここだけは手が勝手に動くまで練習しておく。</p>
+    <div class="scope">
+      <p><b>記号のこと</b>：ベクトルは<b>太字</b>で $\boldsymbol{a}$、成分は縦に並べる（列ベクトル）。単位行列は $E$（教科書によっては $I$）、転置は $A^T$（${}^tA$ と書くこともある）。授業と違ったら授業に合わせて読みかえて。</p>
+      <p>ここが終わったら <a href="../">線形代数応用 中間対策ノート</a> の第1週へ。</p>
+    </div>
+  </div>
+</section>
+
+<nav class="tabbar gut" aria-label="章の切り替え">
+  <div class="inner tabs" id="tabs">
+    <a href="#b1" data-t="b1"><b>1 ベクトル</b><span></span></a>
+    <a href="#b2" data-t="b2"><b>2 行列</b><span></span></a>
+    <a href="#b3" data-t="b3"><b>3 掃き出し</b><span></span></a>
+    <a href="#b4" data-t="b4"><b>4 ランク</b><span></span></a>
+    <a href="#b5" data-t="b5"><b>5 行列式</b><span></span></a>
+    <a href="#b6" data-t="b6"><b>6 逆行列</b><span></span></a>
+    <a href="#bt" data-t="bt"><b>まとめ</b><span></span></a>
+  </div>
+</nav>
+
+<main class="gut"><div class="inner">
+<p class="sheet-hint">赤シート中：赤い部分をタップするとその式だけ見える。もう一度タップで隠れる。</p>
+
+<!-- ======================= 1 ベクトル ======================= -->
+<section class="ch" id="b1" data-title="ベクトル">
+  <div class="ch-top"><span class="ch-no">第1章</span><h2>ベクトル：数を縦に並べたもの</h2><span class="ch-meta">計算は「成分ごと」。これだけ</span></div>
+  <div class="step"><h3><span class="n">1</span>覚える</h3>
+    <div class="memo">
+      <div class="row"><span class="lbl">ベクトル</span><span class="val">数を縦に並べたもの。$\boldsymbol{a}=\begin{pmatrix}2\\1\end{pmatrix}$、$\boldsymbol{b}=\begin{pmatrix}1\\-3\\4\end{pmatrix}$。並んでいる数を<b>成分</b>という</span></div>
+      <div class="row"><span class="lbl">$\mathbb{R}^n$</span><span class="val"><span class="key">成分が $n$ 個の（実数の）ベクトル全体</span>。$\mathbb{R}^2$＝平面、$\mathbb{R}^3$＝空間</span></div>
+      <div class="row"><span class="lbl">和</span><span class="val"><span class="key">成分どうしを足す</span>：$\begin{pmatrix}a_1\\a_2\end{pmatrix}+\begin{pmatrix}b_1\\b_2\end{pmatrix}=\begin{pmatrix}a_1+b_1\\a_2+b_2\end{pmatrix}$</span></div>
+      <div class="row"><span class="lbl">スカラー倍</span><span class="val"><span class="key">全成分に同じ数をかける</span>：$c\begin{pmatrix}a_1\\a_2\end{pmatrix}=\begin{pmatrix}ca_1\\ca_2\end{pmatrix}$（ただの数のことを<b>スカラー</b>という）</span></div>
+      <div class="row"><span class="lbl">零ベクトル</span><span class="val">$\boldsymbol{0}$：成分がぜんぶ 0。$\boldsymbol{a}+\boldsymbol{0}=\boldsymbol{a}$</span></div>
+      <div class="row"><span class="lbl">大きさ（長さ）</span><span class="val"><span class="key">$\|\boldsymbol{a}\|=\sqrt{a_1^2+a_2^2+\cdots+a_n^2}$</span>（三平方の定理）</span></div>
+      <div class="row"><span class="lbl">1次結合</span><span class="val">$s\boldsymbol{a}+t\boldsymbol{b}$ のように<span class="key">スカラー倍して足したもの</span>。応用の第1週の主役</span></div>
+    </div>
+  </div>
+  <div class="step"><h3><span class="n">2</span>わかる</h3>
+    <div class="explain">
+      <p>$\mathbb{R}^2$ のベクトル $\begin{pmatrix}2\\1\end{pmatrix}$ は「原点から、右に2・上に1 進んだ矢印」。足し算は<b>矢印をつなぐ</b>こと、スカラー倍は<b>矢印を伸び縮み</b>させること（マイナスなら逆向き）。</p>
+      <div class="fig">
+        <figure>
+          <svg viewBox="0 0 210 180" role="img" aria-label="a=(2,1) と b=(1,2) を足すと a+b=(3,3)。平行四辺形の対角線になる">
+            <g stroke="var(--line)" stroke-width="1">
+              <line x1="30" y1="30" x2="30" y2="170"/><line x1="70" y1="10" x2="70" y2="170"/><line x1="110" y1="10" x2="110" y2="170"/><line x1="150" y1="10" x2="150" y2="170"/><line x1="190" y1="10" x2="190" y2="170"/>
+              <line x1="20" y1="150" x2="200" y2="150"/><line x1="20" y1="110" x2="200" y2="110"/><line x1="20" y1="70" x2="200" y2="70"/><line x1="20" y1="30" x2="200" y2="30"/>
+            </g>
+            <line x1="20" y1="150" x2="200" y2="150" stroke="var(--sub)" stroke-width="1.3"/>
+            <line x1="30" y1="10" x2="30" y2="170" stroke="var(--sub)" stroke-width="1.3"/>
+            <g stroke="var(--sub)" stroke-width="1.5" stroke-dasharray="5 4" fill="none">
+              <line x1="110" y1="110" x2="150" y2="30"/><line x1="70" y1="70" x2="150" y2="30"/>
+            </g>
+            <defs>
+              <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="context-stroke"/></marker>
+            </defs>
+            <line x1="30" y1="150" x2="110" y2="110" stroke="var(--ink)" stroke-width="2.5" marker-end="url(#ah)"/>
+            <line x1="30" y1="150" x2="70" y2="70" stroke="var(--ok)" stroke-width="2.5" marker-end="url(#ah)"/>
+            <line x1="30" y1="150" x2="150" y2="30" stroke="var(--red)" stroke-width="2.5" marker-end="url(#ah)"/>
+            <text x="112" y="128" font-size="13" fill="var(--ink)" font-style="italic" font-weight="700">a=(2,1)</text>
+            <text x="34" y="64" font-size="13" fill="var(--ok)" font-style="italic" font-weight="700">b=(1,2)</text>
+            <text x="154" y="26" font-size="13" fill="var(--red)" font-style="italic" font-weight="700">a+b</text>
+            <text x="22" y="164" font-size="11" fill="var(--sub)">O</text>
+          </svg>
+          <figcaption>$\boldsymbol{a}+\boldsymbol{b}=\begin{pmatrix}3\\3\end{pmatrix}$ は平行四辺形の対角線</figcaption>
+        </figure>
+      </div>
+      <p><b>例</b>：$\boldsymbol{a}=\begin{pmatrix}1\\2\\-1\end{pmatrix},\ \boldsymbol{b}=\begin{pmatrix}3\\0\\2\end{pmatrix}$ のとき</p>
+      <div class="f">\[ \boldsymbol{a}+\boldsymbol{b}=\begin{pmatrix}1+3\\2+0\\-1+2\end{pmatrix}=\begin{pmatrix}4\\2\\1\end{pmatrix},\qquad 2\boldsymbol{a}-3\boldsymbol{b}=\begin{pmatrix}2\\4\\-2\end{pmatrix}-\begin{pmatrix}9\\0\\6\end{pmatrix}=\begin{pmatrix}-7\\4\\-8\end{pmatrix},\qquad \|\boldsymbol{a}\|=\sqrt{1+4+1}=\sqrt6 \]</div>
+      <p><b>1次結合のイメージ</b>：$\begin{pmatrix}5\\1\end{pmatrix}=3\begin{pmatrix}1\\1\end{pmatrix}+2\begin{pmatrix}1\\-1\end{pmatrix}$ のように、「手持ちのベクトルを何倍かして足すと目的のベクトルが作れるか」を考えるのが応用の第1週。係数 $3,2$ は連立方程式 $s+t=5,\ s-t=1$ を解けば出る。</p>
+    </div>
+  </div>
+  <div class="step"><h3><span class="n">3</span>注意</h3>
+    <div class="redpen">
+      <p><b>次元が違う</b>$\mathbb{R}^2$ と $\mathbb{R}^3$ のベクトルは足せない。成分の数がそろっているか最初に見る。</p>
+      <p><b>大きさ</b>$\|\boldsymbol{a}\|$ は成分の2乗の和の<b>ルート</b>。$\sqrt{\ }$ を付け忘れる、マイナスの成分を2乗し忘れるミスが多い。</p>
+      <p><b>0 と $\boldsymbol{0}$</b>数の $0$ とベクトルの $\boldsymbol{0}$ は別物。答案では $\boldsymbol{0}$ を太字（または $\vec{0}$）で書く。</p>
+    </div>
+  </div>
+  <div class="step"><h3><span class="n">4</span>解く</h3>
+    <div class="probs">
+    <div class="q"><div class="qh"><span class="tag">1-1</span></div>
+      <div class="body">$\boldsymbol{a}=\begin{pmatrix}2\\-1\\3\end{pmatrix},\ \boldsymbol{b}=\begin{pmatrix}1\\4\\-2\end{pmatrix}$ のとき、(1) $\boldsymbol{a}+\boldsymbol{b}$　(2) $3\boldsymbol{a}-2\boldsymbol{b}$　(3) $\|\boldsymbol{b}\|$ を求めよ。</div>
+      <details><summary>解答</summary><div class="ans">
+        (1) <span class="fin">$\begin{pmatrix}3\\3\\1\end{pmatrix}$</span><br>
+        (2) $\begin{pmatrix}6\\-3\\9\end{pmatrix}-\begin{pmatrix}2\\8\\-4\end{pmatrix}=$ <span class="fin">$\begin{pmatrix}4\\-11\\13\end{pmatrix}$</span><br>
+        (3) $\sqrt{1^2+4^2+(-2)^2}=$ <span class="fin">$\sqrt{21}$</span>
+      </div></details></div>
+    <div class="q"><div class="qh"><span class="tag">1-2</span></div>
+      <div class="body">$2\boldsymbol{x}+\begin{pmatrix}1\\3\end{pmatrix}=\begin{pmatrix}5\\-1\end{pmatrix}$ をみたすベクトル $\boldsymbol{x}$ を求めよ。</div>
+      <details><summary>解答</summary><div class="ans">
+        普通の方程式と同じく移項できる：$2\boldsymbol{x}=\begin{pmatrix}5-1\\-1-3\end{pmatrix}=\begin{pmatrix}4\\-4\end{pmatrix}$。<span class="fin">$\boldsymbol{x}=\begin{pmatrix}2\\-2\end{pmatrix}$</span>
+      </div></details></div>
+    <div class="q"><div class="qh"><span class="tag">1-3</span></div>
+      <div class="body">$\begin{pmatrix}4\\-2\end{pmatrix}$ を $\begin{pmatrix}1\\1\end{pmatrix}$ と $\begin{pmatrix}1\\-1\end{pmatrix}$ の1次結合で表せ。</div>
+      <details><summary>解答</summary><div class="ans">
+        $s\begin{pmatrix}1\\1\end{pmatrix}+t\begin{pmatrix}1\\-1\end{pmatrix}=\begin{pmatrix}s+t\\s-t\end{pmatrix}$ なので $s+t=4,\ s-t=-2$。足して $2s=2$ → $s=1$、$t=3$。<br>
+        <span class="fin">$\begin{pmatrix}4\\-2\end{pmatrix}=1\begin{pmatrix}1\\1\end{pmatrix}+3\begin{pmatrix}1\\-1\end{pmatrix}$</span>（検算：$(1+3,\ 1-3)=(4,-2)$ ✓）
+      </div></details></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= 2 行列 ======================= -->
+<section class="ch" id="b2" data-title="行列と積">
+  <div class="ch-top"><span class="ch-no">第2章</span><h2>行列と、その計算（とくに積）</h2><span class="ch-meta">積は「行 × 列」。ここで手を慣らす</span></div>
+  <div class="step"><h3><span class="n">1</span>覚える</h3>
+    <div class="memo">
+      <div class="row"><span class="lbl">行列</span><span class="val">数を長方形に並べたもの。横の並びが<b>行</b>、縦の並びが<b>列</b>。$m$ 行 $n$ 列なら <span class="key">$m\times n$ 行列</span>（型）</span></div>
+      <div class="row"><span class="lbl">$(i,j)$ 成分</span><span class="val"><span class="key">第 $i$ 行・第 $j$ 列</span>にある数。$a_{ij}$ と書く（行が先）</span></div>
+      <div class="row"><span class="lbl">和・スカラー倍</span><span class="val"><span class="key">同じ型どうしだけ</span>、成分ごとに足す／全成分を $c$ 倍</span></div>
+      <div class="row"><span class="lbl">積 $AB$ の条件</span><span class="val"><span class="key">$A$ の列数 $=$ $B$ の行数</span>。型は $(m\times n)(n\times p)=m\times p$</span></div>
+      <div class="row"><span class="lbl">積の成分</span><span class="val">$AB$ の $(i,j)$ 成分 $=$ <span class="key">$A$ の第 $i$ 行と $B$ の第 $j$ 列を、端から掛けて足す</span></span></div>
+      <div class="row"><span class="lbl">交換法則</span><span class="val"><span class="key">一般に $AB\ne BA$</span>（順番を変えちゃダメ）</span></div>
+      <div class="row"><span class="lbl">単位行列</span><span class="val">$E=\begin{pmatrix}1&0\\0&1\end{pmatrix}$（対角が1、他は0）。<span class="key">$AE=EA=A$</span>（数の 1 の役）</span></div>
+      <div class="row"><span class="lbl">転置</span><span class="val">$A^T$：<span class="key">行と列を入れかえる</span>。$(AB)^T=B^TA^T$</span></div>
+      <div class="row"><span class="lbl">行列×ベクトル</span><span class="val"><span class="key">$A\boldsymbol{x}=x_1\boldsymbol{a}_1+x_2\boldsymbol{a}_2+\cdots$</span>（$\boldsymbol{a}_j$ は $A$ の第 $j$ 列）＝列の1次結合</span></div>
+    </div>
+  </div>
+  <div class="step"><h3><span class="n">2</span>わかる</h3>
+    <div class="explain">
+      <div class="mn"><b>行と列の覚え方</b>：「<b>行</b>」の字の右側は横棒「二」→ 横の並び。「<b>列</b>」の字の右側「刂」は縦棒 → 縦の並び。</div>
+      <p><b>積の計算</b>（$A=\begin{pmatrix}1&2\\3&4\end{pmatrix},\ B=\begin{pmatrix}0&1\\2&-1\end{pmatrix}$）。$AB$ の $(1,2)$ 成分なら、$A$ の<b>第1行</b> $(1,\ 2)$ と $B$ の<b>第2列</b> $\begin{pmatrix}1\\-1\end{pmatrix}$ を「1番目どうし・2番目どうし」掛けて足す：$1\cdot1+2\cdot(-1)=-1$。これを全部の場所でやる。</p>
+      <div class="f">\[ AB=\begin{pmatrix}1\cdot0+2\cdot2 & 1\cdot1+2\cdot(-1)\\ 3\cdot0+4\cdot2 & 3\cdot1+4\cdot(-1)\end{pmatrix}=\begin{pmatrix}4&-1\\8&-1\end{pmatrix},\qquad BA=\begin{pmatrix}3&4\\-1&0\end{pmatrix} \]</div>
+      <p>$AB$ と $BA$ はぜんぜん違う。だから行列の式変形では「左から掛けたか、右から掛けたか」を必ず区別する。</p>
+      <p><b>行列×ベクトル</b>は「列の1次結合」として見るのが応用で効く見方：</p>
+      <div class="f">\[ \begin{pmatrix}1&2\\3&4\end{pmatrix}\begin{pmatrix}5\\6\end{pmatrix}=\begin{pmatrix}1\cdot5+2\cdot6\\3\cdot5+4\cdot6\end{pmatrix}=\begin{pmatrix}17\\39\end{pmatrix}=5\begin{pmatrix}1\\3\end{pmatrix}+6\begin{pmatrix}2\\4\end{pmatrix} \]</div>
+      <p>連立方程式 $\begin{cases}x+2y=17\\3x+4y=39\end{cases}$ はこの左辺そのもの。つまり<b>連立方程式は $A\boldsymbol{x}=\boldsymbol{b}$ の1行で書ける</b>（$A$ を<b>係数行列</b>という）。これが第3章につながる。</p>
+    </div>
+  </div>
+  <div class="step"><h3><span class="n">3</span>注意</h3>
+    <div class="redpen">
+      <p><b>型チェック</b>積を計算する前に「$A$ の列数 $=$ $B$ の行数」を確認。$(2\times3)(2\times3)$ は計算できない。</p>
+      <p><b>数と違う</b>$AB=O$（零行列）でも $A=O$ や $B=O$ とは限らない。$AB=AC$ から $B=C$ と約分もできない。</p>
+      <p><b>転置の積</b>$(AB)^T=B^TA^T$。順番が<b>逆</b>になる。$A^TB^T$ と書くと間違い。</p>
+    </div>
+  </div>
+  <div class="step"><h3><span class="n">4</span>解く</h3>
+    <div class="probs">
+    <div class="q"><div class="qh"><span class="tag">2-1</span></div>
+      <div class="body">$A=\begin{pmatrix}2&-1\\0&3\end{pmatrix},\ B=\begin{pmatrix}1&2\\-1&1\end{pmatrix}$ のとき、(1) $A+2B$　(2) $AB$　(3) $BA$ を求めよ。</div>
+      <details><summary>解答</summary><div class="ans">
+        (1) $\begin{pmatrix}2+2&-1+4\\0-2&3+2\end{pmatrix}=$ <span class="fin">$\begin{pmatrix}4&3\\-2&5\end{pmatrix}$</span><br>
+        (2) $\begin{pmatrix}2\cdot1+(-1)(-1)&2\cdot2+(-1)\cdot1\\0\cdot1+3\cdot(-1)&0\cdot2+3\cdot1\end{pmatrix}=$ <span class="fin">$\begin{pmatrix}3&3\\-3&3\end{pmatrix}$</span><br>
+        (3) $\begin{pmatrix}1\cdot2+2\cdot0&1\cdot(-1)+2\cdot3\\(-1)\cdot2+1\cdot0&(-1)(-1)+1\cdot3\end{pmatrix}=$ <span class="fin">$\begin{pmatrix}2&5\\-2&4\end{pmatrix}$</span>（$AB\ne BA$ を確認）
+      </div></details></div>
+    <div class="q"><div class="qh"><span class="tag">2-2</span></div>
+      <div class="body">$A=\begin{pmatrix}1&0&2\\-1&3&1\end{pmatrix},\ B=\begin{pmatrix}2&1\\1&0\\0&-1\end{pmatrix}$ とする。(1) $AB$ と $BA$ の型を答えよ。(2) $AB$ を計算せよ。</div>
+      <details><summary>解答</summary><div class="ans">
+        (1) $A$ は $2\times3$、$B$ は $3\times2$。<span class="fin">$AB$ は $2\times2$、$BA$ は $3\times3$</span>（どちらも計算できるけど型が違う）<br>
+        (2) $\begin{pmatrix}1\cdot2+0\cdot1+2\cdot0 & 1\cdot1+0\cdot0+2\cdot(-1)\\ -1\cdot2+3\cdot1+1\cdot0 & -1\cdot1+3\cdot0+1\cdot(-1)\end{pmatrix}=$ <span class="fin">$\begin{pmatrix}2&-1\\1&-2\end{pmatrix}$</span>
+      </div></details></div>
+    <div class="q"><div class="qh"><span class="tag">2-3</span></div>
+      <div class="body">$A=\begin{pmatrix}1&2&0\\0&1&-1\\3&0&1\end{pmatrix},\ \boldsymbol{x}=\begin{pmatrix}2\\-1\\1\end{pmatrix}$ のとき $A\boldsymbol{x}$ を求めよ。</div>
+      <details><summary>解答</summary><div class="ans">
+        $\begin{pmatrix}1\cdot2+2\cdot(-1)+0\cdot1\\0\cdot2+1\cdot(-1)+(-1)\cdot1\\3\cdot2+0\cdot(-1)+1\cdot1\end{pmatrix}=$ <span class="fin">$\begin{pmatrix}0\\-2\\7\end{pmatrix}$</span><br>
+        （列の1次結合で見ると $2\begin{pmatrix}1\\0\\3\end{pmatrix}-\begin{pmatrix}2\\1\\0\end{pmatrix}+\begin{pmatrix}0\\-1\\1\end{pmatrix}$ で同じ答え）
+      </div></details></div>
+    <div class="q"><div class="qh"><span class="tag">2-4</span></div>
+      <div class="body">$A=\begin{pmatrix}1&1\\0&1\end{pmatrix}$ のとき $A^2,\ A^3$ を求め、$A^n$ を予想せよ。</div>
+      <details><summary>解答</summary><div class="ans">
+        $A^2=AA=\begin{pmatrix}1&2\\0&1\end{pmatrix}$、$A^3=A^2A=\begin{pmatrix}1&3\\0&1\end{pmatrix}$。<span class="fin">$A^n=\begin{pmatrix}1&n\\0&1\end{pmatrix}$</span>
+      </div></details></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= 3 掃き出し法 ======================= -->
+<section class="ch" id="b3" data-title="掃き出し法">
+  <div class="ch-top"><span class="ch-no">第3章</span><h2>連立方程式と掃き出し法</h2><span class="ch-meta">このノートでいちばん大事。応用の計算はほぼこれ</span></div>
+  <div class="step"><h3><span class="n">1</span>覚える</h3>
+    <div class="memo">
+      <div class="row"><span class="lbl">行列で書く</span><span class="val">連立方程式 ＝ <span class="key">$A\boldsymbol{x}=\boldsymbol{b}$</span>（$A$：係数行列、$\boldsymbol{x}$：未知数、$\boldsymbol{b}$：右辺）</span></div>
+      <div class="row"><span class="lbl">拡大係数行列</span><span class="val"><span class="key">$(A\mid\boldsymbol{b})$</span>：係数行列の右に右辺をくっつけたもの</span></div>
+      <div class="row"><span class="lbl">行基本変形</span><span class="val">① <span class="key">ある行を $c$ 倍（$c\ne0$）</span><br>② <span class="key">2つの行を入れかえる</span><br>③ <span class="key">ある行に、別の行の $c$ 倍を足す</span></span></div>
+      <div class="row"><span class="lbl">なぜOK？</span><span class="val">どれも「式を何倍かする／並べかえる／式どうしを足す」なので<span class="key">解は変わらない</span></span></div>
+      <div class="row"><span class="lbl">掃き出し法</span><span class="val">$(A\mid\boldsymbol{b})$ を行基本変形して <span class="key">左側を $E$（単位行列）にする → 右端の列が答え</span></span></div>
+      <div class="row"><span class="lbl">進める順番</span><span class="val">左の列から1列ずつ：<span class="key">その列の「1」を作る → 同じ列の他の数を 0 にする</span></span></div>
+    </div>
+  </div>
+  <div class="step"><h3><span class="n">2</span>わかる</h3>
+    <div class="explain">
+      <p>中学でやった「加減法」を、文字を書かずに<b>係数だけで</b>やるのが掃き出し法。例題で1手ずつ見る：</p>
+      <div class="f">\[ \begin{cases}x+y+z=6\\2x+y-z=1\\x-y+2z=5\end{cases} \]</div>
+      <div class="sweep">
+        <div class="st"><div class="op">スタート<small>拡大係数行列を書く</small></div><div class="mx">\[ \left(\begin{array}{ccc|c}1&1&1&6\\2&1&-1&1\\1&-1&2&5\end{array}\right) \]</div></div>
+        <div class="st"><div class="op">②行 − ①行×2<br>③行 − ①行<small>第1列の下を 0 に</small></div><div class="mx">\[ \left(\begin{array}{ccc|c}1&1&1&6\\0&-1&-3&-11\\0&-2&1&-1\end{array}\right) \]</div></div>
+        <div class="st"><div class="op">②行 ×(−1)<small>第2列に「1」を作る</small></div><div class="mx">\[ \left(\begin{array}{ccc|c}1&1&1&6\\0&1&3&11\\0&-2&1&-1\end{array}\right) \]</div></div>
+        <div class="st"><div class="op">①行 − ②行<br>③行 + ②行×2<small>第2列の上下を 0 に</small></div><div class="mx">\[ \left(\begin{array}{ccc|c}1&0&-2&-5\\0&1&3&11\\0&0&7&21\end{array}\right) \]</div></div>
+        <div class="st"><div class="op">③行 ×$\frac17$<small>第3列に「1」を作る</small></div><div class="mx">\[ \left(\begin{array}{ccc|c}1&0&-2&-5\\0&1&3&11\\0&0&1&3\end{array}\right) \]</div></div>
+        <div class="st"><div class="op">①行 + ③行×2<br>②行 − ③行×3<small>第3列の上を 0 に</small></div><div class="mx">\[ \left(\begin{array}{ccc|c}1&0&0&1\\0&1&0&2\\0&0&1&3\end{array}\right) \]</div></div>
+      </div>
+      <p>左が $E$ になったので、右端を縦に読んで <b>$x=1,\ y=2,\ z=3$</b>。最後に元の式に代入：$1+2+3=6$ ✓、$2+2-3=1$ ✓、$1-2+6=5$ ✓。</p>
+      <p><b>コツ</b>：「1」を作るときは、割り算で分数を作るより、行の入れかえや「1」になっている行を使う方がラク。分数が出ても計算は合うけど、ミスが増える。</p>
+    </div>
+  </div>
+  <div class="step"><h3><span class="n">3</span>注意</h3>
+    <div class="redpen">
+      <p><b>列はいじらない</b>使っていいのは<b>行</b>の変形だけ。列を足したり入れかえたりすると解が変わる。</p>
+      <p><b>右端も一緒に</b>行を変形するときは、縦線の右（右辺）も同じ操作をする。忘れると全部ズレる。</p>
+      <p><b>メモを書く</b>答案には「②−①×2」のように操作を書く。部分点がもらえるし、自分の見直しも速くなる。</p>
+      <p><b>検算</b>出た解を元の式（最初の式！）に代入。途中の式に代入しても、そこまでのミスは見つからない。</p>
+    </div>
+  </div>
+  <div class="step"><h3><span class="n">4</span>解く</h3>
+    <div class="probs">
+    <div class="q"><div class="qh"><span class="tag">3-1</span></div>
+      <div class="body">掃き出し法で解け。$\begin{cases}x+2y=5\\3x-y=1\end{cases}$</div>
+      <details><summary>解答</summary><div class="ans">
+        $\left(\begin{array}{cc|c}1&2&5\\3&-1&1\end{array}\right)\xrightarrow{②-①\times3}\left(\begin{array}{cc|c}1&2&5\\0&-7&-14\end{array}\right)\xrightarrow{②\times(-\frac17)}\left(\begin{array}{cc|c}1&2&5\\0&1&2\end{array}\right)\xrightarrow{①-②\times2}\left(\begin{array}{cc|c}1&0&1\\0&1&2\end{array}\right)$<br>
+        <span class="fin">$x=1,\ y=2$</span>（検算：$1+4=5$ ✓、$3-2=1$ ✓）
+      </div></details></div>
+    <div class="q"><div class="qh"><span class="tag">3-2</span></div>
+      <div class="body">掃き出し法で解け。$\begin{cases}x+2y-z=-1\\2x-y+z=6\\-x+y+2z=-1\end{cases}$</div>
+      <details><summary>解答</summary><div class="ans">
+        $\left(\begin{array}{ccc|c}1&2&-1&-1\\2&-1&1&6\\-1&1&2&-1\end{array}\right)\xrightarrow[③+①]{②-①\times2}\left(\begin{array}{ccc|c}1&2&-1&-1\\0&-5&3&8\\0&3&1&-2\end{array}\right)$<br>
+        第2列の「1」を作るのに $-5$ で割ると分数になるので、<b>②＋③×2</b> で $(0,\ 1,\ 5\mid 4)$ を作る：<br>
+        $\left(\begin{array}{ccc|c}1&2&-1&-1\\0&1&5&4\\0&3&1&-2\end{array}\right)\xrightarrow[③-②\times3]{①-②\times2}\left(\begin{array}{ccc|c}1&0&-11&-9\\0&1&5&4\\0&0&-14&-14\end{array}\right)\xrightarrow{③\times(-\frac1{14})}\left(\begin{array}{ccc|c}1&0&-11&-9\\0&1&5&4\\0&0&1&1\end{array}\right)$<br>
+        $\xrightarrow[②-③\times5]{①+③\times11}\left(\begin{array}{ccc|c}1&0&0&2\\0&1&0&-1\\0&0&1&1\end{array}\right)$　<span class="fin">$x=2,\ y=-1,\ z=1$</span><br>
+        検算：$2-2-1=-1$ ✓、$4+1+1=6$ ✓、$-2-1+2=-1$ ✓
+      </div></details></div>
+    <div class="q"><div class="qh"><span class="tag">3-3</span></div>
+      <div class="body">次の連立方程式を $A\boldsymbol{x}=\boldsymbol{b}$ の形で書き、拡大係数行列を答えよ（解かなくてよい）。$\begin{cases}2x-z=3\\x+4y=0\\y-3z=-2\end{cases}$</div>
+      <details><summary>解答</summary><div class="ans">
+        ない文字の係数は <b>0</b> を書く。<br>
+        <span class="fin">$\begin{pmatrix}2&0&-1\\1&4&0\\0&1&-3\end{pmatrix}\begin{pmatrix}x\\y\\z\end{pmatrix}=\begin{pmatrix}3\\0\\-2\end{pmatrix}$、拡大係数行列 $\left(\begin{array}{ccc|c}2&0&-1&3\\1&4&0&0\\0&1&-3&-2\end{array}\right)$</span>
+      </div></details></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= 4 ランク ======================= -->
+<section class="ch" id="b4" data-title="階段行列とランク">
+  <div class="ch-top"><span class="ch-no">第4章</span><h2>階段行列とランク、解がない・無数にあるとき</h2><span class="ch-meta">ランク＝「本当に意味のある式の本数」</span></div>
+  <div class="step"><h3><span class="n">1</span>覚える</h3>
+    <div class="memo">
+      <div class="row"><span class="lbl">階段行列</span><span class="val">行基本変形で、各行の<b>左端の 0 でない数（主成分）</b>が<span class="key">下の行ほど右にずれる</span>形にしたもの。全部 0 の行は一番下</span></div>
+      <div class="row"><span class="lbl">簡約階段行列</span><span class="val">さらに<span class="key">主成分が 1、その列の他の成分が 0</span>。行列ごとにただ1つに決まる</span></div>
+      <div class="row"><span class="lbl">ランク</span><span class="val">$\operatorname{rank}A=$ <span class="key">階段行列にしたときの 0 でない行の数</span>（＝主成分の数）</span></div>
+      <div class="row"><span class="lbl">解がただ1つ</span><span class="val"><span class="key">$\operatorname{rank}A=\operatorname{rank}(A\mid\boldsymbol{b})=n$</span>（$n$＝未知数の数）</span></div>
+      <div class="row"><span class="lbl">解が無数</span><span class="val"><span class="key">$\operatorname{rank}A=\operatorname{rank}(A\mid\boldsymbol{b})&lt;n$</span>。自由に選べる文字（パラメータ）は <span class="key">$n-\operatorname{rank}A$ 個</span></span></div>
+      <div class="row"><span class="lbl">解なし</span><span class="val"><span class="key">$\operatorname{rank}A&lt;\operatorname{rank}(A\mid\boldsymbol{b})$</span>（途中で $0=1$ みたいな行が出る）</span></div>
+    </div>
+  </div>
+  <div class="step"><h3><span class="n">2</span>わかる</h3>
+    <div class="explain">
+      <p>式が3本あっても、1本が他の2本から作れる（例：③＝②−①）なら、<b>実質2本</b>しかない。その「実質の本数」がランク。行基本変形で消える行（全部 0 になる行）は「他の式から作れたムダな式」。</p>
+      <p><b>例1（解が無数）</b>：$x+y+2z=3,\ 2x+3y+5z=8,\ x+2y+3z=5$</p>
+      <div class="f">\[ \left(\begin{array}{ccc|c}1&1&2&3\\2&3&5&8\\1&2&3&5\end{array}\right)\xrightarrow[③-①]{②-①\times2}\left(\begin{array}{ccc|c}1&1&2&3\\0&1&1&2\\0&1&1&2\end{array}\right)\xrightarrow[①-②]{③-②}\left(\begin{array}{ccc|c}1&0&1&1\\0&1&1&2\\0&0&0&0\end{array}\right) \]</div>
+      <p>0 でない行は2本 → $\operatorname{rank}A=\operatorname{rank}(A\mid\boldsymbol{b})=2&lt;3$ で解は無数。主成分のない列の文字 $z$ を自由にして $z=t$ とおくと、$x+z=1,\ y+z=2$ から</p>
+      <div class="f">\[ \begin{pmatrix}x\\y\\z\end{pmatrix}=\begin{pmatrix}1-t\\2-t\\t\end{pmatrix}=\begin{pmatrix}1\\2\\0\end{pmatrix}+t\begin{pmatrix}-1\\-1\\1\end{pmatrix}\quad(t\text{ は任意の実数}) \]</div>
+      <p><b>例2（解なし）</b>：上の③の右辺を $5$ → $6$ に変えると、最後の行が $(0\ 0\ 0\mid 1)$、つまり「$0x+0y+0z=1$」になる。これは絶対に成り立たないので解なし。このとき $\operatorname{rank}A=2$、$\operatorname{rank}(A\mid\boldsymbol{b})=3$。</p>
+      <p>応用の第3週（同次連立方程式 $A\boldsymbol{x}=\boldsymbol{0}$ の解空間）は、例1 の右辺が全部 0 になった版。そこでは「パラメータの個数 $n-\operatorname{rank}A$」がそのまま解空間の<b>次元</b>になる。</p>
+    </div>
+  </div>
+  <div class="step"><h3><span class="n">3</span>注意</h3>
+    <div class="redpen">
+      <p><b>行の数 ≠ ランク</b>3行あってもランクが3とは限らない。必ず階段にしてから数える。</p>
+      <p><b>どの文字を自由に？</b>簡約化したとき<b>主成分がない列</b>の文字をパラメータにする。そうすると残りの文字がすぐ表せる。</p>
+      <p><b>答えの書き方</b>無数のときは「$t$ は任意の実数」まで書く。パラメータの置き方が模範解答と違っても、代入して全部の式が成り立てば正解。</p>
+    </div>
+  </div>
+  <div class="step"><h3><span class="n">4</span>解く</h3>
+    <div class="probs">
+    <div class="q"><div class="qh"><span class="tag">4-1</span></div>
+      <div class="body">次の行列のランクを求めよ。<br>(1) $\begin{pmatrix}1&2\\2&4\end{pmatrix}$　(2) $\begin{pmatrix}1&2&3\\2&4&6\\1&1&1\end{pmatrix}$　(3) $\begin{pmatrix}1&0&1\\0&1&1\\1&1&0\end{pmatrix}$</div>
+      <details><summary>解答</summary><div class="ans">
+        (1) ②−①×2 で $\begin{pmatrix}1&2\\0&0\end{pmatrix}$。<span class="fin">rank 1</span><br>
+        (2) ②−①×2、③−① で $\begin{pmatrix}1&2&3\\0&0&0\\0&-1&-2\end{pmatrix}$、②と③を入れかえて階段。<span class="fin">rank 2</span><br>
+        (3) ③−① で $(0,1,-1)$、さらに ③−② で $(0,0,-2)$。0 でない行が3本。<span class="fin">rank 3</span>
+      </div></details></div>
+    <div class="q"><div class="qh"><span class="tag">4-2</span></div>
+      <div class="body">次の連立方程式を解け。$\begin{cases}x+2y-z=1\\2x+4y+z=8\end{cases}$</div>
+      <details><summary>解答</summary><div class="ans">
+        $\left(\begin{array}{ccc|c}1&2&-1&1\\2&4&1&8\end{array}\right)\xrightarrow{②-①\times2}\left(\begin{array}{ccc|c}1&2&-1&1\\0&0&3&6\end{array}\right)\xrightarrow{②\times\frac13,\ ①+②}\left(\begin{array}{ccc|c}1&2&0&3\\0&0&1&2\end{array}\right)$<br>
+        rank 2、未知数3個 → パラメータ1個。主成分がない第2列の $y=t$ とおくと $x=3-2t,\ z=2$。<br>
+        <span class="fin">$\begin{pmatrix}x\\y\\z\end{pmatrix}=\begin{pmatrix}3\\0\\2\end{pmatrix}+t\begin{pmatrix}-2\\1\\0\end{pmatrix}$（$t$ は任意）</span>
+      </div></details></div>
+    <div class="q"><div class="qh"><span class="tag">4-3</span></div>
+      <div class="body">連立方程式 $\begin{cases}x+y=1\\2x+ay=b\end{cases}$ が (1) ただ1つの解をもつ (2) 無数の解をもつ (3) 解をもたない ための $a,b$ の条件を求めよ。</div>
+      <details><summary>解答</summary><div class="ans">
+        ②−①×2 で $\left(\begin{array}{cc|c}1&1&1\\0&a-2&b-2\end{array}\right)$。2行目は「$(a-2)y=b-2$」。<br>
+        (1) $a-2\ne0$ なら $y$ が1つに決まる。<span class="fin">$a\ne2$</span>（$b$ は何でもよい）<br>
+        (2) 2行目が $0=0$ になるとき。<span class="fin">$a=2$ かつ $b=2$</span><br>
+        (3) 2行目が $0=(0\text{ でない数})$ になるとき。<span class="fin">$a=2$ かつ $b\ne2$</span>
+      </div></details></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= 5 行列式 ======================= -->
+<section class="ch" id="b5" data-title="行列式">
+  <div class="ch-top"><span class="ch-no">第5章</span><h2>行列式：正方行列に1つの数を対応させる</h2><span class="ch-meta">$\det A\ne0$ かどうかで「解がただ1つ・逆行列がある・独立」がぜんぶ決まる</span></div>
+  <div class="step"><h3><span class="n">1</span>覚える</h3>
+    <div class="memo">
+      <div class="row"><span class="lbl">2×2</span><span class="val"><span class="key">$\det\begin{pmatrix}a&b\\c&d\end{pmatrix}=ad-bc$</span>（$|A|$ とも書く）</span></div>
+      <div class="row"><span class="lbl">3×3（サラス）</span><span class="val"><span class="key">右下がり3本の積の和 − 左下がり3本の積の和</span>（下の図）</span></div>
+      <div class="row"><span class="lbl">余因子展開</span><span class="val">1行（1列）を選んで <span class="key">成分 × その行と列を消した行列式 × 符号</span> を足す。符号は <span class="key">$\begin{pmatrix}+&-&+\\-&+&-\\+&-&+\end{pmatrix}$</span> の市松模様</span></div>
+      <div class="row"><span class="lbl">三角行列</span><span class="val"><span class="key">対角成分の積</span>（対角より下か上が全部 0 のとき）</span></div>
+      <div class="row"><span class="lbl">行基本変形と det</span><span class="val">入れかえ → <span class="key">符号が変わる</span>／1行を $c$ 倍 → <span class="key">$c$ 倍</span>／他の行の定数倍を足す → <span class="key">変わらない</span></span></div>
+      <div class="row"><span class="lbl">0 になる</span><span class="val"><span class="key">2つの行（列）が同じ・比例</span>、全部 0 の行（列）がある</span></div>
+      <div class="row"><span class="lbl">積・転置</span><span class="val"><span class="key">$\det(AB)=\det A\cdot\det B$</span>、$\det A^T=\det A$、$n$ 次なら $\det(cA)=c^n\det A$</span></div>
+      <div class="row"><span class="lbl">いちばん大事</span><span class="val">$n$ 次正方行列で <span class="key">$\det A\ne0$ ⇔ $\operatorname{rank}A=n$ ⇔ 逆行列がある ⇔ 列ベクトルが1次独立</span></span></div>
+    </div>
+  </div>
+  <div class="step"><h3><span class="n">2</span>わかる</h3>
+    <div class="explain">
+      <p><b>サラスの方法</b>：1・2列目を右にもう一度書き写して、斜めに3つずつ掛ける。実線（右下がり）は＋、点線（左下がり）は−。</p>
+      <div class="fig">
+        <figure>
+          <svg viewBox="0 0 230 150" role="img" aria-label="サラスの方法。3行3列の右に1列目と2列目を写し、右下がりの3本の積を足し、左下がりの3本の積を引く">
+            <g stroke="var(--red)" stroke-width="2" opacity=".8">
+              <line x1="22" y1="22" x2="118" y2="128"/><line x1="67" y1="22" x2="163" y2="128"/><line x1="112" y1="22" x2="208" y2="128"/>
+            </g>
+            <g stroke="var(--sub)" stroke-width="2" stroke-dasharray="6 4">
+              <line x1="118" y1="22" x2="22" y2="128"/><line x1="163" y1="22" x2="67" y2="128"/><line x1="208" y1="22" x2="112" y2="128"/>
+            </g>
+            <line x1="137" y1="10" x2="137" y2="140" stroke="var(--line)" stroke-width="1.5"/>
+            <g font-size="17" font-style="italic" text-anchor="middle" dominant-baseline="central" fill="var(--ink)" font-weight="700" paint-order="stroke" stroke="var(--paper)" stroke-width="6">
+              <text x="25" y="25">a</text><text x="70" y="25">b</text><text x="115" y="25">c</text>
+              <text x="25" y="75">d</text><text x="70" y="75">e</text><text x="115" y="75">f</text>
+              <text x="25" y="125">g</text><text x="70" y="125">h</text><text x="115" y="125">i</text>
+            </g>
+            <g font-size="17" font-style="italic" text-anchor="middle" dominant-baseline="central" fill="var(--sub)" paint-order="stroke" stroke="var(--paper)" stroke-width="6">
+              <text x="160" y="25">a</text><text x="205" y="25">b</text>
+              <text x="160" y="75">d</text><text x="205" y="75">e</text>
+              <text x="160" y="125">g</text><text x="205" y="125">h</text>
+            </g>
+          </svg>
+          <figcaption>$aei+bfg+cdh-ceg-afh-bdi$</figcaption>
+        </figure>
+      </div>
+      <p><b>例</b>：$A=\begin{pmatrix}1&2&3\\0&1&4\\5&6&0\end{pmatrix}$</p>
+      <div class="f">\[ \det A=(1\cdot1\cdot0+2\cdot4\cdot5+3\cdot0\cdot6)-(3\cdot1\cdot5+1\cdot4\cdot6+2\cdot0\cdot0)=40-39=1 \]</div>
+      <p><b>同じものを余因子展開（第1行）で</b>：成分ごとに「その行と列を消した 2×2」を掛けて、符号 $+,-,+$ を付ける。</p>
+      <div class="f">\[ \det A=+1\begin{vmatrix}1&4\\6&0\end{vmatrix}-2\begin{vmatrix}0&4\\5&0\end{vmatrix}+3\begin{vmatrix}0&1\\5&6\end{vmatrix}=1\cdot(-24)-2\cdot(-20)+3\cdot(-5)=1 \]</div>
+      <p>余因子展開は <b>0 が多い行・列</b>を選ぶと計算が減る。4×4 以上はサラスが使えないので、行基本変形で 0 を増やしてから余因子展開するのが基本。</p>
+      <p><b>意味</b>：2×2 の $\det$ は、2本の列ベクトルが作る平行四辺形の（向き付きの）面積。0 ＝ つぶれている ＝ 2本が同じ直線上（1次従属）。だから応用の第1週で「$\det\ne0$ なら独立」が使える。</p>
+    </div>
+  </div>
+  <div class="step"><h3><span class="n">3</span>注意</h3>
+    <div class="redpen">
+      <p><b>サラスは3×3専用</b>4×4 に同じ「斜め掛け」をしても答えにならない。</p>
+      <p><b>符号</b>余因子展開の2番目は<b>マイナス</b>。第2行で展開するなら $-,+,-$ から始まる。</p>
+      <p><b>和は分けられない</b>$\det(A+B)\ne\det A+\det B$。積なら分けられる。</p>
+      <p><b>$c$ 倍</b>3×3 で $\det(2A)=2^3\det A=8\det A$。2倍じゃない（全部の行が2倍になるから）。</p>
+    </div>
+  </div>
+  <div class="step"><h3><span class="n">4</span>解く</h3>
+    <div class="probs">
+    <div class="q"><div class="qh"><span class="tag">5-1</span></div>
+      <div class="body">(1) $\begin{vmatrix}3&5\\2&4\end{vmatrix}$　(2) $\begin{vmatrix}2&-3\\4&1\end{vmatrix}$ を求めよ。</div>
+      <details><summary>解答</summary><div class="ans">
+        (1) $3\cdot4-5\cdot2=$ <span class="fin">$2$</span>　(2) $2\cdot1-(-3)\cdot4=2+12=$ <span class="fin">$14$</span>
+      </div></details></div>
+    <div class="q"><div class="qh"><span class="tag">5-2</span></div>
+      <div class="body">(1) $\begin{vmatrix}2&1&0\\1&3&1\\0&1&2\end{vmatrix}$　(2) $\begin{vmatrix}1&2&1\\2&1&-1\\1&-1&2\end{vmatrix}$ を求めよ。</div>
+      <details><summary>解答</summary><div class="ans">
+        (1) 第1行で展開：$2(3\cdot2-1\cdot1)-1(1\cdot2-1\cdot0)+0=10-2=$ <span class="fin">$8$</span><br>
+        (2) サラス：$(1\cdot1\cdot2+2\cdot(-1)\cdot1+1\cdot2\cdot(-1))-(1\cdot1\cdot1+1\cdot(-1)\cdot(-1)+2\cdot2\cdot2)=(2-2-2)-(1+1+8)=-2-10=$ <span class="fin">$-12$</span>
+      </div></details></div>
+    <div class="q"><div class="qh"><span class="tag">5-3</span></div>
+      <div class="body">$\begin{vmatrix}2&5&7\\0&3&1\\0&0&-1\end{vmatrix}$ を求めよ。</div>
+      <details><summary>解答</summary><div class="ans">
+        三角行列なので対角成分の積：$2\cdot3\cdot(-1)=$ <span class="fin">$-6$</span>
+      </div></details></div>
+    <div class="q"><div class="qh"><span class="tag">5-4</span></div>
+      <div class="body">$A,B$ は3次正方行列で $\det A=3,\ \det B=-2$ とする。(1) $\det(AB)$　(2) $\det(2A)$　(3) $\det A^T$ を求めよ。</div>
+      <details><summary>解答</summary><div class="ans">
+        (1) $3\cdot(-2)=$ <span class="fin">$-6$</span>　(2) $2^3\cdot3=$ <span class="fin">$24$</span>　(3) <span class="fin">$3$</span>
+      </div></details></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= 6 逆行列 ======================= -->
+<section class="ch" id="b6" data-title="逆行列">
+  <div class="ch-top"><span class="ch-no">第6章</span><h2>逆行列：行列の「割り算」</h2><span class="ch-meta">2×2 は公式、3×3 は掃き出し</span></div>
+  <div class="step"><h3><span class="n">1</span>覚える</h3>
+    <div class="memo">
+      <div class="row"><span class="lbl">定義</span><span class="val"><span class="key">$AX=XA=E$</span> となる $X$ を $A^{-1}$ と書く（数の $\frac1a$ の役）</span></div>
+      <div class="row"><span class="lbl">ある条件</span><span class="val"><span class="key">$\det A\ne0$</span>（このとき $A$ は<b>正則</b>という）</span></div>
+      <div class="row"><span class="lbl">2×2 の公式</span><span class="val"><span class="key">$\begin{pmatrix}a&b\\c&d\end{pmatrix}^{-1}=\dfrac{1}{ad-bc}\begin{pmatrix}d&-b\\-c&a\end{pmatrix}$</span>（$a,d$ 入れかえ、$b,c$ に − ）</span></div>
+      <div class="row"><span class="lbl">掃き出しで求める</span><span class="val"><span class="key">$(A\mid E)\ \to\ (E\mid A^{-1})$</span>：右に $E$ を並べて、左が $E$ になるまで行基本変形</span></div>
+      <div class="row"><span class="lbl">積の逆</span><span class="val"><span class="key">$(AB)^{-1}=B^{-1}A^{-1}$</span>（順番が逆）</span></div>
+      <div class="row"><span class="lbl">連立方程式</span><span class="val">$A\boldsymbol{x}=\boldsymbol{b}$ の両辺に左から $A^{-1}$ → <span class="key">$\boldsymbol{x}=A^{-1}\boldsymbol{b}$</span></span></div>
+    </div>
+  </div>
+  <div class="step"><h3><span class="n">2</span>わかる</h3>
+    <div class="explain">
+      <p><b>2×2</b>：$A=\begin{pmatrix}2&1\\5&3\end{pmatrix}$ は $\det A=6-5=1$ なので</p>
+      <div class="f">\[ A^{-1}=\frac11\begin{pmatrix}3&-1\\-5&2\end{pmatrix}=\begin{pmatrix}3&-1\\-5&2\end{pmatrix},\qquad AA^{-1}=\begin{pmatrix}6-5&-2+2\\15-15&-5+6\end{pmatrix}=E\ \checkmark \]</div>
+      <p><b>3×3（掃き出し）</b>：$A=\begin{pmatrix}1&2&0\\0&1&1\\1&2&1\end{pmatrix}$。やることは第3章とまったく同じで、右側が3列になっただけ。</p>
+      <div class="sweep">
+        <div class="st"><div class="op">スタート<small>右に $E$ を並べる</small></div><div class="mx">\[ \left(\begin{array}{ccc|ccc}1&2&0&1&0&0\\0&1&1&0&1&0\\1&2&1&0&0&1\end{array}\right) \]</div></div>
+        <div class="st"><div class="op">③行 − ①行</div><div class="mx">\[ \left(\begin{array}{ccc|ccc}1&2&0&1&0&0\\0&1&1&0&1&0\\0&0&1&-1&0&1\end{array}\right) \]</div></div>
+        <div class="st"><div class="op">①行 − ②行×2</div><div class="mx">\[ \left(\begin{array}{ccc|ccc}1&0&-2&1&-2&0\\0&1&1&0&1&0\\0&0&1&-1&0&1\end{array}\right) \]</div></div>
+        <div class="st"><div class="op">①行 + ③行×2<br>②行 − ③行</div><div class="mx">\[ \left(\begin{array}{ccc|ccc}1&0&0&-1&-2&2\\0&1&0&1&1&-1\\0&0&1&-1&0&1\end{array}\right) \]</div></div>
+      </div>
+      <p>よって $A^{-1}=\begin{pmatrix}-1&-2&2\\1&1&-1\\-1&0&1\end{pmatrix}$。<b>検算</b>は $AA^{-1}$ の1行目だけでもやる：$(1,2,0)$ と各列を掛けて $(-1+2,\ -2+2,\ 2-2)=(1,0,0)$ ✓</p>
+      <p>途中で左側に<b>全部 0 の行</b>が出たら、$\det A=0$ ということなので「逆行列は存在しない」で終わり。</p>
+    </div>
+  </div>
+  <div class="step"><h3><span class="n">3</span>注意</h3>
+    <div class="redpen">
+      <p><b>公式の符号</b>2×2 で入れかえるのは $a$ と $d$（対角）、マイナスを付けるのは $b$ と $c$。逆にしやすい。</p>
+      <p><b>$\frac1{\det}$ を忘れない</b>$\det A=1$ 以外のときは全体を $\det A$ で割る。</p>
+      <p><b>検算必須</b>$AA^{-1}=E$ になるか必ず確かめる。逆行列は1か所ミスると全部ダメになる。</p>
+      <p><b>順番</b>$A\boldsymbol{x}=\boldsymbol{b}$ なら $\boldsymbol{x}=A^{-1}\boldsymbol{b}$（左から掛ける）。$\boldsymbol{b}A^{-1}$ は型が合わない。</p>
+    </div>
+  </div>
+  <div class="step"><h3><span class="n">4</span>解く</h3>
+    <div class="probs">
+    <div class="q"><div class="qh"><span class="tag">6-1</span></div>
+      <div class="body">逆行列があれば求めよ。(1) $\begin{pmatrix}4&7\\1&2\end{pmatrix}$　(2) $\begin{pmatrix}2&4\\1&2\end{pmatrix}$　(3) $\begin{pmatrix}3&1\\4&2\end{pmatrix}$</div>
+      <details><summary>解答</summary><div class="ans">
+        (1) $\det=8-7=1$。<span class="fin">$\begin{pmatrix}2&-7\\-1&4\end{pmatrix}$</span><br>
+        (2) $\det=4-4=0$。<span class="fin">逆行列なし</span><br>
+        (3) $\det=6-4=2$。<span class="fin">$\dfrac12\begin{pmatrix}2&-1\\-4&3\end{pmatrix}=\begin{pmatrix}1&-\frac12\\-2&\frac32\end{pmatrix}$</span>
+      </div></details></div>
+    <div class="q"><div class="qh"><span class="tag">6-2</span></div>
+      <div class="body">掃き出し法で逆行列を求めよ。$A=\begin{pmatrix}1&0&2\\2&1&3\\0&0&1\end{pmatrix}$</div>
+      <details><summary>解答</summary><div class="ans">
+        $\left(\begin{array}{ccc|ccc}1&0&2&1&0&0\\2&1&3&0&1&0\\0&0&1&0&0&1\end{array}\right)\xrightarrow{②-①\times2}\left(\begin{array}{ccc|ccc}1&0&2&1&0&0\\0&1&-1&-2&1&0\\0&0&1&0&0&1\end{array}\right)\xrightarrow[②+③]{①-③\times2}\left(\begin{array}{ccc|ccc}1&0&0&1&0&-2\\0&1&0&-2&1&1\\0&0&1&0&0&1\end{array}\right)$<br>
+        <span class="fin">$A^{-1}=\begin{pmatrix}1&0&-2\\-2&1&1\\0&0&1\end{pmatrix}$</span>
+      </div></details></div>
+    <div class="q"><div class="qh"><span class="tag">6-3</span></div>
+      <div class="body">「わかる」の $A=\begin{pmatrix}2&1\\5&3\end{pmatrix}$ の逆行列を使って、$\begin{cases}2x+y=3\\5x+3y=7\end{cases}$ を解け。</div>
+      <details><summary>解答</summary><div class="ans">
+        $\begin{pmatrix}x\\y\end{pmatrix}=A^{-1}\begin{pmatrix}3\\7\end{pmatrix}=\begin{pmatrix}3&-1\\-5&2\end{pmatrix}\begin{pmatrix}3\\7\end{pmatrix}=\begin{pmatrix}9-7\\-15+14\end{pmatrix}$。<span class="fin">$x=2,\ y=-1$</span>（検算：$4-1=3$ ✓、$10-3=7$ ✓）
+      </div></details></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= まとめテスト ======================= -->
+<section class="ch" id="bt" data-title="まとめテスト">
+  <div class="ch-top"><span class="ch-no">まとめ</span><h2>基礎まとめテスト</h2><span class="ch-meta">5問・目安30分。全部できたら応用ノートへ</span></div>
+  <div class="mock-intro">
+    <p>第1〜6章が混ざったテスト。わからなかったら、問題の右にある章に戻ってから解き直す。</p>
+  </div>
+  <div class="step"><div class="probs">
+    <div class="q"><div class="qh"><span class="tag">T-1</span><span class="src">第2・5章</span></div>
+      <div class="body">$A=\begin{pmatrix}1&-1\\2&0\end{pmatrix},\ B=\begin{pmatrix}3&1\\1&2\end{pmatrix}$ のとき、$AB$ と $\det(AB)$ を求めよ。また $\det A\cdot\det B$ と一致することを確かめよ。</div>
+      <details><summary>解答</summary><div class="ans">
+        $AB=\begin{pmatrix}3-1&1-2\\6+0&2+0\end{pmatrix}=$ <span class="fin">$\begin{pmatrix}2&-1\\6&2\end{pmatrix}$</span>、$\det(AB)=4-(-6)=$ <span class="fin">$10$</span><br>
+        $\det A=0-(-2)=2$、$\det B=6-1=5$、$2\cdot5=10$ で一致 ✓
+      </div></details></div>
+    <div class="q"><div class="qh"><span class="tag">T-2</span><span class="src">第3章</span></div>
+      <div class="body">掃き出し法で解け。$\begin{cases}x+2y+z=1\\2x+y+z=3\\x-y+2z=6\end{cases}$</div>
+      <details><summary>解答</summary><div class="ans">
+        $\left(\begin{array}{ccc|c}1&2&1&1\\2&1&1&3\\1&-1&2&6\end{array}\right)\xrightarrow[③-①]{②-①\times2}\left(\begin{array}{ccc|c}1&2&1&1\\0&-3&-1&1\\0&-3&1&5\end{array}\right)\xrightarrow{③-②}\left(\begin{array}{ccc|c}1&2&1&1\\0&-3&-1&1\\0&0&2&4\end{array}\right)$<br>
+        階段になったので下から解く（後退代入）：$2z=4$ → $z=2$。$-3y-2=1$ → $y=-1$。$x+2(-1)+2=1$ → $x=1$。<br>
+        <span class="fin">$x=1,\ y=-1,\ z=2$</span>（検算：$1-2+2=1$ ✓、$2-1+2=3$ ✓、$1+1+4=6$ ✓）<br>
+        ※ ここでは階段で止めて下から代入した（ガウスの消去法）。左を $E$ まで掃き出し切っても同じ答えになる。どっちでもOK。
+      </div></details></div>
+    <div class="q"><div class="qh"><span class="tag">T-3</span><span class="src">第4章</span></div>
+      <div class="body">$A=\begin{pmatrix}1&2&1&0\\2&4&0&2\\1&2&2&-1\end{pmatrix}$ のランクを求めよ。</div>
+      <details><summary>解答</summary><div class="ans">
+        ②−①×2 → $(0,0,-2,2)$、③−① → $(0,0,1,-1)$。この2行は比例しているので、③＋②×$\frac12$ で $(0,0,0,0)$。<br>
+        $\begin{pmatrix}1&2&1&0\\0&0&-2&2\\0&0&0&0\end{pmatrix}$、0 でない行は2本。<span class="fin">rank 2</span>
+      </div></details></div>
+    <div class="q"><div class="qh"><span class="tag">T-4</span><span class="src">第6章</span></div>
+      <div class="body">$\begin{pmatrix}1&2\\3&5\end{pmatrix}$ の逆行列を求めよ。</div>
+      <details><summary>解答</summary><div class="ans">
+        $\det=5-6=-1$。$\dfrac1{-1}\begin{pmatrix}5&-2\\-3&1\end{pmatrix}=$ <span class="fin">$\begin{pmatrix}-5&2\\3&-1\end{pmatrix}$</span><br>
+        検算：$\begin{pmatrix}1&2\\3&5\end{pmatrix}\begin{pmatrix}-5&2\\3&-1\end{pmatrix}=\begin{pmatrix}-5+6&2-2\\-15+15&6-5\end{pmatrix}=E$ ✓
+      </div></details></div>
+    <div class="q"><div class="qh"><span class="tag">T-5</span><span class="src">第5章→応用第1週</span></div>
+      <div class="body">$\boldsymbol{a}_1=\begin{pmatrix}1\\4\\7\end{pmatrix},\ \boldsymbol{a}_2=\begin{pmatrix}2\\5\\8\end{pmatrix},\ \boldsymbol{a}_3=\begin{pmatrix}3\\6\\10\end{pmatrix}$ を並べた行列 $(\boldsymbol{a}_1\ \boldsymbol{a}_2\ \boldsymbol{a}_3)$ の行列式を求め、この3本が1次独立かどうか答えよ。</div>
+      <details><summary>解答</summary><div class="ans">
+        $\det\begin{pmatrix}1&2&3\\4&5&6\\7&8&10\end{pmatrix}=1(50-48)-2(40-42)+3(32-35)=2+4-9=$ <span class="fin">$-3$</span><br>
+        $\det\ne0$ なので <span class="fin">1次独立</span>（この「$\det\ne0$ ⇔ 独立」が応用ノート第1週の判定法）
+      </div></details></div>
+  </div></div>
+</section>
+
+<nav class="nextprev" id="nextprev" aria-label="前後の章"></nav>
+</div></main>
+
+<script>
+(function () {
+  var css = function (n) { return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); };
+  var NS = 'http://www.w3.org/2000/svg';
+  function el(tag, attrs, text) {
+    var e = document.createElementNS(NS, tag);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    if (text != null) e.textContent = text;
+    return e;
+  }
+
+  /* ---------- 進捗（この端末のブラウザにだけ保存） ---------- */
+  var KEY = 'linalg-basics-solved-v1', solved = {};
+  try { solved = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) { solved = {}; }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(solved)); } catch (e) {} }
+
+  var sections = Array.prototype.slice.call(document.querySelectorAll('.ch'));
+  sections.forEach(function (sec) {
+    sec.querySelectorAll('.q').forEach(function (q) {
+      var tag = q.querySelector('.tag').textContent.trim();
+      var id = sec.id + ':' + tag;
+      var lab = document.createElement('label');
+      lab.className = 'done';
+      var cb = document.createElement('input');
+      cb.type = 'checkbox'; cb.id = 'done-' + sec.id + '-' + tag.replace(/[^\w-]/g, '_');
+      cb.checked = !!solved[id];
+      lab.appendChild(cb); lab.appendChild(document.createTextNode('解けた'));
+      q.querySelector('.qh').appendChild(lab);
+      q.classList.toggle('is-done', cb.checked);
+      cb.addEventListener('change', function () {
+        if (cb.checked) solved[id] = 1; else delete solved[id];
+        q.classList.toggle('is-done', cb.checked);
+        save(); refresh();
+      });
+    });
+  });
+  function refresh() {
+    var all = 0, ok = 0;
+    sections.forEach(function (sec) {
+      var qs = sec.querySelectorAll('.q'), n = qs.length, d = sec.querySelectorAll('.q.is-done').length;
+      all += n; ok += d;
+      var a = document.querySelector('.tabs a[data-t="' + sec.id + '"]');
+      if (a) { a.querySelector('span').textContent = d + '/' + n; a.classList.toggle('all-done', n > 0 && d === n); }
+    });
+    document.getElementById('meterTxt').textContent = '解けた問題 ' + ok + ' / ' + all;
+    document.getElementById('meterBar').style.width = (all ? ok / all * 100 : 0) + '%';
+  }
+  refresh();
+
+  /* ---------- タブ ---------- */
+  var ids = sections.map(function (s) { return s.id; });
+  function show(id, scroll) {
+    if (ids.indexOf(id) < 0) id = 'b1';
+    sections.forEach(function (s) { s.hidden = s.id !== id; });
+    document.querySelectorAll('.tabs a').forEach(function (a) {
+      if (a.dataset.t === id) { a.setAttribute('aria-current', 'page'); var tb = document.getElementById('tabs'); tb.scrollLeft = a.offsetLeft - tb.clientWidth / 2 + a.offsetWidth / 2; }
+      else a.removeAttribute('aria-current');
+    });
+    var i = ids.indexOf(id), np = document.getElementById('nextprev');
+    np.innerHTML = '';
+    if (i > 0) { var p = document.createElement('a'); p.href = '#' + ids[i - 1]; p.textContent = '← ' + sections[i - 1].dataset.title; np.appendChild(p); }
+    var sp = document.createElement('span'); sp.className = 'spacer'; np.appendChild(sp);
+    if (i < ids.length - 1) { var n = document.createElement('a'); n.href = '#' + ids[i + 1]; n.textContent = sections[i + 1].dataset.title + ' →'; np.appendChild(n); }
+    if (scroll) document.querySelector('.tabbar').scrollIntoView({ block: 'start' });
+  }
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('a[href^="#"]');
+    if (!a) return;
+    var id = a.getAttribute('href').slice(1);
+    if (ids.indexOf(id) < 0) return;
+    e.preventDefault();
+    try { history.replaceState(null, '', '#' + id); } catch (err) {}
+    show(id, true);
+  });
+  show((location.hash || '#b1').slice(1), false);
+
+  /* ---------- 赤シート ---------- */
+  var btn = document.getElementById('sheetBtn');
+  btn.addEventListener('click', function () {
+    var on = !document.body.classList.contains('redsheet');
+    document.body.classList.toggle('redsheet', on);
+    btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+    btn.textContent = on ? '赤シートを外す' : '赤シートで隠す';
+    if (!on) document.querySelectorAll('.key.peek').forEach(function (k) { k.classList.remove('peek'); });
+  });
+  document.querySelectorAll('.key').forEach(function (k) {
+    k.setAttribute('tabindex', '0');
+    var t = function () { if (document.body.classList.contains('redsheet')) k.classList.toggle('peek'); };
+    k.addEventListener('click', t);
+    k.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); t(); } });
+  });
+
+})();
+</script>
+</body>
+</html>
