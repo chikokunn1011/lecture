@@ -158,7 +158,9 @@ table.v th { background: var(--tab); }
 .done { margin-left: auto; display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--sub); cursor: pointer; user-select: none; }
 .done input { width: 18px; height: 18px; accent-color: var(--ok); }
 .q.is-done .done { color: var(--ok); font-weight: 700; }
-.q .body { margin-top: 6px; }
+.probs > .q { min-width: 0; }
+.q .body { margin-top: 6px; overflow-x: auto; overflow-y: hidden; }
+.ans { overflow-x: auto; overflow-y: hidden; }
 details { margin-top: 10px; }
 summary { cursor: pointer; font-size: 14px; font-weight: 700; color: var(--ink); width: fit-content; padding: 3px 14px; border: 1.5px solid var(--ink); border-radius: 999px; list-style: none; }
 summary::-webkit-details-marker { display: none; }
@@ -250,6 +252,7 @@ details[open] summary { background: var(--ink); color: var(--paper); }
       <li><a href="#c4">基底と次元</a></li>
       <li><a href="#c5">内積・正規直交基底</a></li>
       <li><a href="#c6">一次変換（回転・折り返し）</a></li>
+      <li><a href="#tb">教科書の節末問題（5.1〜5.9節・6.2〜6.3節）</a></li>
     </ol>
     <p><b>基礎から不安なら</b>：ベクトル・行列の積・掃き出し法・ランク・行列式・逆行列を初めから例題つきでまとめた <a href="basics/" style="color:var(--ink)">線形代数の基礎ノート</a> を先にやると、この先がスムーズに読める。</p>
     <p>第6週は「これまでのまとめと演習」、第7週が中間試験。第8週の一次変換は本来は中間の後の回だけど、出るかもとのことなので入れてある。</p>
@@ -268,6 +271,7 @@ details[open] summary { background: var(--ink); color: var(--paper); }
     <a href="#c4" data-t="c4"><b>第4週</b><span></span></a>
     <a href="#c5" data-t="c5"><b>第5週</b><span></span></a>
     <a href="#c6" data-t="c6"><b>第8週</b><span></span></a>
+    <a href="#tb" data-t="tb"><b>節末問題</b><span></span></a>
     <a href="#mock" data-t="mock"><b>模試①</b><span></span></a>
     <a href="#mock2" data-t="mock2"><b>模試②</b><span></span></a>
   </div>
@@ -645,6 +649,174 @@ details[open] summary { background: var(--ink); color: var(--paper); }
       <details><summary>解答</summary><div class="ans">
         後にやる折り返しが左：$\begin{pmatrix}1&0\\0&-1\end{pmatrix}\begin{pmatrix}0&-1\\1&0\end{pmatrix}=\begin{pmatrix}0&-1\\-1&0\end{pmatrix}$<br>
         $S(\alpha)$ の形で $\cos2\alpha=0,\ \sin2\alpha=-1$ → $\alpha=-\frac\pi4$。<span class="fin">$\begin{pmatrix}0&-1\\-1&0\end{pmatrix}$、直線 $y=-x$ に関する折り返し</span>
+      </div></details></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= 教科書 節末問題 ======================= -->
+<section class="ch" id="tb" data-title="教科書の節末問題">
+  <div class="ch-top"><span class="ch-no">教科書<span class="badge">範囲</span></span><h2>教科書の節末問題（5.1〜5.9節・6.2〜6.3節）</h2><span class="ch-meta">授業で扱った節末問題の解説と解答。問題文は要点だけ書き直してある</span></div>
+  <div class="step"><h3><span class="n">1</span>覚える</h3>
+    <div class="memo">
+      <div class="row"><span class="lbl">5.1 1次結合</span><span class="val">$\boldsymbol{b}=c_1\boldsymbol{a}_1+\cdots+c_m\boldsymbol{a}_m$ と書けるか ⇔ <span class="key">拡大係数行列 $(\boldsymbol{a}_1\ \cdots\ \boldsymbol{a}_m\mid\boldsymbol{b})$ の連立方程式が解をもつか</span></span></div>
+      <div class="row"><span class="lbl">5.2〜5.3 独立・従属</span><span class="val">列に並べて簡約化。<span class="key">主成分（先頭の1）のない列があれば従属</span>、その列の成分がそのまま1次関係式の係数</span></div>
+      <div class="row"><span class="lbl">零ベクトル</span><span class="val"><span class="key">$\boldsymbol{0}$ を含む組は必ず1次従属</span>（$1\cdot\boldsymbol{0}=\boldsymbol{0}$ が自明でない関係式）</span></div>
+      <div class="row"><span class="lbl">5.4 簡約行列</span><span class="val">行基本変形で<span class="key">列どうしの1次関係は変わらない</span> → 簡約化の結果は1通りに決まる</span></div>
+      <div class="row"><span class="lbl">5.6 最大独立個数</span><span class="val">$r=$ <span class="key">$\operatorname{rank}(\boldsymbol{a}_1\ \cdots\ \boldsymbol{a}_m)$</span>。主成分のある列の元ベクトルが独立な $r$ 個、残りはその1次結合</span></div>
+      <div class="row"><span class="lbl">5.8 部分空間</span><span class="val">①<span class="key">和で閉じる</span> ②<span class="key">スカラー倍で閉じる</span>（＋空でない）。$c=0$ をとれば $\boldsymbol{0}\in W$ が出る</span></div>
+      <div class="row"><span class="lbl">5.9 解空間</span><span class="val">$\{\boldsymbol{x}\mid A\boldsymbol{x}=\boldsymbol{0}\}=\langle\boldsymbol{a}_1,\ldots,\boldsymbol{a}_m\rangle$。自由変数を1つずつ1、他を0にしたベクトルが生成元</span></div>
+      <div class="row"><span class="lbl">6.2 3次元の回転</span><span class="val">回転軸の成分はそのまま、残り2成分に $\begin{pmatrix}\cos\theta&-\sin\theta\\ \sin\theta&\cos\theta\end{pmatrix}$。<span class="key">3次元の回転は一般に可換でない</span></span></div>
+      <div class="row"><span class="lbl">6.3 表現行列</span><span class="val">$T(\boldsymbol{u}_j)=\sum_i b_{ij}\boldsymbol{v}_i$ の<span class="key">係数を第 $j$ 列に並べた行列 $B$</span>。座標どうしが $\boldsymbol{y}=B\boldsymbol{x}$ でつながる</span></div>
+    </div>
+  </div>
+  <div class="step"><h3><span class="n">2</span>わかる</h3>
+    <div class="explain">
+      <p><b>なぜ行基本変形で列の関係が変わらない？</b>　行基本変形は左から正則行列 $P$ をかけること。$A\boldsymbol{c}=\boldsymbol{0}\iff PA\boldsymbol{c}=\boldsymbol{0}$ なので、「$c_1\boldsymbol{a}_1+\cdots+c_m\boldsymbol{a}_m=\boldsymbol{0}$」という列の関係式は変形の前後でまったく同じになる。だから簡約化した行列を見れば、元のベクトルの関係が読める。</p>
+      <div class="f">\[ (\boldsymbol{a}_1\ \boldsymbol{a}_2\ \boldsymbol{a}_3)\to\begin{pmatrix}1&0&-2\\0&1&3\\0&0&0\end{pmatrix}\quad\Rightarrow\quad \boldsymbol{a}_3=-2\boldsymbol{a}_1+3\boldsymbol{a}_2 \]</div>
+      <p><b>簡約行列が1通りに決まる理由（5.4）</b>　簡約行列は「どの列が主成分の列か」と「主成分のない列が主成分の列の何倍の和か」で全部決まる。この2つは列の1次関係だけで決まる情報なので、行基本変形で変わらない。だから<b>2つの簡約行列で列の関係が1か所でも違えば、一方からもう一方へは変形できない</b>。</p>
+      <p><b>解空間を $\langle\ \rangle$ で書く（5.9）</b>　簡約化 → 主成分のない列の変数を $s,t,\ldots$ とおく → $\boldsymbol{x}=s\boldsymbol{p}_1+t\boldsymbol{p}_2+\cdots$ の形に分解すれば $W=\langle\boldsymbol{p}_1,\boldsymbol{p}_2,\ldots\rangle$。逆に $\langle\ \rangle$ を方程式で書くときは、<b>生成元すべてに直交する係数ベクトル</b>（$\mathbb{R}^3$ の平面なら外積）を探す。</p>
+      <p><b>3次元の回転（6.2）</b>　$x$ 軸（$\boldsymbol{e}_1$）まわり、$y$ 軸（$\boldsymbol{e}_2$）まわりの角 $\theta$ の回転は</p>
+      <div class="f">\[ R_1(\theta)=\begin{pmatrix}1&0&0\\0&\cos\theta&-\sin\theta\\0&\sin\theta&\cos\theta\end{pmatrix} \]</div>
+      <div class="f">\[ R_2(\theta)=\begin{pmatrix}\cos\theta&0&\sin\theta\\0&1&0\\-\sin\theta&0&\cos\theta\end{pmatrix} \]</div>
+      <p>軸の正の向きから見て反時計回りを正とする（右ねじの向き）。$R_2$ は $z\to x$ の向きが正なので $\sin$ の符号の位置が $R_1$ と逆に見える点に注意。教科書の p.161 の定義と符号が違ったら教科書に合わせて。</p>
+      <p><b>表現行列（6.3）</b>　$\mathbb{R}^n$ の基底 $\{\boldsymbol{u}_j\}$、$\mathbb{R}^m$ の基底 $\{\boldsymbol{v}_i\}$ を決めると、線形写像 $T$ は「$\boldsymbol{u}_j$ の行き先を $\boldsymbol{v}$ で表したときの係数」を並べた $m\times n$ 行列 $B$ で表せる。標準基底どうしなら $B$ は普通の行列 $A$（$T(\boldsymbol{x})=A\boldsymbol{x}$）そのもの。</p>
+    </div>
+  </div>
+  <div class="step"><h3><span class="n">3</span>注意</h3>
+    <div class="redpen">
+      <p><b>5.1</b>「表せない」と答えるときは、簡約化で $(0\ 0\ 0\mid 1)$ の行（$0=1$）が出たことを必ず書く。表し方が無数にあるときは1つ書けばOK（一般形も書けると強い）。</p>
+      <p><b>5.4</b>「行基本変形を試したけどできなかった」は証明にならない。<b>変形で変わらない量（列の1次関係）が違う</b>ことを示す。</p>
+      <p><b>5.8</b> 部分空間でないことを示すときは、<b>具体的な反例</b>（数値の $\boldsymbol{u},\boldsymbol{v}$）を1組出して計算まで書く。</p>
+      <p><b>6.2</b> 合成は「後にやる方を左」。$A_1A_2$ は $A_2$ をしてから $A_1$。</p>
+    </div>
+  </div>
+  <div class="step"><h3><span class="n">4</span>解く</h3>
+    <div class="probs">
+    <div class="q"><div class="qh"><span class="tag">5.1-1</span><span class="src">1次結合</span></div>
+      <div class="body">$\boldsymbol{b}$ が $\boldsymbol{a}_1,\boldsymbol{a}_2,\boldsymbol{a}_3$ の1次結合で表せるか調べ、表せるなら表せ。<br>
+        (1) $\boldsymbol{a}_1=\begin{pmatrix}1\\1\\0\end{pmatrix},\boldsymbol{a}_2=\begin{pmatrix}1\\0\\1\end{pmatrix},\boldsymbol{a}_3=\begin{pmatrix}1\\-1\\2\end{pmatrix},\boldsymbol{b}=\begin{pmatrix}1\\0\\0\end{pmatrix}$<br>
+        (2) $\boldsymbol{a}_1,\boldsymbol{a}_2,\boldsymbol{a}_3$ は(1)と同じ、$\boldsymbol{b}=\begin{pmatrix}4\\1\\3\end{pmatrix}$<br>
+        (3) $\boldsymbol{a}_1=\begin{pmatrix}1\\1\\0\end{pmatrix},\boldsymbol{a}_2=\begin{pmatrix}1\\0\\2\end{pmatrix},\boldsymbol{a}_3=\begin{pmatrix}1\\-1\\2\end{pmatrix},\boldsymbol{b}=\begin{pmatrix}1\\0\\0\end{pmatrix}$</div>
+      <details><summary>解答</summary><div class="ans">
+        (1) $\left(\begin{array}{ccc|c}1&1&1&1\\1&0&-1&0\\0&1&2&0\end{array}\right)\to\left(\begin{array}{ccc|c}1&0&-1&0\\0&1&2&0\\0&0&0&1\end{array}\right)$。第3行が $0=1$ で解なし。<span class="fin">表せない</span><br>
+        (2) $\left(\begin{array}{ccc|c}1&1&1&4\\1&0&-1&1\\0&1&2&3\end{array}\right)\to\left(\begin{array}{ccc|c}1&0&-1&1\\0&1&2&3\\0&0&0&0\end{array}\right)$。$c_3=t$ として $c_1=1+t,\ c_2=3-2t$。<br>
+        <span class="fin">表せる。例：$\boldsymbol{b}=\boldsymbol{a}_1+3\boldsymbol{a}_2$</span>（一般に $\boldsymbol{b}=(1+t)\boldsymbol{a}_1+(3-2t)\boldsymbol{a}_2+t\boldsymbol{a}_3$、表し方は無数）<br>
+        (3) $\det(\boldsymbol{a}_1\ \boldsymbol{a}_2\ \boldsymbol{a}_3)=2\ne0$ なので解はただ1つ。簡約化して $c_1=1,\ c_2=-1,\ c_3=1$。<br>
+        <span class="fin">$\boldsymbol{b}=\boldsymbol{a}_1-\boldsymbol{a}_2+\boldsymbol{a}_3$</span>（検算：$(1,1,0)-(1,0,2)+(1,-1,2)=(1,0,0)$ ✓）
+      </div></details></div>
+    <div class="q"><div class="qh"><span class="tag">5.2-1</span><span class="src">1次従属</span></div>
+      <div class="body">次の3つのベクトルは1次従属か調べ、従属なら $c_1\boldsymbol{a}_1+c_2\boldsymbol{a}_2+c_3\boldsymbol{a}_3=\boldsymbol{0}$ を満たす自明でない $c_1,c_2,c_3$ を1組求めよ。<br>
+        (1) $\begin{pmatrix}1\\1\\0\end{pmatrix},\begin{pmatrix}0\\1\\1\end{pmatrix},\begin{pmatrix}-2\\1\\3\end{pmatrix}$　(2) $\begin{pmatrix}1\\1\\0\end{pmatrix},\begin{pmatrix}0\\1\\1\end{pmatrix},\begin{pmatrix}1\\0\\1\end{pmatrix}$　(3) $\begin{pmatrix}1\\2\\1\\1\end{pmatrix},\begin{pmatrix}2\\-1\\-1\\1\end{pmatrix},\begin{pmatrix}-4\\7\\5\\-1\end{pmatrix}$</div>
+      <details><summary>解答</summary><div class="ans">
+        (1) 簡約化 $\begin{pmatrix}1&0&-2\\0&1&3\\0&0&0\end{pmatrix}$ → $\boldsymbol{a}_3=-2\boldsymbol{a}_1+3\boldsymbol{a}_2$。<span class="fin">従属。$(c_1,c_2,c_3)=(2,-3,1)$</span><br>
+        (2) $\det=1\cdot(1-0)-0+1\cdot(1-0)=2\ne0$。<span class="fin">1次独立（従属でない）</span><br>
+        (3) 簡約化 $\begin{pmatrix}1&0&2\\0&1&-3\\0&0&0\\0&0&0\end{pmatrix}$ → $\boldsymbol{a}_3=2\boldsymbol{a}_1-3\boldsymbol{a}_2$。<span class="fin">従属。$(c_1,c_2,c_3)=(-2,3,1)$</span><br>
+        （検算：$-2(1,2,1,1)+3(2,-1,-1,1)+(-4,7,5,-1)=(0,0,0,0)$ ✓）
+      </div></details></div>
+    <div class="q"><div class="qh"><span class="tag">5.2-3</span><span class="src">零ベクトル</span></div>
+      <div class="body">次のうち、あり得ないものを1つ選べ。<br>(ア) $\boldsymbol{0}$ を含む1次従属な組　(イ) $\boldsymbol{0}$ を含まない1次従属な組　(ウ) $\boldsymbol{0}$ を含む1次独立な組　(エ) $\boldsymbol{0}$ を含まない1次独立な組</div>
+      <details><summary>解答</summary><div class="ans">
+        $\boldsymbol{0}$ の係数だけ $1$、他を $0$ にすれば $1\cdot\boldsymbol{0}=\boldsymbol{0}$ という自明でない1次関係式ができる。だから $\boldsymbol{0}$ を含む組は必ず従属。<span class="fin">(ウ)</span><br>
+        （(イ)の例：$\boldsymbol{a},2\boldsymbol{a}$。(エ)の例：$\boldsymbol{e}_1,\boldsymbol{e}_2$）
+      </div></details></div>
+    <div class="q"><div class="qh"><span class="tag">5.3-1</span><span class="src">1次独立</span></div>
+      <div class="body">次のベクトルの組は1次独立か1次従属か。<br>
+        (1) $\begin{pmatrix}1\\2\\1\\-2\end{pmatrix},\begin{pmatrix}0\\-2\\-2\\0\end{pmatrix},\begin{pmatrix}0\\2\\3\\1\end{pmatrix},\begin{pmatrix}3\\0\\-3\\6\end{pmatrix}$　(2) $\begin{pmatrix}3\\0\\4\\1\end{pmatrix},\begin{pmatrix}6\\2\\3\\2\end{pmatrix},\begin{pmatrix}-1\\3\\6\\1\end{pmatrix},\begin{pmatrix}-3\\7\\23\\3\end{pmatrix}$</div>
+      <details><summary>解答</summary><div class="ans">
+        (1) 4本の4次元なので行列式でOK。$\det(\boldsymbol{a}_1\ \cdots\ \boldsymbol{a}_4)=-24\ne0$（簡約化すると単位行列 $E_4$）。<span class="fin">1次独立</span><br>
+        (2) 簡約化 $\begin{pmatrix}1&0&0&2\\0&1&0&-1\\0&0&1&3\\0&0&0&0\end{pmatrix}$、rank $3&lt;4$。<br>
+        <span class="fin">1次従属。$\boldsymbol{a}_4=2\boldsymbol{a}_1-\boldsymbol{a}_2+3\boldsymbol{a}_3$</span>（検算：$(6-6-3,\ 0-2+9,\ 8-3+18,\ 2-2+3)=(-3,7,23,3)$ ✓）
+      </div></details></div>
+    <div class="q"><div class="qh"><span class="tag">5.3-2</span><span class="src">文字ベクトル</span></div>
+      <div class="body">$\boldsymbol{a}_1,\boldsymbol{a}_2,\boldsymbol{a}_3,\boldsymbol{a}_4$ が1次独立のとき、次の組は1次独立か1次従属か。（写真で問題文の頭が切れていたので、この設定で解いた）<br>
+        (1) $\boldsymbol{a}_1+\boldsymbol{a}_2,\ \boldsymbol{a}_1-\boldsymbol{a}_2$　(2) $\boldsymbol{a}_1,\ \boldsymbol{a}_2,\ \boldsymbol{a}_1+2\boldsymbol{a}_2$　(3) $\boldsymbol{a}_1,\ \boldsymbol{a}_1+\boldsymbol{a}_2,\ \boldsymbol{a}_2+\boldsymbol{a}_3$<br>
+        (4) $\boldsymbol{a}_1-\boldsymbol{a}_2,\ 2\boldsymbol{a}_1+\boldsymbol{a}_2,\ \boldsymbol{a}_1+3\boldsymbol{a}_2$　(5) $\boldsymbol{a}_1-\boldsymbol{a}_2,\ \boldsymbol{a}_2+\boldsymbol{a}_3,\ \boldsymbol{a}_1+\boldsymbol{a}_4$</div>
+      <details><summary>解答</summary><div class="ans">
+        どれも「$x(\cdots)+y(\cdots)+z(\cdots)=\boldsymbol{0}$ とおき、$\boldsymbol{a}_i$ ごとに整理 → 独立性から各係数 $=0$」で解く。<br>
+        (1) $(x+y)\boldsymbol{a}_1+(x-y)\boldsymbol{a}_2=\boldsymbol{0}$ → $x+y=0,\ x-y=0$ → $x=y=0$。<span class="fin">独立</span><br>
+        (2) $(\boldsymbol{a}_1+2\boldsymbol{a}_2)-\boldsymbol{a}_1-2\boldsymbol{a}_2=\boldsymbol{0}$。<span class="fin">従属</span><br>
+        (3) $(x+y)\boldsymbol{a}_1+(y+z)\boldsymbol{a}_2+z\boldsymbol{a}_3=\boldsymbol{0}$ → $z=0,\ y=0,\ x=0$。<span class="fin">独立</span><br>
+        (4) 3本とも $\boldsymbol{a}_1,\boldsymbol{a}_2$ の2本で書けるので従属（2次元に3本）。具体的には $x+2y+z=0,\ -x+y+3z=0$ を解いて<br>
+        <span class="fin">従属。$5(\boldsymbol{a}_1-\boldsymbol{a}_2)-4(2\boldsymbol{a}_1+\boldsymbol{a}_2)+3(\boldsymbol{a}_1+3\boldsymbol{a}_2)=\boldsymbol{0}$</span>（$\boldsymbol{a}_1$：$5-8+3=0$、$\boldsymbol{a}_2$：$-5-4+9=0$ ✓）<br>
+        (5) $(x+z)\boldsymbol{a}_1+(-x+y)\boldsymbol{a}_2+y\boldsymbol{a}_3+z\boldsymbol{a}_4=\boldsymbol{0}$ → $y=0,\ z=0$、そこから $x=0$。<span class="fin">独立</span>
+      </div></details></div>
+    <div class="q"><div class="qh"><span class="tag">5.4-1</span><span class="src">簡約行列</span></div>
+      <div class="body">次の簡約な行列 $A,B$ について、$A$ を行基本変形しても $B$ にできないことを示せ。<br>
+        (1) $A=\begin{pmatrix}1&2\\0&0\end{pmatrix},\ B=\begin{pmatrix}1&0\\0&1\end{pmatrix}$<br>
+        (2) $A=\begin{pmatrix}1&0&0&2\\0&1&0&2\\0&0&1&2\end{pmatrix},\ B=\begin{pmatrix}1&0&0&0\\0&1&0&2\\0&0&1&2\end{pmatrix}$<br>
+        (3) $A=\begin{pmatrix}1&2&0&3&1\\0&0&1&4&0\end{pmatrix},\ B=\begin{pmatrix}1&2&0&3&5\\0&0&1&4&6\end{pmatrix}$</div>
+      <details><summary>解答</summary><div class="ans">
+        方針：行基本変形で列の1次関係は変わらない。$A$ の列 $\boldsymbol{a}_j$ で成り立つ関係式が $B$ の列 $\boldsymbol{b}_j$ で成り立たなければ、$A\to B$ はできない。<br>
+        (1) $A$ では $\boldsymbol{a}_2=2\boldsymbol{a}_1$。変形できるなら $\boldsymbol{b}_2=2\boldsymbol{b}_1$ のはずだが、$\boldsymbol{b}_2=(0,1)^T\ne(2,0)^T=2\boldsymbol{b}_1$。<span class="fin">よってできない</span>（$\operatorname{rank}A=1\ne2=\operatorname{rank}B$ でもOK）<br>
+        (2) $A$ では $\boldsymbol{a}_4=2\boldsymbol{a}_1+2\boldsymbol{a}_2+2\boldsymbol{a}_3$。ところが $2\boldsymbol{b}_1+2\boldsymbol{b}_2+2\boldsymbol{b}_3=(2,2,2)^T\ne(0,2,2)^T=\boldsymbol{b}_4$。<span class="fin">よってできない</span><br>
+        (3) $A$ では第5列が $\boldsymbol{a}_5=\boldsymbol{a}_1$（第1列・第3列で書くと係数 $1,0$）。$B$ では $\boldsymbol{b}_5=5\boldsymbol{b}_1+6\boldsymbol{b}_3\ne\boldsymbol{b}_1$。<span class="fin">第5列の関係が違うのでできない</span>
+      </div></details></div>
+    <div class="q"><div class="qh"><span class="tag">5.6-1</span><span class="src">最大独立個数</span></div>
+      <div class="body">次の組の1次独立な最大個数 $r$ と、$r$ 個の1次独立なベクトルを1組求め、他のベクトルをそれらの1次結合で表せ。<br>
+        (1) $\begin{pmatrix}1\\0\\1\\1\end{pmatrix},\begin{pmatrix}1\\0\\2\\1\end{pmatrix},\begin{pmatrix}1\\1\\0\\2\end{pmatrix},\begin{pmatrix}2\\1\\3\\3\end{pmatrix},\begin{pmatrix}5\\3\\7\\8\end{pmatrix}$　(2) $\begin{pmatrix}1\\2\\3\\4\end{pmatrix},\begin{pmatrix}2\\3\\4\\5\end{pmatrix},\begin{pmatrix}1\\3\\5\\7\end{pmatrix},\begin{pmatrix}5\\4\\3\\2\end{pmatrix},\begin{pmatrix}2\\1\\0\\-1\end{pmatrix}$</div>
+      <details><summary>解答</summary><div class="ans">
+        (1) 簡約化 $\begin{pmatrix}1&0&0&-1&-3\\0&1&0&2&5\\0&0&1&1&3\\0&0&0&0&0\end{pmatrix}$。主成分は第1〜3列。<br>
+        <span class="fin">$r=3$、独立な組 $\boldsymbol{a}_1,\boldsymbol{a}_2,\boldsymbol{a}_3$。$\boldsymbol{a}_4=-\boldsymbol{a}_1+2\boldsymbol{a}_2+\boldsymbol{a}_3$、$\boldsymbol{a}_5=-3\boldsymbol{a}_1+5\boldsymbol{a}_2+3\boldsymbol{a}_3$</span><br>
+        (2) 簡約化 $\begin{pmatrix}1&0&3&-7&-4\\0&1&-1&6&3\\0&0&0&0&0\\0&0&0&0&0\end{pmatrix}$。主成分は第1・2列。<br>
+        <span class="fin">$r=2$、独立な組 $\boldsymbol{a}_1,\boldsymbol{a}_2$。$\boldsymbol{a}_3=3\boldsymbol{a}_1-\boldsymbol{a}_2$、$\boldsymbol{a}_4=-7\boldsymbol{a}_1+6\boldsymbol{a}_2$、$\boldsymbol{a}_5=-4\boldsymbol{a}_1+3\boldsymbol{a}_2$</span><br>
+        （検算例：$-7(1,2,3,4)+6(2,3,4,5)=(5,4,3,2)$ ✓）
+      </div></details></div>
+    <div class="q"><div class="qh"><span class="tag">5.8-1</span><span class="src">証明</span></div>
+      <div class="body">$\mathbb{R}^n$ の部分空間 $W$ は必ず零ベクトル $\boldsymbol{0}$ を含むことを示せ。</div>
+      <details><summary>解答</summary><div class="ans">
+        $W$ は空集合でないので、少なくとも1つ $\boldsymbol{u}\in W$ がある。$W$ はスカラー倍で閉じているので、$c=0$ として $0\boldsymbol{u}\in W$。$0\boldsymbol{u}=\boldsymbol{0}$ なので <span class="fin">$\boldsymbol{0}\in W$</span>。<br>
+        （対偶で使う：<b>$\boldsymbol{0}\notin W$ なら部分空間でない</b>。判定問題で最初に見るポイント）
+      </div></details></div>
+    <div class="q"><div class="qh"><span class="tag">5.8-2</span><span class="src">反例</span></div>
+      <div class="body">$W=\left\{\begin{pmatrix}x\\y\end{pmatrix}\in\mathbb{R}^2\ \middle|\ xy\ge0\right\}$（第1・第3象限、境界の軸を含む）は和について閉じていないことを示せ。</div>
+      <details><summary>解答</summary><div class="ans">
+        $\boldsymbol{u}=\begin{pmatrix}2\\1\end{pmatrix},\ \boldsymbol{v}=\begin{pmatrix}-1\\-2\end{pmatrix}$ とすると $2\cdot1=2\ge0$、$(-1)(-2)=2\ge0$ でどちらも $W$ の元。<br>
+        しかし $\boldsymbol{u}+\boldsymbol{v}=\begin{pmatrix}1\\-1\end{pmatrix}$ は $1\cdot(-1)=-1&lt;0$ で $W$ の元でない。<span class="fin">よって和について閉じていない</span>（部分空間でない）。<br>
+        （$\boldsymbol{u}=(1,0)^T,\ \boldsymbol{v}=(0,-1)^T$ のように軸上の点を使ってもOK。なお $W$ はスカラー倍には閉じている：$(cx)(cy)=c^2xy\ge0$）
+      </div></details></div>
+    <div class="q"><div class="qh"><span class="tag">5.9-1</span><span class="src">解空間</span></div>
+      <div class="body">次の解空間 $W$ を $\langle\boldsymbol{a}_1,\ldots,\boldsymbol{a}_m\rangle$ の形で表せ。<br>
+        (1) $x+3y=0$ （$\mathbb{R}^2$）　(2) $2x+5y=0$ （$\mathbb{R}^2$）<br>
+        (3) $\begin{cases}x+3y-z=0\\x+5y-3z=0\end{cases}$　(4) $x-2y+3z=0$ （$\mathbb{R}^3$）<br>
+        (5) $\begin{cases}x_1+x_2+x_3+x_4=0\\x_1-x_2+2x_4=0\\2x_1+x_2-x_3+5x_4=0\end{cases}$　(6) $\begin{cases}x_1-x_2+3x_3+2x_4=0\\-2x_1+x_2-x_3-3x_4=0\\3x_1-x_2-x_3+4x_4=0\end{cases}$</div>
+      <details><summary>解答</summary><div class="ans">
+        (1) $y=t$ → $x=-3t$。<span class="fin">$W=\left\langle\begin{pmatrix}-3\\1\end{pmatrix}\right\rangle$</span><br>
+        (2) $y=2t$ とおくと分数が出ない → $x=-5t$。<span class="fin">$W=\left\langle\begin{pmatrix}-5\\2\end{pmatrix}\right\rangle$</span><br>
+        (3) $\begin{pmatrix}1&3&-1\\1&5&-3\end{pmatrix}\to\begin{pmatrix}1&0&2\\0&1&-1\end{pmatrix}$、$z=t$ → $x=-2t,\ y=t$。<span class="fin">$W=\left\langle\begin{pmatrix}-2\\1\\1\end{pmatrix}\right\rangle$</span><br>
+        (4) $y=s,\ z=t$ → $x=2s-3t$。<span class="fin">$W=\left\langle\begin{pmatrix}2\\1\\0\end{pmatrix},\begin{pmatrix}-3\\0\\1\end{pmatrix}\right\rangle$</span><br>
+        (5) 簡約化 $\begin{pmatrix}1&0&0&2\\0&1&0&0\\0&0&1&-1\end{pmatrix}$、$x_4=t$ → $x_1=-2t,\ x_2=0,\ x_3=t$。<span class="fin">$W=\left\langle\begin{pmatrix}-2\\0\\1\\1\end{pmatrix}\right\rangle$</span><br>
+        (6) 簡約化 $\begin{pmatrix}1&0&-2&1\\0&1&-5&-1\\0&0&0&0\end{pmatrix}$（rank 2）、$x_3=s,\ x_4=t$ → $x_1=2s-t,\ x_2=5s+t$。<br>
+        <span class="fin">$W=\left\langle\begin{pmatrix}2\\5\\1\\0\end{pmatrix},\begin{pmatrix}-1\\1\\0\\1\end{pmatrix}\right\rangle$</span>
+      </div></details></div>
+    <div class="q"><div class="qh"><span class="tag">5.9-2</span><span class="src">逆向き</span></div>
+      <div class="body">次の $\mathbb{R}^3$ の部分空間 $W$ を、解空間（方程式）の形で表せ。<br>
+        (1) $W=\left\langle\begin{pmatrix}-1\\1\\0\end{pmatrix},\begin{pmatrix}-2\\0\\1\end{pmatrix}\right\rangle$　(2) $W=\left\langle\begin{pmatrix}2\\1\\0\end{pmatrix},\begin{pmatrix}0\\1\\1\end{pmatrix},\begin{pmatrix}4\\1\\-1\end{pmatrix}\right\rangle$</div>
+      <details><summary>解答</summary><div class="ans">
+        $ax+by+cz=0$ が生成元すべてで成り立つように $(a,b,c)$ を決める（生成元に直交するベクトル）。<br>
+        (1) $-a+b=0,\ -2a+c=0$ → $(a,b,c)=(1,1,2)$。<span class="fin">$W=\{(x,y,z)^T\mid x+y+2z=0\}$</span><br>
+        (2) まず $\boldsymbol{a}_3=2\boldsymbol{a}_1-\boldsymbol{a}_2$（$(4,2,0)-(0,1,1)=(4,1,-1)$ ✓）なので $W=\langle\boldsymbol{a}_1,\boldsymbol{a}_2\rangle$ で平面。$2a+b=0,\ b+c=0$ → $(a,b,c)=(1,-2,2)$。<br>
+        <span class="fin">$W=\{(x,y,z)^T\mid x-2y+2z=0\}$</span><br>
+        確かめ：2本の生成元が独立で次元2、方程式1本の解空間も次元 $3-1=2$。$W\subset$ 解空間かつ次元が等しいので一致。
+      </div></details></div>
+    <div class="q"><div class="qh"><span class="tag">6.2-1</span><span class="src">3次元の回転</span></div>
+      <div class="body">$A_1$ は $\boldsymbol{e}_1$ を軸、$A_2$ は $\boldsymbol{e}_2$ を軸とする3次元空間の回転の行列で、回転角はどちらも $\theta=\frac\pi2$ とする。<br>(1) $A_1,A_2$ を求めよ。(2) $A_1A_2$ と $A_2A_1$ を計算せよ。</div>
+      <details><summary>解答</summary><div class="ans">
+        (1) 「わかる」の $R_1,R_2$ に $\cos\frac\pi2=0,\ \sin\frac\pi2=1$ を代入。<br>
+        <span class="fin">$A_1=\begin{pmatrix}1&0&0\\0&0&-1\\0&1&0\end{pmatrix},\quad A_2=\begin{pmatrix}0&0&1\\0&1&0\\-1&0&0\end{pmatrix}$</span><br>
+        （確認：$A_1\boldsymbol{e}_2=\boldsymbol{e}_3$、$A_2\boldsymbol{e}_3=\boldsymbol{e}_1$。軸の正の向きから見て反時計回り）<br>
+        (2) <span class="fin">$A_1A_2=\begin{pmatrix}0&0&1\\1&0&0\\0&1&0\end{pmatrix},\quad A_2A_1=\begin{pmatrix}0&1&0\\0&0&-1\\-1&0&0\end{pmatrix}$</span><br>
+        $A_1A_2\ne A_2A_1$。2次元の回転は $R(\alpha)R(\beta)=R(\alpha+\beta)$ で必ず可換だけど、<b>3次元の回転は順番を変えると結果が変わる</b>。<br>
+        （教科書の回転の向きの定義が逆なら、$A_1,A_2$ の $\pm1$ の符号が入れ替わる。積の計算方法は同じ）
+      </div></details></div>
+    <div class="q"><div class="qh"><span class="tag">6.3-1</span><span class="src">証明</span></div>
+      <div class="body">$T$ を $\mathbb{R}^2$ から $\mathbb{R}^3$ への線形写像、$\{\boldsymbol{u}_1,\boldsymbol{u}_2\}$ を $\mathbb{R}^2$ の基底、$\{\boldsymbol{v}_1,\boldsymbol{v}_2,\boldsymbol{v}_3\}$ を $\mathbb{R}^3$ の基底とし、$T(\boldsymbol{u}_j)=b_{1j}\boldsymbol{v}_1+b_{2j}\boldsymbol{v}_2+b_{3j}\boldsymbol{v}_3$（$j=1,2$）の係数を並べた $3\times2$ 行列を $B$ とする。<br>$\boldsymbol{x}=x_1\boldsymbol{u}_1+x_2\boldsymbol{u}_2$、$T(\boldsymbol{x})=y_1\boldsymbol{v}_1+y_2\boldsymbol{v}_2+y_3\boldsymbol{v}_3$ のとき $\begin{pmatrix}y_1\\y_2\\y_3\end{pmatrix}=B\begin{pmatrix}x_1\\x_2\end{pmatrix}$ を示せ。</div>
+      <details><summary>解答</summary><div class="ans">
+        $T$ の線形性より
+        \[ T(\boldsymbol{x})=x_1T(\boldsymbol{u}_1)+x_2T(\boldsymbol{u}_2)=x_1\sum_{i=1}^3 b_{i1}\boldsymbol{v}_i+x_2\sum_{i=1}^3 b_{i2}\boldsymbol{v}_i=\sum_{i=1}^3(b_{i1}x_1+b_{i2}x_2)\boldsymbol{v}_i \]
+        一方 $T(\boldsymbol{x})=\sum_i y_i\boldsymbol{v}_i$。$\boldsymbol{v}_1,\boldsymbol{v}_2,\boldsymbol{v}_3$ は基底（1次独立）なので、1次結合の係数は1通りに決まる。よって $y_i=b_{i1}x_1+b_{i2}x_2$（$i=1,2,3$）。<br>
+        これを並べると <span class="fin">$\begin{pmatrix}y_1\\y_2\\y_3\end{pmatrix}=\begin{pmatrix}b_{11}&b_{12}\\b_{21}&b_{22}\\b_{31}&b_{32}\end{pmatrix}\begin{pmatrix}x_1\\x_2\end{pmatrix}=B\begin{pmatrix}x_1\\x_2\end{pmatrix}$</span>（証明終わり）<br>
+        ポイント：「係数の一意性（基底は1次独立）」を使ったことを必ず書く。
       </div></details></div>
     </div>
   </div>
