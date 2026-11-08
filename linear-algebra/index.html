@@ -253,6 +253,7 @@ details[open] summary { background: var(--ink); color: var(--paper); }
       <li><a href="#c5">内積・正規直交基底</a></li>
       <li><a href="#c6">一次変換（回転・折り返し）</a></li>
       <li><a href="#tb">教科書の節末問題（5.1〜5.9節・6.2〜6.3節）</a></li>
+      <li><a href="#qz">小テストで出た範囲（類題つき）</a></li>
     </ol>
     <p><b>基礎から不安なら</b>：ベクトル・行列の積・掃き出し法・ランク・行列式・逆行列を初めから例題つきでまとめた <a href="basics/" style="color:var(--ink)">線形代数の基礎ノート</a> を先にやると、この先がスムーズに読める。</p>
     <p>第6週は「これまでのまとめと演習」、第7週が中間試験。第8週の一次変換は本来は中間の後の回だけど、出るかもとのことなので入れてある。</p>
@@ -272,6 +273,7 @@ details[open] summary { background: var(--ink); color: var(--paper); }
     <a href="#c5" data-t="c5"><b>第5週</b><span></span></a>
     <a href="#c6" data-t="c6"><b>第8週</b><span></span></a>
     <a href="#tb" data-t="tb"><b>節末問題</b><span></span></a>
+    <a href="#qz" data-t="qz"><b>小テスト</b><span></span></a>
     <a href="#mock" data-t="mock"><b>模試①</b><span></span></a>
     <a href="#mock2" data-t="mock2"><b>模試②</b><span></span></a>
   </div>
@@ -817,6 +819,99 @@ details[open] summary { background: var(--ink); color: var(--paper); }
         一方 $T(\boldsymbol{x})=\sum_i y_i\boldsymbol{v}_i$。$\boldsymbol{v}_1,\boldsymbol{v}_2,\boldsymbol{v}_3$ は基底（1次独立）なので、1次結合の係数は1通りに決まる。よって $y_i=b_{i1}x_1+b_{i2}x_2$（$i=1,2,3$）。<br>
         これを並べると <span class="fin">$\begin{pmatrix}y_1\\y_2\\y_3\end{pmatrix}=\begin{pmatrix}b_{11}&b_{12}\\b_{21}&b_{22}\\b_{31}&b_{32}\end{pmatrix}\begin{pmatrix}x_1\\x_2\end{pmatrix}=B\begin{pmatrix}x_1\\x_2\end{pmatrix}$</span>（証明終わり）<br>
         ポイント：「係数の一意性（基底は1次独立）」を使ったことを必ず書く。
+      </div></details></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= 小テスト対策 ======================= -->
+<section class="ch" id="qz" data-title="小テストの範囲">
+  <div class="ch-top"><span class="ch-no">小テスト<span class="badge">配信済み</span></span><h2>小テストで出た範囲（選択式の即答テク）</h2><span class="ch-meta">1次独立・次元・部分空間・回転・1次変換の像。類題で確認</span></div>
+  <div class="step"><h3><span class="n">1</span>覚える</h3>
+    <div class="memo">
+      <div class="row"><span class="lbl">独立の即判定</span><span class="val"><span class="key">$\boldsymbol{0}$ を含む → 従属</span>／<span class="key">2本は比例なら従属</span>／<span class="key">$\mathbb{R}^n$ に $n+1$ 本以上 → 従属</span>／$n$ 本なら $\det\ne0$ で独立</span></div>
+      <div class="row"><span class="lbl">張る空間の次元</span><span class="val">$\dim\langle\boldsymbol{a}_1,\ldots,\boldsymbol{a}_k\rangle=$ <span class="key">$\operatorname{rank}(\boldsymbol{a}_1\ \cdots\ \boldsymbol{a}_k)$</span>（独立な最大本数）</span></div>
+      <div class="row"><span class="lbl">行列の空間</span><span class="val">$\dim M_{m,n}(\mathbb{R})=$ <span class="key">$mn$</span>（基底は $(i,j)$ 成分だけ1の行列 $E_{ij}$ 全部）</span></div>
+      <div class="row"><span class="lbl">部分空間の判定</span><span class="val"><span class="key">定数項0の1次式（同次）だけ</span>で決まる集合 → 部分空間。<span class="key">定数項 $\ne0$</span> → $\boldsymbol{0}$ を含まずアウト。<span class="key">2乗・積・絶対値・不等式</span> → 反例でアウト</span></div>
+      <div class="row"><span class="lbl">点の回転</span><span class="val">$\begin{pmatrix}x'\\y'\end{pmatrix}=\begin{pmatrix}\cos\theta&-\sin\theta\\ \sin\theta&\cos\theta\end{pmatrix}\begin{pmatrix}x\\y\end{pmatrix}$。検算は<span class="key">原点からの距離が変わらない</span>こと</span></div>
+      <div class="row"><span class="lbl">直線の像</span><span class="val">$\det A\ne0$ → 直線は直線へ。<span class="key">$\det A=0$ → 平面全体が1本の直線に潰れる</span>。直線の向きが潰れる方向なら<span class="key">像は1点</span></span></div>
+    </div>
+  </div>
+  <div class="step"><h3><span class="n">2</span>わかる</h3>
+    <div class="explain">
+      <p><b>張る空間の次元はなぜ rank？</b>　$\langle\boldsymbol{a}_1,\ldots,\boldsymbol{a}_k\rangle$ の基底は「$\boldsymbol{a}_i$ の中から取れる独立な最大の組」（5.6節）。その本数が rank。成分が等差数列っぽく並ぶベクトル（$(1,2,3,4)^T,(2,3,4,5)^T,\ldots$）は、差をとると同じベクトルになるので rank 2 になりやすい。</p>
+      <p><b>$M_{m,n}$ の次元が $mn$ なのは</b>　$m\times n$ 行列は $mn$ 個の成分を自由に決められて、$A=\sum_{i,j}a_{ij}E_{ij}$ と1通りに書けるから。$\{E_{ij}\}$ が基底で $mn$ 個。例えば $M_{2,2}$ は $\mathbb{R}^4$ と同じ4次元。条件がつくと減る：2次対称行列 $\begin{pmatrix}a&b\\b&c\end{pmatrix}$ は自由な文字が3つなので3次元。</p>
+      <p><b>部分空間の見分け方</b>　条件が「$ax+by+cz=0$ の形の式（いくつでも）」なら、それは同次連立1次方程式の解空間なので必ず部分空間。$x=y=z$ も $x-y=0,\ y-z=0$ の2式なので部分空間（原点を通る直線）。$|x|=|y|=|z|$ は $(1,1,1)$ と $(1,-1,1)$ を足すと $(2,0,2)$ で外れる、のように反例1つでアウト。</p>
+      <p><b>$\det A=0$ の1次変換</b>　例えば $A=\begin{pmatrix}1&2\\3&6\end{pmatrix}$ は $A\begin{pmatrix}x\\y\end{pmatrix}=(x+2y)\begin{pmatrix}1\\3\end{pmatrix}$ と書ける。どの点も直線 $y=3x$ 上に移り、$x+2y$ の値だけで行き先が決まる。だから</p>
+      <ul>
+        <li>$x+2y$ が一定の直線（傾き $-\frac12$）上の点は、全部同じ1点に移る</li>
+        <li>それ以外の向きの直線は、$x+2y$ がすべての値をとるので、直線 $y=3x$ 全体に移る</li>
+      </ul>
+      <p>選択肢に「点」があったら、まず直線の傾きと潰れる方向（$A\boldsymbol{v}=\boldsymbol{0}$ となる $\boldsymbol{v}$）が一致するか見る。</p>
+    </div>
+  </div>
+  <div class="step"><h3><span class="n">3</span>注意</h3>
+    <div class="redpen">
+      <p><b>独立</b> 単位ベクトル $\boldsymbol{e}_1,\boldsymbol{e}_2,\boldsymbol{e}_3$ は当然独立。逆に「成分がバラバラに見える」だけでは独立とは限らない。3本目が1本目＋2本目、などを必ずチェック。</p>
+      <p><b>回転</b> 角の向きは反時計回りが正。$\frac{5\pi}6$ なら $\cos=-\frac{\sqrt3}2,\ \sin=\frac12$。符号ミスが一番多い。</p>
+      <p><b>像</b> 直線の像は、直線上の点を $(t,\ mt+k)$ とパラメータで書いて $A$ をかけ、$t$ を消去する。$t$ が消えて定数だけ残ったら像は1点。</p>
+    </div>
+  </div>
+  <div class="step"><h3><span class="n">4</span>解く（類題）</h3>
+    <div class="probs">
+    <div class="q"><div class="qh"><span class="tag">Q-1</span><span class="src">1次独立</span></div>
+      <div class="body">次のうち1次独立な組をすべて選べ。<br>
+        (ア) $\left\{\begin{pmatrix}2\\-6\end{pmatrix},\begin{pmatrix}-1\\3\end{pmatrix}\right\}$　(イ) $\left\{\begin{pmatrix}1\\2\end{pmatrix},\begin{pmatrix}2\\1\end{pmatrix}\right\}$　(ウ) $\left\{\begin{pmatrix}1\\2\end{pmatrix},\begin{pmatrix}3\\4\end{pmatrix},\begin{pmatrix}5\\6\end{pmatrix}\right\}$<br>
+        (エ) $\left\{\begin{pmatrix}1\\0\\1\end{pmatrix},\begin{pmatrix}0\\1\\1\end{pmatrix},\begin{pmatrix}1\\1\\0\end{pmatrix}\right\}$　(オ) $\left\{\begin{pmatrix}1\\1\\2\end{pmatrix},\begin{pmatrix}2\\3\\5\end{pmatrix},\begin{pmatrix}3\\4\\7\end{pmatrix}\right\}$　(カ) $\left\{\begin{pmatrix}1\\2\\3\end{pmatrix},\begin{pmatrix}0\\0\\0\end{pmatrix},\begin{pmatrix}2\\1\\0\end{pmatrix}\right\}$</div>
+      <details><summary>解答</summary><div class="ans">
+        (ア) $(2,-6)=-2(-1,3)$ で比例 → 従属。(イ) 比例でない（$\det=1-4=-3\ne0$）→ 独立。(ウ) $\mathbb{R}^2$ に3本 → 従属。<br>
+        (エ) $\det=1(0-1)-0+1(0-1)=-2\ne0$ → 独立。(オ) 3本目＝1本目＋2本目 → 従属。(カ) $\boldsymbol{0}$ を含む → 従属。<br>
+        <span class="fin">(イ)(エ)</span>
+      </div></details></div>
+    <div class="q"><div class="qh"><span class="tag">Q-2</span><span class="src">次元</span></div>
+      <div class="body">次の $\mathbb{R}^4$ のベクトルが張る部分空間 $W$ の次元を求めよ。<br>
+        (1) $\begin{pmatrix}1\\2\\3\\4\end{pmatrix},\begin{pmatrix}2\\3\\4\\5\end{pmatrix},\begin{pmatrix}3\\4\\5\\6\end{pmatrix},\begin{pmatrix}4\\5\\6\\7\end{pmatrix}$　(2) $\begin{pmatrix}1\\1\\0\\0\end{pmatrix},\begin{pmatrix}0\\1\\1\\0\end{pmatrix},\begin{pmatrix}0\\0\\1\\1\end{pmatrix},\begin{pmatrix}1\\0\\0\\-1\end{pmatrix}$</div>
+      <details><summary>解答</summary><div class="ans">
+        (1) 隣どうしの差はどれも $(1,1,1,1)^T$。$\boldsymbol{a}_3=2\boldsymbol{a}_2-\boldsymbol{a}_1$、$\boldsymbol{a}_4=3\boldsymbol{a}_2-2\boldsymbol{a}_1$ で、$\boldsymbol{a}_1,\boldsymbol{a}_2$ は比例でない。<span class="fin">$\dim W=2$</span><br>
+        (2) 列に並べて簡約化すると単位行列 $E_4$（$\det=-2\ne0$）。<span class="fin">$\dim W=4$（$W=\mathbb{R}^4$）</span><br>
+        （(2)は $\boldsymbol{a}_1-\boldsymbol{a}_2+\boldsymbol{a}_3=(1,0,0,1)^T$ が $\boldsymbol{a}_4=(1,0,0,-1)^T$ と最後の成分だけ違うのがミソ。見た目で従属と決めつけない）
+      </div></details></div>
+    <div class="q"><div class="qh"><span class="tag">Q-3</span><span class="src">行列の空間</span></div>
+      <div class="body">次の実ベクトル空間の次元を答えよ。<br>(1) $M_{2,3}(\mathbb{R})$　(2) 2次の対称行列全体　(3) トレースが0の2次正方行列全体　(4) $n$ 次の上三角行列全体</div>
+      <details><summary>解答</summary><div class="ans">
+        (1) $2\times3$ <span class="fin">$=6$</span><br>
+        (2) $\begin{pmatrix}a&b\\b&c\end{pmatrix}$ で自由な文字3つ。<span class="fin">3</span><br>
+        (3) $\begin{pmatrix}a&b\\c&-a\end{pmatrix}$ で自由な文字3つ（4次元から条件1本で $4-1$）。<span class="fin">3</span><br>
+        (4) 対角線とその上の成分の個数 $n+(n-1)+\cdots+1$。<span class="fin">$\dfrac{n(n+1)}2$</span>
+      </div></details></div>
+    <div class="q"><div class="qh"><span class="tag">Q-4</span><span class="src">部分空間</span></div>
+      <div class="body">次の $\mathbb{R}^3$ の部分集合のうち、部分空間であるものをすべて選べ。<br>
+        (ア) $x+2y-z=0$　(イ) $x+y+z=2$　(ウ) $x=2y=3z$　(エ) $x^2=yz$　(オ) $x\ge0$　(カ) $x=0$ かつ $y=z$　(キ) $xyz=0$</div>
+      <details><summary>解答</summary><div class="ans">
+        (ア) 同次1次式 → ○。(イ) $\boldsymbol{0}$ が $0\ne2$ で入らない → ×。(ウ) $x-2y=0,\ 2y-3z=0$ の解空間（原点を通る直線）→ ○。<br>
+        (エ) $(1,1,1)$ と $(1,-1,-1)$ はどちらも入るが、和 $(2,0,0)$ は $4\ne0$ → ×。<br>
+        (オ) $(1,0,0)$ は入るが $-1$ 倍の $(-1,0,0)$ は入らない → ×。(カ) 同次1次式2本 → ○。<br>
+        (キ) $(1,0,0)$ と $(0,1,1)$ は入るが、和 $(1,1,1)$ は積が $1\ne0$ → ×（3つの平面の和集合は部分空間でない）。<br>
+        <span class="fin">(ア)(ウ)(カ)</span>
+      </div></details></div>
+    <div class="q"><div class="qh"><span class="tag">Q-5</span><span class="src">回転</span></div>
+      <div class="body">(1) 点 $(2\sqrt3,\ 4)$ を原点中心に $\frac{2\pi}3$ 回転させた点を求めよ。<br>(2) 点 $(6,\ -2\sqrt3)$ を原点中心に時計回りに $\frac\pi3$ 回転させた点を求めよ。</div>
+      <details><summary>解答</summary><div class="ans">
+        (1) $\cos\frac{2\pi}3=-\frac12,\ \sin\frac{2\pi}3=\frac{\sqrt3}2$。<br>
+        $x'=-\frac12\cdot2\sqrt3-\frac{\sqrt3}2\cdot4=-\sqrt3-2\sqrt3=-3\sqrt3$、$y'=\frac{\sqrt3}2\cdot2\sqrt3-\frac12\cdot4=3-2=1$。<span class="fin">$(-3\sqrt3,\ 1)$</span><br>
+        （検算：距離² $12+16=28$、$27+1=28$ ✓）<br>
+        (2) 時計回りなので $\theta=-\frac\pi3$：$\cos=\frac12,\ \sin=-\frac{\sqrt3}2$。<br>
+        $x'=\frac12\cdot6+\frac{\sqrt3}2\cdot(-2\sqrt3)=3-3=0$、$y'=-\frac{\sqrt3}2\cdot6+\frac12\cdot(-2\sqrt3)=-3\sqrt3-\sqrt3=-4\sqrt3$。<span class="fin">$(0,\ -4\sqrt3)$</span><br>
+        （検算：$36+12=48$、$0+48=48$ ✓）
+      </div></details></div>
+    <div class="q"><div class="qh"><span class="tag">Q-6</span><span class="src">直線の像</span></div>
+      <div class="body">(1) $A=\begin{pmatrix}2&-1\\-4&2\end{pmatrix}$ の定める1次変換による、直線 $y=2x+1$ の像と直線 $y=x$ の像をそれぞれ求めよ。<br>(2) $B=\begin{pmatrix}1&2\\3&4\end{pmatrix}$ の定める1次変換による、直線 $y=x+1$ の像を求めよ。</div>
+      <details><summary>解答</summary><div class="ans">
+        (1) $\det A=4-4=0$。$A\begin{pmatrix}x\\y\end{pmatrix}=(2x-y)\begin{pmatrix}1\\-2\end{pmatrix}$ なので、平面全体が直線 $y=-2x$ に潰れる。<br>
+        ・$y=2x+1$ 上では $2x-y=-1$ で一定 → <span class="fin">像は点 $(-1,\ 2)$</span><br>
+        ・$y=x$ 上では $2x-y=x$ がすべての実数をとる → <span class="fin">像は直線 $y=-2x$</span><br>
+        (2) $\det B=4-6=-2\ne0$ なので像は直線。点 $(t,\ t+1)$ を移すと $(X,Y)=(3t+2,\ 7t+4)$。$t=\frac{X-2}3$ を代入して $Y=\frac{7X-2}3$。<br>
+        <span class="fin">直線 $y=\dfrac73x-\dfrac23$</span>（確認：$t=0$ の像 $(2,4)$ は $\frac{14-2}3=4$ ✓）
       </div></details></div>
     </div>
   </div>
