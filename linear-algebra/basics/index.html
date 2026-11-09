@@ -165,6 +165,16 @@ summary::-webkit-details-marker { display: none; }
 details[open] summary { background: var(--ink); color: var(--paper); }
 .ans { margin-top: 10px; padding: 10px 14px; border-left: 3px solid var(--ok); background: var(--ok-soft); border-radius: 0 8px 8px 0; }
 .ans .fin { font-weight: 700; color: var(--ok); }
+.ans .use { margin: 0 0 10px; padding: 8px 12px; background: var(--paper); border: 1px dashed var(--line); border-radius: 8px; font-size: 14px; }
+.ans .use > b { display: block; margin-bottom: 2px; }
+.ans .use ul { margin: 0; padding-left: 1.2em; }
+.ans .use li { margin: 3px 0; }
+.ans .pt { margin: 12px 0 2px; font-weight: 700; }
+.ans ol.sol { margin: 4px 0 6px; padding-left: 1.5em; }
+.ans ol.sol li { margin: 6px 0; }
+.ans .why { display: block; font-size: 13px; color: var(--sub); margin-top: 1px; }
+.ans .conc { margin: 6px 0; }
+.ans .chk { margin: 4px 0 0; font-size: 13px; color: var(--sub); }
 .spec { display: flex; flex-wrap: wrap; gap: 14px; margin: 8px 0; }
 .spec figure { margin: 0; flex: 1 1 240px; min-width: 0; max-width: 340px; }
 .spec figcaption { font-size: 12.5px; color: var(--sub); text-align: center; }
@@ -342,20 +352,63 @@ details[open] summary { background: var(--ink); color: var(--paper); }
     <div class="q"><div class="qh"><span class="tag">1-1</span></div>
       <div class="body">$\boldsymbol{a}=\begin{pmatrix}2\\-1\\3\end{pmatrix},\ \boldsymbol{b}=\begin{pmatrix}1\\4\\-2\end{pmatrix}$ のとき、(1) $\boldsymbol{a}+\boldsymbol{b}$　(2) $3\boldsymbol{a}-2\boldsymbol{b}$　(3) $\|\boldsymbol{b}\|$ を求めよ。</div>
       <details><summary>解答</summary><div class="ans">
-        (1) <span class="fin">$\begin{pmatrix}3\\3\\1\end{pmatrix}$</span><br>
-        (2) $\begin{pmatrix}6\\-3\\9\end{pmatrix}-\begin{pmatrix}2\\8\\-4\end{pmatrix}=$ <span class="fin">$\begin{pmatrix}4\\-11\\13\end{pmatrix}$</span><br>
-        (3) $\sqrt{1^2+4^2+(-2)^2}=$ <span class="fin">$\sqrt{21}$</span>
+        <div class="use"><b>使う知識</b><ul>
+  <li><b>ベクトルの和</b>：同じ位置の成分どうしを足す。$\begin{pmatrix}a_1\\a_2\\a_3\end{pmatrix}+\begin{pmatrix}b_1\\b_2\\b_3\end{pmatrix}=\begin{pmatrix}a_1+b_1\\a_2+b_2\\a_3+b_3\end{pmatrix}$（差も同じく成分ごとに引く）。</li>
+  <li><b>スカラー倍</b>：数 $k$ を全部の成分に掛ける。$k\begin{pmatrix}a_1\\a_2\\a_3\end{pmatrix}=\begin{pmatrix}ka_1\\ka_2\\ka_3\end{pmatrix}$。</li>
+  <li><b>ベクトルの大きさ（ノルム）</b>：$\|\boldsymbol{b}\|=\sqrt{b_1^2+b_2^2+b_3^2}$。成分を2乗して足し、ルートをとる（三平方の定理の3次元版）。</li>
+</ul></div>
+<p class="pt">(1)</p>
+<ol class="sol">
+  <li>上の成分から順に足す：$\boldsymbol{a}+\boldsymbol{b}=\begin{pmatrix}2+1\\-1+4\\3+(-2)\end{pmatrix}$ <span class="why">理由：ベクトルの和は成分ごとに足すと決まっている（定義）。</span></li>
+  <li>計算して $\begin{pmatrix}3\\3\\1\end{pmatrix}$。</li>
+</ol>
+<p class="conc">成分ごとに足して <span class="fin">$\begin{pmatrix}3\\3\\1\end{pmatrix}$</span></p>
+<p class="pt">(2)</p>
+<ol class="sol">
+  <li>まず $3\boldsymbol{a}=\begin{pmatrix}3\cdot2\\3\cdot(-1)\\3\cdot3\end{pmatrix}=\begin{pmatrix}6\\-3\\9\end{pmatrix}$ <span class="why">理由：スカラー倍は全成分に3を掛ける。</span></li>
+  <li>次に $2\boldsymbol{b}=\begin{pmatrix}2\cdot1\\2\cdot4\\2\cdot(-2)\end{pmatrix}=\begin{pmatrix}2\\8\\-4\end{pmatrix}$</li>
+  <li>成分ごとに引く：$3\boldsymbol{a}-2\boldsymbol{b}=\begin{pmatrix}6-2\\-3-8\\9-(-4)\end{pmatrix}=\begin{pmatrix}4\\-11\\13\end{pmatrix}$ <span class="why">理由：差も成分ごと。3番目は $9-(-4)=9+4$ になる点に注意。</span></li>
+</ol>
+<p class="conc">スカラー倍してから成分ごとに引いて <span class="fin">$\begin{pmatrix}4\\-11\\13\end{pmatrix}$</span></p>
+<p class="pt">(3)</p>
+<ol class="sol">
+  <li>各成分を2乗する：$1^2=1,\ 4^2=16,\ (-2)^2=4$ <span class="why">理由：ノルムの定義。負の成分も2乗すれば正になる。</span></li>
+  <li>足して $1+16+4=21$、ルートをとって $\sqrt{21}$（$21=3\cdot7$ なのでこれ以上簡単にならない）。</li>
+</ol>
+<p class="conc">ノルムの定義より <span class="fin">$\|\boldsymbol{b}\|=\sqrt{21}$</span></p>
+<p class="chk">検算：(2) を $3\boldsymbol{a}-2\boldsymbol{b}$ の第1成分だけ直接計算すると $3\cdot2-2\cdot1=4$ ✓、第2成分 $3\cdot(-1)-2\cdot4=-11$ ✓、第3成分 $3\cdot3-2\cdot(-2)=13$ ✓</p>
       </div></details></div>
     <div class="q"><div class="qh"><span class="tag">1-2</span></div>
       <div class="body">$2\boldsymbol{x}+\begin{pmatrix}1\\3\end{pmatrix}=\begin{pmatrix}5\\-1\end{pmatrix}$ をみたすベクトル $\boldsymbol{x}$ を求めよ。</div>
       <details><summary>解答</summary><div class="ans">
-        普通の方程式と同じく移項できる：$2\boldsymbol{x}=\begin{pmatrix}5-1\\-1-3\end{pmatrix}=\begin{pmatrix}4\\-4\end{pmatrix}$。<span class="fin">$\boldsymbol{x}=\begin{pmatrix}2\\-2\end{pmatrix}$</span>
+        <div class="use"><b>使う知識</b><ul>
+  <li><b>ベクトルの和・差・スカラー倍は成分ごと</b>：$\begin{pmatrix}a_1\\a_2\end{pmatrix}\pm\begin{pmatrix}b_1\\b_2\end{pmatrix}=\begin{pmatrix}a_1\pm b_1\\a_2\pm b_2\end{pmatrix}$, $k\begin{pmatrix}a_1\\a_2\end{pmatrix}=\begin{pmatrix}ka_1\\ka_2\end{pmatrix}$。</li>
+  <li><b>ベクトルの方程式も移項・割り算ができる</b>：成分ごとに見ればただの数の方程式が2本並んでいるだけなので、両辺から同じベクトルを引く・両辺を同じ数（0以外）で割る、をしてよい。</li>
+</ul></div>
+<ol class="sol">
+  <li>両辺から $\begin{pmatrix}1\\3\end{pmatrix}$ を引く（移項）：$2\boldsymbol{x}=\begin{pmatrix}5\\-1\end{pmatrix}-\begin{pmatrix}1\\3\end{pmatrix}$ <span class="why">理由：成分ごとに見ると $2x_1+1=5,\ 2x_2+3=-1$ という普通の方程式なので、移項してよい。</span></li>
+  <li>成分ごとに引く：$2\boldsymbol{x}=\begin{pmatrix}5-1\\-1-3\end{pmatrix}=\begin{pmatrix}4\\-4\end{pmatrix}$</li>
+  <li>両辺を2で割る（$\tfrac12$ 倍する）：$\boldsymbol{x}=\tfrac12\begin{pmatrix}4\\-4\end{pmatrix}=\begin{pmatrix}2\\-2\end{pmatrix}$ <span class="why">理由：スカラー倍は全成分に $\tfrac12$ を掛ける。</span></li>
+</ol>
+<p class="conc">移項して2で割ると <span class="fin">$\boldsymbol{x}=\begin{pmatrix}2\\-2\end{pmatrix}$</span></p>
+<p class="chk">検算：$2\begin{pmatrix}2\\-2\end{pmatrix}+\begin{pmatrix}1\\3\end{pmatrix}=\begin{pmatrix}4+1\\-4+3\end{pmatrix}=\begin{pmatrix}5\\-1\end{pmatrix}$ ✓</p>
       </div></details></div>
     <div class="q"><div class="qh"><span class="tag">1-3</span></div>
       <div class="body">$\begin{pmatrix}4\\-2\end{pmatrix}$ を $\begin{pmatrix}1\\1\end{pmatrix}$ と $\begin{pmatrix}1\\-1\end{pmatrix}$ の1次結合で表せ。</div>
       <details><summary>解答</summary><div class="ans">
-        $s\begin{pmatrix}1\\1\end{pmatrix}+t\begin{pmatrix}1\\-1\end{pmatrix}=\begin{pmatrix}s+t\\s-t\end{pmatrix}$ なので $s+t=4,\ s-t=-2$。足して $2s=2$ → $s=1$、$t=3$。<br>
-        <span class="fin">$\begin{pmatrix}4\\-2\end{pmatrix}=1\begin{pmatrix}1\\1\end{pmatrix}+3\begin{pmatrix}1\\-1\end{pmatrix}$</span>（検算：$(1+3,\ 1-3)=(4,-2)$ ✓）
+        <div class="use"><b>使う知識</b><ul>
+  <li><b>1次結合</b>：ベクトル $\boldsymbol{u},\boldsymbol{v}$ にそれぞれ数を掛けて足した形 $s\boldsymbol{u}+t\boldsymbol{v}$ のこと。「1次結合で表せ」は、$\begin{pmatrix}4\\-2\end{pmatrix}=s\boldsymbol{u}+t\boldsymbol{v}$ となる数 $s,t$ を見つけよ、という意味。</li>
+  <li><b>スカラー倍・和は成分ごと</b>：$s\begin{pmatrix}u_1\\u_2\end{pmatrix}+t\begin{pmatrix}v_1\\v_2\end{pmatrix}=\begin{pmatrix}su_1+tv_1\\su_2+tv_2\end{pmatrix}$。</li>
+  <li><b>ベクトルが等しい</b> ⇔ 対応する成分がすべて等しい。</li>
+</ul></div>
+<ol class="sol">
+  <li>求める形を $s\begin{pmatrix}1\\1\end{pmatrix}+t\begin{pmatrix}1\\-1\end{pmatrix}=\begin{pmatrix}4\\-2\end{pmatrix}$ とおく。<span class="why">理由：1次結合の定義。$s,t$ が未知数。</span></li>
+  <li>左辺を計算：$\begin{pmatrix}s\\s\end{pmatrix}+\begin{pmatrix}t\\-t\end{pmatrix}=\begin{pmatrix}s+t\\s-t\end{pmatrix}$ <span class="why">理由：スカラー倍してから成分ごとに足す。</span></li>
+  <li>成分を比べて連立方程式 $s+t=4,\ s-t=-2$ を作る。<span class="why">理由：ベクトルが等しいのは上の成分どうし・下の成分どうしが等しいとき。</span></li>
+  <li>2式を足すと $2s=2$ なので $s=1$。1本目に入れて $t=4-1=3$。</li>
+</ol>
+<p class="conc">$s=1,\ t=3$ が見つかったので <span class="fin">$\begin{pmatrix}4\\-2\end{pmatrix}=1\begin{pmatrix}1\\1\end{pmatrix}+3\begin{pmatrix}1\\-1\end{pmatrix}$</span></p>
+<p class="chk">検算：$1\begin{pmatrix}1\\1\end{pmatrix}+3\begin{pmatrix}1\\-1\end{pmatrix}=\begin{pmatrix}1+3\\1-3\end{pmatrix}=\begin{pmatrix}4\\-2\end{pmatrix}$ ✓</p>
       </div></details></div>
     </div>
   </div>
@@ -400,26 +453,88 @@ details[open] summary { background: var(--ink); color: var(--paper); }
     <div class="q"><div class="qh"><span class="tag">2-1</span></div>
       <div class="body">$A=\begin{pmatrix}2&-1\\0&3\end{pmatrix},\ B=\begin{pmatrix}1&2\\-1&1\end{pmatrix}$ のとき、(1) $A+2B$　(2) $AB$　(3) $BA$ を求めよ。</div>
       <details><summary>解答</summary><div class="ans">
-        (1) $\begin{pmatrix}2+2&-1+4\\0-2&3+2\end{pmatrix}=$ <span class="fin">$\begin{pmatrix}4&3\\-2&5\end{pmatrix}$</span><br>
-        (2) $\begin{pmatrix}2\cdot1+(-1)(-1)&2\cdot2+(-1)\cdot1\\0\cdot1+3\cdot(-1)&0\cdot2+3\cdot1\end{pmatrix}=$ <span class="fin">$\begin{pmatrix}3&3\\-3&3\end{pmatrix}$</span><br>
-        (3) $\begin{pmatrix}1\cdot2+2\cdot0&1\cdot(-1)+2\cdot3\\(-1)\cdot2+1\cdot0&(-1)(-1)+1\cdot3\end{pmatrix}=$ <span class="fin">$\begin{pmatrix}2&5\\-2&4\end{pmatrix}$</span>（$AB\ne BA$ を確認）
+        <div class="use"><b>使う知識</b><ul>
+  <li><b>行列の和・スカラー倍</b>：同じ型の行列は同じ位置の成分どうしを足す。$k$ 倍は全成分に $k$ を掛ける。</li>
+  <li><b>行列の積</b>：$AB$ の $(i,j)$ 成分（$i$ 行 $j$ 列）は「$A$ の第 $i$ 行」と「$B$ の第 $j$ 列」を、前から順に掛けて足したもの。2×2 なら
+  $\begin{pmatrix}a&b\\c&d\end{pmatrix}\begin{pmatrix}p&q\\r&s\end{pmatrix}=\begin{pmatrix}ap+br&aq+bs\\cp+dr&cq+ds\end{pmatrix}$。</li>
+  <li><b>積の順番は変えられない</b>：一般に $AB\ne BA$（交換法則が成り立たない）。</li>
+</ul></div>
+<p class="pt">(1)</p>
+<ol class="sol">
+  <li>$2B=\begin{pmatrix}2\cdot1&2\cdot2\\2\cdot(-1)&2\cdot1\end{pmatrix}=\begin{pmatrix}2&4\\-2&2\end{pmatrix}$ <span class="why">理由：スカラー倍は全成分に2を掛ける。</span></li>
+  <li>$A+2B=\begin{pmatrix}2+2&-1+4\\0+(-2)&3+2\end{pmatrix}=\begin{pmatrix}4&3\\-2&5\end{pmatrix}$ <span class="why">理由：行列の和は同じ位置どうしを足す。</span></li>
+</ol>
+<p class="conc">成分ごとに計算して <span class="fin">$\begin{pmatrix}4&3\\-2&5\end{pmatrix}$</span></p>
+<p class="pt">(2)</p>
+<ol class="sol">
+  <li>$(1,1)$ 成分：$A$ の第1行 $(2,\ -1)$ × $B$ の第1列 $(1,\ -1)$ → $2\cdot1+(-1)\cdot(-1)=2+1=3$ <span class="why">理由：積の定義（行×列で、掛けて足す）。</span></li>
+  <li>$(1,2)$ 成分：$A$ の第1行 $(2,\ -1)$ × $B$ の第2列 $(2,\ 1)$ → $2\cdot2+(-1)\cdot1=4-1=3$</li>
+  <li>$(2,1)$ 成分：$A$ の第2行 $(0,\ 3)$ × $B$ の第1列 $(1,\ -1)$ → $0\cdot1+3\cdot(-1)=-3$</li>
+  <li>$(2,2)$ 成分：$A$ の第2行 $(0,\ 3)$ × $B$ の第2列 $(2,\ 1)$ → $0\cdot2+3\cdot1=3$</li>
+</ol>
+<p class="conc">4つの成分を並べて <span class="fin">$AB=\begin{pmatrix}3&3\\-3&3\end{pmatrix}$</span></p>
+<p class="pt">(3)</p>
+<ol class="sol">
+  <li>今度は $B$ が左なので「$B$ の行 × $A$ の列」。<span class="why">理由：積は左の行列の行と右の行列の列を組み合わせる。順番が逆だと使う行・列が変わる。</span></li>
+  <li>$(1,1)$：$B$ の第1行 $(1,\ 2)$ × $A$ の第1列 $(2,\ 0)$ → $1\cdot2+2\cdot0=2$</li>
+  <li>$(1,2)$：$B$ の第1行 $(1,\ 2)$ × $A$ の第2列 $(-1,\ 3)$ → $1\cdot(-1)+2\cdot3=-1+6=5$</li>
+  <li>$(2,1)$：$B$ の第2行 $(-1,\ 1)$ × $A$ の第1列 $(2,\ 0)$ → $(-1)\cdot2+1\cdot0=-2$</li>
+  <li>$(2,2)$：$B$ の第2行 $(-1,\ 1)$ × $A$ の第2列 $(-1,\ 3)$ → $(-1)\cdot(-1)+1\cdot3=1+3=4$</li>
+</ol>
+<p class="conc">並べて <span class="fin">$BA=\begin{pmatrix}2&5\\-2&4\end{pmatrix}$</span>。(2) と比べると $AB\ne BA$ で、掛ける順番で答えが変わることが確かめられる。</p>
       </div></details></div>
     <div class="q"><div class="qh"><span class="tag">2-2</span></div>
       <div class="body">$A=\begin{pmatrix}1&0&2\\-1&3&1\end{pmatrix},\ B=\begin{pmatrix}2&1\\1&0\\0&-1\end{pmatrix}$ とする。(1) $AB$ と $BA$ の型を答えよ。(2) $AB$ を計算せよ。</div>
       <details><summary>解答</summary><div class="ans">
-        (1) $A$ は $2\times3$、$B$ は $3\times2$。<span class="fin">$AB$ は $2\times2$、$BA$ は $3\times3$</span>（どちらも計算できるけど型が違う）<br>
-        (2) $\begin{pmatrix}1\cdot2+0\cdot1+2\cdot0 & 1\cdot1+0\cdot0+2\cdot(-1)\\ -1\cdot2+3\cdot1+1\cdot0 & -1\cdot1+3\cdot0+1\cdot(-1)\end{pmatrix}=$ <span class="fin">$\begin{pmatrix}2&-1\\1&-2\end{pmatrix}$</span>
+        <div class="use"><b>使う知識</b><ul>
+  <li><b>行列の型</b>：$m$ 行 $n$ 列の行列を「$m\times n$ 行列」という。</li>
+  <li><b>積ができる条件と積の型</b>：$(m\times n)$ と $(n\times p)$ のように「左の列の数＝右の行の数」のときだけ積が定義でき、結果は $m\times p$（外側の数が残る）。</li>
+  <li><b>積の成分</b>：$AB$ の $(i,j)$ 成分＝$A$ の第 $i$ 行と $B$ の第 $j$ 列を前から順に掛けて足したもの。3成分なら $a_1b_1+a_2b_2+a_3b_3$。</li>
+</ul></div>
+<p class="pt">(1)</p>
+<ol class="sol">
+  <li>$A$ は2行3列なので $2\times3$、$B$ は3行2列なので $3\times2$。</li>
+  <li>$AB$：$(2\times\underline{3})(\underline{3}\times2)$ で内側がそろうので計算でき、型は外側の $2\times2$。<span class="why">理由：積の型の規則。</span></li>
+  <li>$BA$：$(3\times\underline{2})(\underline{2}\times3)$ で内側がそろうので計算でき、型は $3\times3$。</li>
+</ol>
+<p class="conc">どちらも計算できるが型が違うので <span class="fin">$AB$ は $2\times2$、$BA$ は $3\times3$</span>（そもそも $AB$ と $BA$ は比べることすらできない）</p>
+<p class="pt">(2)</p>
+<ol class="sol">
+  <li>$(1,1)$：$A$ の第1行 $(1,\ 0,\ 2)$ × $B$ の第1列 $(2,\ 1,\ 0)$ → $1\cdot2+0\cdot1+2\cdot0=2$ <span class="why">理由：積の定義（行×列で、掛けて足す）。</span></li>
+  <li>$(1,2)$：$A$ の第1行 $(1,\ 0,\ 2)$ × $B$ の第2列 $(1,\ 0,\ -1)$ → $1\cdot1+0\cdot0+2\cdot(-1)=1-2=-1$</li>
+  <li>$(2,1)$：$A$ の第2行 $(-1,\ 3,\ 1)$ × $B$ の第1列 $(2,\ 1,\ 0)$ → $(-1)\cdot2+3\cdot1+1\cdot0=-2+3=1$</li>
+  <li>$(2,2)$：$A$ の第2行 $(-1,\ 3,\ 1)$ × $B$ の第2列 $(1,\ 0,\ -1)$ → $(-1)\cdot1+3\cdot0+1\cdot(-1)=-1-1=-2$</li>
+</ol>
+<p class="conc">(1) の通り $2\times2$ になり <span class="fin">$AB=\begin{pmatrix}2&-1\\1&-2\end{pmatrix}$</span></p>
       </div></details></div>
     <div class="q"><div class="qh"><span class="tag">2-3</span></div>
       <div class="body">$A=\begin{pmatrix}1&2&0\\0&1&-1\\3&0&1\end{pmatrix},\ \boldsymbol{x}=\begin{pmatrix}2\\-1\\1\end{pmatrix}$ のとき $A\boldsymbol{x}$ を求めよ。</div>
       <details><summary>解答</summary><div class="ans">
-        $\begin{pmatrix}1\cdot2+2\cdot(-1)+0\cdot1\\0\cdot2+1\cdot(-1)+(-1)\cdot1\\3\cdot2+0\cdot(-1)+1\cdot1\end{pmatrix}=$ <span class="fin">$\begin{pmatrix}0\\-2\\7\end{pmatrix}$</span><br>
-        （列の1次結合で見ると $2\begin{pmatrix}1\\0\\3\end{pmatrix}-\begin{pmatrix}2\\1\\0\end{pmatrix}+\begin{pmatrix}0\\-1\\1\end{pmatrix}$ で同じ答え）
+        <div class="use"><b>使う知識</b><ul>
+  <li><b>行列×ベクトル</b>：$A\boldsymbol{x}$ の第 $i$ 成分＝$A$ の第 $i$ 行と $\boldsymbol{x}$ を前から順に掛けて足したもの（ベクトルは1列の行列と思って積の定義を使う）。$3\times3$ と $3\times1$ の積なので結果は $3\times1$（3次元ベクトル）。</li>
+  <li><b>列の1次結合としての見方</b>：$A=(\boldsymbol{a}_1\ \boldsymbol{a}_2\ \boldsymbol{a}_3)$（列ベクトルで書く）なら $A\boldsymbol{x}=x_1\boldsymbol{a}_1+x_2\boldsymbol{a}_2+x_3\boldsymbol{a}_3$。</li>
+</ul></div>
+<ol class="sol">
+  <li>第1成分：$A$ の第1行 $(1,\ 2,\ 0)$ × $\boldsymbol{x}=(2,\ -1,\ 1)$ → $1\cdot2+2\cdot(-1)+0\cdot1=2-2+0=0$ <span class="why">理由：積の定義（行×列）。</span></li>
+  <li>第2成分：第2行 $(0,\ 1,\ -1)$ × $\boldsymbol{x}$ → $0\cdot2+1\cdot(-1)+(-1)\cdot1=-1-1=-2$</li>
+  <li>第3成分：第3行 $(3,\ 0,\ 1)$ × $\boldsymbol{x}$ → $3\cdot2+0\cdot(-1)+1\cdot1=6+1=7$</li>
+</ol>
+<p class="conc">3つの成分を縦に並べて <span class="fin">$A\boldsymbol{x}=\begin{pmatrix}0\\-2\\7\end{pmatrix}$</span></p>
+<p class="chk">検算（列の1次結合で計算）：$2\begin{pmatrix}1\\0\\3\end{pmatrix}+(-1)\begin{pmatrix}2\\1\\0\end{pmatrix}+1\begin{pmatrix}0\\-1\\1\end{pmatrix}=\begin{pmatrix}2-2+0\\0-1-1\\6-0+1\end{pmatrix}=\begin{pmatrix}0\\-2\\7\end{pmatrix}$ ✓</p>
       </div></details></div>
     <div class="q"><div class="qh"><span class="tag">2-4</span></div>
       <div class="body">$A=\begin{pmatrix}1&1\\0&1\end{pmatrix}$ のとき $A^2,\ A^3$ を求め、$A^n$ を予想せよ。</div>
       <details><summary>解答</summary><div class="ans">
-        $A^2=AA=\begin{pmatrix}1&2\\0&1\end{pmatrix}$、$A^3=A^2A=\begin{pmatrix}1&3\\0&1\end{pmatrix}$。<span class="fin">$A^n=\begin{pmatrix}1&n\\0&1\end{pmatrix}$</span>
+        <div class="use"><b>使う知識</b><ul>
+  <li><b>行列の累乗</b>：$A^2=AA$, $A^3=A^2A$ のように同じ行列を繰り返し掛ける（正方行列だけできる）。</li>
+  <li><b>2×2 の積</b>：$\begin{pmatrix}a&b\\c&d\end{pmatrix}\begin{pmatrix}p&q\\r&s\end{pmatrix}=\begin{pmatrix}ap+br&aq+bs\\cp+dr&cq+ds\end{pmatrix}$（左の行 × 右の列）。</li>
+</ul></div>
+<ol class="sol">
+  <li>$A^2=AA=\begin{pmatrix}1&1\\0&1\end{pmatrix}\begin{pmatrix}1&1\\0&1\end{pmatrix}=\begin{pmatrix}1\cdot1+1\cdot0&1\cdot1+1\cdot1\\0\cdot1+1\cdot0&0\cdot1+1\cdot1\end{pmatrix}=\begin{pmatrix}1&2\\0&1\end{pmatrix}$ <span class="why">理由：累乗の定義と積の定義（例：右上は「第1行 $(1,1)$ × 第2列 $(1,1)$」で $1+1=2$）。</span></li>
+  <li>$A^3=A^2A=\begin{pmatrix}1&2\\0&1\end{pmatrix}\begin{pmatrix}1&1\\0&1\end{pmatrix}=\begin{pmatrix}1\cdot1+2\cdot0&1\cdot1+2\cdot1\\0\cdot1+1\cdot0&0\cdot1+1\cdot1\end{pmatrix}=\begin{pmatrix}1&3\\0&1\end{pmatrix}$</li>
+  <li>規則を見る：左上・左下・右下は $1,0,1$ のまま、右上だけ $1\to2\to3$ と1ずつ増える。<span class="why">理由：$\begin{pmatrix}1&k\\0&1\end{pmatrix}A$ の右上は第1行 $(1,k)$ × 第2列 $(1,1)$ で $1+k$。つまり $A$ を1回掛けるごとに右上がちょうど1増える。</span></li>
+</ol>
+<p class="conc">右上が掛けた回数と一致するので <span class="fin">$A^n=\begin{pmatrix}1&n\\0&1\end{pmatrix}$</span> と予想できる（ステップ3の理由がそのまま数学的帰納法の証明になっている）。</p>
       </div></details></div>
     </div>
   </div>
@@ -467,23 +582,54 @@ details[open] summary { background: var(--ink); color: var(--paper); }
     <div class="q"><div class="qh"><span class="tag">3-1</span></div>
       <div class="body">掃き出し法で解け。$\begin{cases}x+2y=5\\3x-y=1\end{cases}$</div>
       <details><summary>解答</summary><div class="ans">
-        $\left(\begin{array}{cc|c}1&2&5\\3&-1&1\end{array}\right)\xrightarrow{②-①\times3}\left(\begin{array}{cc|c}1&2&5\\0&-7&-14\end{array}\right)\xrightarrow{②\times(-\frac17)}\left(\begin{array}{cc|c}1&2&5\\0&1&2\end{array}\right)\xrightarrow{①-②\times2}\left(\begin{array}{cc|c}1&0&1\\0&1&2\end{array}\right)$<br>
-        <span class="fin">$x=1,\ y=2$</span>（検算：$1+4=5$ ✓、$3-2=1$ ✓）
+        <div class="use"><b>使う知識</b><ul>
+  <li><b>拡大係数行列</b>：連立方程式の係数と右辺だけを取り出して並べたもの。$\begin{cases}x+2y=5\\3x-y=1\end{cases}$ なら $\left(\begin{array}{cc|c}1&2&5\\3&-1&1\end{array}\right)$（縦線の左が係数、右が右辺）。1行が1本の式。</li>
+  <li><b>行基本変形で解は変わらない</b>：(ア) 2つの行を入れ替える、(イ) ある行を0でない数倍する、(ウ) ある行に別の行の定数倍を足す。この3つは「式を入れ替える／式の両辺に同じ数を掛ける／式どうしを足し引きする」と同じなので、連立方程式の解を変えない。</li>
+  <li><b>掃き出し法のゴール</b>：左側を $\begin{pmatrix}1&0\\0&1\end{pmatrix}$ にすれば、各行が $x=\square,\ y=\square$ と読める。</li>
+</ul></div>
+<ol class="sol">
+  <li>拡大係数行列を書く：$\left(\begin{array}{cc|c}1&2&5\\3&-1&1\end{array}\right)$</li>
+  <li><b>②−①×3</b>：$\left(\begin{array}{cc|c}1&2&5\\0&-7&-14\end{array}\right)$（②の各成分：$3-3=0,\ -1-6=-7,\ 1-15=-14$）<span class="why">理由：第1列の①の「1」の下を0にして、②から $x$ を消す。操作(ウ)なので解は変わらない。</span></li>
+  <li><b>②×$(-\tfrac17)$</b>：$\left(\begin{array}{cc|c}1&2&5\\0&1&2\end{array}\right)$ <span class="why">理由：第2列の主役を1にする。操作(イ)。この時点で②は $y=2$ を表す。</span></li>
+  <li><b>①−②×2</b>：$\left(\begin{array}{cc|c}1&0&1\\0&1&2\end{array}\right)$（①の各成分：$1-0=1,\ 2-2=0,\ 5-4=1$）<span class="why">理由：第2列の②の「1」の上を0にして、①から $y$ を消す。操作(ウ)。</span></li>
+  <li>左側が $\begin{pmatrix}1&0\\0&1\end{pmatrix}$ になったので、①は $x=1$、②は $y=2$ と読める。</li>
+</ol>
+<p class="conc">行基本変形では解が変わらないから、最後の形から読んだものが元の方程式の解：<span class="fin">$x=1,\ y=2$</span></p>
+<p class="chk">検算：$1+2\cdot2=5$ ✓、$3\cdot1-2=1$ ✓</p>
       </div></details></div>
     <div class="q"><div class="qh"><span class="tag">3-2</span></div>
       <div class="body">掃き出し法で解け。$\begin{cases}x+2y-z=-1\\2x-y+z=6\\-x+y+2z=-1\end{cases}$</div>
       <details><summary>解答</summary><div class="ans">
-        $\left(\begin{array}{ccc|c}1&2&-1&-1\\2&-1&1&6\\-1&1&2&-1\end{array}\right)\xrightarrow[③+①]{②-①\times2}\left(\begin{array}{ccc|c}1&2&-1&-1\\0&-5&3&8\\0&3&1&-2\end{array}\right)$<br>
-        第2列の「1」を作るのに $-5$ で割ると分数になるので、<b>②＋③×2</b> で $(0,\ 1,\ 5\mid 4)$ を作る：<br>
-        $\left(\begin{array}{ccc|c}1&2&-1&-1\\0&1&5&4\\0&3&1&-2\end{array}\right)\xrightarrow[③-②\times3]{①-②\times2}\left(\begin{array}{ccc|c}1&0&-11&-9\\0&1&5&4\\0&0&-14&-14\end{array}\right)\xrightarrow{③\times(-\frac1{14})}\left(\begin{array}{ccc|c}1&0&-11&-9\\0&1&5&4\\0&0&1&1\end{array}\right)$<br>
-        $\xrightarrow[②-③\times5]{①+③\times11}\left(\begin{array}{ccc|c}1&0&0&2\\0&1&0&-1\\0&0&1&1\end{array}\right)$　<span class="fin">$x=2,\ y=-1,\ z=1$</span><br>
-        検算：$2-2-1=-1$ ✓、$4+1+1=6$ ✓、$-2-1+2=-1$ ✓
+        <div class="use"><b>使う知識</b><ul>
+  <li><b>拡大係数行列</b>：係数と右辺を並べたもの。1行が1本の式、縦線の左の列が順に $x,y,z$ の係数、右が右辺。</li>
+  <li><b>行基本変形で解は変わらない</b>：(ア) 行の入れ替え、(イ) ある行を0でない数倍、(ウ) ある行に別の行の定数倍を足す。どれも「式の入れ替え・両辺に同じ数を掛ける・式どうしの足し引き」なので解は変わらない。</li>
+  <li><b>掃き出し法の手順</b>：第1列から順に、その列の主役（対角の位置）を1にし、同じ列の他の成分を全部0にする。左側が単位行列 $\begin{pmatrix}1&0&0\\0&1&0\\0&0&1\end{pmatrix}$ になれば右端の列が答え。</li>
+</ul></div>
+<ol class="sol">
+  <li>拡大係数行列：$\left(\begin{array}{ccc|c}1&2&-1&-1\\2&-1&1&6\\-1&1&2&-1\end{array}\right)$</li>
+  <li><b>②−①×2、③+①</b>：$\left(\begin{array}{ccc|c}1&2&-1&-1\\0&-5&3&8\\0&3&1&-2\end{array}\right)$ <span class="why">理由：①の第1列が1なので、それを使って②・③の第1列を0にする（$x$ を消す）。操作(ウ)。例えば②は $(2,-1,1\mid6)-2(1,2,-1\mid-1)=(0,-5,3\mid8)$。</span></li>
+  <li><b>②+③×2</b>：$(0,-5,3\mid8)+2(0,3,1\mid-2)=(0,1,5\mid4)$ なので $\left(\begin{array}{ccc|c}1&2&-1&-1\\0&1&5&4\\0&3&1&-2\end{array}\right)$ <span class="why">理由：第2列の主役を1にしたい。$-5$ で割ると分数だらけになるので、③を2倍して足すと $-5+6=1$ がきれいに作れる。操作(ウ)なので解は変わらない。</span></li>
+  <li><b>①−②×2、③−②×3</b>：$\left(\begin{array}{ccc|c}1&0&-11&-9\\0&1&5&4\\0&0&-14&-14\end{array}\right)$ <span class="why">理由：②の「1」を使って第2列の上下を0にする。①：$(1,2,-1\mid-1)-2(0,1,5\mid4)=(1,0,-11\mid-9)$、③：$(0,3,1\mid-2)-3(0,1,5\mid4)=(0,0,-14\mid-14)$。</span></li>
+  <li><b>③×$(-\tfrac1{14})$</b>：$\left(\begin{array}{ccc|c}1&0&-11&-9\\0&1&5&4\\0&0&1&1\end{array}\right)$ <span class="why">理由：第3列の主役を1にする。操作(イ)。この時点で③は $z=1$。</span></li>
+  <li><b>①+③×11、②−③×5</b>：$\left(\begin{array}{ccc|c}1&0&0&2\\0&1&0&-1\\0&0&1&1\end{array}\right)$ <span class="why">理由：③の「1」で第3列の上を0にする。①：$-9+11=2$、②：$4-5=-1$。</span></li>
+</ol>
+<p class="conc">左側が単位行列になったので右端をそのまま読めばよく、行基本変形で解は変わらないから <span class="fin">$x=2,\ y=-1,\ z=1$</span></p>
+<p class="chk">検算：$2+2\cdot(-1)-1=-1$ ✓、$2\cdot2-(-1)+1=6$ ✓、$-2+(-1)+2\cdot1=-1$ ✓</p>
       </div></details></div>
     <div class="q"><div class="qh"><span class="tag">3-3</span></div>
       <div class="body">次の連立方程式を $A\boldsymbol{x}=\boldsymbol{b}$ の形で書き、拡大係数行列を答えよ（解かなくてよい）。$\begin{cases}2x-z=3\\x+4y=0\\y-3z=-2\end{cases}$</div>
       <details><summary>解答</summary><div class="ans">
-        ない文字の係数は <b>0</b> を書く。<br>
-        <span class="fin">$\begin{pmatrix}2&0&-1\\1&4&0\\0&1&-3\end{pmatrix}\begin{pmatrix}x\\y\\z\end{pmatrix}=\begin{pmatrix}3\\0\\-2\end{pmatrix}$、拡大係数行列 $\left(\begin{array}{ccc|c}2&0&-1&3\\1&4&0&0\\0&1&-3&-2\end{array}\right)$</span>
+        <div class="use"><b>使う知識</b><ul>
+  <li><b>連立方程式の行列表示</b>：係数を並べた行列 $A$（第 $i$ 行＝第 $i$ 式の係数を $x,y,z$ の順に）、未知数ベクトル $\boldsymbol{x}=\begin{pmatrix}x\\y\\z\end{pmatrix}$、右辺ベクトル $\boldsymbol{b}$ で $A\boldsymbol{x}=\boldsymbol{b}$ と書ける。行列×ベクトルの第 $i$ 成分は「$A$ の第 $i$ 行と $\boldsymbol{x}$ を掛けて足したもの」なので、ちょうど第 $i$ 式の左辺になる。</li>
+  <li><b>拡大係数行列</b>：$A$ の右に縦線をはさんで $\boldsymbol{b}$ をくっつけた $(A\mid\boldsymbol{b})$。</li>
+</ul></div>
+<ol class="sol">
+  <li>各式を $x,y,z$ が全部そろった形に書き直す。式に出てこない文字は係数 <b>0</b>：$\begin{cases}2x+0y-1z=3\\1x+4y+0z=0\\0x+1y-3z=-2\end{cases}$ <span class="why">理由：行列の各行には $x,y,z$ の3つ分の係数が必要。出てこない文字を飛ばすと列がずれてしまう。</span></li>
+  <li>係数を行ごとに並べて $A=\begin{pmatrix}2&0&-1\\1&4&0\\0&1&-3\end{pmatrix}$、右辺を並べて $\boldsymbol{b}=\begin{pmatrix}3\\0\\-2\end{pmatrix}$。</li>
+  <li>確認：$A\boldsymbol{x}$ の第1成分は第1行 $(2,0,-1)$ × $(x,y,z)$ で $2x-z$。第1式の左辺と一致する。<span class="why">理由：行列×ベクトルの定義。他の行も同様。</span></li>
+  <li>$A$ の右に $\boldsymbol{b}$ を付けて拡大係数行列を作る。</li>
+</ol>
+<p class="conc">係数行列と右辺を並べて <span class="fin">$\begin{pmatrix}2&0&-1\\1&4&0\\0&1&-3\end{pmatrix}\begin{pmatrix}x\\y\\z\end{pmatrix}=\begin{pmatrix}3\\0\\-2\end{pmatrix}$、拡大係数行列 $\left(\begin{array}{ccc|c}2&0&-1&3\\1&4&0&0\\0&1&-3&-2\end{array}\right)$</span></p>
       </div></details></div>
     </div>
   </div>
@@ -525,24 +671,79 @@ details[open] summary { background: var(--ink); color: var(--paper); }
     <div class="q"><div class="qh"><span class="tag">4-1</span></div>
       <div class="body">次の行列のランクを求めよ。<br>(1) $\begin{pmatrix}1&2\\2&4\end{pmatrix}$　(2) $\begin{pmatrix}1&2&3\\2&4&6\\1&1&1\end{pmatrix}$　(3) $\begin{pmatrix}1&0&1\\0&1&1\\1&1&0\end{pmatrix}$</div>
       <details><summary>解答</summary><div class="ans">
-        (1) ②−①×2 で $\begin{pmatrix}1&2\\0&0\end{pmatrix}$。<span class="fin">rank 1</span><br>
-        (2) ②−①×2、③−① で $\begin{pmatrix}1&2&3\\0&0&0\\0&-1&-2\end{pmatrix}$、②と③を入れかえて階段。<span class="fin">rank 2</span><br>
-        (3) ③−① で $(0,1,-1)$、さらに ③−② で $(0,0,-2)$。0 でない行が3本。<span class="fin">rank 3</span>
+        <div class="use"><b>使う知識</b><ul>
+  <li><b>行基本変形</b>：①行の入れ替え ②ある行を0でない数倍 ③ある行に別の行の定数倍を足す、の3つ。連立方程式の解やランクを変えない（式を足し引きしているだけだから）。</li>
+  <li><b>階段行列</b>：各行の左端の0でない数（主成分）が、下の行ほど右にずれている形。全部0の行は一番下にまとめる。</li>
+  <li><b>ランクの定義</b>：$\operatorname{rank}A=$ 行基本変形で階段行列にしたときの「0でない行の本数」（＝主成分の数）。</li>
+</ul></div>
+<p class="pt">(1)</p>
+<ol class="sol">
+  <li>②−2×①：$(2,4)-2(1,2)=(0,0)$ なので $\begin{pmatrix}1&2\\0&0\end{pmatrix}$ <span class="why">理由：①の主成分1の下を0にする。行基本変形なのでランクは変わらない。</span></li>
+  <li>これはもう階段行列。0でない行は①の1本だけ。<span class="why">理由：ランクの定義。②は①の2倍で「ムダな行」だったということ。</span></li>
+</ol>
+<p class="conc">0でない行が1本なので <span class="fin">rank 1</span></p>
+<p class="pt">(2)</p>
+<ol class="sol">
+  <li>②−2×①：$(2,4,6)-2(1,2,3)=(0,0,0)$。③−①：$(1,1,1)-(1,2,3)=(0,-1,-2)$。<div class="f">\[\begin{pmatrix}1&2&3\\0&0&0\\0&-1&-2\end{pmatrix}\]</div><span class="why">理由：第1列の1の下を0にする。</span></li>
+  <li>②↔③：$\begin{pmatrix}1&2&3\\0&-1&-2\\0&0&0\end{pmatrix}$ <span class="why">理由：全部0の行は一番下に置くのが階段行列の形。入れ替えも行基本変形なのでランクは変わらない。</span></li>
+  <li>主成分は①の1（第1列）と②の $-1$（第2列）で、下ほど右にずれている → 階段行列。0でない行は2本。</li>
+</ol>
+<p class="conc">0でない行が2本なので <span class="fin">rank 2</span></p>
+<p class="pt">(3)</p>
+<ol class="sol">
+  <li>③−①：$(1,1,0)-(1,0,1)=(0,1,-1)$。<div class="f">\[\begin{pmatrix}1&0&1\\0&1&1\\0&1&-1\end{pmatrix}\]</div><span class="why">理由：第1列の1の下を0にする（②はもともと0）。</span></li>
+  <li>③−②：$(0,1,-1)-(0,1,1)=(0,0,-2)$。<div class="f">\[\begin{pmatrix}1&0&1\\0&1&1\\0&0&-2\end{pmatrix}\]</div><span class="why">理由：第2列の主成分1の下を0にする。</span></li>
+  <li>主成分が $1,1,-2$ と斜めに並んだ階段行列。0でない行は3本。<span class="why">理由：主成分は0でなければ1でなくてもいい（数えるだけなら簡約しなくてOK）。</span></li>
+</ol>
+<p class="conc">0でない行が3本なので <span class="fin">rank 3</span></p>
       </div></details></div>
     <div class="q"><div class="qh"><span class="tag">4-2</span></div>
       <div class="body">次の連立方程式を解け。$\begin{cases}x+2y-z=1\\2x+4y+z=8\end{cases}$</div>
       <details><summary>解答</summary><div class="ans">
-        $\left(\begin{array}{ccc|c}1&2&-1&1\\2&4&1&8\end{array}\right)\xrightarrow{②-①\times2}\left(\begin{array}{ccc|c}1&2&-1&1\\0&0&3&6\end{array}\right)\xrightarrow{②\times\frac13,\ ①+②}\left(\begin{array}{ccc|c}1&2&0&3\\0&0&1&2\end{array}\right)$<br>
-        rank 2、未知数3個 → パラメータ1個。主成分がない第2列の $y=t$ とおくと $x=3-2t,\ z=2$。<br>
-        <span class="fin">$\begin{pmatrix}x\\y\\z\end{pmatrix}=\begin{pmatrix}3\\0\\2\end{pmatrix}+t\begin{pmatrix}-2\\1\\0\end{pmatrix}$（$t$ は任意）</span>
+        <div class="use"><b>使う知識</b><ul>
+  <li><b>拡大係数行列</b>：連立方程式は係数と右辺を並べた $(A\mid\boldsymbol{b})$ で表せる。1行が1本の式。</li>
+  <li><b>行基本変形</b>：①行の入れ替え ②ある行を0でない数倍 ③ある行に別の行の定数倍を足す、の3つ。連立方程式の解やランクを変えない（式を足し引きしているだけだから）。</li>
+  <li><b>解の個数とランク</b>：$\operatorname{rank}A=\operatorname{rank}(A\mid\boldsymbol{b})=r$ なら解があり、自由に選べる文字（パラメータ）は「未知数の個数 $-\,r$」個。</li>
+  <li><b>パラメータの選び方</b>：簡約階段行列で主成分がない列の文字を $t$ とおく。</li>
+</ul></div>
+<ol class="sol">
+  <li>拡大係数行列を作る：$\left(\begin{array}{ccc|c}1&2&-1&1\\2&4&1&8\end{array}\right)$ <span class="why">理由：1行目が $x+2y-z=1$、2行目が $2x+4y+z=8$ の係数と右辺。</span></li>
+  <li>②−2×①：$(2,4,1\,|\,8)-2(1,2,-1\,|\,1)=(0,0,3\,|\,6)$<div class="f">\[\left(\begin{array}{ccc|c}1&2&-1&1\\0&0&3&6\end{array}\right)\]</div><span class="why">理由：$x$ の係数を消す。行基本変形なので解は変わらない。</span></li>
+  <li>②×$\frac13$：$(0,0,1\,|\,2)$、続けて ①+②：$(1,2,0\,|\,3)$<div class="f">\[\left(\begin{array}{ccc|c}1&2&0&3\\0&0&1&2\end{array}\right)\]</div><span class="why">理由：主成分を1にして、その列（第3列）の他の成分を0にする＝簡約階段行列にする。</span></li>
+  <li>0でない行は2本なので $\operatorname{rank}A=\operatorname{rank}(A\mid\boldsymbol{b})=2$。未知数3個なので $3-2=1$ 個のパラメータが出る。<span class="why">理由：解の個数とランクの関係。2つのランクが等しいので解はある。</span></li>
+  <li>主成分は第1列（$x$）と第3列（$z$）にあり、第2列（$y$）にはない。だから $y=t$ とおく。</li>
+  <li>式に戻すと $x+2y=3,\ z=2$。$y=t$ を入れて $x=3-2t,\ z=2$。</li>
+</ol>
+<p class="conc">$t$ を好きに選べる無数の解になる。ベクトルで書くと <span class="fin">$\begin{pmatrix}x\\y\\z\end{pmatrix}=\begin{pmatrix}3\\0\\2\end{pmatrix}+t\begin{pmatrix}-2\\1\\0\end{pmatrix}$（$t$ は任意）</span></p>
+<p class="chk">検算：$x+2y-z=(3-2t)+2t-2=1$ ✓、$2x+4y+z=(6-4t)+4t+2=8$ ✓（どんな $t$ でも成り立つ）</p>
       </div></details></div>
     <div class="q"><div class="qh"><span class="tag">4-3</span></div>
       <div class="body">連立方程式 $\begin{cases}x+y=1\\2x+ay=b\end{cases}$ が (1) ただ1つの解をもつ (2) 無数の解をもつ (3) 解をもたない ための $a,b$ の条件を求めよ。</div>
       <details><summary>解答</summary><div class="ans">
-        ②−①×2 で $\left(\begin{array}{cc|c}1&1&1\\0&a-2&b-2\end{array}\right)$。2行目は「$(a-2)y=b-2$」。<br>
-        (1) $a-2\ne0$ なら $y$ が1つに決まる。<span class="fin">$a\ne2$</span>（$b$ は何でもよい）<br>
-        (2) 2行目が $0=0$ になるとき。<span class="fin">$a=2$ かつ $b=2$</span><br>
-        (3) 2行目が $0=(0\text{ でない数})$ になるとき。<span class="fin">$a=2$ かつ $b\ne2$</span>
+        <div class="use"><b>使う知識</b><ul>
+  <li><b>行基本変形</b>：①行の入れ替え ②ある行を0でない数倍 ③ある行に別の行の定数倍を足す、の3つ。連立方程式の解やランクを変えない（式を足し引きしているだけだから）。</li>
+  <li><b>1次方程式 $py=q$ の解</b>：$p\ne0$ なら $y=\frac{q}{p}$ がただ1つ。$p=0,\ q=0$ なら $0=0$ で何でも成り立つ（無数）。$p=0,\ q\ne0$ なら $0=q$ が成り立たず解なし。</li>
+  <li><b>ランクでの言い方</b>：$\operatorname{rank}A=\operatorname{rank}(A\mid\boldsymbol{b})=$ 未知数の数 → ただ1つ、$\operatorname{rank}A=\operatorname{rank}(A\mid\boldsymbol{b})&lt;$ 未知数の数 → 無数、$\operatorname{rank}A&lt;\operatorname{rank}(A\mid\boldsymbol{b})$ → 解なし。</li>
+</ul></div>
+<ol class="sol">
+  <li>拡大係数行列 $\left(\begin{array}{cc|c}1&1&1\\2&a&b\end{array}\right)$ で ②−2×①：$(2,a\,|\,b)-2(1,1\,|\,1)=(0,a-2\,|\,b-2)$<div class="f">\[\left(\begin{array}{cc|c}1&1&1\\0&a-2&b-2\end{array}\right)\]</div><span class="why">理由：$x$ を消して2本目を $y$ だけの式にする。行基本変形なので解は変わらない。</span></li>
+  <li>2行目は式に戻すと $(a-2)y=b-2$。あとはこの1本の式の解の個数を場合分けすればいい。<span class="why">理由：$y$ が決まれば1行目 $x+y=1$ から $x=1-y$ が必ず1つに決まるので、解の個数は $y$ の個数で決まる。</span></li>
+</ol>
+<p class="pt">(1)</p>
+<ol class="sol">
+  <li>$a-2\ne0$ なら $y=\dfrac{b-2}{a-2}$ がただ1つ、$x=1-y$ も1つ。<span class="why">理由：$py=q$ で $p\ne0$ の場合。このとき rank 2＝未知数2個。</span></li>
+</ol>
+<p class="conc">$b$ に関係なくただ1つの解になるので <span class="fin">$a\ne2$</span>（$b$ は何でもよい）</p>
+<p class="pt">(2)</p>
+<ol class="sol">
+  <li>$a=2$ かつ $b=2$ なら2行目は $0\cdot y=0$ で、どんな $y$ でも成り立つ。<span class="why">理由：$p=0,\ q=0$ の場合。rank$A$＝rank$(A\mid\boldsymbol{b})=1&lt;2$。</span></li>
+</ol>
+<p class="conc">$y=t$（任意）、$x=1-t$ で無数の解。条件は <span class="fin">$a=2$ かつ $b=2$</span></p>
+<p class="pt">(3)</p>
+<ol class="sol">
+  <li>$a=2$ かつ $b\ne2$ なら2行目は $0\cdot y=b-2\ (\ne0)$。左辺は必ず0なので成り立たない。<span class="why">理由：$p=0,\ q\ne0$ の場合。rank$A=1&lt;$ rank$(A\mid\boldsymbol{b})=2$。</span></li>
+</ol>
+<p class="conc">どんな $x,y$ でも満たせないので解なし。条件は <span class="fin">$a=2$ かつ $b\ne2$</span></p>
       </div></details></div>
     </div>
   </div>
@@ -611,23 +812,85 @@ details[open] summary { background: var(--ink); color: var(--paper); }
     <div class="q"><div class="qh"><span class="tag">5-1</span></div>
       <div class="body">(1) $\begin{vmatrix}3&5\\2&4\end{vmatrix}$　(2) $\begin{vmatrix}2&-3\\4&1\end{vmatrix}$ を求めよ。</div>
       <details><summary>解答</summary><div class="ans">
-        (1) $3\cdot4-5\cdot2=$ <span class="fin">$2$</span>　(2) $2\cdot1-(-3)\cdot4=2+12=$ <span class="fin">$14$</span>
+        <div class="use"><b>使う知識</b><ul>
+  <li><b>2×2の行列式</b>：$\begin{vmatrix}a&b\\c&d\end{vmatrix}=ad-bc$（右下がりの対角の積 − 左下がりの対角の積）。</li>
+</ul></div>
+<p class="pt">(1)</p>
+<ol class="sol">
+  <li>$a=3,\ b=5,\ c=2,\ d=4$ を公式に入れる：$3\cdot4-5\cdot2$</li>
+  <li>$=12-10=2$</li>
+</ol>
+<p class="conc">答えは <span class="fin">$2$</span></p>
+<p class="pt">(2)</p>
+<ol class="sol">
+  <li>$a=2,\ b=-3,\ c=4,\ d=1$ を公式に入れる：$2\cdot1-(-3)\cdot4$ <span class="why">注意：$b$ が負なので「引く」と符号がひっくり返る。かっこを付けて書くとミスしない。</span></li>
+  <li>$=2-(-12)=2+12=14$</li>
+</ol>
+<p class="conc">答えは <span class="fin">$14$</span></p>
       </div></details></div>
     <div class="q"><div class="qh"><span class="tag">5-2</span></div>
       <div class="body">(1) $\begin{vmatrix}2&1&0\\1&3&1\\0&1&2\end{vmatrix}$　(2) $\begin{vmatrix}1&2&1\\2&1&-1\\1&-1&2\end{vmatrix}$ を求めよ。</div>
       <details><summary>解答</summary><div class="ans">
-        (1) 第1行で展開：$2(3\cdot2-1\cdot1)-1(1\cdot2-1\cdot0)+0=10-2=$ <span class="fin">$8$</span><br>
-        (2) サラス：$(1\cdot1\cdot2+2\cdot(-1)\cdot1+1\cdot2\cdot(-1))-(1\cdot1\cdot1+1\cdot(-1)\cdot(-1)+2\cdot2\cdot2)=(2-2-2)-(1+1+8)=-2-10=$ <span class="fin">$-12$</span>
+        <div class="use"><b>使う知識</b><ul>
+  <li><b>2×2の行列式</b>：$\begin{vmatrix}a&b\\c&d\end{vmatrix}=ad-bc$。</li>
+  <li><b>第1行での余因子展開</b>：$\begin{vmatrix}a_{11}&a_{12}&a_{13}\\a_{21}&a_{22}&a_{23}\\a_{31}&a_{32}&a_{33}\end{vmatrix}=a_{11}\begin{vmatrix}a_{22}&a_{23}\\a_{32}&a_{33}\end{vmatrix}-a_{12}\begin{vmatrix}a_{21}&a_{23}\\a_{31}&a_{33}\end{vmatrix}+a_{13}\begin{vmatrix}a_{21}&a_{22}\\a_{31}&a_{32}\end{vmatrix}$。各成分に「その行と列を消した2×2」を掛け、符号は $+,-,+$。</li>
+  <li><b>サラスの方法（3×3専用）</b>：$\det=(a_{11}a_{22}a_{33}+a_{12}a_{23}a_{31}+a_{13}a_{21}a_{32})-(a_{13}a_{22}a_{31}+a_{11}a_{23}a_{32}+a_{12}a_{21}a_{33})$。前半が右下がり3本、後半が左下がり3本。</li>
+</ul></div>
+<p class="pt">(1) 第1行で余因子展開</p>
+<ol class="sol">
+  <li>第1行は $(2,1,0)$。0 があるので第1行展開が楽。<span class="why">理由：成分が0の項は計算しなくていい。</span></li>
+  <li>$2$ の項：1行目と1列目を消すと $\begin{vmatrix}3&1\\1&2\end{vmatrix}=3\cdot2-1\cdot1=5$。符号 $+$ で $+2\cdot5=10$。</li>
+  <li>$1$ の項：1行目と2列目を消すと $\begin{vmatrix}1&1\\0&2\end{vmatrix}=1\cdot2-1\cdot0=2$。符号 $-$ で $-1\cdot2=-2$。<span class="why">理由：市松模様の符号で2番目はマイナス。</span></li>
+  <li>$0$ の項：$+0\cdot(\cdots)=0$。</li>
+  <li>合計：$10-2+0=8$</li>
+</ol>
+<p class="conc">答えは <span class="fin">$8$</span></p>
+<p class="pt">(2) サラスの方法</p>
+<ol class="sol">
+  <li>右下がり3本（＋）：$1\cdot1\cdot2=2,\ \ 2\cdot(-1)\cdot1=-2,\ \ 1\cdot2\cdot(-1)=-2$。和は $2-2-2=-2$。<span class="why">理由：$a_{11}a_{22}a_{33},\ a_{12}a_{23}a_{31},\ a_{13}a_{21}a_{32}$ の順。</span></li>
+  <li>左下がり3本（−）：$1\cdot1\cdot1=1,\ \ 1\cdot(-1)\cdot(-1)=1,\ \ 2\cdot2\cdot2=8$。和は $1+1+8=10$。<span class="why">理由：$a_{13}a_{22}a_{31},\ a_{11}a_{23}a_{32},\ a_{12}a_{21}a_{33}$ の順。</span></li>
+  <li>（右下がりの和）−（左下がりの和）$=-2-10=-12$</li>
+</ol>
+<p class="conc">答えは <span class="fin">$-12$</span></p>
+<p class="chk">検算（(2) を第1行展開で）：$1(1\cdot2-(-1)(-1))-2(2\cdot2-(-1)\cdot1)+1(2\cdot(-1)-1\cdot1)=1-10-3=-12$ ✓</p>
       </div></details></div>
     <div class="q"><div class="qh"><span class="tag">5-3</span></div>
       <div class="body">$\begin{vmatrix}2&5&7\\0&3&1\\0&0&-1\end{vmatrix}$ を求めよ。</div>
       <details><summary>解答</summary><div class="ans">
-        三角行列なので対角成分の積：$2\cdot3\cdot(-1)=$ <span class="fin">$-6$</span>
+        <div class="use"><b>使う知識</b><ul>
+  <li><b>三角行列の行列式</b>：対角線より下（または上）が全部0の行列（三角行列）の行列式は、<b>対角成分の積</b>。</li>
+  <li><b>第1列での余因子展開</b>：第1列の各成分 × その行と列を消した行列式 × 符号（$+,-,+$）を足す。</li>
+</ul></div>
+<ol class="sol">
+  <li>対角線より下（$2$ の下、$3$ の下）が全部0なので三角行列。<span class="why">理由：成分 $(2,1),(3,1),(3,2)$ が0。</span></li>
+  <li>なぜ対角成分の積になるか：第1列 $(2,0,0)$ で展開すると $0$ の項は消えて $2\begin{vmatrix}3&1\\0&-1\end{vmatrix}$ だけ残る。<span class="why">理由：余因子展開。0の成分の項は0。</span></li>
+  <li>$\begin{vmatrix}3&1\\0&-1\end{vmatrix}=3\cdot(-1)-1\cdot0=-3$。よって $2\cdot(-3)=-6$。つまり $2\cdot3\cdot(-1)$ と同じ。</li>
+</ol>
+<p class="conc">対角成分の積 $2\cdot3\cdot(-1)$ で <span class="fin">$-6$</span></p>
       </div></details></div>
     <div class="q"><div class="qh"><span class="tag">5-4</span></div>
       <div class="body">$A,B$ は3次正方行列で $\det A=3,\ \det B=-2$ とする。(1) $\det(AB)$　(2) $\det(2A)$　(3) $\det A^T$ を求めよ。</div>
       <details><summary>解答</summary><div class="ans">
-        (1) $3\cdot(-2)=$ <span class="fin">$-6$</span>　(2) $2^3\cdot3=$ <span class="fin">$24$</span>　(3) <span class="fin">$3$</span>
+        <div class="use"><b>使う知識</b><ul>
+  <li><b>積の行列式</b>：$\det(AB)=\det A\cdot\det B$。</li>
+  <li><b>定数倍の行列式</b>：$n$ 次正方行列なら $\det(kA)=k^n\det A$。<span class="why">理由：$kA$ は全部の行が $k$ 倍。1行を $k$ 倍すると行列式は $k$ 倍なので、$n$ 行全部で $k^n$ 倍。</span></li>
+  <li><b>転置の行列式</b>：$\det A^T=\det A$（行と列を入れ替えても行列式は同じ）。</li>
+</ul></div>
+<p class="pt">(1)</p>
+<ol class="sol">
+  <li>$\det(AB)=\det A\cdot\det B=3\cdot(-2)=-6$ <span class="why">理由：積の行列式は行列式の積。</span></li>
+</ol>
+<p class="conc"><span class="fin">$-6$</span></p>
+<p class="pt">(2)</p>
+<ol class="sol">
+  <li>$A$ は3次なので $n=3$。$\det(2A)=2^3\det A=8\cdot3=24$ <span class="why">理由：3本の行がそれぞれ2倍になるので $2\times2\times2$ 倍。$2\cdot3=6$ にするのはよくある間違い。</span></li>
+</ol>
+<p class="conc"><span class="fin">$24$</span></p>
+<p class="pt">(3)</p>
+<ol class="sol">
+  <li>$\det A^T=\det A=3$ <span class="why">理由：転置しても行列式は変わらない。</span></li>
+</ol>
+<p class="conc"><span class="fin">$3$</span></p>
       </div></details></div>
     </div>
   </div>
@@ -674,20 +937,66 @@ details[open] summary { background: var(--ink); color: var(--paper); }
     <div class="q"><div class="qh"><span class="tag">6-1</span></div>
       <div class="body">逆行列があれば求めよ。(1) $\begin{pmatrix}4&7\\1&2\end{pmatrix}$　(2) $\begin{pmatrix}2&4\\1&2\end{pmatrix}$　(3) $\begin{pmatrix}3&1\\4&2\end{pmatrix}$</div>
       <details><summary>解答</summary><div class="ans">
-        (1) $\det=8-7=1$。<span class="fin">$\begin{pmatrix}2&-7\\-1&4\end{pmatrix}$</span><br>
-        (2) $\det=4-4=0$。<span class="fin">逆行列なし</span><br>
-        (3) $\det=6-4=2$。<span class="fin">$\dfrac12\begin{pmatrix}2&-1\\-4&3\end{pmatrix}=\begin{pmatrix}1&-\frac12\\-2&\frac32\end{pmatrix}$</span>
+        <div class="use"><b>使う知識</b><ul>
+  <li><b>2×2の逆行列の公式</b>：$A=\begin{pmatrix}a&b\\c&d\end{pmatrix}$ で $\det A=ad-bc\ne0$ なら $A^{-1}=\dfrac{1}{ad-bc}\begin{pmatrix}d&-b\\-c&a\end{pmatrix}$（$a,d$ を入れかえ、$b,c$ の符号を変えて、$\det$ で割る）。</li>
+  <li><b>逆行列がある条件</b>：$\det A\ne0$ ⇔ 逆行列がある。$\det A=0$ なら逆行列はない。</li>
+  <li><b>逆行列の定義</b>：$AA^{-1}=A^{-1}A=E$（単位行列）となる行列。</li>
+</ul></div>
+<p class="pt">(1)</p>
+<ol class="sol">
+  <li>$\det=4\cdot2-7\cdot1=8-7=1\ne0$ なので逆行列がある。<span class="why">理由：$\det\ne0$ ⇔ 逆行列あり。</span></li>
+  <li>$a=4,d=2$ を入れかえ、$b=7,c=1$ の符号を変える：$\begin{pmatrix}2&-7\\-1&4\end{pmatrix}$。これを $\det=1$ で割る（そのまま）。<span class="why">理由：2×2の逆行列の公式。</span></li>
+</ol>
+<p class="conc"><span class="fin">$\begin{pmatrix}2&-7\\-1&4\end{pmatrix}$</span></p>
+<p class="chk">検算：$\begin{pmatrix}4&7\\1&2\end{pmatrix}\begin{pmatrix}2&-7\\-1&4\end{pmatrix}=\begin{pmatrix}8-7&-28+28\\2-2&-7+8\end{pmatrix}=\begin{pmatrix}1&0\\0&1\end{pmatrix}$ ✓</p>
+<p class="pt">(2)</p>
+<ol class="sol">
+  <li>$\det=2\cdot2-4\cdot1=4-4=0$。<span class="why">理由：$\det=0$ なら逆行列はない（公式で $\frac10$ になってしまう）。実際②行 $(1,2)$ の2倍が①行 $(2,4)$ で、行が比例している。</span></li>
+</ol>
+<p class="conc">$\det=0$ なので <span class="fin">逆行列なし</span></p>
+<p class="pt">(3)</p>
+<ol class="sol">
+  <li>$\det=3\cdot2-1\cdot4=6-4=2\ne0$ なので逆行列がある。</li>
+  <li>$a=3,d=2$ を入れかえ、$b=1,c=4$ の符号を変える：$\begin{pmatrix}2&-1\\-4&3\end{pmatrix}$。<span class="why">理由：2×2の逆行列の公式。</span></li>
+  <li>$\det=2$ で割る：$\dfrac12\begin{pmatrix}2&-1\\-4&3\end{pmatrix}=\begin{pmatrix}1&-\frac12\\-2&\frac32\end{pmatrix}$</li>
+</ol>
+<p class="conc"><span class="fin">$\dfrac12\begin{pmatrix}2&-1\\-4&3\end{pmatrix}=\begin{pmatrix}1&-\frac12\\-2&\frac32\end{pmatrix}$</span></p>
+<p class="chk">検算：$\begin{pmatrix}3&1\\4&2\end{pmatrix}\begin{pmatrix}1&-\frac12\\-2&\frac32\end{pmatrix}=\begin{pmatrix}3-2&-\frac32+\frac32\\4-4&-2+3\end{pmatrix}=E$ ✓</p>
       </div></details></div>
     <div class="q"><div class="qh"><span class="tag">6-2</span></div>
       <div class="body">掃き出し法で逆行列を求めよ。$A=\begin{pmatrix}1&0&2\\2&1&3\\0&0&1\end{pmatrix}$</div>
       <details><summary>解答</summary><div class="ans">
-        $\left(\begin{array}{ccc|ccc}1&0&2&1&0&0\\2&1&3&0&1&0\\0&0&1&0&0&1\end{array}\right)\xrightarrow{②-①\times2}\left(\begin{array}{ccc|ccc}1&0&2&1&0&0\\0&1&-1&-2&1&0\\0&0&1&0&0&1\end{array}\right)\xrightarrow[②+③]{①-③\times2}\left(\begin{array}{ccc|ccc}1&0&0&1&0&-2\\0&1&0&-2&1&1\\0&0&1&0&0&1\end{array}\right)$<br>
-        <span class="fin">$A^{-1}=\begin{pmatrix}1&0&-2\\-2&1&1\\0&0&1\end{pmatrix}$</span>
+        <div class="use"><b>使う知識</b><ul>
+  <li><b>掃き出し法で逆行列</b>：$(A\mid E)$ を行基本変形して左側を $E$ にすると、右側が $A^{-1}$ になる：$(A\mid E)\to(E\mid A^{-1})$。</li>
+  <li><b>行基本変形</b>：①行の入れ替え ②ある行を0でない数倍 ③ある行に別の行の定数倍を足す、の3つ。連立方程式の解やランクを変えない（式を足し引きしているだけだから）。</li>
+  <li><b>なぜこれで逆行列になるか</b>：行基本変形を全部まとめると「左から行列 $P$ を掛ける」ことになる。$PA=E$ になったなら $P=A^{-1}$ で、右側は $PE=A^{-1}$。</li>
+</ul></div>
+<ol class="sol">
+  <li>$A$ の右に単位行列 $E$ を並べる：<div class="f">\[\left(\begin{array}{ccc|ccc}1&0&2&1&0&0\\2&1&3&0&1&0\\0&0&1&0&0&1\end{array}\right)\]</div></li>
+  <li>②−2×①：$(2,1,3\,|\,0,1,0)-2(1,0,2\,|\,1,0,0)=(0,1,-1\,|\,-2,1,0)$<div class="f">\[\left(\begin{array}{ccc|ccc}1&0&2&1&0&0\\0&1&-1&-2&1&0\\0&0&1&0&0&1\end{array}\right)\]</div><span class="why">理由：第1列を $(1,0,0)^T$ にする。③はもともと0。</span></li>
+  <li>第2列は既に $(0,1,0)^T$ なので何もしなくていい。</li>
+  <li>①−2×③：$(1,0,2\,|\,1,0,0)-2(0,0,1\,|\,0,0,1)=(1,0,0\,|\,1,0,-2)$。②+③：$(0,1,-1\,|\,-2,1,0)+(0,0,1\,|\,0,0,1)=(0,1,0\,|\,-2,1,1)$<div class="f">\[\left(\begin{array}{ccc|ccc}1&0&0&1&0&-2\\0&1&0&-2&1&1\\0&0&1&0&0&1\end{array}\right)\]</div><span class="why">理由：③の主成分1を使って第3列の上2つを0にする。</span></li>
+  <li>左側が $E$ になったので、右側が $A^{-1}$。<span class="why">理由：$(A\mid E)\to(E\mid A^{-1})$。</span></li>
+</ol>
+<p class="conc">左が $E$ になったので右側を読んで <span class="fin">$A^{-1}=\begin{pmatrix}1&0&-2\\-2&1&1\\0&0&1\end{pmatrix}$</span></p>
+<p class="chk">検算：$AA^{-1}=\begin{pmatrix}1&0&2\\2&1&3\\0&0&1\end{pmatrix}\begin{pmatrix}1&0&-2\\-2&1&1\\0&0&1\end{pmatrix}=\begin{pmatrix}1&0&-2+2\\2-2&1&-4+1+3\\0&0&1\end{pmatrix}=E$ ✓</p>
       </div></details></div>
     <div class="q"><div class="qh"><span class="tag">6-3</span></div>
       <div class="body">「わかる」の $A=\begin{pmatrix}2&1\\5&3\end{pmatrix}$ の逆行列を使って、$\begin{cases}2x+y=3\\5x+3y=7\end{cases}$ を解け。</div>
       <details><summary>解答</summary><div class="ans">
-        $\begin{pmatrix}x\\y\end{pmatrix}=A^{-1}\begin{pmatrix}3\\7\end{pmatrix}=\begin{pmatrix}3&-1\\-5&2\end{pmatrix}\begin{pmatrix}3\\7\end{pmatrix}=\begin{pmatrix}9-7\\-15+14\end{pmatrix}$。<span class="fin">$x=2,\ y=-1$</span>（検算：$4-1=3$ ✓、$10-3=7$ ✓）
+        <div class="use"><b>使う知識</b><ul>
+  <li><b>連立方程式の行列表示</b>：$\begin{cases}2x+y=3\\5x+3y=7\end{cases}$ は $A\begin{pmatrix}x\\y\end{pmatrix}=\begin{pmatrix}3\\7\end{pmatrix}$、$A=\begin{pmatrix}2&1\\5&3\end{pmatrix}$ と書ける。</li>
+  <li><b>逆行列で解く</b>：$A\boldsymbol{x}=\boldsymbol{b}$ の両辺に左から $A^{-1}$ を掛けると $A^{-1}A=E$ なので $\boldsymbol{x}=A^{-1}\boldsymbol{b}$。</li>
+  <li><b>2×2の逆行列の公式</b>：$\begin{pmatrix}a&b\\c&d\end{pmatrix}^{-1}=\dfrac{1}{ad-bc}\begin{pmatrix}d&-b\\-c&a\end{pmatrix}$。</li>
+  <li><b>行列×ベクトル</b>：$\begin{pmatrix}p&q\\r&s\end{pmatrix}\begin{pmatrix}u\\v\end{pmatrix}=\begin{pmatrix}pu+qv\\ru+sv\end{pmatrix}$（行と列を掛けて足す）。</li>
+</ul></div>
+<ol class="sol">
+  <li>$A=\begin{pmatrix}2&1\\5&3\end{pmatrix}$ の逆行列：$\det A=2\cdot3-1\cdot5=1$ なので $A^{-1}=\begin{pmatrix}3&-1\\-5&2\end{pmatrix}$。<span class="why">理由：2×2の公式（$a,d$ を入れかえ、$b,c$ の符号を変え、$\det=1$ で割る）。</span></li>
+  <li>$\begin{pmatrix}x\\y\end{pmatrix}=A^{-1}\begin{pmatrix}3\\7\end{pmatrix}$ <span class="why">理由：$A\boldsymbol{x}=\boldsymbol{b}$ の両辺に左から $A^{-1}$ を掛けた。行列は掛ける順番が大事なので必ず「左から」。</span></li>
+  <li>計算：$\begin{pmatrix}3&-1\\-5&2\end{pmatrix}\begin{pmatrix}3\\7\end{pmatrix}=\begin{pmatrix}3\cdot3+(-1)\cdot7\\(-5)\cdot3+2\cdot7\end{pmatrix}=\begin{pmatrix}9-7\\-15+14\end{pmatrix}=\begin{pmatrix}2\\-1\end{pmatrix}$</li>
+</ol>
+<p class="conc">$A^{-1}\boldsymbol{b}$ を計算して <span class="fin">$x=2,\ y=-1$</span></p>
+<p class="chk">検算：$2\cdot2+(-1)=3$ ✓、$5\cdot2+3\cdot(-1)=7$ ✓</p>
       </div></details></div>
     </div>
   </div>
@@ -703,34 +1012,89 @@ details[open] summary { background: var(--ink); color: var(--paper); }
     <div class="q"><div class="qh"><span class="tag">T-1</span><span class="src">第2・5章</span></div>
       <div class="body">$A=\begin{pmatrix}1&-1\\2&0\end{pmatrix},\ B=\begin{pmatrix}3&1\\1&2\end{pmatrix}$ のとき、$AB$ と $\det(AB)$ を求めよ。また $\det A\cdot\det B$ と一致することを確かめよ。</div>
       <details><summary>解答</summary><div class="ans">
-        $AB=\begin{pmatrix}3-1&1-2\\6+0&2+0\end{pmatrix}=$ <span class="fin">$\begin{pmatrix}2&-1\\6&2\end{pmatrix}$</span>、$\det(AB)=4-(-6)=$ <span class="fin">$10$</span><br>
-        $\det A=0-(-2)=2$、$\det B=6-1=5$、$2\cdot5=10$ で一致 ✓
+        <div class="use"><b>使う知識</b><ul>
+  <li><b>行列の積</b>：$AB$ の $(i,j)$ 成分 ＝ $A$ の第 $i$ 行と $B$ の第 $j$ 列を、成分ごとに掛けて足したもの。</li>
+  <li><b>2×2の行列式</b>：$\begin{vmatrix}a&b\\c&d\end{vmatrix}=ad-bc$。</li>
+  <li><b>積の行列式</b>：$\det(AB)=\det A\cdot\det B$。</li>
+</ul></div>
+<ol class="sol">
+  <li>$(1,1)$ 成分：$A$ の第1行 $(1,-1)$ と $B$ の第1列 $(3,1)$ で $1\cdot3+(-1)\cdot1=2$。$(1,2)$ 成分：$(1,-1)$ と第2列 $(1,2)$ で $1\cdot1+(-1)\cdot2=-1$。<span class="why">理由：行列の積の定義。</span></li>
+  <li>$(2,1)$ 成分：$A$ の第2行 $(2,0)$ と $(3,1)$ で $2\cdot3+0\cdot1=6$。$(2,2)$ 成分：$(2,0)$ と $(1,2)$ で $2\cdot1+0\cdot2=2$。よって $AB=\begin{pmatrix}2&-1\\6&2\end{pmatrix}$。</li>
+  <li>$\det(AB)=2\cdot2-(-1)\cdot6=4+6=10$ <span class="why">理由：2×2の行列式 $ad-bc$。</span></li>
+  <li>$\det A=1\cdot0-(-1)\cdot2=2$、$\det B=3\cdot2-1\cdot1=5$。積は $2\cdot5=10$。</li>
+</ol>
+<p class="conc">$AB=$ <span class="fin">$\begin{pmatrix}2&-1\\6&2\end{pmatrix}$</span>、$\det(AB)=$ <span class="fin">$10$</span>。$\det A\cdot\det B=10$ と一致するので、$\det(AB)=\det A\cdot\det B$ が確かめられた ✓</p>
       </div></details></div>
     <div class="q"><div class="qh"><span class="tag">T-2</span><span class="src">第3章</span></div>
       <div class="body">掃き出し法で解け。$\begin{cases}x+2y+z=1\\2x+y+z=3\\x-y+2z=6\end{cases}$</div>
       <details><summary>解答</summary><div class="ans">
-        $\left(\begin{array}{ccc|c}1&2&1&1\\2&1&1&3\\1&-1&2&6\end{array}\right)\xrightarrow[③-①]{②-①\times2}\left(\begin{array}{ccc|c}1&2&1&1\\0&-3&-1&1\\0&-3&1&5\end{array}\right)\xrightarrow{③-②}\left(\begin{array}{ccc|c}1&2&1&1\\0&-3&-1&1\\0&0&2&4\end{array}\right)$<br>
-        階段になったので下から解く（後退代入）：$2z=4$ → $z=2$。$-3y-2=1$ → $y=-1$。$x+2(-1)+2=1$ → $x=1$。<br>
-        <span class="fin">$x=1,\ y=-1,\ z=2$</span>（検算：$1-2+2=1$ ✓、$2-1+2=3$ ✓、$1+1+4=6$ ✓）<br>
-        ※ ここでは階段で止めて下から代入した（ガウスの消去法）。左を $E$ まで掃き出し切っても同じ答えになる。どっちでもOK。
+        <div class="use"><b>使う知識</b><ul>
+  <li><b>拡大係数行列</b>：連立方程式を係数と右辺を並べた $(A\mid\boldsymbol{b})$ で表す。1行が1本の式。</li>
+  <li><b>行基本変形</b>：①行の入れ替え ②ある行を0でない数倍 ③ある行に別の行の定数倍を足す、の3つ。連立方程式の解やランクを変えない（式を足し引きしているだけだから）。</li>
+  <li><b>後退代入</b>：階段行列にすると一番下の式は文字1つだけになるので、下から順に解いて上の式に代入していける。</li>
+</ul></div>
+<ol class="sol">
+  <li>拡大係数行列を作る：<div class="f">\[\left(\begin{array}{ccc|c}1&2&1&1\\2&1&1&3\\1&-1&2&6\end{array}\right)\]</div></li>
+  <li>②−2×①：$(2,1,1\,|\,3)-2(1,2,1\,|\,1)=(0,-3,-1\,|\,1)$。③−①：$(1,-1,2\,|\,6)-(1,2,1\,|\,1)=(0,-3,1\,|\,5)$<div class="f">\[\left(\begin{array}{ccc|c}1&2&1&1\\0&-3&-1&1\\0&-3&1&5\end{array}\right)\]</div><span class="why">理由：②③から $x$ を消す。行基本変形なので解は変わらない。</span></li>
+  <li>③−②：$(0,-3,1\,|\,5)-(0,-3,-1\,|\,1)=(0,0,2\,|\,4)$<div class="f">\[\left(\begin{array}{ccc|c}1&2&1&1\\0&-3&-1&1\\0&0&2&4\end{array}\right)\]</div><span class="why">理由：③から $y$ を消して階段行列にする。</span></li>
+  <li>③は $2z=4$ なので $z=2$。<span class="why">理由：後退代入。一番下は $z$ だけの式。</span></li>
+  <li>②は $-3y-z=1$。$z=2$ を入れて $-3y-2=1$、$-3y=3$、$y=-1$。</li>
+  <li>①は $x+2y+z=1$。入れて $x+2(-1)+2=1$、$x=1$。</li>
+</ol>
+<p class="conc">下から順に決まって <span class="fin">$x=1,\ y=-1,\ z=2$</span></p>
+<p class="chk">検算：$1+2(-1)+2=1$ ✓、$2\cdot1+(-1)+2=3$ ✓、$1-(-1)+2\cdot2=6$ ✓</p>
+<p>※ ここでは階段で止めて下から代入した（ガウスの消去法）。左側を $E$ まで掃き出し切っても同じ答えになる。どっちでもOK。</p>
       </div></details></div>
     <div class="q"><div class="qh"><span class="tag">T-3</span><span class="src">第4章</span></div>
       <div class="body">$A=\begin{pmatrix}1&2&1&0\\2&4&0&2\\1&2&2&-1\end{pmatrix}$ のランクを求めよ。</div>
       <details><summary>解答</summary><div class="ans">
-        ②−①×2 → $(0,0,-2,2)$、③−① → $(0,0,1,-1)$。この2行は比例しているので、③＋②×$\frac12$ で $(0,0,0,0)$。<br>
-        $\begin{pmatrix}1&2&1&0\\0&0&-2&2\\0&0&0&0\end{pmatrix}$、0 でない行は2本。<span class="fin">rank 2</span>
+        <div class="use"><b>使う知識</b><ul>
+  <li><b>行基本変形</b>：①行の入れ替え ②ある行を0でない数倍 ③ある行に別の行の定数倍を足す、の3つ。連立方程式の解やランクを変えない（式を足し引きしているだけだから）。</li>
+  <li><b>階段行列</b>：各行の左端の0でない数（主成分）が、下の行ほど右にずれている形。全部0の行は一番下にまとめる。</li>
+  <li><b>ランクの定義</b>：$\operatorname{rank}A=$ 行基本変形で階段行列にしたときの「0でない行の本数」（＝主成分の数）。</li>
+</ul></div>
+<ol class="sol">
+  <li>②−2×①：$(2,4,0,2)-2(1,2,1,0)=(0,0,-2,2)$。③−①：$(1,2,2,-1)-(1,2,1,0)=(0,0,1,-1)$<div class="f">\[\begin{pmatrix}1&2&1&0\\0&0&-2&2\\0&0&1&-1\end{pmatrix}\]</div><span class="why">理由：第1列の1の下を0にする。第2列もついでに0になった。</span></li>
+  <li>②と③は $(0,0,-2,2)=-2\times(0,0,1,-1)$ で比例している。③$+\frac12\times$②：$(0,0,1,-1)+\frac12(0,0,-2,2)=(0,0,0,0)$<div class="f">\[\begin{pmatrix}1&2&1&0\\0&0&-2&2\\0&0&0&0\end{pmatrix}\]</div><span class="why">理由：②の主成分 $-2$（第3列）の下を0にする。比例している行は片方が丸ごと消える。</span></li>
+  <li>主成分は①の1（第1列）と②の $-2$（第3列）で、下ほど右にずれている → 階段行列。0でない行は2本。<span class="why">理由：第2列に主成分がなくても階段行列。ランクは0でない行を数えるだけ。</span></li>
+</ol>
+<p class="conc">行は3本あるが0でない行は2本なので <span class="fin">rank 2</span></p>
       </div></details></div>
     <div class="q"><div class="qh"><span class="tag">T-4</span><span class="src">第6章</span></div>
       <div class="body">$\begin{pmatrix}1&2\\3&5\end{pmatrix}$ の逆行列を求めよ。</div>
       <details><summary>解答</summary><div class="ans">
-        $\det=5-6=-1$。$\dfrac1{-1}\begin{pmatrix}5&-2\\-3&1\end{pmatrix}=$ <span class="fin">$\begin{pmatrix}-5&2\\3&-1\end{pmatrix}$</span><br>
-        検算：$\begin{pmatrix}1&2\\3&5\end{pmatrix}\begin{pmatrix}-5&2\\3&-1\end{pmatrix}=\begin{pmatrix}-5+6&2-2\\-15+15&6-5\end{pmatrix}=E$ ✓
+        <div class="use"><b>使う知識</b><ul>
+  <li><b>2×2の逆行列の公式</b>：$A=\begin{pmatrix}a&b\\c&d\end{pmatrix}$ で $\det A=ad-bc\ne0$ なら $A^{-1}=\dfrac{1}{ad-bc}\begin{pmatrix}d&-b\\-c&a\end{pmatrix}$（$a,d$ を入れかえ、$b,c$ の符号を変えて、$\det$ で割る）。</li>
+  <li><b>逆行列がある条件</b>：$\det A\ne0$ ⇔ 逆行列がある。$\det A=0$ なら逆行列はない。</li>
+  <li><b>逆行列の定義</b>：$AA^{-1}=A^{-1}A=E$（単位行列）となる行列。</li>
+</ul></div>
+<ol class="sol">
+  <li>$\det=1\cdot5-2\cdot3=5-6=-1\ne0$ なので逆行列がある。<span class="why">理由：$\det\ne0$ ⇔ 逆行列あり。</span></li>
+  <li>$a=1,d=5$ を入れかえ、$b=2,c=3$ の符号を変える：$\begin{pmatrix}5&-2\\-3&1\end{pmatrix}$ <span class="why">理由：2×2の逆行列の公式。</span></li>
+  <li>$\det=-1$ で割る：$\dfrac1{-1}\begin{pmatrix}5&-2\\-3&1\end{pmatrix}=\begin{pmatrix}-5&2\\3&-1\end{pmatrix}$ <span class="why">注意：$-1$ で割ると全成分の符号が反転する。</span></li>
+</ol>
+<p class="conc"><span class="fin">$\begin{pmatrix}-5&2\\3&-1\end{pmatrix}$</span></p>
+<p class="chk">検算：$\begin{pmatrix}1&2\\3&5\end{pmatrix}\begin{pmatrix}-5&2\\3&-1\end{pmatrix}=\begin{pmatrix}-5+6&2-2\\-15+15&6-5\end{pmatrix}=\begin{pmatrix}1&0\\0&1\end{pmatrix}=E$ ✓</p>
       </div></details></div>
     <div class="q"><div class="qh"><span class="tag">T-5</span><span class="src">第5章→応用第1週</span></div>
       <div class="body">$\boldsymbol{a}_1=\begin{pmatrix}1\\4\\7\end{pmatrix},\ \boldsymbol{a}_2=\begin{pmatrix}2\\5\\8\end{pmatrix},\ \boldsymbol{a}_3=\begin{pmatrix}3\\6\\10\end{pmatrix}$ を並べた行列 $(\boldsymbol{a}_1\ \boldsymbol{a}_2\ \boldsymbol{a}_3)$ の行列式を求め、この3本が1次独立かどうか答えよ。</div>
       <details><summary>解答</summary><div class="ans">
-        $\det\begin{pmatrix}1&2&3\\4&5&6\\7&8&10\end{pmatrix}=1(50-48)-2(40-42)+3(32-35)=2+4-9=$ <span class="fin">$-3$</span><br>
-        $\det\ne0$ なので <span class="fin">1次独立</span>（この「$\det\ne0$ ⇔ 独立」が応用ノート第1週の判定法）
+        <div class="use"><b>使う知識</b><ul>
+  <li><b>第1行での余因子展開</b>：$\begin{vmatrix}a_{11}&a_{12}&a_{13}\\a_{21}&a_{22}&a_{23}\\a_{31}&a_{32}&a_{33}\end{vmatrix}=a_{11}\begin{vmatrix}a_{22}&a_{23}\\a_{32}&a_{33}\end{vmatrix}-a_{12}\begin{vmatrix}a_{21}&a_{23}\\a_{31}&a_{33}\end{vmatrix}+a_{13}\begin{vmatrix}a_{21}&a_{22}\\a_{31}&a_{32}\end{vmatrix}$（符号は $+,-,+$）。</li>
+  <li><b>2×2の行列式</b>：$\begin{vmatrix}a&b\\c&d\end{vmatrix}=ad-bc$。</li>
+  <li><b>1次独立の定義</b>：$c_1\boldsymbol{a}_1+c_2\boldsymbol{a}_2+c_3\boldsymbol{a}_3=\boldsymbol{0}$ を満たすのが $c_1=c_2=c_3=0$ だけのとき1次独立。</li>
+  <li><b>行列式による判定</b>：$n$ 本の $n$ 次元ベクトルを並べた行列 $A$ について、$\det A\ne0$ ⇔ 1次独立。<span class="why">理由：$\det A\ne0$ なら $A^{-1}$ があり、$A\boldsymbol{c}=\boldsymbol{0}$ に左から掛けて $\boldsymbol{c}=\boldsymbol{0}$ しか出てこない。</span></li>
+</ul></div>
+<ol class="sol">
+  <li>ベクトルを列として並べる：$A=(\boldsymbol{a}_1\ \boldsymbol{a}_2\ \boldsymbol{a}_3)=\begin{pmatrix}1&2&3\\4&5&6\\7&8&10\end{pmatrix}$</li>
+  <li>$1$ の項：1行目・1列目を消して $\begin{vmatrix}5&6\\8&10\end{vmatrix}=50-48=2$。符号 $+$ で $+1\cdot2=2$。<span class="why">理由：第1行での余因子展開。</span></li>
+  <li>$2$ の項：1行目・2列目を消して $\begin{vmatrix}4&6\\7&10\end{vmatrix}=40-42=-2$。符号 $-$ で $-2\cdot(-2)=4$。</li>
+  <li>$3$ の項：1行目・3列目を消して $\begin{vmatrix}4&5\\7&8\end{vmatrix}=32-35=-3$。符号 $+$ で $+3\cdot(-3)=-9$。</li>
+  <li>合計：$\det A=2+4-9=-3$</li>
+  <li>$\det A=-3\ne0$ なので $A\boldsymbol{c}=\boldsymbol{0}$ の解は $\boldsymbol{c}=\boldsymbol{0}$ だけ。<span class="why">理由：行列式による判定。</span></li>
+</ol>
+<p class="conc">$\det A=$ <span class="fin">$-3$</span> で0でないから、1次関係式は全部0の解しかなく <span class="fin">1次独立</span>（この「$\det\ne0$ ⇔ 独立」が応用ノート第1週の判定法）</p>
+<p class="chk">検算（サラス）：$(1\cdot5\cdot10+2\cdot6\cdot7+3\cdot4\cdot8)-(3\cdot5\cdot7+1\cdot6\cdot8+2\cdot4\cdot10)=(50+84+96)-(105+48+80)=230-233=-3$ ✓</p>
       </div></details></div>
   </div></div>
 </section>
