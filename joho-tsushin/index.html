@@ -1,0 +1,1289 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>ベクトル解析 まとめノート</title>
+<style>html{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=Zen+Kaku+Gothic+New:wght@500;900&display=swap">
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['$', '$']], displayMath: [['\\[', '\\]']] },
+  svg: { fontCache: 'global' },
+  options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'code'] }
+};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.js"></script>
+<style>
+/* Layout: 教科書＋蛍光ペン＋赤ペン。上部に章タブ（1章ずつ表示）、各章は「覚える→わかる→注意→解く」の順。
+   大胆さは1か所だけ：蛍光マーカーと赤シート。それ以外は静かに。 */
+:root {
+  --bg: #eef1f5;
+  --paper: #ffffff;
+  --ink: #1a2b4a;
+  --sub: #56657c;
+  --line: #d9e0e8;
+  --marker: #ffe45c;
+  --marker-ink: #1a2b4a;
+  --red: #d4322c;
+  --red-soft: #fdeceb;
+  --sheet: #e0453f;
+  --ok: #1e7b55;
+  --ok-soft: #e3f3ea;
+  --tab: #e3e8ef;
+  --f-head: "Zen Kaku Gothic New", "Hiragino Sans", "Yu Gothic", sans-serif;
+  --f-body: "BIZ UDPGothic", "Hiragino Sans", "Yu Gothic", "Meiryo", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #11161f; --paper: #19202c; --ink: #e5eaf2; --sub: #9daabd; --line: #2c3646;
+    --marker: #6b5a00; --marker-ink: #fff6c2; --red: #ff7d72; --red-soft: #3a1f1e; --sheet: #c8372f;
+    --ok: #63d19f; --ok-soft: #173326; --tab: #222b39; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #11161f; --paper: #19202c; --ink: #e5eaf2; --sub: #9daabd; --line: #2c3646;
+  --marker: #6b5a00; --marker-ink: #fff6c2; --red: #ff7d72; --red-soft: #3a1f1e; --sheet: #c8372f;
+  --ok: #63d19f; --ok-soft: #173326; --tab: #222b39; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: var(--f-body); font-size: 16px; line-height: 1.85;
+}
+.gut { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.inner { max-width: 880px; margin: 0 auto; }
+
+/* ---------- hero ---------- */
+.hero { background: var(--paper); border-bottom: 1px solid var(--line); padding-block: 28px 22px; }
+.hero .inner { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 28px; align-items: center; }
+.course { font-size: 13px; color: var(--sub); }
+.home-link { display: inline-block; font-size: 13px; color: var(--sub); text-decoration: none; margin-bottom: 6px; }
+.home-link:hover { color: var(--ink); text-decoration: underline; }
+h1 { font-family: var(--f-head); font-weight: 900; font-size: clamp(28px, 5vw, 40px); line-height: 1.2; margin: 4px 0 12px; text-wrap: balance; letter-spacing: .01em; }
+.lead { margin: 0 0 16px; color: var(--sub); max-width: 46ch; }
+.euler { font-size: 22px; margin: 6px 0 2px; }
+.euler-note { font-size: 13px; color: var(--sub); margin: 0; }
+#phasor { width: 100%; height: auto; display: block; }
+.status { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; margin-top: 18px; }
+.meter { flex: 1 1 220px; min-width: 0; }
+.meter .bar { height: 8px; border-radius: 4px; background: var(--tab); overflow: hidden; }
+.meter .bar i { display: block; height: 100%; width: 0; background: var(--ok); transition: width .3s; }
+.meter .txt { font-size: 13px; color: var(--sub); margin-top: 4px; font-variant-numeric: tabular-nums; }
+.sheet-btn { font: inherit; font-size: 14px; font-weight: 700; padding: 6px 14px; border-radius: 8px; border: 2px solid var(--sheet); background: var(--paper); color: var(--sheet); cursor: pointer; }
+.sheet-btn[aria-pressed="true"] { background: var(--sheet); color: #fff; }
+.sheet-btn:focus-visible, .tabs a:focus-visible, summary:focus-visible, .done input:focus-visible, .nextprev a:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
+
+/* ---------- 講義の流れ ---------- */
+.flow { padding-block: 20px 6px; }
+.flow h2 { font-family: var(--f-head); font-size: 15px; font-weight: 900; margin: 0 0 8px; }
+.flow ol { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 4px; align-items: center; }
+.flow li { display: flex; align-items: center; gap: 4px; font-size: 13.5px; }
+.flow li + li::before { content: "›"; color: var(--sub); margin-right: 2px; }
+.flow a { color: var(--ink); text-decoration: none; border-bottom: 1px dashed var(--sub); }
+.flow a:hover { border-bottom-style: solid; }
+.flow p { font-size: 13.5px; color: var(--sub); margin: 8px 0 0; max-width: 70ch; }
+
+/* ---------- tabs ---------- */
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+.tabbar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); border-bottom: 1px solid var(--line); }
+.tabs { position: relative; display: flex; gap: 4px; overflow-x: auto; padding-block: 10px; scrollbar-width: thin; }
+.tabs a { flex: none; display: flex; flex-direction: column; align-items: center; gap: 0; min-width: 62px; padding: 5px 10px 4px; border-radius: 8px; color: var(--ink); text-decoration: none; background: var(--tab); line-height: 1.3; }
+.tabs a b { font-size: 13.5px; }
+.tabs a span { font-size: 11px; color: var(--sub); font-variant-numeric: tabular-nums; }
+.tabs a[aria-current="page"] { background: var(--ink); color: var(--paper); }
+.tabs a[aria-current="page"] span { color: var(--paper); opacity: .8; }
+.tabs a.all-done span { color: var(--ok); font-weight: 700; }
+.tabs a[aria-current="page"].all-done span { color: var(--paper); }
+
+/* ---------- chapter ---------- */
+main { padding-block: 26px 80px; }
+.ch[hidden] { display: none; }
+.ch { scroll-margin-top: calc(env(safe-area-inset-top, 0px) + 90px); }
+.ch-top { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-bottom: 18px; }
+.ch-no { font-family: var(--f-head); font-weight: 900; font-size: 15px; color: var(--sub); }
+.ch-top h2 { font-family: var(--f-head); font-weight: 900; font-size: clamp(24px, 4vw, 32px); line-height: 1.25; margin: 0; text-wrap: balance; flex-basis: 100%; }
+.ch-meta { font-size: 13px; color: var(--sub); }
+.step { margin-top: 26px; }
+.step > h3 { font-family: var(--f-head); font-weight: 900; font-size: 17px; margin: 0 0 10px; display: flex; align-items: center; gap: 10px; }
+.step > h3 .n { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--ink); color: var(--paper); font-size: 13px; }
+.step > h3 small { font-family: var(--f-body); font-weight: 400; font-size: 13px; color: var(--sub); }
+
+/* 1. 覚える：蛍光ペン */
+.memo { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 14px 20px; display: grid; gap: 4px; }
+.memo .row { display: grid; grid-template-columns: 9.5em minmax(0, 1fr); gap: 12px; align-items: baseline; padding: 6px 0; border-bottom: 1px dashed var(--line); }
+.memo .row:last-child { border-bottom: 0; }
+.memo .lbl { font-size: 13.5px; font-weight: 700; color: var(--sub); }
+.memo .val { min-width: 0; overflow-x: auto; overflow-y: hidden; }
+.key { background: linear-gradient(transparent 38%, var(--marker) 38%, var(--marker) 92%, transparent 92%); color: var(--marker-ink); padding: 0 3px; border-radius: 2px; position: relative; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+body.redsheet .key { background: var(--sheet); color: transparent; cursor: pointer; }
+body.redsheet .key * { visibility: hidden; }
+body.redsheet .key.peek { background: linear-gradient(transparent 38%, var(--marker) 38%, var(--marker) 92%, transparent 92%); color: var(--marker-ink); }
+body.redsheet .key.peek * { visibility: visible; }
+.sheet-hint { display: none; font-size: 13px; color: var(--sheet); margin: 6px 0 0; }
+body.redsheet .sheet-hint { display: block; }
+
+/* 2. わかる */
+.explain { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 16px 20px; }
+.explain p, .explain li { max-width: 68ch; }
+.explain p { margin: 6px 0; }
+.explain ul, .explain ol { margin: 6px 0; padding-left: 1.3em; }
+.f { overflow-x: auto; overflow-y: hidden; padding: 2px 0; }
+.fig { margin: 12px 0 6px; display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start; }
+.fig figure { margin: 0; flex: 1 1 240px; min-width: 0; max-width: 360px; }
+.fig figure > svg { width: 100%; height: auto; display: block; }
+.fig figcaption { font-size: 12.5px; color: var(--sub); text-align: center; margin-top: 2px; }
+table.v { border-collapse: collapse; font-size: 14px; margin: 8px 0; }
+table.v th, table.v td { border: 1px solid var(--line); padding: 4px 10px; text-align: center; font-variant-numeric: tabular-nums; }
+table.v th { background: var(--tab); }
+.tbl { overflow-x: auto; }
+.block { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin: 12px 0; font-size: 14px; }
+.block .box { border: 2px solid var(--ink); border-radius: 8px; padding: 6px 14px; background: var(--bg); }
+.block .arr { color: var(--sub); }
+
+/* 3. 注意：赤ペン */
+.redpen { display: grid; gap: 8px; }
+.redpen p { margin: 0; padding: 8px 14px 8px 16px; border-left: 3px solid var(--red); background: var(--red-soft); border-radius: 0 8px 8px 0; font-size: 15px; max-width: none; }
+.redpen p b:first-child { color: var(--red); margin-right: 4px; }
+.redpen p.trap { display: none; }
+
+/* 4. 解く */
+.probs { display: grid; gap: 12px; }
+.q { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 14px 18px; }
+.q.is-done { border-color: var(--ok); }
+.q .qh { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.q .tag { font-family: var(--f-head); font-weight: 900; font-size: 15px; }
+.q .src { font-size: 12px; color: var(--sub); }
+.done { margin-left: auto; display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--sub); cursor: pointer; user-select: none; }
+.done input { width: 18px; height: 18px; accent-color: var(--ok); }
+.q.is-done .done { color: var(--ok); font-weight: 700; }
+.q .body { margin-top: 6px; }
+details { margin-top: 10px; }
+summary { cursor: pointer; font-size: 14px; font-weight: 700; color: var(--ink); width: fit-content; padding: 3px 14px; border: 1.5px solid var(--ink); border-radius: 999px; list-style: none; }
+summary::-webkit-details-marker { display: none; }
+details[open] summary { background: var(--ink); color: var(--paper); }
+.ans { margin-top: 10px; padding: 10px 14px; border-left: 3px solid var(--ok); background: var(--ok-soft); border-radius: 0 8px 8px 0; }
+.ans .fin { font-weight: 700; color: var(--ok); }
+.ans .use { margin: 0 0 10px; padding: 8px 12px; background: var(--paper); border: 1px dashed var(--line); border-radius: 8px; font-size: 14px; }
+.ans .use > b { display: block; margin-bottom: 2px; }
+.ans .use ul { margin: 0; padding-left: 1.2em; }
+.ans .use li { margin: 3px 0; }
+.ans .pt { margin: 12px 0 2px; font-weight: 700; }
+.ans ol.sol { margin: 4px 0 6px; padding-left: 1.5em; }
+.ans ol.sol li { margin: 6px 0; }
+.ans .why { display: block; font-size: 13px; color: var(--sub); margin-top: 1px; }
+.ans .conc { margin: 6px 0; }
+.ans .chk { margin: 4px 0 0; font-size: 13px; color: var(--sub); }
+.spec { display: flex; flex-wrap: wrap; gap: 14px; margin: 8px 0; }
+.spec figure { margin: 0; flex: 1 1 240px; min-width: 0; max-width: 340px; }
+.spec figcaption { font-size: 12.5px; color: var(--sub); text-align: center; }
+.spec figure > svg { width: 100%; height: auto; display: block; }
+.mock-intro { background: var(--paper); border: 2px solid var(--ink); border-radius: 12px; padding: 14px 20px; }
+.mock-intro p { margin: 4px 0; }
+.nextprev { display: flex; justify-content: space-between; gap: 10px; margin-top: 30px; flex-wrap: wrap; }
+.nextprev a { color: var(--ink); text-decoration: none; padding: 8px 14px; border: 1px solid var(--line); border-radius: 8px; background: var(--paper); font-size: 14px; }
+.nextprev a:hover { border-color: var(--ink); }
+.nextprev .spacer { flex: 1; }
+
+@media (max-width: 760px) {
+  .hero .inner { grid-template-columns: minmax(0, 1fr); }
+  .hero .viz { max-width: 340px; }
+  .memo { padding: 10px 14px; }
+  .memo .row { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .explain { padding: 14px; }
+  .q { padding: 12px 14px; }
+  .done { margin-left: 0; }
+}
+@media (prefers-reduced-motion: reduce) { .meter .bar i { transition: none; } }
+</style>
+<style>
+/* ページ固有の追加分（road 表など） */
+.probs { grid-template-columns: minmax(0, 1fr); }
+.q .body, .ans ol.sol li, .ans .conc, .ans .chk, .ans .use li, .ans .pt, .redpen p, .explain p, .explain li { overflow-x: auto; overflow-y: hidden; }
+
+.road { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; font-size: 14px; }
+.road h2 { font-family: var(--f-head); font-size: 15px; font-weight: 900; margin: 0 0 8px; }
+.road table { border-collapse: collapse; width: 100%; }
+.road td { padding: 5px 4px; border-bottom: 1px dashed var(--line); vertical-align: top; line-height: 1.5; }
+.road tr:last-child td { border-bottom: 0; }
+.road td:first-child { font-weight: 700; white-space: nowrap; padding-right: 10px; }
+.road td:last-child { color: var(--sub); }
+.road a { color: var(--ink); }
+.scope a, .explain a { color: var(--ink); }
+.sweep { display: grid; gap: 6px; margin: 10px 0; }
+.sweep .st { display: grid; grid-template-columns: 11em minmax(0, 1fr); gap: 10px; align-items: center; border-bottom: 1px dashed var(--line); padding-bottom: 6px; }
+.sweep .st:last-child { border-bottom: 0; }
+.sweep .op { font-size: 13.5px; font-weight: 700; color: var(--red); }
+.sweep .op small { display: block; font-weight: 400; color: var(--sub); }
+.sweep .mx { min-width: 0; overflow-x: auto; overflow-y: hidden; }
+.mn { background: var(--bg); border: 1px dashed var(--sub); border-radius: 8px; padding: 8px 12px; margin: 10px 0; font-size: 14.5px; }
+.ch-top .back { font-size: 13px; color: var(--sub); flex-basis: 100%; }
+.ch-top .back a { color: var(--sub); }
+@media (max-width: 760px) {
+  .sweep .st { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+}
+</style>
+</head>
+<body>
+
+<header class="hero gut">
+  <div class="inner">
+    <div>
+      <a class="home-link" href="../">← 講義一覧</a>
+      <div class="course">情報通信基礎数学 ／ ベクトル解析</div>
+      <h1>ベクトル解析 まとめノート</h1>
+      <p class="lead">内積・外積 → ベクトル関数の微分積分 → 勾配 → 発散・回転 → 線積分。講義スライド4回分と演習プリントの全問の解答をまとめた。上のタブを左から順に進めればOK。</p>
+      <div class="euler">$\nabla=\dfrac{\partial}{\partial x}\mathbf{i}+\dfrac{\partial}{\partial y}\mathbf{j}+\dfrac{\partial}{\partial z}\mathbf{k}$</div>
+      <p class="euler-note">ナブラ $\nabla$ を $f$ にそのまま掛けると<b>勾配</b>、$\cdot$ で掛けると<b>発散</b>、$\times$ で掛けると<b>回転</b>。後半はぜんぶこの1行の使い回し。</p>
+      <div class="status">
+        <div class="meter" aria-live="polite">
+          <div class="bar"><i id="meterBar"></i></div>
+          <div class="txt" id="meterTxt">解けた問題 0 / 0</div>
+        </div>
+        <button type="button" class="sheet-btn" id="sheetBtn" aria-pressed="false">赤シートで隠す</button>
+      </div>
+    </div>
+    <div class="viz">
+      <div class="road">
+        <h2>どの章で何を計算する？</h2>
+        <table>
+          <tr><td><a href="#v1">内積・外積</a></td><td>長さ・角度・直交するベクトル・面積</td></tr>
+          <tr><td><a href="#v2">ベクトル関数</a></td><td>成分ごとに微分・積分。積の微分</td></tr>
+          <tr><td><a href="#v3">勾配</a></td><td>$\nabla f$、方向微分 $\nabla f\cdot\mathbf{u}$、等位線</td></tr>
+          <tr><td><a href="#v4">発散・回転</a></td><td>$\nabla\cdot\mathbf{A}$（数）と $\nabla\times\mathbf{A}$（ベクトル）</td></tr>
+          <tr><td><a href="#v5">線積分</a></td><td>曲線の長さ、$\int f\,ds$ と $\int\mathbf{A}\cdot d\mathbf{r}$</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="flow gut" aria-label="進め方">
+  <div class="inner">
+    <h2>おすすめの進め方</h2>
+    <ol>
+      <li><a href="#v1">内積・外積</a></li>
+      <li><a href="#v2">ベクトル関数の微積分</a></li>
+      <li><a href="#v3">勾配</a></li>
+      <li><a href="#v4">発散・回転</a></li>
+      <li><a href="#v5">線積分</a></li>
+      <li><a href="#vt">まとめテスト</a></li>
+    </ol>
+    <p>各章は「覚える → わかる → 注意 → 解く」の順。「解く」には講義スライドの例題と演習プリントの全問が入っていて、解答はぜんぶ「使う知識 → 途中式（理由つき）→ 結論 → 検算」の形。いちばん点になるのは<b>外積の計算</b>と<b>線積分の3ステップ</b>。</p>
+    <div class="scope">
+      <p><b>記号のこと</b>：講義に合わせて、ベクトルは<b>太字</b>の大文字 $\mathbf{A}$、座標軸の単位ベクトルは $\mathbf{i},\mathbf{j},\mathbf{k}$。$\mathbf{A}=A_x\mathbf{i}+A_y\mathbf{j}+A_z\mathbf{k}$ は線形代数の $\begin{pmatrix}A_x\\A_y\\A_z\end{pmatrix}$ と同じもの。$\log$ は自然対数（底 $e$）。</p>
+    </div>
+  </div>
+</section>
+
+<nav class="tabbar gut" aria-label="章の切り替え">
+  <div class="inner tabs" id="tabs">
+    <a href="#v1" data-t="v1"><b>1 内積・外積</b><span></span></a>
+    <a href="#v2" data-t="v2"><b>2 微分・積分</b><span></span></a>
+    <a href="#v3" data-t="v3"><b>3 勾配</b><span></span></a>
+    <a href="#v4" data-t="v4"><b>4 発散・回転</b><span></span></a>
+    <a href="#v5" data-t="v5"><b>5 線積分</b><span></span></a>
+    <a href="#vt" data-t="vt"><b>まとめテスト</b><span></span></a>
+  </div>
+</nav>
+
+<main class="gut"><div class="inner">
+<p class="sheet-hint">赤シート中：赤い部分をタップするとその式だけ見える。もう一度タップで隠れる。</p>
+
+<!-- ======================= 1 内積・外積 ======================= -->
+<section class="ch" id="v1" data-title="内積・外積">
+  <div class="ch-top"><span class="ch-no">第1章</span><h2>ベクトルと内積・外積</h2><span class="ch-meta">講義「ベクトル解析(1)」＋演習「ベクトルの内積・外積」</span></div>
+  <div class="step"><h3><span class="n">1</span>覚える</h3>
+    <div class="memo">
+      <div class="row"><span class="lbl">表し方</span><span class="val">$\mathbf{A}=A_x\mathbf{i}+A_y\mathbf{j}+A_z\mathbf{k}$。$\mathbf{i}=(1,0,0),\ \mathbf{j}=(0,1,0),\ \mathbf{k}=(0,0,1)$。書いていない成分は 0</span></div>
+      <div class="row"><span class="lbl">大きさ</span><span class="val"><span class="key">$|\mathbf{A}|=\sqrt{A_x^2+A_y^2+A_z^2}$</span>（三平方の定理）</span></div>
+      <div class="row"><span class="lbl">方向余弦</span><span class="val">各軸となす角 $\alpha,\beta,\gamma$ について $\cos\alpha=\dfrac{A_x}{|\mathbf{A}|},\ \cos\beta=\dfrac{A_y}{|\mathbf{A}|},\ \cos\gamma=\dfrac{A_z}{|\mathbf{A}|}$</span></div>
+      <div class="row"><span class="lbl">内積（成分）</span><span class="val"><span class="key">$\mathbf{A}\cdot\mathbf{B}=A_xB_x+A_yB_y+A_zB_z$</span>（答えは<b>数</b>）</span></div>
+      <div class="row"><span class="lbl">内積（角度）</span><span class="val"><span class="key">$\mathbf{A}\cdot\mathbf{B}=|\mathbf{A}||\mathbf{B}|\cos\theta$</span> → $\cos\theta=\dfrac{\mathbf{A}\cdot\mathbf{B}}{|\mathbf{A}||\mathbf{B}|}$</span></div>
+      <div class="row"><span class="lbl">直交</span><span class="val"><span class="key">$\mathbf{A}\perp\mathbf{B}\iff\mathbf{A}\cdot\mathbf{B}=0$</span>（$\cos90^\circ=0$ だから）</span></div>
+      <div class="row"><span class="lbl">射影</span><span class="val">$\mathbf{y}$ の $\mathbf{x}$ 方向成分：<span class="key">$\mathbf{z}=\dfrac{\mathbf{y}\cdot\mathbf{x}}{\mathbf{x}\cdot\mathbf{x}}\,\mathbf{x}$</span>。単位ベクトル $\mathbf{u}$ なら $(\mathbf{A}\cdot\mathbf{u})\,\mathbf{u}$</span></div>
+      <div class="row"><span class="lbl">外積</span><span class="val"><span class="key">$\mathbf{A}\times\mathbf{B}=(A_yB_z-A_zB_y)\mathbf{i}+(A_zB_x-A_xB_z)\mathbf{j}+(A_xB_y-A_yB_x)\mathbf{k}$</span>（答えは<b>ベクトル</b>）</span></div>
+      <div class="row"><span class="lbl">外積の意味</span><span class="val">向き：<span class="key">$\mathbf{A}$ と $\mathbf{B}$ の両方に直交</span>（右ねじの向き）。長さ：<span class="key">$|\mathbf{A}\times\mathbf{B}|=|\mathbf{A}||\mathbf{B}|\sin\theta$＝平行四辺形の面積</span></span></div>
+      <div class="row"><span class="lbl">スカラー場</span><span class="val">座標ごとに<b>数が1つ</b>：$f(x,y,z)$（例：各点の温度）</span></div>
+      <div class="row"><span class="lbl">ベクトル場</span><span class="val">座標ごとに<b>ベクトルが1つ</b>：$\mathbf{F}=f_x(x,y,z)\mathbf{i}+f_y(x,y,z)\mathbf{j}+f_z(x,y,z)\mathbf{k}$（例：各点の風）</span></div>
+    </div>
+  </div>
+  <div class="step"><h3><span class="n">2</span>わかる</h3>
+    <div class="explain">
+      <p><b>内積は「片方の方向にどれだけ向いているか」</b>。長さ1のベクトル $\mathbf{u}$ との内積 $\mathbf{A}\cdot\mathbf{u}=|\mathbf{A}|\cos\theta$ は、$\mathbf{A}$ を $\mathbf{u}$ の方向に落とした影の長さ（＝$\mathbf{u}$ 方向成分）。同じ向きなら最大、直角なら 0、逆向きならマイナス。</p>
+      <p><b>射影の出し方（スライドの「問題」）</b>：$\mathbf{x}$ を通る直線上で $\mathbf{y}$ にいちばん近い点 $\mathbf{z}$ は、$\mathbf{y}$ から直線に垂線を下ろした足。直線上の点だから $\mathbf{z}=a\mathbf{x}$、垂線だから $(\mathbf{y}-a\mathbf{x})\cdot\mathbf{x}=0$。分配して $\mathbf{y}\cdot\mathbf{x}-a\,\mathbf{x}\cdot\mathbf{x}=0$ なので $a=\dfrac{\mathbf{y}\cdot\mathbf{x}}{\mathbf{x}\cdot\mathbf{x}}$。</p>
+      <div class="fig"><figure><svg viewBox="0 0 220 170" role="img" aria-label="ベクトル y から、x 方向の直線に垂線を下ろした足が z（射影）。y−z は x と直交する"><defs><marker id="ahp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="context-stroke"/></marker></defs><line x1="20" y1="150" x2="195.0" y2="45.0" stroke="var(--sub)" stroke-dasharray="3 3"/><line x1="20" y1="150" x2="190" y2="130" stroke="var(--ink)" stroke-width="2" marker-end="url(#ahp)"/><line x1="20" y1="150" x2="120" y2="90" stroke="var(--red)" stroke-width="2.4" marker-end="url(#ahp)"/><line x1="190" y1="130" x2="153.8" y2="69.7" stroke="var(--ok)" stroke-width="1.6" stroke-dasharray="4 3"/><circle cx="153.8" cy="69.7" r="3.2" fill="var(--ok)"/><text x="96" y="86" font-size="14" font-weight="700" fill="var(--red)">x</text><text x="192" y="146" font-size="14" font-weight="700" fill="var(--ink)">y</text><text x="147.8" y="59.7" font-size="14" font-weight="700" fill="var(--ok)">z</text><text x="177.9" y="99.9" font-size="11" fill="var(--ok)">y−z ⊥ x</text></svg><figcaption>射影：$\mathbf{y}$ から $\mathbf{x}$ の直線に垂線</figcaption></figure><figure><svg viewBox="0 0 240 180" role="img" aria-label="A と B が作る平行四辺形と、それに垂直に立つ A×B。A×B の長さは平行四辺形の面積"><defs><marker id="ahc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="context-stroke"/></marker></defs><polygon points="60,150 170,160 230,120 120,110" fill="var(--marker)" fill-opacity=".55" stroke="var(--sub)" stroke-dasharray="4 3"/><line x1="60" y1="150" x2="170" y2="160" stroke="var(--ink)" stroke-width="2.2" marker-end="url(#ahc)"/><line x1="60" y1="150" x2="120" y2="110" stroke="var(--ink)" stroke-width="2.2" marker-end="url(#ahc)"/><line x1="60" y1="150" x2="60" y2="20" stroke="var(--red)" stroke-width="2.6" marker-end="url(#ahc)"/><text x="166" y="176" font-size="14" font-weight="700">A</text><text x="114" y="104" font-size="14" font-weight="700">B</text><text x="68" y="34" font-size="14" font-weight="700" fill="var(--red)">A×B</text><text x="68" y="52" font-size="11" fill="var(--red)">長さ＝面積 |A||B|sinθ</text><text x="148" y="140" font-size="11" fill="var(--sub)" text-anchor="middle">平行四辺形</text></svg><figcaption>外積：面積の大きさを持つ垂直なベクトル</figcaption></figure></div>
+      <p><b>外積の成分の覚え方</b>：$\mathbf{i}$ 成分は「$y,z$」、$\mathbf{j}$ 成分は「$z,x$」、$\mathbf{k}$ 成分は「$x,y$」を使う（$x\to y\to z\to x$ の順にぐるっと回す）。どれも「(前の文字の $A$)(後ろの文字の $B$) − (後ろの $A$)(前の $B$)」。行列式で書くと</p>
+      <div class="f">\[\mathbf{A}\times\mathbf{B}=\begin{vmatrix}\mathbf{i}&\mathbf{j}&\mathbf{k}\\A_x&A_y&A_z\\B_x&B_y&B_z\end{vmatrix}\]</div>
+      <p>で、1行目で展開（$\mathbf{j}$ の項だけ符号マイナス）すると上の式になる。たすき掛けで「右下がり − 左下がり」と覚えてもOK。</p>
+      <p><b>外積のイメージ</b>：$\mathbf{A}$ と $\mathbf{B}$ が作る平行四辺形に垂直に立った矢印で、長さはその面積。スライドの言い方だと「平行四辺形の穴が大きいと、たくさん湧き出す」。</p>
+    </div>
+  </div>
+  <div class="step"><h3><span class="n">3</span>注意</h3>
+    <div class="redpen">
+      <p><b>順番</b>外積は順番を入れ替えると向きが逆：$\mathbf{B}\times\mathbf{A}=-\mathbf{A}\times\mathbf{B}$。内積は入れ替えても同じ。</p>
+      <p><b>答えの種類</b>内積の答えは<b>数</b>、外積の答えは<b>ベクトル</b>。内積の答えに $\mathbf{i}$ をつけたら×。</p>
+      <p><b>単位ベクトル</b>「両方と直交する単位ベクトル」は外積を自分の長さで割ったもの。逆向きもOKなので<b>$\pm$ の2つ</b>ある。</p>
+      <p><b>符号ミス</b>外積の $\mathbf{j}$ 成分は $A_zB_x-A_xB_z$（$A_xB_z-A_zB_x$ と逆にしがち）。最後に $\mathbf{A}\cdot(\mathbf{A}\times\mathbf{B})=0$ で検算すると確実。</p>
+      <p><b>スライドの誤植</b>方向余弦の3つ目は $\cos\gamma=A_z/|\mathbf{A}|$（スライドは $A_y$ になっている）。</p>
+    </div>
+  </div>
+  <div class="step"><h3><span class="n">4</span>解く</h3>
+    <div class="probs">
+    <div class="q"><div class="qh"><span class="tag">例題</span><span class="src">講義スライド「問題・射影」</span></div>
+      <div class="body">原点からベクトル $\mathbf{x}=\mathbf{i}+\mathbf{j}$ を通る直線上の点で、$\mathbf{y}=3\mathbf{i}+\mathbf{j}+2\mathbf{k}$ に最も近い点 $\mathbf{z}$ を求めよ。（スライドは文字のまま。ここでは数字を入れた）</div>
+      <details><summary>解答</summary><div class="ans">
+        <div class="use"><b>使う知識</b><ul>
+  <li><b>射影の公式</b>：$\mathbf{z}=\dfrac{\mathbf{y}\cdot\mathbf{x}}{\mathbf{x}\cdot\mathbf{x}}\mathbf{x}$。<span class="why">理由：最も近い点は垂線の足なので $(\mathbf{y}-a\mathbf{x})\cdot\mathbf{x}=0$。これを $a$ について解いた形。</span></li>
+  <li><b>内積</b>：$\mathbf{A}\cdot\mathbf{B}=A_xB_x+A_yB_y+A_zB_z$。</li>
+</ul></div>
+<ol class="sol">
+  <li>$\mathbf{y}\cdot\mathbf{x}=3\cdot1+1\cdot1+2\cdot0=4$ <span class="why">理由：成分ごとに掛けて足す（$\mathbf{x}$ の $\mathbf{k}$ 成分は 0）。</span></li>
+  <li>$\mathbf{x}\cdot\mathbf{x}=1^2+1^2+0^2=2$ <span class="why">理由：自分自身との内積は長さの2乗。</span></li>
+  <li>$a=\dfrac{4}{2}=2$、$\mathbf{z}=2\mathbf{x}=2\mathbf{i}+2\mathbf{j}$ <span class="why">理由：射影の公式に代入。</span></li>
+</ol>
+<p class="conc">射影の公式より <span class="fin">$\mathbf{z}=2\mathbf{i}+2\mathbf{j}$</span></p>
+<p class="chk">検算：$\mathbf{y}-\mathbf{z}=\mathbf{i}-\mathbf{j}+2\mathbf{k}$ と $\mathbf{x}$ の内積は $1-1+0=0$ で、ちゃんと直交している ✓</p>
+      </div></details></div>
+
+    <div class="q"><div class="qh"><span class="tag">演習1-1</span><span class="src">演習「内積・外積」1</span></div>
+      <div class="body">$\mathbf{A}=\mathbf{i}+\sqrt2\mathbf{j}-\sqrt2\mathbf{k},\ \mathbf{B}=\mathbf{i}+\sqrt2\mathbf{j}+\sqrt2\mathbf{k}$ について<br>(1) 長さ $|\mathbf{A}|,|\mathbf{B}|$　(2) 内積 $\mathbf{A}\cdot\mathbf{B}$　(3) なす角 $\theta$ の $\cos\theta$　(4) 外積 $\mathbf{A}\times\mathbf{B}$　(5) $\mathbf{A}$ と $\mathbf{B}$ の両方と直交する単位ベクトル</div>
+      <details><summary>解答</summary><div class="ans">
+        <div class="use"><b>使う知識</b><ul>
+  <li><b>大きさ</b>：$|\mathbf{A}|=\sqrt{A_x^2+A_y^2+A_z^2}$。</li>
+  <li><b>内積</b>：$\mathbf{A}\cdot\mathbf{B}=A_xB_x+A_yB_y+A_zB_z=|\mathbf{A}||\mathbf{B}|\cos\theta$。</li>
+  <li><b>外積</b>：$\mathbf{A}\times\mathbf{B}=(A_yB_z-A_zB_y)\mathbf{i}+(A_zB_x-A_xB_z)\mathbf{j}+(A_xB_y-A_yB_x)\mathbf{k}$。$\mathbf{A},\mathbf{B}$ の両方に直交する。</li>
+  <li><b>単位ベクトル</b>：ベクトルを自分の長さで割ると長さ1になる。</li>
+</ul></div>
+<p class="pt">(1)</p>
+<ol class="sol">
+  <li>$|\mathbf{A}|=\sqrt{1^2+(\sqrt2)^2+(-\sqrt2)^2}=\sqrt{1+2+2}=\sqrt5$ <span class="why">理由：大きさの定義。$(-\sqrt2)^2=2$ でマイナスは消える。</span></li>
+  <li>$|\mathbf{B}|=\sqrt{1+2+2}=\sqrt5$ <span class="why">理由：$\mathbf{B}$ は $\mathbf{k}$ 成分の符号が違うだけなので2乗すれば同じ。</span></li>
+</ol>
+<p class="conc">定義どおり計算して <span class="fin">$|\mathbf{A}|=|\mathbf{B}|=\sqrt5$</span></p>
+<p class="pt">(2)</p>
+<ol class="sol">
+  <li>$\mathbf{A}\cdot\mathbf{B}=1\cdot1+\sqrt2\cdot\sqrt2+(-\sqrt2)\cdot\sqrt2=1+2-2$ <span class="why">理由：成分ごとに掛けて足す。</span></li>
+</ol>
+<p class="conc">成分の積の和で <span class="fin">$\mathbf{A}\cdot\mathbf{B}=1$</span></p>
+<p class="pt">(3)</p>
+<ol class="sol">
+  <li>$\cos\theta=\dfrac{\mathbf{A}\cdot\mathbf{B}}{|\mathbf{A}||\mathbf{B}|}=\dfrac{1}{\sqrt5\cdot\sqrt5}=\dfrac15$ <span class="why">理由：$\mathbf{A}\cdot\mathbf{B}=|\mathbf{A}||\mathbf{B}|\cos\theta$ を $\cos\theta$ について解いた。(1)(2) の結果を代入。</span></li>
+</ol>
+<p class="conc">内積の角度の式より <span class="fin">$\cos\theta=\dfrac15$</span>（$\theta\approx78.5^\circ$）</p>
+<p class="pt">(4)</p>
+<ol class="sol">
+  <li>$\mathbf{i}$ 成分：$A_yB_z-A_zB_y=\sqrt2\cdot\sqrt2-(-\sqrt2)\cdot\sqrt2=2+2=4$ <span class="why">理由：外積の $\mathbf{i}$ 成分は $y,z$ を使う。</span></li>
+  <li>$\mathbf{j}$ 成分：$A_zB_x-A_xB_z=(-\sqrt2)\cdot1-1\cdot\sqrt2=-2\sqrt2$ <span class="why">理由：$\mathbf{j}$ 成分は $z,x$ の順。</span></li>
+  <li>$\mathbf{k}$ 成分：$A_xB_y-A_yB_x=1\cdot\sqrt2-\sqrt2\cdot1=0$ <span class="why">理由：$\mathbf{k}$ 成分は $x,y$ の順。</span></li>
+</ol>
+<p class="conc">外積の成分の式より <span class="fin">$\mathbf{A}\times\mathbf{B}=4\mathbf{i}-2\sqrt2\,\mathbf{j}$</span></p>
+<p class="pt">(5)</p>
+<ol class="sol">
+  <li>外積 $\mathbf{A}\times\mathbf{B}$ は $\mathbf{A}$ と $\mathbf{B}$ の両方に直交する <span class="why">理由：外積の性質。だから (4) の向きを使えばいい。</span></li>
+  <li>長さ：$|\mathbf{A}\times\mathbf{B}|=\sqrt{4^2+(-2\sqrt2)^2}=\sqrt{16+8}=\sqrt{24}=2\sqrt6$</li>
+  <li>長さで割る：$\dfrac{4\mathbf{i}-2\sqrt2\mathbf{j}}{2\sqrt6}=\dfrac{2}{\sqrt6}\mathbf{i}-\dfrac{\sqrt2}{\sqrt6}\mathbf{j}=\dfrac{\sqrt6}{3}\mathbf{i}-\dfrac{\sqrt3}{3}\mathbf{j}$ <span class="why">理由：長さで割ると長さ1。$\frac{2}{\sqrt6}=\frac{2\sqrt6}{6}$、$\frac{\sqrt2}{\sqrt6}=\frac{1}{\sqrt3}=\frac{\sqrt3}{3}$ と有理化。</span></li>
+  <li>逆向きも両方に直交する長さ1のベクトルなので $\pm$ をつける。</li>
+</ol>
+<p class="conc">外積を長さで割って <span class="fin">$\pm\left(\dfrac{\sqrt6}{3}\mathbf{i}-\dfrac{\sqrt3}{3}\mathbf{j}\right)$</span></p>
+<p class="chk">検算：$\mathbf{A}\cdot(4,-2\sqrt2,0)=4-4+0=0$、$\mathbf{B}\cdot(4,-2\sqrt2,0)=4-4+0=0$ ✓。$|\mathbf{A}\times\mathbf{B}|=|\mathbf{A}||\mathbf{B}|\sin\theta=5\sqrt{1-\frac1{25}}=\sqrt{24}$ も (5) の長さと一致 ✓。$\left(\frac{\sqrt6}{3}\right)^2+\left(\frac{\sqrt3}{3}\right)^2=\frac69+\frac39=1$ ✓</p>
+      </div></details></div>
+
+    <div class="q"><div class="qh"><span class="tag">演習1-2</span><span class="src">演習「内積・外積」2</span></div>
+      <div class="body">3次元空間に $\mathbf{A}=\mathbf{j}-\mathbf{k},\ \mathbf{B}=\mathbf{j}+\mathbf{k}$ がある（$\mathbf{i}$ 成分は 0）。<br>(1) $\mathbf{A},\mathbf{B}$ を図示し、2つが作る平行四辺形の面積を求めよ。　(2) 外積 $\mathbf{A}\times\mathbf{B}$ を計算せよ。　(3) 外積を図示せよ。</div>
+      <details><summary>解答</summary><div class="ans">
+        <div class="use"><b>使う知識</b><ul>
+  <li><b>外積</b>：$\mathbf{A}\times\mathbf{B}=(A_yB_z-A_zB_y)\mathbf{i}+(A_zB_x-A_xB_z)\mathbf{j}+(A_xB_y-A_yB_x)\mathbf{k}$。</li>
+  <li><b>外積の長さ＝平行四辺形の面積</b>：$|\mathbf{A}\times\mathbf{B}|=|\mathbf{A}||\mathbf{B}|\sin\theta$。</li>
+  <li><b>内積で角度</b>：$\mathbf{A}\cdot\mathbf{B}=0$ なら直交。</li>
+</ul></div>
+<p class="pt">(1)</p>
+<ol class="sol">
+  <li>成分は $\mathbf{A}=(0,1,-1)$、$\mathbf{B}=(0,1,1)$。横軸 $\mathbf{j}$・縦軸 $\mathbf{k}$ の図に、$\mathbf{A}$ は「右に1・下に1」、$\mathbf{B}$ は「右に1・上に1」の矢印で描く（下の左図）。</li>
+  <li>$\mathbf{A}\cdot\mathbf{B}=0+1-1=0$ なので直交 <span class="why">理由：内積0 ⇔ 直交。</span></li>
+  <li>$|\mathbf{A}|=|\mathbf{B}|=\sqrt{0+1+1}=\sqrt2$ で直交しているから、平行四辺形は1辺 $\sqrt2$ の正方形。面積 $=\sqrt2\cdot\sqrt2\cdot\sin90^\circ=2$ <span class="why">理由：面積 $=|\mathbf{A}||\mathbf{B}|\sin\theta$、$\theta=90^\circ$。</span></li>
+</ol>
+<p class="conc">直交する長さ $\sqrt2$ の2辺なので <span class="fin">面積 2</span></p>
+<p class="pt">(2)</p>
+<ol class="sol">
+  <li>$\mathbf{i}$ 成分：$A_yB_z-A_zB_y=1\cdot1-(-1)\cdot1=2$</li>
+  <li>$\mathbf{j}$ 成分：$A_zB_x-A_xB_z=(-1)\cdot0-0\cdot1=0$</li>
+  <li>$\mathbf{k}$ 成分：$A_xB_y-A_yB_x=0\cdot1-1\cdot0=0$ <span class="why">理由：どれも外積の成分の式に代入しただけ。$A_x=B_x=0$ なので $\mathbf{j},\mathbf{k}$ 成分は 0 になる。</span></li>
+</ol>
+<p class="conc">外積の成分の式より <span class="fin">$\mathbf{A}\times\mathbf{B}=2\mathbf{i}$</span></p>
+<p class="pt">(3)</p>
+<ol class="sol">
+  <li>$2\mathbf{i}$ は $\mathbf{i}$ 軸の正の向きに長さ 2 の矢印。$\mathbf{A},\mathbf{B}$ は $\mathbf{j}$-$\mathbf{k}$ 平面にあるので、それに垂直な $\mathbf{i}$ 方向を向くのは外積の性質どおり <span class="why">理由：外積は両方に直交する。</span></li>
+  <li>プリントの図（横 $\mathbf{j}$・縦 $\mathbf{i}$）なら、原点から真上に長さ 2 の矢印（下の右図）。</li>
+</ol>
+<div class="fig"><figure><svg viewBox="0 0 220 220" role="img" aria-label="横軸j・縦軸kの平面に、A=(1,-1) と B=(1,1) の矢印。2本が作る平行四辺形は対角線の長さ2の正方形で面積2"><defs><marker id="ah12" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="context-stroke"/></marker></defs><line x1="12" y1="110" x2="208" y2="110" stroke="var(--sub)" stroke-width="1.3" marker-end="url(#ah12)"/><line x1="110" y1="208" x2="110" y2="12" stroke="var(--sub)" stroke-width="1.3" marker-end="url(#ah12)"/><text x="206" y="126" font-size="13" fill="var(--sub)" text-anchor="end" font-style="italic" font-weight="700">j</text><text x="118" y="22" font-size="13" fill="var(--sub)" font-style="italic" font-weight="700">k</text><line x1="60" y1="107" x2="60" y2="113" stroke="var(--sub)"/><line x1="107" y1="160" x2="113" y2="160" stroke="var(--sub)"/><line x1="160" y1="107" x2="160" y2="113" stroke="var(--sub)"/><line x1="107" y1="60" x2="113" y2="60" stroke="var(--sub)"/><text x="158" y="125" font-size="11" fill="var(--sub)">1</text><text x="116" y="64" font-size="11" fill="var(--sub)">1</text><polygon points="110,110 160,160 210,110 160,60" fill="var(--marker)" fill-opacity=".55" stroke="var(--sub)" stroke-dasharray="4 3"/><line x1="110" y1="110" x2="160" y2="160" stroke="var(--red)" stroke-width="2.4" marker-end="url(#ah12)"/><line x1="110" y1="110" x2="160" y2="60" stroke="var(--ok)" stroke-width="2.4" marker-end="url(#ah12)"/><text x="164" y="174" font-size="14" font-weight="700" fill="var(--red)">A</text><text x="164" y="56" font-size="14" font-weight="700" fill="var(--ok)">B</text><text x="180" y="160" font-size="12" fill="var(--ink)">面積 2</text></svg><figcaption>(1) $\mathbf{A},\mathbf{B}$ と平行四辺形（$j$-$k$ 平面）</figcaption></figure><figure><svg viewBox="0 0 220 220" role="img" aria-label="横軸j・縦軸iの平面に、A×B=2i を縦軸（i軸）の正の向きに長さ2の矢印で描いた図"><defs><marker id="ah12b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="context-stroke"/></marker></defs><line x1="12" y1="110" x2="208" y2="110" stroke="var(--sub)" stroke-width="1.3" marker-end="url(#ah12b)"/><line x1="110" y1="208" x2="110" y2="12" stroke="var(--sub)" stroke-width="1.3" marker-end="url(#ah12b)"/><text x="206" y="126" font-size="13" fill="var(--sub)" text-anchor="end" font-style="italic" font-weight="700">j</text><text x="118" y="22" font-size="13" fill="var(--sub)" font-style="italic" font-weight="700">i</text><line x1="60" y1="107" x2="60" y2="113" stroke="var(--sub)"/><line x1="107" y1="160" x2="113" y2="160" stroke="var(--sub)"/><line x1="160" y1="107" x2="160" y2="113" stroke="var(--sub)"/><line x1="107" y1="60" x2="113" y2="60" stroke="var(--sub)"/><text x="158" y="125" font-size="11" fill="var(--sub)">1</text><text x="116" y="64" font-size="11" fill="var(--sub)">1</text><line x1="110" y1="110" x2="110" y2="12" stroke="var(--red)" stroke-width="3" marker-end="url(#ah12b)"/><text x="126" y="50" font-size="14" font-weight="700" fill="var(--red)">A×B = 2i</text><text x="116" y="40" font-size="11" fill="var(--sub)">2</text></svg><figcaption>(3) 外積 $\mathbf{A}\times\mathbf{B}=2\mathbf{i}$（$j$-$i$ 平面）</figcaption></figure></div>
+<p class="conc">外積は平行四辺形に垂直で、長さは面積と同じ <span class="fin">2</span>（$|2\mathbf{i}|=2$ が (1) の面積と一致）</p>
+<p class="chk">検算：右ねじの向き：$\mathbf{A}$ から $\mathbf{B}$ へ回す（図で下向き→上向き、反時計回り）と、ねじは紙面手前＝$\mathbf{i}$ の正の向きに進む ✓</p>
+      </div></details></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= 2 ベクトル関数の微分・積分 ======================= -->
+<section class="ch" id="v2" data-title="ベクトル関数の微分・積分">
+  <div class="ch-top"><span class="ch-no">第2章</span><h2>ベクトル関数の微分・積分</h2><span class="ch-meta">講義「ベクトル解析(2)」＋演習「ベクトル関数」</span></div>
+  <div class="step"><h3><span class="n">1</span>覚える</h3>
+    <div class="memo">
+      <div class="row"><span class="lbl">ベクトル関数</span><span class="val">成分が関数のベクトル：$\mathbf{A}(u)=A_x(u)\mathbf{i}+A_y(u)\mathbf{j}+A_z(u)\mathbf{k}$。<b>3つの関数を並べただけ</b></span></div>
+      <div class="row"><span class="lbl">微分</span><span class="val"><span class="key">成分ごとに微分</span>：$\mathbf{A}'(u)=A_x'(u)\mathbf{i}+A_y'(u)\mathbf{j}+A_z'(u)\mathbf{k}$</span></div>
+      <div class="row"><span class="lbl">積分</span><span class="val"><span class="key">成分ごとに積分</span>：$\displaystyle\int_a^b\mathbf{A}\,du=\mathbf{i}\int_a^bA_x\,du+\mathbf{j}\int_a^bA_y\,du+\mathbf{k}\int_a^bA_z\,du$</span></div>
+      <div class="row"><span class="lbl">内積の微分</span><span class="val"><span class="key">$(\mathbf{F}\cdot\mathbf{G})'=\mathbf{F}'\cdot\mathbf{G}+\mathbf{F}\cdot\mathbf{G}'$</span>（答えは数）</span></div>
+      <div class="row"><span class="lbl">外積の微分</span><span class="val"><span class="key">$(\mathbf{F}\times\mathbf{G})'=\mathbf{F}'\times\mathbf{G}+\mathbf{F}\times\mathbf{G}'$</span>（順番を変えない）</span></div>
+      <div class="row"><span class="lbl">偏微分</span><span class="val">$\mathbf{A}(u,v)$ を $u$ で偏微分 ＝ <span class="key">$v$ を定数とみて $u$ で微分</span>（成分ごと）</span></div>
+      <div class="row"><span class="lbl">2階偏微分</span><span class="val">$\dfrac{\partial^2\mathbf{A}}{\partial u\partial v}=\dfrac{\partial}{\partial u}\left(\dfrac{\partial\mathbf{A}}{\partial v}\right)$。なめらかなら <span class="key">$\dfrac{\partial^2\mathbf{A}}{\partial u\partial v}=\dfrac{\partial^2\mathbf{A}}{\partial v\partial u}$</span>（順番を変えても同じ）</span></div>
+      <div class="row"><span class="lbl">微分の公式</span><span class="val">$(x^m)'=mx^{m-1}$、$(e^x)'=e^x$、$(\log x)'=\dfrac1x$、$(\sin x)'=\cos x$、$(\cos x)'=-\sin x$</span></div>
+      <div class="row"><span class="lbl">積分の公式</span><span class="val">$\int x^m dx=\dfrac{x^{m+1}}{m+1}$、$\int e^x dx=e^x$、$\int\frac1x dx=\log x$、$\int\sin x\,dx=-\cos x$、$\int\cos x\,dx=\sin x$</span></div>
+      <div class="row"><span class="lbl">中身が $au$</span><span class="val"><span class="key">$(e^{au})'=ae^{au}$、$(\cos au)'=-a\sin au$</span>（合成関数の微分：中身の微分 $a$ が前に出る）</span></div>
+      <div class="row"><span class="lbl">積・商の微分</span><span class="val">$(fg)'=f'g+fg'$、$\left(\dfrac fg\right)'=\dfrac{f'g-fg'}{g^2}$</span></div>
+    </div>
+  </div>
+  <div class="step"><h3><span class="n">2</span>わかる</h3>
+    <div class="explain">
+      <p><b>ふつうの関数のおさらい</b>（スライドの例）：速度 $v$ で時刻 0 から $t$ まで走った距離は $\int_0^t v\,d\tau=vt$。速度が $v(\tau)=a\tau$（$\tau&lt;1$）、その後 $a$ で一定なら、$t\ge1$ での距離は $\dfrac a2+\int_1^t a\,d\tau=at-\dfrac a2$。逆に速度を微分すると加速度（$\tau&lt;1$ で $a$、$\tau&gt;1$ で 0）。<b>積分＝面積</b>、<b>微分＝傾き</b>。</p>
+      <p><b>ベクトル関数は「3本のふつうの関数」</b>。$\mathbf{A}(u)=\sin u\,\mathbf{i}+\cos u\,\mathbf{j}+u\,\mathbf{k}$ なら、$\sin u$・$\cos u$・$u$ をそれぞれ微分・積分して、元の $\mathbf{i},\mathbf{j},\mathbf{k}$ の位置に戻すだけ。新しい計算ルールはない。</p>
+      <p><b>内積・外積の微分</b>は「積の微分 $(fg)'=f'g+fg'$」のベクトル版。内積を先に計算してから微分しても、公式を使っても同じ答えになる（演習2-2 で両方やって検算できる）。</p>
+      <p><b>定積分と不定積分</b>：定積分は積分した変数が答えに残らない（数になる）。不定積分は積分定数 $C$ がつき、変数が答えに残る。</p>
+    </div>
+  </div>
+  <div class="step"><h3><span class="n">3</span>注意</h3>
+    <div class="redpen">
+      <p><b>内積の微分は数</b>$(\mathbf{F}\cdot\mathbf{G})'$ は数（スカラー）。スライドの式には $\mathbf{i},\mathbf{j},\mathbf{k}$ がついているけど、内積は数なので本当は $F_x'G_x+F_y'G_y+F_z'G_z+F_xG_x'+F_yG_y'+F_zG_z'$。</p>
+      <p><b>外積の順番</b>$(\mathbf{F}\times\mathbf{G})'=\mathbf{F}'\times\mathbf{G}+\mathbf{F}\times\mathbf{G}'$ で、$\mathbf{G}\times\mathbf{F}'$ と書くと符号が逆になる。</p>
+      <p><b>中身の微分</b>$e^{au}$ の微分は $ae^{au}$。$a$ を掛け忘れるのが定番ミス。$e^{a(u+v)}$ を $u$ で微分しても $a$ が1つ出る。</p>
+      <p><b>偏微分</b>$u$ で偏微分するとき $v^2$ や $\sin v$ はただの定数。$v^2e^{au}$ の $u$ 微分は $v^2\cdot ae^{au}$。</p>
+    </div>
+  </div>
+  <div class="step"><h3><span class="n">4</span>解く</h3>
+    <div class="probs">
+    <div class="q"><div class="qh"><span class="tag">例題1</span><span class="src">講義スライド「問題」（2階偏微分）</span></div>
+      <div class="body">$\mathbf{A}(u,v)=\sin u\cos v\,\mathbf{i}+v^2\sin u\,\mathbf{j}+u^2\cos v\,\mathbf{k}$ について $\dfrac{\partial^2\mathbf{A}}{\partial u\partial v}$ と $\dfrac{\partial^2\mathbf{A}}{\partial v\partial u}$ を計算せよ。</div>
+      <details><summary>解答</summary><div class="ans">
+        <div class="use"><b>使う知識</b><ul>
+  <li><b>偏微分</b>：$u$ で微分するときは $v$ を定数扱い（逆も同じ）。成分ごとに微分。</li>
+  <li><b>記号の読み方</b>：$\dfrac{\partial^2\mathbf{A}}{\partial u\partial v}=\dfrac{\partial}{\partial u}\left(\dfrac{\partial\mathbf{A}}{\partial v}\right)$（右の $v$ から先に微分）。</li>
+</ul></div>
+<p class="pt">$\dfrac{\partial^2\mathbf{A}}{\partial u\partial v}$</p>
+<ol class="sol">
+  <li>まず $v$ で微分：$\dfrac{\partial\mathbf{A}}{\partial v}=-\sin u\sin v\,\mathbf{i}+2v\sin u\,\mathbf{j}-u^2\sin v\,\mathbf{k}$ <span class="why">理由：$(\cos v)'=-\sin v$、$(v^2)'=2v$。$\sin u$、$u^2$ は定数。</span></li>
+  <li>それを $u$ で微分：$-\cos u\sin v\,\mathbf{i}+2v\cos u\,\mathbf{j}-2u\sin v\,\mathbf{k}$ <span class="why">理由：$(\sin u)'=\cos u$、$(u^2)'=2u$。$\sin v$、$2v$ は定数。</span></li>
+</ol>
+<p class="pt">$\dfrac{\partial^2\mathbf{A}}{\partial v\partial u}$</p>
+<ol class="sol">
+  <li>まず $u$ で微分：$\dfrac{\partial\mathbf{A}}{\partial u}=\cos u\cos v\,\mathbf{i}+v^2\cos u\,\mathbf{j}+2u\cos v\,\mathbf{k}$</li>
+  <li>それを $v$ で微分：$-\cos u\sin v\,\mathbf{i}+2v\cos u\,\mathbf{j}-2u\sin v\,\mathbf{k}$</li>
+</ol>
+<p class="conc">どちらの順でも <span class="fin">$-\cos u\sin v\,\mathbf{i}+2v\cos u\,\mathbf{j}-2u\sin v\,\mathbf{k}$</span>（なめらかな関数なら微分の順番によらない）</p>
+<p class="chk">検算：2つの計算を独立にやって同じ答えになったことが検算になっている ✓</p>
+      </div></details></div>
+
+    <div class="q"><div class="qh"><span class="tag">例題2</span><span class="src">講義スライド「問題」（定積分）</span></div>
+      <div class="body">$\displaystyle\int_0^{\pi/2}\left(\cos u\,\mathbf{i}+e^{2u}\mathbf{j}+\sin u\,\mathbf{k}\right)du$ を計算せよ。</div>
+      <details><summary>解答</summary><div class="ans">
+        <div class="use"><b>使う知識</b><ul>
+  <li><b>ベクトル関数の定積分</b>：成分ごとに定積分する。</li>
+  <li><b>積分公式</b>：$\int\cos u\,du=\sin u$、$\int e^{2u}du=\frac12e^{2u}$、$\int\sin u\,du=-\cos u$。<span class="why">理由：$\left(\frac12e^{2u}\right)'=\frac12\cdot2e^{2u}=e^{2u}$ だから。</span></li>
+</ul></div>
+<ol class="sol">
+  <li>$\mathbf{i}$ 成分：$\left[\sin u\right]_0^{\pi/2}=1-0=1$</li>
+  <li>$\mathbf{j}$ 成分：$\left[\tfrac12e^{2u}\right]_0^{\pi/2}=\tfrac12(e^{\pi}-1)$ <span class="why">理由：$u=\pi/2$ で $e^{2\cdot\pi/2}=e^\pi$、$u=0$ で $e^0=1$。</span></li>
+  <li>$\mathbf{k}$ 成分：$\left[-\cos u\right]_0^{\pi/2}=-0-(-1)=1$</li>
+</ol>
+<p class="conc">成分ごとに積分して <span class="fin">$\mathbf{i}+\dfrac12(e^\pi-1)\mathbf{j}+\mathbf{k}$</span></p>
+<p class="chk">検算：答えを $u$ の関数に戻した $\sin u\,\mathbf{i}+\frac12e^{2u}\mathbf{j}-\cos u\,\mathbf{k}$ を微分すると $\cos u\,\mathbf{i}+e^{2u}\mathbf{j}+\sin u\,\mathbf{k}$ に戻る ✓</p>
+      </div></details></div>
+
+    <div class="q"><div class="qh"><span class="tag">演習2-1</span><span class="src">演習「ベクトル関数」1</span></div>
+      <div class="body">次の1変数ベクトル関数の導関数 $\mathbf{A}'$ を求めよ（$a$ は定数）。<br>(1) $\mathbf{A}=\sin u\,\mathbf{i}+\cos u\,\mathbf{j}+u\,\mathbf{k}$　(2) $\mathbf{A}=u\sin u\,\mathbf{i}+\dfrac{\cos u}{u}\mathbf{j}+e^u\mathbf{k}$　(3) $\mathbf{A}=\log u\,\mathbf{i}+\cos(au)\,\mathbf{j}+e^{au}\mathbf{k}$</div>
+      <details><summary>解答</summary><div class="ans">
+        <div class="use"><b>使う知識</b><ul>
+  <li><b>ベクトル関数の微分</b>：成分ごとに微分する。</li>
+  <li><b>積の微分</b> $(fg)'=f'g+fg'$、<b>商の微分</b> $\left(\frac fg\right)'=\frac{f'g-fg'}{g^2}$。</li>
+  <li><b>合成関数の微分</b>：$(\cos au)'=-a\sin au$、$(e^{au})'=ae^{au}$。</li>
+</ul></div>
+<p class="pt">(1)</p>
+<ol class="sol">
+  <li>$(\sin u)'=\cos u$、$(\cos u)'=-\sin u$、$(u)'=1$ <span class="why">理由：基本の微分公式を成分ごとに。</span></li>
+</ol>
+<p class="conc"><span class="fin">$\mathbf{A}'=\cos u\,\mathbf{i}-\sin u\,\mathbf{j}+\mathbf{k}$</span></p>
+<p class="pt">(2)</p>
+<ol class="sol">
+  <li>$\mathbf{i}$ 成分：$(u\sin u)'=1\cdot\sin u+u\cos u$ <span class="why">理由：積の微分（$f=u,\ g=\sin u$）。</span></li>
+  <li>$\mathbf{j}$ 成分：$\left(\dfrac{\cos u}{u}\right)'=\dfrac{(-\sin u)\cdot u-\cos u\cdot1}{u^2}=-\dfrac{u\sin u+\cos u}{u^2}$ <span class="why">理由：商の微分（$f=\cos u,\ g=u$）。</span></li>
+  <li>$\mathbf{k}$ 成分：$(e^u)'=e^u$</li>
+</ol>
+<p class="conc"><span class="fin">$\mathbf{A}'=(\sin u+u\cos u)\mathbf{i}-\dfrac{u\sin u+\cos u}{u^2}\mathbf{j}+e^u\mathbf{k}$</span></p>
+<p class="pt">(3)</p>
+<ol class="sol">
+  <li>$\mathbf{i}$ 成分：$(\log u)'=\dfrac1u$</li>
+  <li>$\mathbf{j}$ 成分：$(\cos au)'=-\sin(au)\cdot a=-a\sin(au)$ <span class="why">理由：合成関数の微分。中身 $au$ の微分 $a$ を掛ける。</span></li>
+  <li>$\mathbf{k}$ 成分：$(e^{au})'=e^{au}\cdot a=ae^{au}$ <span class="why">理由：同じく中身の微分 $a$ を掛ける。</span></li>
+</ol>
+<p class="conc"><span class="fin">$\mathbf{A}'=\dfrac1u\mathbf{i}-a\sin(au)\,\mathbf{j}+ae^{au}\mathbf{k}$</span></p>
+<p class="chk">検算：(2) の $\mathbf{j}$ 成分を $\cos u\cdot u^{-1}$ の積の微分でやると $-\sin u\cdot u^{-1}+\cos u\cdot(-u^{-2})=-\frac{u\sin u+\cos u}{u^2}$ で一致 ✓。(3) で $a=1$ とすると $\cos u\to-\sin u$、$e^u\to e^u$ で基本公式に戻る ✓</p>
+      </div></details></div>
+
+    <div class="q"><div class="qh"><span class="tag">演習2-2</span><span class="src">演習「ベクトル関数」2</span></div>
+      <div class="body">$\mathbf{A}=u\,\mathbf{i}+u^2\mathbf{j}+e^u\mathbf{k},\ \mathbf{B}=u\,\mathbf{i}+\sin u\,\mathbf{j}+u\,\mathbf{k}$ について<br>(1) 内積 $\mathbf{A}\cdot\mathbf{B}$　(2) $(\mathbf{A}\cdot\mathbf{B})'$　(3) 外積 $\mathbf{A}\times\mathbf{B}$　(4) $(\mathbf{A}\times\mathbf{B})'$</div>
+      <details><summary>解答</summary><div class="ans">
+        <div class="use"><b>使う知識</b><ul>
+  <li><b>内積・外積の成分の式</b>（第1章）。$u$ の関数でも計算のしかたは同じ。</li>
+  <li><b>積の微分</b>：$(fg)'=f'g+fg'$。$(ue^u)'=e^u+ue^u$、$(u^2\sin u)'=2u\sin u+u^2\cos u$、$(e^u\sin u)'=e^u\sin u+e^u\cos u$。</li>
+  <li><b>内積・外積の微分公式</b>：$(\mathbf{A}\cdot\mathbf{B})'=\mathbf{A}'\cdot\mathbf{B}+\mathbf{A}\cdot\mathbf{B}'$、$(\mathbf{A}\times\mathbf{B})'=\mathbf{A}'\times\mathbf{B}+\mathbf{A}\times\mathbf{B}'$。（先に積を計算して成分ごとに微分しても同じ）</li>
+</ul></div>
+<p class="pt">(1)</p>
+<ol class="sol">
+  <li>$\mathbf{A}\cdot\mathbf{B}=u\cdot u+u^2\cdot\sin u+e^u\cdot u$ <span class="why">理由：成分ごとに掛けて足す。</span></li>
+</ol>
+<p class="conc"><span class="fin">$\mathbf{A}\cdot\mathbf{B}=u^2+u^2\sin u+ue^u$</span></p>
+<p class="pt">(2)</p>
+<ol class="sol">
+  <li>(1) を項ごとに微分：$(u^2)'=2u$ <span class="why">理由：$(x^m)'=mx^{m-1}$。</span></li>
+  <li>$(u^2\sin u)'=2u\sin u+u^2\cos u$ <span class="why">理由：積の微分。</span></li>
+  <li>$(ue^u)'=e^u+ue^u$ <span class="why">理由：積の微分。</span></li>
+</ol>
+<p class="conc">足して <span class="fin">$(\mathbf{A}\cdot\mathbf{B})'=2u+2u\sin u+u^2\cos u+e^u+ue^u$</span></p>
+<p class="pt">(3)</p>
+<ol class="sol">
+  <li>$\mathbf{i}$ 成分：$A_yB_z-A_zB_y=u^2\cdot u-e^u\sin u=u^3-e^u\sin u$</li>
+  <li>$\mathbf{j}$ 成分：$A_zB_x-A_xB_z=e^u\cdot u-u\cdot u=ue^u-u^2$</li>
+  <li>$\mathbf{k}$ 成分：$A_xB_y-A_yB_x=u\sin u-u^2\cdot u=u\sin u-u^3$ <span class="why">理由：どれも外積の成分の式（$\mathbf{i}$：$yz$、$\mathbf{j}$：$zx$、$\mathbf{k}$：$xy$）。</span></li>
+</ol>
+<p class="conc"><span class="fin">$\mathbf{A}\times\mathbf{B}=(u^3-e^u\sin u)\mathbf{i}+(ue^u-u^2)\mathbf{j}+(u\sin u-u^3)\mathbf{k}$</span></p>
+<p class="pt">(4)</p>
+<ol class="sol">
+  <li>$\mathbf{i}$ 成分：$(u^3-e^u\sin u)'=3u^2-(e^u\sin u+e^u\cos u)$ <span class="why">理由：$e^u\sin u$ は積の微分。</span></li>
+  <li>$\mathbf{j}$ 成分：$(ue^u-u^2)'=e^u+ue^u-2u$</li>
+  <li>$\mathbf{k}$ 成分：$(u\sin u-u^3)'=\sin u+u\cos u-3u^2$</li>
+</ol>
+<p class="conc"><span class="fin">$(\mathbf{A}\times\mathbf{B})'=(3u^2-e^u\sin u-e^u\cos u)\mathbf{i}+(e^u+ue^u-2u)\mathbf{j}+(\sin u+u\cos u-3u^2)\mathbf{k}$</span></p>
+<p class="chk">検算：(2) を公式で。$\mathbf{A}'=\mathbf{i}+2u\mathbf{j}+e^u\mathbf{k}$、$\mathbf{B}'=\mathbf{i}+\cos u\,\mathbf{j}+\mathbf{k}$。$\mathbf{A}'\cdot\mathbf{B}=u+2u\sin u+ue^u$、$\mathbf{A}\cdot\mathbf{B}'=u+u^2\cos u+e^u$。足すと $2u+2u\sin u+u^2\cos u+e^u+ue^u$ で一致 ✓。(3) は $\mathbf{A}\cdot(\mathbf{A}\times\mathbf{B})=u(u^3-e^u\sin u)+u^2(ue^u-u^2)+e^u(u\sin u-u^3)=0$ ✓</p>
+      </div></details></div>
+
+    <div class="q"><div class="qh"><span class="tag">演習2-3</span><span class="src">演習「ベクトル関数」3</span></div>
+      <div class="body">2変数ベクトル関数 $\mathbf{A}=v^2e^{au}\mathbf{i}+\cos u\sin v\,\mathbf{j}+e^{a(u+v)}\mathbf{k}$ について<br>(1) $\dfrac{\partial\mathbf{A}}{\partial u}$　(2) $\dfrac{\partial\mathbf{A}}{\partial v}$　(3) $\dfrac{\partial^2\mathbf{A}}{\partial v^2}$　(4) $\dfrac{\partial^2\mathbf{A}}{\partial u\partial v}$</div>
+      <details><summary>解答</summary><div class="ans">
+        <div class="use"><b>使う知識</b><ul>
+  <li><b>偏微分</b>：$u$ で微分するときは $v$ を定数、$v$ で微分するときは $u$ を定数として、成分ごとに微分。</li>
+  <li><b>合成関数の微分</b>：$\dfrac{\partial}{\partial u}e^{a(u+v)}=ae^{a(u+v)}$（中身 $a(u+v)$ を $u$ で微分すると $a$）。$v$ で微分しても同じく $a$ が出る。</li>
+  <li><b>2階偏微分</b>：$\dfrac{\partial^2\mathbf{A}}{\partial u\partial v}=\dfrac{\partial}{\partial u}\left(\dfrac{\partial\mathbf{A}}{\partial v}\right)$。</li>
+</ul></div>
+<p class="pt">(1)</p>
+<ol class="sol">
+  <li>$\mathbf{i}$：$v^2$ は定数なので $v^2\cdot ae^{au}=av^2e^{au}$</li>
+  <li>$\mathbf{j}$：$\sin v$ は定数なので $-\sin u\sin v$</li>
+  <li>$\mathbf{k}$：$ae^{a(u+v)}$ <span class="why">理由：合成関数の微分で中身の $u$ 微分 $a$ が出る。</span></li>
+</ol>
+<p class="conc"><span class="fin">$\dfrac{\partial\mathbf{A}}{\partial u}=av^2e^{au}\mathbf{i}-\sin u\sin v\,\mathbf{j}+ae^{a(u+v)}\mathbf{k}$</span></p>
+<p class="pt">(2)</p>
+<ol class="sol">
+  <li>$\mathbf{i}$：$e^{au}$ は定数なので $2ve^{au}$</li>
+  <li>$\mathbf{j}$：$\cos u$ は定数なので $\cos u\cos v$</li>
+  <li>$\mathbf{k}$：$ae^{a(u+v)}$ <span class="why">理由：中身 $a(u+v)$ を $v$ で微分しても $a$。</span></li>
+</ol>
+<p class="conc"><span class="fin">$\dfrac{\partial\mathbf{A}}{\partial v}=2ve^{au}\mathbf{i}+\cos u\cos v\,\mathbf{j}+ae^{a(u+v)}\mathbf{k}$</span></p>
+<p class="pt">(3)</p>
+<ol class="sol">
+  <li>(2) をもう一度 $v$ で微分する：$\mathbf{i}$：$2e^{au}$、$\mathbf{j}$：$-\cos u\sin v$、$\mathbf{k}$：$a\cdot ae^{a(u+v)}=a^2e^{a(u+v)}$ <span class="why">理由：$(2v)'=2$、$(\cos v)'=-\sin v$、また $a$ が1つ出る。</span></li>
+</ol>
+<p class="conc"><span class="fin">$\dfrac{\partial^2\mathbf{A}}{\partial v^2}=2e^{au}\mathbf{i}-\cos u\sin v\,\mathbf{j}+a^2e^{a(u+v)}\mathbf{k}$</span></p>
+<p class="pt">(4)</p>
+<ol class="sol">
+  <li>(2) を $u$ で微分する：$\mathbf{i}$：$2v\cdot ae^{au}=2ave^{au}$、$\mathbf{j}$：$-\sin u\cos v$、$\mathbf{k}$：$a^2e^{a(u+v)}$ <span class="why">理由：$\frac{\partial^2}{\partial u\partial v}$ は「$v$ で微分した後に $u$ で微分」。$v$ は定数扱い。</span></li>
+</ol>
+<p class="conc"><span class="fin">$\dfrac{\partial^2\mathbf{A}}{\partial u\partial v}=2ave^{au}\mathbf{i}-\sin u\cos v\,\mathbf{j}+a^2e^{a(u+v)}\mathbf{k}$</span></p>
+<p class="chk">検算：(1) を $v$ で微分しても $2ave^{au}\mathbf{i}-\sin u\cos v\,\mathbf{j}+a^2e^{a(u+v)}\mathbf{k}$ で (4) と一致 ✓（微分の順番によらない）</p>
+      </div></details></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= 3 勾配 ======================= -->
+<section class="ch" id="v3" data-title="勾配">
+  <div class="ch-top"><span class="ch-no">第3章</span><h2>勾配・方向微分・等位面</h2><span class="ch-meta">講義「ベクトル解析(3)」前半＋演習「スカラー関数の勾配」</span></div>
+  <div class="step"><h3><span class="n">1</span>覚える</h3>
+    <div class="memo">
+      <div class="row"><span class="lbl">微分の定義</span><span class="val">$\dfrac{df}{dx}=\displaystyle\lim_{h\to0}\dfrac{f(x+h)-f(x)}{h}$（接線の傾き）</span></div>
+      <div class="row"><span class="lbl">ナブラ</span><span class="val"><span class="key">$\nabla=\dfrac{\partial}{\partial x}\mathbf{i}+\dfrac{\partial}{\partial y}\mathbf{j}+\dfrac{\partial}{\partial z}\mathbf{k}$</span></span></div>
+      <div class="row"><span class="lbl">勾配</span><span class="val">スカラー場 $f$ の勾配：<span class="key">$\nabla f=\dfrac{\partial f}{\partial x}\mathbf{i}+\dfrac{\partial f}{\partial y}\mathbf{j}+\dfrac{\partial f}{\partial z}\mathbf{k}$</span>（答えは<b>ベクトル</b>）</span></div>
+      <div class="row"><span class="lbl">方向微分</span><span class="val">単位ベクトル $\mathbf{u}$ の方向への傾き：<span class="key">$\dfrac{df}{du}=\nabla f\cdot\mathbf{u}=|\nabla f|\cos\theta$</span>（勾配の $\mathbf{u}$ 方向への射影）</span></div>
+      <div class="row"><span class="lbl">勾配の向き</span><span class="val"><span class="key">$f$ がいちばん急に増える向き</span>。その方向の傾きが $|\nabla f|$</span></div>
+      <div class="row"><span class="lbl">等位面</span><span class="val">$f$ が同じ値になる点の集まり（2次元なら等位線）。<span class="key">等位面と勾配は直交</span>：等位面に接する $\mathbf{u}$ では $\nabla f\cdot\mathbf{u}=0$</span></div>
+      <div class="row"><span class="lbl">連鎖律</span><span class="val">$f=g(s),\ s=x^2+y^2+z^2$ なら <span class="key">$\dfrac{\partial f}{\partial x}=\dfrac{dg}{ds}\cdot\dfrac{\partial s}{\partial x}=\dfrac{dg}{ds}\cdot2x$</span></span></div>
+    </div>
+  </div>
+  <div class="step"><h3><span class="n">2</span>わかる</h3>
+    <div class="explain">
+      <p><b>スカラー場は「場所ごとの数」</b>。たとえば $f=\dfrac{1}{\sqrt{x^2+y^2+z^2}}$ は原点からの距離に反比例する場で、遠くで小さく近くで大きい。</p>
+      <p><b>勾配は「坂の上り方向の矢印」</b>。$x$ 方向・$y$ 方向・$z$ 方向にどれだけ増えるか（偏微分）を並べたベクトル。$f=x^2+y^2$ なら $\nabla f=2x\mathbf{i}+2y\mathbf{j}$ で、点 $(1,1)$ では $2\mathbf{i}+2\mathbf{j}$、点 $(-1,0)$ では $-2\mathbf{i}$。どちらも原点から外向き＝$f$ が増える向き。</p>
+      <div class="fig"><figure><svg viewBox="0 0 270 220" role="img" aria-label="f=x²+y² の等位線（同心円）と、点(1,1)での勾配 2i+2j。勾配は円に直角で外向き"><defs><marker id="ahg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="context-stroke"/></marker></defs><line x1="6" y1="110" x2="214" y2="110" stroke="var(--sub)" stroke-width="1.3" marker-end="url(#ahg)"/><line x1="110" y1="214" x2="110" y2="6" stroke="var(--sub)" stroke-width="1.3" marker-end="url(#ahg)"/><text x="212" y="126" font-size="13" fill="var(--sub)" text-anchor="end" font-style="italic" font-weight="700">x</text><text x="118" y="16" font-size="13" fill="var(--sub)" font-style="italic" font-weight="700">y</text><circle cx="110" cy="110" r="34.0" fill="none" stroke="var(--sub)" stroke-width="1.1"/><circle cx="110" cy="110" r="48.1" fill="none" stroke="var(--sub)" stroke-width="1.1"/><circle cx="110" cy="110" r="68.0" fill="none" stroke="var(--sub)" stroke-width="1.1"/><circle cx="110" cy="110" r="88.4" fill="none" stroke="var(--sub)" stroke-width="1.1"/><line x1="108" y1="40" x2="180" y2="112" stroke="var(--ok)" stroke-width="1.6" stroke-dasharray="5 3"/><line x1="144" y1="76" x2="194" y2="26" stroke="var(--red)" stroke-width="2.6" marker-end="url(#ahg)"/><circle cx="144" cy="76" r="3" fill="var(--ink)"/><text x="184" y="22" font-size="12" font-weight="700" fill="var(--red)">∇f = 2i+2j</text><text x="86" y="38" font-size="11" fill="var(--ok)">等位線の接線</text><text x="148" y="92" font-size="10" fill="var(--sub)">(1,1)</text></svg><figcaption>$f=x^2+y^2$ の等位線と勾配</figcaption></figure></div>
+      <p><b>方向微分は射影</b>。斜め方向 $\mathbf{u}$ に進んだときの傾きは、勾配ベクトルの $\mathbf{u}$ 方向成分 $\nabla f\cdot\mathbf{u}$。だから $\mathbf{u}$ が勾配と同じ向きのとき最大、直角（＝等位線に沿う向き）のとき 0。等位線に沿って歩いても高さは変わらない、という当たり前のことを式で言っている。</p>
+      <p><b>等位面</b>：$f=x^2+y^2$ の値 1 の等位線は円 $x^2+y^2=1$、$f=x^2+y^2+z^2$ の値 1 の等位面は球 $x^2+y^2+z^2=1$。</p>
+    </div>
+  </div>
+  <div class="step"><h3><span class="n">3</span>注意</h3>
+    <div class="redpen">
+      <p><b>単位ベクトル</b>方向微分の $\mathbf{u}$ は長さ1。問題が $(1,1,0)$ のように長さ1でない向きで出したら、自分で長さで割ってから内積する。</p>
+      <p><b>点を代入</b>「点 $(1,1,1)$ での方向微分」は、先に $\nabla f$ を文字のまま求めてから座標を代入する。</p>
+      <p><b>答えの種類</b>勾配 $\nabla f$ はベクトル、方向微分 $\nabla f\cdot\mathbf{u}$ は数。</p>
+      <p><b>解答プリントの誤植</b>1(2) の「$u=x^2+y^2+x^2$」は $u=x^2+y^2+z^2$ のこと。2(1) の答え「$\sqrt3$」は $2\sqrt3$ が正しい（$2\cdot\frac{1}{\sqrt3}\cdot3=\frac{6}{\sqrt3}$）。</p>
+    </div>
+  </div>
+  <div class="step"><h3><span class="n">4</span>解く</h3>
+    <div class="probs">
+    <div class="q"><div class="qh"><span class="tag">例題</span><span class="src">講義スライド「例題：勾配」</span></div>
+      <div class="body">スカラー場 $f=x^2+y^2+z^2$ の勾配を求め、点 $(1,1,1)$ における単位ベクトル (a) $\mathbf{u}=\frac{1}{\sqrt2}(1,1,0)$、(b) $\mathbf{u}=\frac{1}{\sqrt2}(-1,1,0)$ の方向への方向微分を求めよ。</div>
+      <details><summary>解答</summary><div class="ans">
+        <div class="use"><b>使う知識</b><ul>
+  <li><b>勾配</b>：$\nabla f=\frac{\partial f}{\partial x}\mathbf{i}+\frac{\partial f}{\partial y}\mathbf{j}+\frac{\partial f}{\partial z}\mathbf{k}$。</li>
+  <li><b>方向微分</b>：$\nabla f\cdot\mathbf{u}$（$\mathbf{u}$ は単位ベクトル）。</li>
+</ul></div>
+<ol class="sol">
+  <li>$\frac{\partial f}{\partial x}=2x$（$y^2,z^2$ は定数扱い）、同様に $2y,\ 2z$。よって $\nabla f=2x\mathbf{i}+2y\mathbf{j}+2z\mathbf{k}$ <span class="why">理由：勾配の定義。</span></li>
+  <li>点 $(1,1,1)$ を代入：$\nabla f=2\mathbf{i}+2\mathbf{j}+2\mathbf{k}$</li>
+  <li>(a)：$(2,2,2)\cdot\frac{1}{\sqrt2}(1,1,0)=\frac{2+2+0}{\sqrt2}=\frac{4}{\sqrt2}=2\sqrt2$ <span class="why">理由：方向微分は勾配と $\mathbf{u}$ の内積。</span></li>
+  <li>(b)：$(2,2,2)\cdot\frac{1}{\sqrt2}(-1,1,0)=\frac{-2+2+0}{\sqrt2}=0$</li>
+</ol>
+<p class="conc"><span class="fin">$\nabla f=2x\mathbf{i}+2y\mathbf{j}+2z\mathbf{k}$</span>、方向微分は (a) <span class="fin">$2\sqrt2$</span>　(b) <span class="fin">$0$</span>（(b) の向きは等位面＝球に接する向きなので傾き0）</p>
+<p class="chk">検算：(b) の $\mathbf{u}$ と点の位置ベクトル $(1,1,1)$ の内積は $0$。球の半径方向と直角＝球面に接する向きなので、方向微分 0 はつじつまが合う ✓</p>
+      </div></details></div>
+
+    <div class="q"><div class="qh"><span class="tag">演習3-1</span><span class="src">演習「スカラー関数の勾配」1（解答プリントあり）</span></div>
+      <div class="body">次のスカラー場の勾配を求めよ。<br>(1) $f=x^2+y^2+z^2$　(2) $f=\dfrac{1}{\sqrt{x^2+y^2+z^2}}$　(3) $f=e^{-(x^2+y^2+z^2)}$</div>
+      <details><summary>解答</summary><div class="ans">
+        <div class="use"><b>使う知識</b><ul>
+  <li><b>勾配</b>：$\nabla f=\frac{\partial f}{\partial x}\mathbf{i}+\frac{\partial f}{\partial y}\mathbf{j}+\frac{\partial f}{\partial z}\mathbf{k}$。</li>
+  <li><b>合成関数の偏微分</b>：$s=x^2+y^2+z^2$ とおいて $f=g(s)$ なら $\frac{\partial f}{\partial x}=g'(s)\cdot\frac{\partial s}{\partial x}=g'(s)\cdot2x$。</li>
+  <li><b>対称性</b>：$f$ が $x,y,z$ について同じ形なら、$y,z$ の偏微分は $x$ を $y,z$ に置きかえるだけ。</li>
+</ul></div>
+<p class="pt">(1)</p>
+<ol class="sol">
+  <li>$\frac{\partial f}{\partial x}=2x,\ \frac{\partial f}{\partial y}=2y,\ \frac{\partial f}{\partial z}=2z$ <span class="why">理由：ほかの文字は定数扱いで微分。</span></li>
+</ol>
+<p class="conc"><span class="fin">$\nabla f=2x\mathbf{i}+2y\mathbf{j}+2z\mathbf{k}$</span></p>
+<p class="pt">(2)</p>
+<ol class="sol">
+  <li>$s=x^2+y^2+z^2$ とおくと $f=s^{-1/2}$ <span class="why">理由：ルートは $\frac12$ 乗、分母は $-1$ 乗。</span></li>
+  <li>$\frac{df}{ds}=-\frac12s^{-3/2}$、$\frac{\partial s}{\partial x}=2x$ <span class="why">理由：$(s^m)'=ms^{m-1}$ で $m=-\frac12$。</span></li>
+  <li>$\frac{\partial f}{\partial x}=-\frac12s^{-3/2}\cdot2x=-x(x^2+y^2+z^2)^{-3/2}$ <span class="why">理由：連鎖律で掛ける。</span></li>
+  <li>$y,z$ も同様に $-y(\cdots)^{-3/2},\ -z(\cdots)^{-3/2}$ <span class="why">理由：対称性。</span></li>
+</ol>
+<p class="conc"><span class="fin">$\nabla f=-\dfrac{x\mathbf{i}+y\mathbf{j}+z\mathbf{k}}{(x^2+y^2+z^2)^{3/2}}$</span>（原点を向く＝原点に近いほど $f$ が大きい）</p>
+<p class="pt">(3)</p>
+<ol class="sol">
+  <li>$f=e^{-s}$ とみると $\frac{df}{ds}=-e^{-s}$、$\frac{\partial s}{\partial x}=2x$</li>
+  <li>$\frac{\partial f}{\partial x}=-e^{-s}\cdot2x=-2xe^{-(x^2+y^2+z^2)}$ <span class="why">理由：連鎖律。</span></li>
+  <li>$y,z$ も同様。</li>
+</ol>
+<p class="conc"><span class="fin">$\nabla f=-2e^{-(x^2+y^2+z^2)}(x\mathbf{i}+y\mathbf{j}+z\mathbf{k})$</span></p>
+<p class="chk">検算：解答プリントの答えと一致 ✓。(2) は点 $(1,0,0)$ で $-\mathbf{i}$。$f=1/x$（$x&gt;0$, $y=z=0$）の微分 $-1/x^2$ に $x=1$ を入れた $-1$ と一致 ✓</p>
+      </div></details></div>
+
+    <div class="q"><div class="qh"><span class="tag">演習3-2</span><span class="src">演習「スカラー関数の勾配」2（解答プリントあり）</span></div>
+      <div class="body">演習3-1 の3つのスカラー場について、点 $(1,1,1)$ での単位ベクトル $\mathbf{u}=\dfrac{1}{\sqrt3}(1,1,1)$ 方向の方向微分を求めよ。</div>
+      <details><summary>解答</summary><div class="ans">
+        <div class="use"><b>使う知識</b><ul>
+  <li><b>方向微分</b>：$\nabla f\cdot\mathbf{u}$。勾配に点の座標を代入してから内積をとる。</li>
+  <li>点 $(1,1,1)$ では $x^2+y^2+z^2=3$。</li>
+</ul></div>
+<p class="pt">(1)</p>
+<ol class="sol">
+  <li>$\nabla f(1,1,1)=2\mathbf{i}+2\mathbf{j}+2\mathbf{k}$ <span class="why">理由：3-1(1) に代入。</span></li>
+  <li>$(2,2,2)\cdot\frac{1}{\sqrt3}(1,1,1)=\frac{6}{\sqrt3}=2\sqrt3$ <span class="why">理由：$\frac{6}{\sqrt3}=\frac{6\sqrt3}{3}$。</span></li>
+</ol>
+<p class="conc"><span class="fin">$2\sqrt3$</span>（解答プリントは「$\sqrt3$」になっているけど、$2\cdot\frac{3}{\sqrt3}=\frac{6}{\sqrt3}=2\sqrt3$ が正しい）</p>
+<p class="pt">(2)</p>
+<ol class="sol">
+  <li>$\nabla f(1,1,1)=-3^{-3/2}(\mathbf{i}+\mathbf{j}+\mathbf{k})$ <span class="why">理由：3-1(2) に $x^2+y^2+z^2=3$ を代入。</span></li>
+  <li>内積：$-3^{-3/2}\cdot\frac{1+1+1}{\sqrt3}=-3^{-3/2}\cdot\sqrt3=-3^{-1}$ <span class="why">理由：$\frac{3}{\sqrt3}=\sqrt3=3^{1/2}$、指数を足して $-\frac32+\frac12=-1$。</span></li>
+</ol>
+<p class="conc"><span class="fin">$-\dfrac13$</span></p>
+<p class="pt">(3)</p>
+<ol class="sol">
+  <li>$\nabla f(1,1,1)=-2e^{-3}(\mathbf{i}+\mathbf{j}+\mathbf{k})$</li>
+  <li>内積：$-2e^{-3}\cdot\frac{3}{\sqrt3}=-2\sqrt3e^{-3}$</li>
+</ol>
+<p class="conc"><span class="fin">$-2\sqrt3e^{-3}$</span></p>
+<p class="chk">検算：$\mathbf{u}$ は点 $(1,1,1)$ の外向き（原点から離れる向き）。(1) は外ほど大きい場なのでプラス、(2)(3) は外ほど小さい場なのでマイナス ✓。(1) は $|\nabla f|=2\sqrt3$ と同じ値（勾配と同じ向きに進むので最大値）✓</p>
+      </div></details></div>
+
+    <div class="q"><div class="qh"><span class="tag">演習3-3</span><span class="src">演習「スカラー関数の勾配」3</span></div>
+      <div class="body">次の2次元スカラー場の値が 1 の等位曲線を描け。<br>(1) $f(x,y)=x^2+y^2$　(2) $f(x,y)=3x^2+y^2$　(3) $f(x,y)=|x|+|y|$</div>
+      <details><summary>解答</summary><div class="ans">
+        <div class="use"><b>使う知識</b><ul>
+  <li><b>等位線</b>：$f(x,y)=1$ を満たす点 $(x,y)$ の集まり。</li>
+  <li><b>楕円</b>：$\frac{x^2}{a^2}+\frac{y^2}{b^2}=1$ は $x$ 軸と $\pm a$、$y$ 軸と $\pm b$ で交わる楕円。</li>
+  <li><b>絶対値</b>：$|x|=x\ (x\ge0),\ -x\ (x&lt;0)$。象限ごとに場合分けすると直線になる。</li>
+</ul></div>
+<p class="pt">(1)</p>
+<ol class="sol">
+  <li>$x^2+y^2=1$ は原点中心・半径 1 の円 <span class="why">理由：原点からの距離 $\sqrt{x^2+y^2}$ が 1。</span></li>
+</ol>
+<p class="pt">(2)</p>
+<ol class="sol">
+  <li>$3x^2+y^2=1$ を $\dfrac{x^2}{(1/\sqrt3)^2}+\dfrac{y^2}{1^2}=1$ と書き直す <span class="why">理由：$3x^2=\frac{x^2}{1/3}$。</span></li>
+  <li>$x$ 軸との交点 $\pm\frac{1}{\sqrt3}\approx\pm0.58$、$y$ 軸との交点 $\pm1$ の<b>縦長の楕円</b>。</li>
+</ol>
+<p class="pt">(3)</p>
+<ol class="sol">
+  <li>第1象限（$x,y\ge0$）：$x+y=1$ → $(1,0)$ と $(0,1)$ を結ぶ線分 <span class="why">理由：絶対値が外れる。</span></li>
+  <li>ほかの象限も同様に $-x+y=1$、$-x-y=1$、$x-y=1$ の線分。</li>
+  <li>4本つなぐと頂点 $(\pm1,0),(0,\pm1)$ の<b>ひし形（正方形を45°回したもの）</b>。</li>
+</ol>
+<div class="fig"><figure><svg viewBox="0 0 200 200" role="img" aria-label="(1) 円 $x^2+y^2=1$ の等位線"><defs><marker id="ahl0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="context-stroke"/></marker></defs><line x1="8" y1="100" x2="192" y2="100" stroke="var(--sub)" stroke-width="1.3" marker-end="url(#ahl0)"/><line x1="100" y1="192" x2="100" y2="8" stroke="var(--sub)" stroke-width="1.3" marker-end="url(#ahl0)"/><text x="190" y="116" font-size="13" fill="var(--sub)" text-anchor="end" font-style="italic" font-weight="700">x</text><text x="108" y="18" font-size="13" fill="var(--sub)" font-style="italic" font-weight="700">y</text><line x1="40" y1="97" x2="40" y2="103" stroke="var(--sub)"/><line x1="97" y1="160" x2="103" y2="160" stroke="var(--sub)"/><line x1="160" y1="97" x2="160" y2="103" stroke="var(--sub)"/><line x1="97" y1="40" x2="103" y2="40" stroke="var(--sub)"/><text x="158" y="115" font-size="11" fill="var(--sub)">1</text><text x="106" y="44" font-size="11" fill="var(--sub)">1</text><circle cx="100" cy="100" r="60" fill="none" stroke="var(--red)" stroke-width="2.4"/></svg><figcaption>(1) 円 $x^2+y^2=1$</figcaption></figure><figure><svg viewBox="0 0 200 200" role="img" aria-label="(2) 楕円 $3x^2+y^2=1$ の等位線"><defs><marker id="ahl1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="context-stroke"/></marker></defs><line x1="8" y1="100" x2="192" y2="100" stroke="var(--sub)" stroke-width="1.3" marker-end="url(#ahl1)"/><line x1="100" y1="192" x2="100" y2="8" stroke="var(--sub)" stroke-width="1.3" marker-end="url(#ahl1)"/><text x="190" y="116" font-size="13" fill="var(--sub)" text-anchor="end" font-style="italic" font-weight="700">x</text><text x="108" y="18" font-size="13" fill="var(--sub)" font-style="italic" font-weight="700">y</text><line x1="40" y1="97" x2="40" y2="103" stroke="var(--sub)"/><line x1="97" y1="160" x2="103" y2="160" stroke="var(--sub)"/><line x1="160" y1="97" x2="160" y2="103" stroke="var(--sub)"/><line x1="97" y1="40" x2="103" y2="40" stroke="var(--sub)"/><text x="158" y="115" font-size="11" fill="var(--sub)">1</text><text x="106" y="44" font-size="11" fill="var(--sub)">1</text><ellipse cx="100" cy="100" rx="34.6" ry="60" fill="none" stroke="var(--red)" stroke-width="2.4"/><text x="136.6" y="94" font-size="10" fill="var(--sub)">1/√3</text></svg><figcaption>(2) 楕円 $3x^2+y^2=1$</figcaption></figure><figure><svg viewBox="0 0 200 200" role="img" aria-label="(3) ひし形 $|x|+|y|=1$ の等位線"><defs><marker id="ahl2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="context-stroke"/></marker></defs><line x1="8" y1="100" x2="192" y2="100" stroke="var(--sub)" stroke-width="1.3" marker-end="url(#ahl2)"/><line x1="100" y1="192" x2="100" y2="8" stroke="var(--sub)" stroke-width="1.3" marker-end="url(#ahl2)"/><text x="190" y="116" font-size="13" fill="var(--sub)" text-anchor="end" font-style="italic" font-weight="700">x</text><text x="108" y="18" font-size="13" fill="var(--sub)" font-style="italic" font-weight="700">y</text><line x1="40" y1="97" x2="40" y2="103" stroke="var(--sub)"/><line x1="97" y1="160" x2="103" y2="160" stroke="var(--sub)"/><line x1="160" y1="97" x2="160" y2="103" stroke="var(--sub)"/><line x1="97" y1="40" x2="103" y2="40" stroke="var(--sub)"/><text x="158" y="115" font-size="11" fill="var(--sub)">1</text><text x="106" y="44" font-size="11" fill="var(--sub)">1</text><polygon points="160,100 100,40 40,100 100,160" fill="none" stroke="var(--red)" stroke-width="2.4"/></svg><figcaption>(3) ひし形 $|x|+|y|=1$</figcaption></figure></div>
+<p class="conc"><span class="fin">(1) 半径1の円　(2) 横の半径 $\frac{1}{\sqrt3}$・縦の半径 1 の楕円　(3) 頂点 $(\pm1,0),(0,\pm1)$ のひし形</span></p>
+<p class="chk">検算：どの曲線も $(0,\pm1)$ を通る（$x=0$ を入れるとどれも $y^2=1$ または $|y|=1$）✓。(2) で $y=0$ なら $3x^2=1$、$x=\pm\frac{1}{\sqrt3}$ ✓</p>
+      </div></details></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= 4 発散・回転 ======================= -->
+<section class="ch" id="v4" data-title="発散・回転">
+  <div class="ch-top"><span class="ch-no">第4章</span><h2>発散と回転</h2><span class="ch-meta">講義「ベクトル解析(3)」後半＋演習「発散と回転」</span></div>
+  <div class="step"><h3><span class="n">1</span>覚える</h3>
+    <div class="memo">
+      <div class="row"><span class="lbl">発散 div</span><span class="val"><span class="key">$\nabla\cdot\mathbf{A}=\dfrac{\partial A_x}{\partial x}+\dfrac{\partial A_y}{\partial y}+\dfrac{\partial A_z}{\partial z}$</span>（答えは<b>数</b>）</span></div>
+      <div class="row"><span class="lbl">発散の意味</span><span class="val">小さな箱から<span class="key">どれだけ湧き出すか</span>。0 なら「入った分だけそのまま出る」</span></div>
+      <div class="row"><span class="lbl">回転 rot</span><span class="val">ナブラとの外積：$\nabla\times\mathbf{A}=\begin{vmatrix}\mathbf{i}&\mathbf{j}&\mathbf{k}\\\frac{\partial}{\partial x}&\frac{\partial}{\partial y}&\frac{\partial}{\partial z}\\A_x&A_y&A_z\end{vmatrix}$</span></div>
+      <div class="row"><span class="lbl">回転（成分）</span><span class="val"><span class="key">$\left(\dfrac{\partial A_z}{\partial y}-\dfrac{\partial A_y}{\partial z}\right)\mathbf{i}+\left(\dfrac{\partial A_x}{\partial z}-\dfrac{\partial A_z}{\partial x}\right)\mathbf{j}+\left(\dfrac{\partial A_y}{\partial x}-\dfrac{\partial A_x}{\partial y}\right)\mathbf{k}$</span>（答えは<b>ベクトル</b>）</span></div>
+      <div class="row"><span class="lbl">回転の意味</span><span class="val"><span class="key">渦の強さと軸の向き</span>。$\mathbf{k}$ 成分 $\frac{\partial A_y}{\partial x}-\frac{\partial A_x}{\partial y}$ が $z$ 軸まわりの渦</span></div>
+      <div class="row"><span class="lbl">電磁気では</span><span class="val">静電界は電荷のない所で発散0。磁場の渦→電流（アンペールの法則）、電場の渦→磁束密度の時間変化（ファラデーの法則）</span></div>
+    </div>
+  </div>
+  <div class="step"><h3><span class="n">2</span>わかる</h3>
+    <div class="explain">
+      <p><b>発散</b>：小さな立方体を考えると、$x$ 方向に $\frac{\partial A_x}{\partial x}$、$y$ 方向に $\frac{\partial A_y}{\partial y}$、$z$ 方向に $\frac{\partial A_z}{\partial z}$ だけ「出ていく量が入ってくる量より多い」。その合計が発散。足される量＝発散。</p>
+      <p><b>回転の $\mathbf{k}$ 成分</b>：点 $(x,y)$ のまわりの小さな正方形を反時計回りに一周する。右の辺（$x+\Delta x$）で上向きの成分 $A_y$ が増えていれば（$\frac{\partial A_y}{\partial x}&gt;0$）反時計回りに押される。上の辺（$y+\Delta y$）で $A_x$ が減っていれば（$\frac{\partial A_x}{\partial y}&lt;0$）やはり反時計回り。だから $\frac{\partial A_y}{\partial x}-\frac{\partial A_x}{\partial y}$ が渦の強さ。</p>
+      <p><b>スライドの例</b>：$\mathbf{A}=y\mathbf{i}+x\mathbf{j}$ は回転 $=(1-1)\mathbf{k}=\mathbf{0}$ で渦なし。$\mathbf{A}=(-x-y)\mathbf{i}+(x-y)\mathbf{j}$ は回転 $=(1-(-1))\mathbf{k}=2\mathbf{k}$ で $z$ 軸まわりに反時計回りの渦がある。</p>
+      <p><b>覚え方</b>：回転の $\mathbf{i},\mathbf{j},\mathbf{k}$ 成分は外積と同じ並び（$yz$、$zx$、$xy$）で、$B$ のところを $\frac{\partial}{\partial\,\cdot}$ と $A$ に置きかえたもの。</p>
+    </div>
+  </div>
+  <div class="step"><h3><span class="n">3</span>注意</h3>
+    <div class="redpen">
+      <p><b>答えの種類</b>発散は<b>数</b>、回転は<b>ベクトル</b>。発散に $\mathbf{i}$ をつけたり、回転を数で答えたら×。</p>
+      <p><b>どの成分をどれで微分</b>発散は「$A_x$ を $x$ で」と<b>同じ文字どうし</b>。回転は「$A_z$ を $y$ で」のように<b>違う文字どうし</b>。</p>
+      <p><b>2次元の場</b>$z$ 成分がなく $x,y$ だけの場でも、回転は $\mathbf{k}$ 成分として出てくる（例：$-2\mathbf{k}$）。</p>
+      <p><b>原点</b>$\frac{x}{\sqrt{x^2+y^2}}$ のような場は原点で定義されないので「原点以外で」計算する。</p>
+      <p><b>スライドの記号</b>静電界のスライドの「$\nabla E=0$」は発散 $\nabla\cdot\mathbf{E}=0$ のこと。分母の $4\pi_0$ は $4\pi\varepsilon_0$（$\varepsilon_0$：真空の誘電率）。</p>
+    </div>
+  </div>
+  <div class="step"><h3><span class="n">4</span>解く</h3>
+    <div class="probs">
+    <div class="q"><div class="qh"><span class="tag">例題</span><span class="src">講義スライド「発散の計算例」＋回転</span></div>
+      <div class="body">$\mathbf{A}=xy\,\mathbf{i}+yz\,\mathbf{j}+zx\,\mathbf{k}$ の発散と回転を求めよ。</div>
+      <details><summary>解答</summary><div class="ans">
+        <div class="use"><b>使う知識</b><ul>
+  <li><b>発散</b>：$\nabla\cdot\mathbf{A}=\frac{\partial A_x}{\partial x}+\frac{\partial A_y}{\partial y}+\frac{\partial A_z}{\partial z}$。</li>
+  <li><b>回転</b>：$\left(\frac{\partial A_z}{\partial y}-\frac{\partial A_y}{\partial z}\right)\mathbf{i}+\left(\frac{\partial A_x}{\partial z}-\frac{\partial A_z}{\partial x}\right)\mathbf{j}+\left(\frac{\partial A_y}{\partial x}-\frac{\partial A_x}{\partial y}\right)\mathbf{k}$。</li>
+</ul></div>
+<p class="pt">発散</p>
+<ol class="sol">
+  <li>$\frac{\partial(xy)}{\partial x}=y,\ \frac{\partial(yz)}{\partial y}=z,\ \frac{\partial(zx)}{\partial z}=x$ <span class="why">理由：同じ文字で偏微分、ほかは定数。</span></li>
+</ol>
+<p class="conc"><span class="fin">$\nabla\cdot\mathbf{A}=x+y+z$</span></p>
+<p class="pt">回転</p>
+<ol class="sol">
+  <li>$\mathbf{i}$：$\frac{\partial(zx)}{\partial y}-\frac{\partial(yz)}{\partial z}=0-y=-y$</li>
+  <li>$\mathbf{j}$：$\frac{\partial(xy)}{\partial z}-\frac{\partial(zx)}{\partial x}=0-z=-z$</li>
+  <li>$\mathbf{k}$：$\frac{\partial(yz)}{\partial x}-\frac{\partial(xy)}{\partial y}=0-x=-x$ <span class="why">理由：回転の成分の式にそのまま当てはめる。</span></li>
+</ol>
+<p class="conc"><span class="fin">$\nabla\times\mathbf{A}=-y\,\mathbf{i}-z\,\mathbf{j}-x\,\mathbf{k}$</span></p>
+<p class="chk">検算：回転の発散はいつも 0 になる。$\frac{\partial(-y)}{\partial x}+\frac{\partial(-z)}{\partial y}+\frac{\partial(-x)}{\partial z}=0$ ✓</p>
+      </div></details></div>
+
+    <div class="q"><div class="qh"><span class="tag">演習4-1</span><span class="src">演習「発散と回転」1</span></div>
+      <div class="body">次のベクトル場の発散と回転を求めよ。<br>(1) $\mathbf{A}=x\mathbf{i}+y\mathbf{j}+z\mathbf{k}$　(2) $\mathbf{A}=y\mathbf{i}-x\mathbf{j}$　(3) $\mathbf{A}=x^2yz\,\mathbf{i}+xy^2z\,\mathbf{j}+xyz^2\mathbf{k}$　(4) $\mathbf{A}=\dfrac{x}{\sqrt{x^2+y^2}}\mathbf{i}+\dfrac{y}{\sqrt{x^2+y^2}}\mathbf{j}$</div>
+      <details><summary>解答</summary><div class="ans">
+        <div class="use"><b>使う知識</b><ul>
+  <li><b>発散</b>：$\frac{\partial A_x}{\partial x}+\frac{\partial A_y}{\partial y}+\frac{\partial A_z}{\partial z}$。<b>回転</b>：$\left(\frac{\partial A_z}{\partial y}-\frac{\partial A_y}{\partial z}\right)\mathbf{i}+\left(\frac{\partial A_x}{\partial z}-\frac{\partial A_z}{\partial x}\right)\mathbf{j}+\left(\frac{\partial A_y}{\partial x}-\frac{\partial A_x}{\partial y}\right)\mathbf{k}$。</li>
+  <li><b>商の微分</b>：$\frac{\partial}{\partial x}\frac{x}{r}=\frac{1\cdot r-x\cdot\frac{\partial r}{\partial x}}{r^2}$、$r=\sqrt{x^2+y^2}$ のとき $\frac{\partial r}{\partial x}=\frac{x}{r}$、$\frac{\partial r}{\partial y}=\frac{y}{r}$。</li>
+</ul></div>
+<p class="pt">(1)</p>
+<ol class="sol">
+  <li>発散：$1+1+1=3$</li>
+  <li>回転：$A_x=x$ は $x$ だけ、$A_y=y$ は $y$ だけ、$A_z=z$ は $z$ だけの関数なので、違う文字で偏微分すると全部 0 <span class="why">理由：回転は違う文字どうしの偏微分だけでできている。</span></li>
+</ol>
+<p class="conc">発散 <span class="fin">3</span>、回転 <span class="fin">$\mathbf{0}$</span>（まっすぐ湧き出すだけで渦なし）</p>
+<p class="pt">(2)</p>
+<ol class="sol">
+  <li>$A_x=y,\ A_y=-x,\ A_z=0$。発散：$\frac{\partial y}{\partial x}+\frac{\partial(-x)}{\partial y}+0=0$</li>
+  <li>回転の $\mathbf{i},\mathbf{j}$ 成分：$z$ を含まず $A_z=0$ なので 0</li>
+  <li>$\mathbf{k}$ 成分：$\frac{\partial(-x)}{\partial x}-\frac{\partial y}{\partial y}=-1-1=-2$</li>
+</ol>
+<p class="conc">発散 <span class="fin">0</span>、回転 <span class="fin">$-2\mathbf{k}$</span>（時計回りの渦）</p>
+<p class="pt">(3)</p>
+<ol class="sol">
+  <li>発散：$\frac{\partial(x^2yz)}{\partial x}+\frac{\partial(xy^2z)}{\partial y}+\frac{\partial(xyz^2)}{\partial z}=2xyz+2xyz+2xyz=6xyz$</li>
+  <li>$\mathbf{i}$：$\frac{\partial(xyz^2)}{\partial y}-\frac{\partial(xy^2z)}{\partial z}=xz^2-xy^2$</li>
+  <li>$\mathbf{j}$：$\frac{\partial(x^2yz)}{\partial z}-\frac{\partial(xyz^2)}{\partial x}=x^2y-yz^2$</li>
+  <li>$\mathbf{k}$：$\frac{\partial(xy^2z)}{\partial x}-\frac{\partial(x^2yz)}{\partial y}=y^2z-x^2z$ <span class="why">理由：回転の成分の式。偏微分する文字以外は定数。</span></li>
+</ol>
+<p class="conc">発散 <span class="fin">$6xyz$</span>、回転 <span class="fin">$x(z^2-y^2)\mathbf{i}+y(x^2-z^2)\mathbf{j}+z(y^2-x^2)\mathbf{k}$</span></p>
+<p class="pt">(4)</p>
+<ol class="sol">
+  <li>$r=\sqrt{x^2+y^2}$ とおく（原点以外）。$\frac{\partial}{\partial x}\frac{x}{r}=\frac{r-x\cdot\frac xr}{r^2}=\frac{r^2-x^2}{r^3}=\frac{y^2}{r^3}$ <span class="why">理由：商の微分。分子分母に $r$ を掛けて整理、$r^2-x^2=y^2$。</span></li>
+  <li>同様に $\frac{\partial}{\partial y}\frac{y}{r}=\frac{x^2}{r^3}$。発散 $=\frac{y^2+x^2}{r^3}=\frac{r^2}{r^3}=\frac1r$</li>
+  <li>回転の $\mathbf{k}$ 成分：$\frac{\partial}{\partial x}\frac yr=y\cdot\left(-\frac{1}{r^2}\right)\frac xr=-\frac{xy}{r^3}$、$\frac{\partial}{\partial y}\frac xr=-\frac{xy}{r^3}$。差は $0$ <span class="why">理由：$\frac{\partial}{\partial x}\frac1r=-\frac{1}{r^2}\cdot\frac{x}{r}$（連鎖律）。</span></li>
+  <li>$\mathbf{i},\mathbf{j}$ 成分は $A_z=0$ で $z$ も含まないので 0。</li>
+</ol>
+<p class="conc">発散 <span class="fin">$\dfrac{1}{\sqrt{x^2+y^2}}$</span>、回転 <span class="fin">$\mathbf{0}$</span>（長さ1で外向きの矢印が並ぶ場。原点を除く）</p>
+<p class="chk">検算：(3) の回転の発散 $\frac{\partial}{\partial x}x(z^2-y^2)+\frac{\partial}{\partial y}y(x^2-z^2)+\frac{\partial}{\partial z}z(y^2-x^2)=(z^2-y^2)+(x^2-z^2)+(y^2-x^2)=0$ ✓。(4) を点 $(1,0)$ で確かめる：$\frac{y^2}{r^3}=0$、$\frac{x^2}{r^3}=1$ で発散 $0+1=1$、公式 $\frac1r=\frac11=1$ と一致 ✓</p>
+      </div></details></div>
+
+    <div class="q"><div class="qh"><span class="tag">演習4-2</span><span class="src">演習「発散と回転」2</span></div>
+      <div class="body">次のベクトル場を指定の点（$(\pm1,\pm1)$ など周りの8点）で図示し、発散と回転を求めよ（2次元なので $z=0$ として計算）。<br>(1) $\mathbf{A}=x\mathbf{i}+y\mathbf{j}$　(2) $\mathbf{A}=-y\mathbf{i}+x\mathbf{j}$</div>
+      <details><summary>解答</summary><div class="ans">
+        <div class="use"><b>使う知識</b><ul>
+  <li><b>ベクトル場の図示</b>：各点 $(x,y)$ に、その点での $\mathbf{A}$ の矢印を描く。</li>
+  <li><b>発散・回転の式</b>（上と同じ）。$z$ 成分なしの場は回転が $\mathbf{k}$ 成分だけになる。</li>
+</ul></div>
+<p class="pt">(1)</p>
+<ol class="sol">
+  <li>各点の矢印：$(1,0)$ で $\mathbf{i}$、$(0,1)$ で $\mathbf{j}$、$(1,1)$ で $\mathbf{i}+\mathbf{j}$、$(-1,-1)$ で $-\mathbf{i}-\mathbf{j}$ … <b>どれも原点から外向き</b>（点の位置ベクトルそのもの）。</li>
+  <li>発散：$\frac{\partial x}{\partial x}+\frac{\partial y}{\partial y}=2$</li>
+  <li>回転：$\mathbf{k}$ 成分 $\frac{\partial y}{\partial x}-\frac{\partial x}{\partial y}=0$</li>
+</ol>
+<p class="conc">発散 <span class="fin">2</span>、回転 <span class="fin">$\mathbf{0}$</span>：湧き出すだけで渦なし</p>
+<p class="pt">(2)</p>
+<ol class="sol">
+  <li>各点の矢印：$(1,0)$ で $\mathbf{j}$（上）、$(0,1)$ で $-\mathbf{i}$（左）、$(-1,0)$ で $-\mathbf{j}$（下）、$(0,-1)$ で $\mathbf{i}$（右）、$(1,1)$ で $-\mathbf{i}+\mathbf{j}$ … <b>原点のまわりを反時計回り</b>。</li>
+  <li>発散：$\frac{\partial(-y)}{\partial x}+\frac{\partial x}{\partial y}=0$</li>
+  <li>回転：$\mathbf{k}$ 成分 $\frac{\partial x}{\partial x}-\frac{\partial(-y)}{\partial y}=1+1=2$</li>
+</ol>
+<div class="fig"><figure><svg viewBox="0 0 220 220" role="img" aria-label="(1) A = xi + yj を8つの点で矢印にした図"><defs><marker id="ahf0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="context-stroke"/></marker></defs><line x1="6" y1="110" x2="214" y2="110" stroke="var(--sub)" stroke-width="1.3" marker-end="url(#ahf0)"/><line x1="110" y1="214" x2="110" y2="6" stroke="var(--sub)" stroke-width="1.3" marker-end="url(#ahf0)"/><text x="212" y="126" font-size="13" fill="var(--sub)" text-anchor="end" font-style="italic" font-weight="700">x</text><text x="118" y="16" font-size="13" fill="var(--sub)" font-style="italic" font-weight="700">y</text><circle cx="50" cy="50" r="2.6" fill="var(--ink)"/><line x1="50" y1="50" x2="24.8" y2="24.8" stroke="var(--red)" stroke-width="2.2" marker-end="url(#ahf0)"/><circle cx="110" cy="50" r="2.6" fill="var(--ink)"/><line x1="110" y1="50" x2="110.0" y2="24.8" stroke="var(--red)" stroke-width="2.2" marker-end="url(#ahf0)"/><circle cx="170" cy="50" r="2.6" fill="var(--ink)"/><line x1="170" y1="50" x2="195.2" y2="24.8" stroke="var(--red)" stroke-width="2.2" marker-end="url(#ahf0)"/><circle cx="50" cy="110" r="2.6" fill="var(--ink)"/><line x1="50" y1="110" x2="24.8" y2="110.0" stroke="var(--red)" stroke-width="2.2" marker-end="url(#ahf0)"/><circle cx="170" cy="110" r="2.6" fill="var(--ink)"/><line x1="170" y1="110" x2="195.2" y2="110.0" stroke="var(--red)" stroke-width="2.2" marker-end="url(#ahf0)"/><circle cx="50" cy="170" r="2.6" fill="var(--ink)"/><line x1="50" y1="170" x2="24.8" y2="195.2" stroke="var(--red)" stroke-width="2.2" marker-end="url(#ahf0)"/><circle cx="110" cy="170" r="2.6" fill="var(--ink)"/><line x1="110" y1="170" x2="110.0" y2="195.2" stroke="var(--red)" stroke-width="2.2" marker-end="url(#ahf0)"/><circle cx="170" cy="170" r="2.6" fill="var(--ink)"/><line x1="170" y1="170" x2="195.2" y2="195.2" stroke="var(--red)" stroke-width="2.2" marker-end="url(#ahf0)"/><text x="46" y="124" font-size="10" fill="var(--sub)" text-anchor="end">-1</text><text x="105" y="165" font-size="10" fill="var(--sub)" text-anchor="end">-1</text><text x="166" y="124" font-size="10" fill="var(--sub)" text-anchor="end">1</text><text x="105" y="45" font-size="10" fill="var(--sub)" text-anchor="end">1</text></svg><figcaption>(1) $\mathbf{A}=x\mathbf{i}+y\mathbf{j}$：外向きに湧き出す（発散 2・回転 0）</figcaption></figure><figure><svg viewBox="0 0 220 220" role="img" aria-label="(2) A = -yi + xj を8つの点で矢印にした図"><defs><marker id="ahf1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="context-stroke"/></marker></defs><line x1="6" y1="110" x2="214" y2="110" stroke="var(--sub)" stroke-width="1.3" marker-end="url(#ahf1)"/><line x1="110" y1="214" x2="110" y2="6" stroke="var(--sub)" stroke-width="1.3" marker-end="url(#ahf1)"/><text x="212" y="126" font-size="13" fill="var(--sub)" text-anchor="end" font-style="italic" font-weight="700">x</text><text x="118" y="16" font-size="13" fill="var(--sub)" font-style="italic" font-weight="700">y</text><circle cx="50" cy="50" r="2.6" fill="var(--ink)"/><line x1="50" y1="50" x2="24.8" y2="75.2" stroke="var(--red)" stroke-width="2.2" marker-end="url(#ahf1)"/><circle cx="110" cy="50" r="2.6" fill="var(--ink)"/><line x1="110" y1="50" x2="84.8" y2="50.0" stroke="var(--red)" stroke-width="2.2" marker-end="url(#ahf1)"/><circle cx="170" cy="50" r="2.6" fill="var(--ink)"/><line x1="170" y1="50" x2="144.8" y2="24.8" stroke="var(--red)" stroke-width="2.2" marker-end="url(#ahf1)"/><circle cx="50" cy="110" r="2.6" fill="var(--ink)"/><line x1="50" y1="110" x2="50.0" y2="135.2" stroke="var(--red)" stroke-width="2.2" marker-end="url(#ahf1)"/><circle cx="170" cy="110" r="2.6" fill="var(--ink)"/><line x1="170" y1="110" x2="170.0" y2="84.8" stroke="var(--red)" stroke-width="2.2" marker-end="url(#ahf1)"/><circle cx="50" cy="170" r="2.6" fill="var(--ink)"/><line x1="50" y1="170" x2="75.2" y2="195.2" stroke="var(--red)" stroke-width="2.2" marker-end="url(#ahf1)"/><circle cx="110" cy="170" r="2.6" fill="var(--ink)"/><line x1="110" y1="170" x2="135.2" y2="170.0" stroke="var(--red)" stroke-width="2.2" marker-end="url(#ahf1)"/><circle cx="170" cy="170" r="2.6" fill="var(--ink)"/><line x1="170" y1="170" x2="195.2" y2="144.8" stroke="var(--red)" stroke-width="2.2" marker-end="url(#ahf1)"/><text x="46" y="124" font-size="10" fill="var(--sub)" text-anchor="end">-1</text><text x="105" y="165" font-size="10" fill="var(--sub)" text-anchor="end">-1</text><text x="166" y="124" font-size="10" fill="var(--sub)" text-anchor="end">1</text><text x="105" y="45" font-size="10" fill="var(--sub)" text-anchor="end">1</text></svg><figcaption>(2) $\mathbf{A}=-y\mathbf{i}+x\mathbf{j}$：反時計回りの渦（発散 0・回転 2k）</figcaption></figure></div>
+<p class="conc">発散 <span class="fin">0</span>、回転 <span class="fin">$2\mathbf{k}$</span>：湧き出しなし、反時計回りの渦（右ねじで $+z$ 向き）</p>
+<p class="chk">検算：(2) の各矢印は位置ベクトル $(x,y)$ との内積が $-xy+yx=0$ で、どの点でも円の接線向き ✓。演習4-1(2) の $y\mathbf{i}-x\mathbf{j}$ はこれの逆向きなので回転も逆の $-2\mathbf{k}$ ✓</p>
+      </div></details></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= 5 線積分 ======================= -->
+<section class="ch" id="v5" data-title="線積分">
+  <div class="ch-top"><span class="ch-no">第5章</span><h2>空間曲線と線積分</h2><span class="ch-meta">講義「空間曲線と線積分」＋演習「線積分（スカラー場）」「ベクトル場の線積分」</span></div>
+  <div class="step"><h3><span class="n">1</span>覚える</h3>
+    <div class="memo">
+      <div class="row"><span class="lbl">空間曲線</span><span class="val">1つの変数 $u$ で表す：$\mathbf{r}(u)=x(u)\mathbf{i}+y(u)\mathbf{j}+z(u)\mathbf{k}$。例：$\cos u\,\mathbf{i}+\sin u\,\mathbf{j}+\mathbf{k}$ は高さ1の半径1の円</span></div>
+      <div class="row"><span class="lbl">接ベクトル</span><span class="val"><span class="key">$\dfrac{d\mathbf{r}}{du}=\dfrac{dx}{du}\mathbf{i}+\dfrac{dy}{du}\mathbf{j}+\dfrac{dz}{du}\mathbf{k}$</span>（進む向き）。単位接ベクトルは $\dfrac{d\mathbf{r}}{du}\Big/\left|\dfrac{d\mathbf{r}}{du}\right|$</span></div>
+      <div class="row"><span class="lbl">弧長（曲線の長さ）</span><span class="val"><span class="key">$s=\displaystyle\int_a^b\left|\dfrac{d\mathbf{r}}{du}\right|du$</span>（$ds=|d\mathbf{r}|=\left|\frac{d\mathbf{r}}{du}\right|du$：微小な長さ）</span></div>
+      <div class="row"><span class="lbl">スカラー場の線積分</span><span class="val"><span class="key">$\displaystyle\int_Cf\,ds=\int_a^bf\big(x(u),y(u),z(u)\big)\left|\dfrac{d\mathbf{r}}{du}\right|du$</span></span></div>
+      <div class="row"><span class="lbl">ベクトル場の線積分</span><span class="val"><span class="key">$\displaystyle\int_C\mathbf{A}\cdot d\mathbf{r}=\int_a^b\mathbf{A}\big(\mathbf{r}(u)\big)\cdot\dfrac{d\mathbf{r}}{du}\,du$</span></span></div>
+      <div class="row"><span class="lbl">違い</span><span class="val">スカラー場は<span class="key">長さ $|\mathbf{r}'|$ を掛ける</span>。ベクトル場は<span class="key">進む向き $\mathbf{r}'$ と内積</span>（場の進行方向成分だけ集める）</span></div>
+      <div class="row"><span class="lbl">2点を結ぶ直線</span><span class="val">P から Q へ：$\mathbf{r}(u)=\mathrm{P}+u(\mathrm{Q}-\mathrm{P})$、$0\le u\le1$。原点から $(1,2,2)$ なら $u\mathbf{i}+2u\mathbf{j}+2u\mathbf{k}$</span></div>
+    </div>
+  </div>
+  <div class="step"><h3><span class="n">2</span>わかる</h3>
+    <div class="explain">
+      <p><b>スカラー場の線積分＝掃除機が吸ったほこりの量</b>。床の各点にほこりの量 $f$ がたまっていて、掃除機が曲線 $C$ に沿って進む。吸える量は「その点のほこり $f$ × 進んだ微小な長さ $ds$」の合計。$u$ が少し増えたときに進む長さが $\left|\frac{d\mathbf{r}}{du}\right|du$ なので、これを掛けて $u$ で積分する。</p>
+      <p><b>ベクトル場の線積分＝板が受けた風の力の合計</b>。各点で風 $\mathbf{A}$ が吹いていて、板を持って $C$ に沿って進む。効くのは風の<b>進行方向の成分</b>だけ（横風は効かない）。だから進む向き $\frac{d\mathbf{r}}{du}$ との内積を積分する。物理なら「力 × 移動」＝仕事。</p>
+      <p><b>計算はいつも3ステップ</b>：</p>
+      <ol>
+        <li>曲線を $\mathbf{r}(u)$ で表し、$x,y,z$ を $u$ の式にする</li>
+        <li>$\dfrac{d\mathbf{r}}{du}$ を計算する（スカラー場なら長さ $\left|\frac{d\mathbf{r}}{du}\right|$ も）</li>
+        <li>場の $x,y,z$ に $u$ の式を代入し、掛けて（内積して）$u$ で積分する</li>
+      </ol>
+      <p><b>弧長の例（スライド）</b>：$\mathbf{r}=2u^3\mathbf{i}+3u\mathbf{j}+3u^2\mathbf{k}$ なら $\frac{d\mathbf{r}}{du}=6u^2\mathbf{i}+3\mathbf{j}+6u\mathbf{k}$、$\left|\frac{d\mathbf{r}}{du}\right|=\sqrt{36u^4+36u^2+9}=3(2u^2+1)$。単位接ベクトルは $\dfrac{2u^2\mathbf{i}+\mathbf{j}+2u\mathbf{k}}{2u^2+1}$、0 から $u$ までの弧長は $\int_0^u3(2v^2+1)dv=2u^3+3u$。</p>
+    </div>
+  </div>
+  <div class="step"><h3><span class="n">3</span>注意</h3>
+    <div class="redpen">
+      <p><b>$|\mathbf{r}'|$ の付け忘れ</b>スカラー場の線積分（と曲線の長さ）では $\left|\frac{d\mathbf{r}}{du}\right|$ を必ず掛ける。ベクトル場のほうでは掛けない（内積の中に入っている）。</p>
+      <p><b>代入し忘れ</b>場の $x,y,z$ は<b>曲線上の値</b> $x(u),y(u),z(u)$ に置きかえてから積分する。$x$ が残ったまま $du$ で積分したら×。</p>
+      <p><b>ルートが外れる形</b>$|\mathbf{r}'|^2$ が $(\ \ )^2$ の形になるように作ってある問題が多い。$e^{4t}+2e^{2t}+1=(e^{2t}+1)^2$、$2-2\cos t=4\sin^2\frac t2$ など。</p>
+      <p><b>向き</b>ベクトル場の線積分は、曲線を逆向きにたどると符号が反対になる。スカラー場の線積分（長さで重みづけ）は向きによらない。</p>
+    </div>
+  </div>
+  <div class="step"><h3><span class="n">4</span>解く</h3>
+    <div class="probs">
+    <div class="q"><div class="qh"><span class="tag">例題1</span><span class="src">講義スライド「例題」（スカラー場の線積分）</span></div>
+      <div class="body">スカラー場 $f=\dfrac{1}{x^2+y^2}$ を、次の曲線に沿って線積分せよ。<br>(a) $\mathbf{r}(u)=\cos u\,\mathbf{i}+\sin u\,\mathbf{j}+u\,\mathbf{k}$、$0\le u\le\pi$　(b) $\mathbf{r}(u)=u\mathbf{i}+2u\mathbf{j}+3u\mathbf{k}$、$1\le u\le2$</div>
+      <details><summary>解答</summary><div class="ans">
+        <div class="use"><b>使う知識</b><ul>
+  <li><b>スカラー場の線積分</b>：$\int_Cf\,ds=\int_a^bf(\mathbf{r}(u))\left|\frac{d\mathbf{r}}{du}\right|du$。</li>
+  <li>$\cos^2u+\sin^2u=1$。$\int u^{-2}du=-u^{-1}$。</li>
+</ul></div>
+<p class="pt">(a)</p>
+<ol class="sol">
+  <li>$\frac{d\mathbf{r}}{du}=-\sin u\,\mathbf{i}+\cos u\,\mathbf{j}+\mathbf{k}$、長さ $\sqrt{\sin^2u+\cos^2u+1}=\sqrt2$</li>
+  <li>曲線上で $x^2+y^2=\cos^2u+\sin^2u=1$ なので $f=1$ <span class="why">理由：$x=\cos u,\ y=\sin u$ を代入。</span></li>
+  <li>$\int_0^\pi1\cdot\sqrt2\,du=\sqrt2\pi$</li>
+</ol>
+<p class="conc"><span class="fin">$\sqrt2\pi$</span></p>
+<p class="pt">(b)</p>
+<ol class="sol">
+  <li>$\frac{d\mathbf{r}}{du}=\mathbf{i}+2\mathbf{j}+3\mathbf{k}$、長さ $\sqrt{1+4+9}=\sqrt{14}$</li>
+  <li>$f=\frac{1}{u^2+4u^2}=\frac{1}{5u^2}$ <span class="why">理由：$x=u,\ y=2u$ を代入。</span></li>
+  <li>$\int_1^2\frac{\sqrt{14}}{5u^2}du=\frac{\sqrt{14}}{5}\left[-\frac1u\right]_1^2=\frac{\sqrt{14}}{5}\left(-\frac12+1\right)=\frac{\sqrt{14}}{10}$</li>
+</ol>
+<p class="conc"><span class="fin">$\dfrac{\sqrt{14}}{10}$</span></p>
+<p class="chk">検算：(a) はらせんの長さ $\int_0^\pi\sqrt2du=\sqrt2\pi$ に $f=1$ を掛けたものなので一致して当然 ✓。(b) は $f$ が $\frac15$ から $\frac1{20}$ の間、長さ $\sqrt{14}$ なので答えは $\frac{\sqrt{14}}{20}\approx0.19$ と $\frac{\sqrt{14}}{5}\approx0.75$ の間。$\frac{\sqrt{14}}{10}\approx0.37$ ✓</p>
+      </div></details></div>
+
+    <div class="q"><div class="qh"><span class="tag">例題2</span><span class="src">講義スライド「ベクトル場の線積分の例(1)」</span></div>
+      <div class="body">ベクトル場 $\mathbf{A}=yz\,\mathbf{i}+zx\,\mathbf{j}+xy\,\mathbf{k}$ を、$(0,0,0)$ から $(1,2,2)$ への直線に沿って線積分せよ。</div>
+      <details><summary>解答</summary><div class="ans">
+        <div class="use"><b>使う知識</b><ul>
+  <li><b>2点を結ぶ直線</b>：原点から $(1,2,2)$ なら $\mathbf{r}(u)=u\mathbf{i}+2u\mathbf{j}+2u\mathbf{k}$、$0\le u\le1$。</li>
+  <li><b>ベクトル場の線積分</b>：$\int_C\mathbf{A}\cdot d\mathbf{r}=\int_a^b\mathbf{A}(\mathbf{r}(u))\cdot\frac{d\mathbf{r}}{du}du$。</li>
+</ul></div>
+<ol class="sol">
+  <li>$\frac{d\mathbf{r}}{du}=\mathbf{i}+2\mathbf{j}+2\mathbf{k}$</li>
+  <li>$x=u,\ y=2u,\ z=2u$ を代入：$\mathbf{A}=4u^2\mathbf{i}+2u^2\mathbf{j}+2u^2\mathbf{k}$ <span class="why">理由：$yz=4u^2$、$zx=2u^2$、$xy=2u^2$。</span></li>
+  <li>内積：$4u^2\cdot1+2u^2\cdot2+2u^2\cdot2=12u^2$</li>
+  <li>$\int_0^112u^2du=\left[4u^3\right]_0^1=4$</li>
+</ol>
+<p class="conc"><span class="fin">4</span></p>
+<p class="chk">検算：$\mathbf{A}=\nabla(xyz)$（$xyz$ を $x,y,z$ で偏微分すると $yz,zx,xy$）なので、線積分は「終点の $xyz$ − 始点の $xyz$」$=1\cdot2\cdot2-0=4$ でも出る ✓</p>
+      </div></details></div>
+
+    <div class="q"><div class="qh"><span class="tag">演習5-1</span><span class="src">演習「線積分 スカラー場の積分」1</span></div>
+      <div class="body">次の曲線 $C:\mathbf{r}=\mathbf{r}(t)$ の長さを求めよ。<br>(1) $\mathbf{r}(t)=\frac12e^{2t}\mathbf{i}+\sqrt2e^t\mathbf{j}+t\mathbf{k}\ (0\le t\le1)$　(2) $\mathbf{r}(t)=(t-\sin t)\mathbf{i}+\frac{1}{\sqrt2}\cos t\,\mathbf{j}+\frac{1}{\sqrt2}(1-\cos t)\mathbf{k}\ (0\le t\le1)$</div>
+      <details><summary>解答</summary><div class="ans">
+        <div class="use"><b>使う知識</b><ul>
+  <li><b>曲線の長さ</b>：$s=\int_a^b\left|\frac{d\mathbf{r}}{dt}\right|dt$。</li>
+  <li><b>平方完成の形</b>：$A^2+2A+1=(A+1)^2$。<b>半角の公式</b>：$1-\cos t=2\sin^2\frac t2$。</li>
+  <li>$\int e^{2t}dt=\frac12e^{2t}$、$\int\sin\frac t2dt=-2\cos\frac t2$。</li>
+</ul></div>
+<p class="pt">(1)</p>
+<ol class="sol">
+  <li>$\frac{d\mathbf{r}}{dt}=e^{2t}\mathbf{i}+\sqrt2e^t\mathbf{j}+\mathbf{k}$ <span class="why">理由：$\left(\frac12e^{2t}\right)'=e^{2t}$、$(\sqrt2e^t)'=\sqrt2e^t$。</span></li>
+  <li>$\left|\frac{d\mathbf{r}}{dt}\right|^2=e^{4t}+2e^{2t}+1=(e^{2t}+1)^2$ <span class="why">理由：$A=e^{2t}$ とおくと $A^2+2A+1$。</span></li>
+  <li>$\left|\frac{d\mathbf{r}}{dt}\right|=e^{2t}+1$（正なのでそのまま外れる）</li>
+  <li>$\int_0^1(e^{2t}+1)dt=\left[\frac12e^{2t}+t\right]_0^1=\frac12e^2+1-\frac12=\frac{e^2+1}{2}$</li>
+</ol>
+<p class="conc"><span class="fin">$\dfrac{e^2+1}{2}$</span>（$\approx4.19$）</p>
+<p class="pt">(2)</p>
+<ol class="sol">
+  <li>$\frac{d\mathbf{r}}{dt}=(1-\cos t)\mathbf{i}-\frac{1}{\sqrt2}\sin t\,\mathbf{j}+\frac{1}{\sqrt2}\sin t\,\mathbf{k}$</li>
+  <li>$\left|\frac{d\mathbf{r}}{dt}\right|^2=(1-\cos t)^2+\frac12\sin^2t+\frac12\sin^2t=1-2\cos t+\cos^2t+\sin^2t=2-2\cos t$ <span class="why">理由：$\cos^2t+\sin^2t=1$。</span></li>
+  <li>$2-2\cos t=4\sin^2\frac t2$ なので $\left|\frac{d\mathbf{r}}{dt}\right|=2\sin\frac t2$ <span class="why">理由：半角の公式。$0\le t\le1$ では $\sin\frac t2\ge0$ なので絶対値はそのまま外せる。</span></li>
+  <li>$\int_0^12\sin\frac t2dt=\left[-4\cos\frac t2\right]_0^1=-4\cos\frac12+4$</li>
+</ol>
+<p class="conc"><span class="fin">$4\left(1-\cos\dfrac12\right)$</span>（$\approx0.490$）</p>
+<p class="chk">検算：(2) は $t$ が小さいと $2\sin\frac t2\approx t$ なので長さ $\approx\int_0^1t\,dt=0.5$。答え $0.490$ とほぼ同じ ✓。(1) は始点 $(\frac12,\sqrt2,0)$ と終点 $(\frac{e^2}{2},\sqrt2e,1)$ の直線距離 $\approx4.14$ より少しだけ長い ✓</p>
+      </div></details></div>
+
+    <div class="q"><div class="qh"><span class="tag">演習5-2</span><span class="src">演習「線積分 スカラー場の積分」2</span></div>
+      <div class="body">次のスカラー場を、与えられた空間曲線に沿って線積分せよ。<br>(1) $f=x+y+z$、$\mathbf{r}=u\mathbf{i}+2u\mathbf{j}+3u\mathbf{k}$、$u\in[0,1]$<br>(2) $f=x+y+z$、$\mathbf{r}=\cos u\,\mathbf{i}+\sin u\,\mathbf{j}+3\mathbf{k}$、$u\in[0,\pi]$<br>(3) $f=xyz$、$\mathbf{r}=u\mathbf{i}+u\mathbf{j}+u\mathbf{k}$、$u\in[0,1]$</div>
+      <details><summary>解答</summary><div class="ans">
+        <div class="use"><b>使う知識</b><ul>
+  <li><b>スカラー場の線積分</b>：$\int_Cf\,ds=\int_a^bf(\mathbf{r}(u))\left|\frac{d\mathbf{r}}{du}\right|du$。</li>
+  <li>$\int\cos u\,du=\sin u$、$\int\sin u\,du=-\cos u$。</li>
+</ul></div>
+<p class="pt">(1)</p>
+<ol class="sol">
+  <li>$\frac{d\mathbf{r}}{du}=\mathbf{i}+2\mathbf{j}+3\mathbf{k}$、長さ $\sqrt{14}$</li>
+  <li>$f=u+2u+3u=6u$ <span class="why">理由：$x=u,y=2u,z=3u$ を代入。</span></li>
+  <li>$\int_0^16u\sqrt{14}\,du=\sqrt{14}\left[3u^2\right]_0^1=3\sqrt{14}$</li>
+</ol>
+<p class="conc"><span class="fin">$3\sqrt{14}$</span></p>
+<p class="pt">(2)</p>
+<ol class="sol">
+  <li>$\frac{d\mathbf{r}}{du}=-\sin u\,\mathbf{i}+\cos u\,\mathbf{j}$（$3\mathbf{k}$ は定数なので微分すると0）、長さ $1$</li>
+  <li>$f=\cos u+\sin u+3$</li>
+  <li>$\int_0^\pi(\cos u+\sin u+3)du=\left[\sin u-\cos u+3u\right]_0^\pi=(0+1+3\pi)-(0-1+0)=2+3\pi$ <span class="why">理由：$\cos\pi=-1$ なので $-\cos\pi=1$、$\cos0=1$ なので $-\cos0=-1$。</span></li>
+</ol>
+<p class="conc"><span class="fin">$2+3\pi$</span></p>
+<p class="pt">(3)</p>
+<ol class="sol">
+  <li>$\frac{d\mathbf{r}}{du}=\mathbf{i}+\mathbf{j}+\mathbf{k}$、長さ $\sqrt3$</li>
+  <li>$f=u\cdot u\cdot u=u^3$</li>
+  <li>$\int_0^1u^3\sqrt3\,du=\sqrt3\left[\frac{u^4}{4}\right]_0^1=\frac{\sqrt3}{4}$</li>
+</ol>
+<p class="conc"><span class="fin">$\dfrac{\sqrt3}{4}$</span></p>
+<p class="chk">検算：(2) は半円（長さ $\pi$）の上で $f$ の平均が $3+\frac{2}{\pi}$（$\cos$ の平均0、$\sin$ の平均 $\frac2\pi$）なので $\pi\left(3+\frac2\pi\right)=3\pi+2$ ✓。(1) は長さ $\sqrt{14}$ × $f$ の平均 $3$ で $3\sqrt{14}$ ✓</p>
+      </div></details></div>
+
+    <div class="q"><div class="qh"><span class="tag">演習5-3</span><span class="src">演習「ベクトル場の線積分」1</span></div>
+      <div class="body">次のベクトル場を、与えられた空間曲線に沿って線積分せよ。<br>(1) $\mathbf{f}=x\mathbf{i}+y\mathbf{j}+z\mathbf{k}$、$\mathbf{r}=u\mathbf{i}+2u\mathbf{j}+3u\mathbf{k}$、$u\in[0,1]$<br>(2) $\mathbf{f}=y\mathbf{i}+z\mathbf{j}+x\mathbf{k}$、$\mathbf{r}=u\mathbf{i}+2u\mathbf{j}+3u\mathbf{k}$、$u\in[0,1]$<br>(3) $\mathbf{f}=xy\,\mathbf{i}+(y+zx)\mathbf{j}+y\,\mathbf{k}$、$\mathbf{r}=u\mathbf{i}+2u^2\mathbf{j}+u^3\mathbf{k}$、$u\in[-1,1]$</div>
+      <details><summary>解答</summary><div class="ans">
+        <div class="use"><b>使う知識</b><ul>
+  <li><b>ベクトル場の線積分</b>：$\int_C\mathbf{f}\cdot d\mathbf{r}=\int_a^b\mathbf{f}(\mathbf{r}(u))\cdot\frac{d\mathbf{r}}{du}du$。</li>
+  <li><b>奇関数の積分</b>：$u^3,u^5$ のような奇関数を $-1$ から $1$ まで積分すると 0。偶関数 $u^4$ は $2\int_0^1$。</li>
+</ul></div>
+<p class="pt">(1)</p>
+<ol class="sol">
+  <li>$\frac{d\mathbf{r}}{du}=\mathbf{i}+2\mathbf{j}+3\mathbf{k}$、曲線上で $\mathbf{f}=u\mathbf{i}+2u\mathbf{j}+3u\mathbf{k}$</li>
+  <li>内積：$u+4u+9u=14u$</li>
+  <li>$\int_0^114u\,du=7$</li>
+</ol>
+<p class="conc"><span class="fin">7</span></p>
+<p class="pt">(2)</p>
+<ol class="sol">
+  <li>曲線上で $\mathbf{f}=y\mathbf{i}+z\mathbf{j}+x\mathbf{k}=2u\mathbf{i}+3u\mathbf{j}+u\mathbf{k}$ <span class="why">理由：$\mathbf{i}$ 成分は $y=2u$、$\mathbf{j}$ 成分は $z=3u$、$\mathbf{k}$ 成分は $x=u$。順番に注意。</span></li>
+  <li>内積：$2u\cdot1+3u\cdot2+u\cdot3=11u$</li>
+  <li>$\int_0^111u\,du=\frac{11}{2}$</li>
+</ol>
+<p class="conc"><span class="fin">$\dfrac{11}{2}$</span></p>
+<p class="pt">(3)</p>
+<ol class="sol">
+  <li>$\frac{d\mathbf{r}}{du}=\mathbf{i}+4u\mathbf{j}+3u^2\mathbf{k}$</li>
+  <li>代入：$xy=u\cdot2u^2=2u^3$、$y+zx=2u^2+u^3\cdot u=2u^2+u^4$、$y=2u^2$</li>
+  <li>内積：$2u^3\cdot1+(2u^2+u^4)\cdot4u+2u^2\cdot3u^2=2u^3+8u^3+4u^5+6u^4=10u^3+6u^4+4u^5$</li>
+  <li>$\int_{-1}^1$：奇関数 $10u^3,4u^5$ は 0。$\int_{-1}^16u^4du=2\cdot\frac65=\frac{12}{5}$ <span class="why">理由：対称な区間では奇関数の積分は打ち消しあう。</span></li>
+</ol>
+<p class="conc"><span class="fin">$\dfrac{12}{5}$</span></p>
+<p class="chk">検算：(1) の $\mathbf{f}=\nabla\left(\frac{x^2+y^2+z^2}{2}\right)$ なので、終点 $(1,2,3)$ と始点の値の差 $\frac{14}{2}-0=7$ ✓。(3) を奇関数を使わずに計算：$\left[\frac{10u^4}{4}+\frac{6u^5}{5}+\frac{4u^6}{6}\right]_{-1}^{1}=\left(\frac52+\frac65+\frac23\right)-\left(\frac52-\frac65+\frac23\right)=\frac{12}{5}$ ✓</p>
+      </div></details></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= まとめテスト ======================= -->
+<section class="ch" id="vt" data-title="まとめテスト">
+  <div class="ch-top"><span class="ch-no">まとめ</span><h2>まとめテスト（類題9問）</h2><span class="ch-meta">演習と同じ形で数字を変えた問題。全章から</span></div>
+  <div class="step"><h3><span class="n">!</span>やり方</h3>
+    <div class="mock-intro">
+      <p>紙とペンで解いてから「解答」を開く。目安は1問5分。解けたら「解けた」にチェック（この端末のブラウザにだけ保存される）。</p>
+      <p>外積・勾配・発散・回転・線積分の5パターンがそろっている。迷ったら各章の「覚える」に戻る。</p>
+    </div>
+  </div>
+  <div class="step"><h3><span class="n">4</span>解く</h3>
+    <div class="probs">
+    <div class="q"><div class="qh"><span class="tag">T1</span><span class="src">第1章</span></div>
+      <div class="body">$\mathbf{A}=2\mathbf{i}-\mathbf{j}+2\mathbf{k},\ \mathbf{B}=\mathbf{i}+2\mathbf{j}+2\mathbf{k}$ について、$|\mathbf{A}|,|\mathbf{B}|$、$\cos\theta$、$\mathbf{A}\times\mathbf{B}$、2つが作る平行四辺形の面積を求めよ。</div>
+      <details><summary>解答</summary><div class="ans">
+        <div class="use"><b>使う知識</b><ul>
+  <li>$|\mathbf{A}|=\sqrt{A_x^2+A_y^2+A_z^2}$、$\cos\theta=\frac{\mathbf{A}\cdot\mathbf{B}}{|\mathbf{A}||\mathbf{B}|}$。</li>
+  <li>外積の成分の式と、$|\mathbf{A}\times\mathbf{B}|$＝平行四辺形の面積。</li>
+</ul></div>
+<ol class="sol">
+  <li>$|\mathbf{A}|=\sqrt{4+1+4}=3$、$|\mathbf{B}|=\sqrt{1+4+4}=3$</li>
+  <li>$\mathbf{A}\cdot\mathbf{B}=2-2+4=4$ なので $\cos\theta=\frac{4}{3\cdot3}=\frac49$</li>
+  <li>$\mathbf{i}$：$(-1)\cdot2-2\cdot2=-6$、$\mathbf{j}$：$2\cdot1-2\cdot2=-2$、$\mathbf{k}$：$2\cdot2-(-1)\cdot1=5$ <span class="why">理由：$\mathbf{i}$：$A_yB_z-A_zB_y$、$\mathbf{j}$：$A_zB_x-A_xB_z$、$\mathbf{k}$：$A_xB_y-A_yB_x$。</span></li>
+  <li>面積 $=|\mathbf{A}\times\mathbf{B}|=\sqrt{36+4+25}=\sqrt{65}$</li>
+</ol>
+<p class="conc"><span class="fin">$|\mathbf{A}|=|\mathbf{B}|=3$、$\cos\theta=\frac49$、$\mathbf{A}\times\mathbf{B}=-6\mathbf{i}-2\mathbf{j}+5\mathbf{k}$、面積 $\sqrt{65}$</span></p>
+<p class="chk">検算：$\mathbf{A}\cdot(-6,-2,5)=-12+2+10=0$、$\mathbf{B}\cdot(-6,-2,5)=-6-4+10=0$ ✓。$|\mathbf{A}||\mathbf{B}|\sin\theta=9\sqrt{1-\frac{16}{81}}=\sqrt{81-16}=\sqrt{65}$ ✓</p>
+      </div></details></div>
+
+    <div class="q"><div class="qh"><span class="tag">T2</span><span class="src">第1章（射影）</span></div>
+      <div class="body">$\mathbf{y}=2\mathbf{i}+4\mathbf{j}+\mathbf{k}$ の、$\mathbf{x}=\mathbf{i}+2\mathbf{j}+2\mathbf{k}$ 方向への射影（$\mathbf{x}$ を通る直線上で $\mathbf{y}$ に最も近い点）を求めよ。</div>
+      <details><summary>解答</summary><div class="ans">
+        <div class="use"><b>使う知識</b><ul>
+  <li><b>射影</b>：$\mathbf{z}=\frac{\mathbf{y}\cdot\mathbf{x}}{\mathbf{x}\cdot\mathbf{x}}\mathbf{x}$（$\mathbf{y}-\mathbf{z}$ が $\mathbf{x}$ と直交する点）。</li>
+</ul></div>
+<ol class="sol">
+  <li>$\mathbf{y}\cdot\mathbf{x}=2+8+2=12$、$\mathbf{x}\cdot\mathbf{x}=1+4+4=9$</li>
+  <li>$a=\frac{12}{9}=\frac43$、$\mathbf{z}=\frac43(\mathbf{i}+2\mathbf{j}+2\mathbf{k})$ <span class="why">理由：射影の公式。</span></li>
+</ol>
+<p class="conc"><span class="fin">$\mathbf{z}=\dfrac43\mathbf{i}+\dfrac83\mathbf{j}+\dfrac83\mathbf{k}$</span></p>
+<p class="chk">検算：$\mathbf{y}-\mathbf{z}=\frac23\mathbf{i}+\frac43\mathbf{j}-\frac53\mathbf{k}$、$\mathbf{x}$ との内積 $\frac23+\frac83-\frac{10}{3}=0$ ✓</p>
+      </div></details></div>
+
+    <div class="q"><div class="qh"><span class="tag">T3</span><span class="src">第2章</span></div>
+      <div class="body">$\mathbf{A}=u^2\mathbf{i}+\sin2u\,\mathbf{j}+e^{-u}\mathbf{k},\ \mathbf{B}=\mathbf{i}+u\mathbf{j}+u\mathbf{k}$ について、$\mathbf{A}'$ と $(\mathbf{A}\cdot\mathbf{B})'$ を求めよ。</div>
+      <details><summary>解答</summary><div class="ans">
+        <div class="use"><b>使う知識</b><ul>
+  <li>成分ごとに微分。$(\sin2u)'=2\cos2u$、$(e^{-u})'=-e^{-u}$（中身の微分 $2$, $-1$ が出る）。</li>
+  <li>積の微分 $(fg)'=f'g+fg'$。</li>
+</ul></div>
+<ol class="sol">
+  <li>$\mathbf{A}'=2u\mathbf{i}+2\cos2u\,\mathbf{j}-e^{-u}\mathbf{k}$</li>
+  <li>$\mathbf{A}\cdot\mathbf{B}=u^2+u\sin2u+ue^{-u}$</li>
+  <li>微分：$(u^2)'=2u$、$(u\sin2u)'=\sin2u+2u\cos2u$、$(ue^{-u})'=e^{-u}-ue^{-u}$ <span class="why">理由：積の微分。</span></li>
+</ol>
+<p class="conc"><span class="fin">$\mathbf{A}'=2u\mathbf{i}+2\cos2u\,\mathbf{j}-e^{-u}\mathbf{k}$、$(\mathbf{A}\cdot\mathbf{B})'=2u+\sin2u+2u\cos2u+e^{-u}-ue^{-u}$</span></p>
+<p class="chk">検算：公式 $\mathbf{A}'\cdot\mathbf{B}+\mathbf{A}\cdot\mathbf{B}'$ で。$\mathbf{B}'=\mathbf{j}+\mathbf{k}$。$\mathbf{A}'\cdot\mathbf{B}=2u+2u\cos2u-ue^{-u}$、$\mathbf{A}\cdot\mathbf{B}'=\sin2u+e^{-u}$。足すと一致 ✓</p>
+      </div></details></div>
+
+    <div class="q"><div class="qh"><span class="tag">T4</span><span class="src">第2章（積分）</span></div>
+      <div class="body">$\displaystyle\int_0^1\left(2u\,\mathbf{i}+3u^2\mathbf{j}+e^u\mathbf{k}\right)du$ を計算せよ。</div>
+      <details><summary>解答</summary><div class="ans">
+        <div class="use"><b>使う知識</b><ul>
+  <li>成分ごとに定積分。$\int u^m du=\frac{u^{m+1}}{m+1}$、$\int e^udu=e^u$。</li>
+</ul></div>
+<ol class="sol">
+  <li>$\mathbf{i}$：$[u^2]_0^1=1$、$\mathbf{j}$：$[u^3]_0^1=1$、$\mathbf{k}$：$[e^u]_0^1=e-1$</li>
+</ol>
+<p class="conc"><span class="fin">$\mathbf{i}+\mathbf{j}+(e-1)\mathbf{k}$</span></p>
+<p class="chk">検算：$u^2\mathbf{i}+u^3\mathbf{j}+e^u\mathbf{k}$ を微分すると被積分関数に戻る ✓</p>
+      </div></details></div>
+
+    <div class="q"><div class="qh"><span class="tag">T5</span><span class="src">第3章</span></div>
+      <div class="body">$f=x^2y+yz^3$ の勾配を求め、点 $(1,2,1)$ における $(2,1,2)$ 方向の方向微分を求めよ。</div>
+      <details><summary>解答</summary><div class="ans">
+        <div class="use"><b>使う知識</b><ul>
+  <li>勾配 $\nabla f=\frac{\partial f}{\partial x}\mathbf{i}+\frac{\partial f}{\partial y}\mathbf{j}+\frac{\partial f}{\partial z}\mathbf{k}$。</li>
+  <li>方向微分 $\nabla f\cdot\mathbf{u}$。<b>$\mathbf{u}$ は長さ1にしてから</b>。</li>
+</ul></div>
+<ol class="sol">
+  <li>$\frac{\partial f}{\partial x}=2xy$、$\frac{\partial f}{\partial y}=x^2+z^3$、$\frac{\partial f}{\partial z}=3yz^2$</li>
+  <li>点 $(1,2,1)$：$\nabla f=4\mathbf{i}+2\mathbf{j}+6\mathbf{k}$</li>
+  <li>$(2,1,2)$ の長さは $\sqrt{4+1+4}=3$ なので $\mathbf{u}=\frac13(2,1,2)$ <span class="why">理由：方向微分は単位ベクトルで計算する。</span></li>
+  <li>$\nabla f\cdot\mathbf{u}=\frac{8+2+12}{3}=\frac{22}{3}$</li>
+</ol>
+<p class="conc"><span class="fin">$\nabla f=2xy\,\mathbf{i}+(x^2+z^3)\mathbf{j}+3yz^2\mathbf{k}$、方向微分 $\dfrac{22}{3}$</span></p>
+<p class="chk">検算：$|\nabla f|=\sqrt{16+4+36}=\sqrt{56}\approx7.48$。方向微分は最大値 $|\nabla f|$ を超えない。$\frac{22}{3}\approx7.33$ ✓</p>
+      </div></details></div>
+
+    <div class="q"><div class="qh"><span class="tag">T6</span><span class="src">第4章</span></div>
+      <div class="body">$\mathbf{A}=xz\,\mathbf{i}+yz\,\mathbf{j}-z^2\mathbf{k}$ の発散と回転を求めよ。</div>
+      <details><summary>解答</summary><div class="ans">
+        <div class="use"><b>使う知識</b><ul>
+  <li>発散 $\frac{\partial A_x}{\partial x}+\frac{\partial A_y}{\partial y}+\frac{\partial A_z}{\partial z}$、回転の成分の式。</li>
+</ul></div>
+<ol class="sol">
+  <li>発散：$z+z-2z=0$</li>
+  <li>$\mathbf{i}$：$\frac{\partial(-z^2)}{\partial y}-\frac{\partial(yz)}{\partial z}=0-y=-y$</li>
+  <li>$\mathbf{j}$：$\frac{\partial(xz)}{\partial z}-\frac{\partial(-z^2)}{\partial x}=x-0=x$</li>
+  <li>$\mathbf{k}$：$\frac{\partial(yz)}{\partial x}-\frac{\partial(xz)}{\partial y}=0-0=0$</li>
+</ol>
+<p class="conc">発散 <span class="fin">0</span>、回転 <span class="fin">$-y\,\mathbf{i}+x\,\mathbf{j}$</span></p>
+<p class="chk">検算：回転の発散 $\frac{\partial(-y)}{\partial x}+\frac{\partial x}{\partial y}+0=0$ ✓</p>
+      </div></details></div>
+
+    <div class="q"><div class="qh"><span class="tag">T7</span><span class="src">第5章（曲線の長さ）</span></div>
+      <div class="body">らせん $\mathbf{r}(t)=3\cos t\,\mathbf{i}+3\sin t\,\mathbf{j}+4t\,\mathbf{k}\ (0\le t\le2\pi)$ の長さを求めよ。</div>
+      <details><summary>解答</summary><div class="ans">
+        <div class="use"><b>使う知識</b><ul>
+  <li>長さ $=\int_a^b\left|\frac{d\mathbf{r}}{dt}\right|dt$、$\sin^2t+\cos^2t=1$。</li>
+</ul></div>
+<ol class="sol">
+  <li>$\frac{d\mathbf{r}}{dt}=-3\sin t\,\mathbf{i}+3\cos t\,\mathbf{j}+4\mathbf{k}$</li>
+  <li>長さ $\sqrt{9\sin^2t+9\cos^2t+16}=\sqrt{25}=5$（$t$ によらず一定）</li>
+  <li>$\int_0^{2\pi}5\,dt=10\pi$</li>
+</ol>
+<p class="conc"><span class="fin">$10\pi$</span></p>
+<p class="chk">検算：らせんを円柱の側面に開くと、横 $2\pi\cdot3=6\pi$・縦 $4\cdot2\pi=8\pi$ の直角三角形の斜辺。$\sqrt{(6\pi)^2+(8\pi)^2}=10\pi$ ✓</p>
+      </div></details></div>
+
+    <div class="q"><div class="qh"><span class="tag">T8</span><span class="src">第5章（スカラー場）</span></div>
+      <div class="body">$f=x^2+y^2+z$ を、$\mathbf{r}=\cos u\,\mathbf{i}+\sin u\,\mathbf{j}+u\,\mathbf{k}\ (0\le u\le2\pi)$ に沿って線積分せよ。</div>
+      <details><summary>解答</summary><div class="ans">
+        <div class="use"><b>使う知識</b><ul>
+  <li>$\int_Cf\,ds=\int f(\mathbf{r}(u))\left|\frac{d\mathbf{r}}{du}\right|du$。</li>
+</ul></div>
+<ol class="sol">
+  <li>$\frac{d\mathbf{r}}{du}=-\sin u\,\mathbf{i}+\cos u\,\mathbf{j}+\mathbf{k}$、長さ $\sqrt2$</li>
+  <li>$f=\cos^2u+\sin^2u+u=1+u$</li>
+  <li>$\int_0^{2\pi}(1+u)\sqrt2\,du=\sqrt2\left[u+\frac{u^2}{2}\right]_0^{2\pi}=\sqrt2(2\pi+2\pi^2)$</li>
+</ol>
+<p class="conc"><span class="fin">$2\sqrt2\pi(1+\pi)$</span></p>
+<p class="chk">検算：長さ $2\sqrt2\pi$ × $f$ の平均（$1+u$ の平均は $1+\pi$）$=2\sqrt2\pi(1+\pi)$ ✓</p>
+      </div></details></div>
+
+    <div class="q"><div class="qh"><span class="tag">T9</span><span class="src">第5章（ベクトル場）</span></div>
+      <div class="body">$\mathbf{A}=y\,\mathbf{i}+x\,\mathbf{j}+z\,\mathbf{k}$ を、$\mathbf{r}=u\mathbf{i}+u^2\mathbf{j}+u^3\mathbf{k}\ (0\le u\le1)$ に沿って線積分せよ。</div>
+      <details><summary>解答</summary><div class="ans">
+        <div class="use"><b>使う知識</b><ul>
+  <li>$\int_C\mathbf{A}\cdot d\mathbf{r}=\int\mathbf{A}(\mathbf{r}(u))\cdot\frac{d\mathbf{r}}{du}du$。</li>
+</ul></div>
+<ol class="sol">
+  <li>$\frac{d\mathbf{r}}{du}=\mathbf{i}+2u\mathbf{j}+3u^2\mathbf{k}$</li>
+  <li>曲線上で $\mathbf{A}=u^2\mathbf{i}+u\mathbf{j}+u^3\mathbf{k}$ <span class="why">理由：$\mathbf{i}$ 成分は $y=u^2$、$\mathbf{j}$ 成分は $x=u$、$\mathbf{k}$ 成分は $z=u^3$。</span></li>
+  <li>内積：$u^2+2u^2+3u^5=3u^2+3u^5$</li>
+  <li>$\int_0^1(3u^2+3u^5)du=1+\frac12=\frac32$</li>
+</ol>
+<p class="conc"><span class="fin">$\dfrac32$</span></p>
+<p class="chk">検算：$\mathbf{A}=\nabla\left(xy+\frac{z^2}{2}\right)$ なので「終点 $(1,1,1)$ の値 − 始点の値」$=1+\frac12-0=\frac32$ ✓</p>
+      </div></details></div>
+    </div>
+  </div>
+</section>
+
+<nav class="nextprev" id="nextprev" aria-label="前後の章"></nav>
+</div></main>
+
+<script>
+(function () {
+  var css = function (n) { return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); };
+  var NS = 'http://www.w3.org/2000/svg';
+  function el(tag, attrs, text) {
+    var e = document.createElementNS(NS, tag);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    if (text != null) e.textContent = text;
+    return e;
+  }
+
+  /* ---------- 進捗（この端末のブラウザにだけ保存） ---------- */
+  var KEY = 'vecana-solved-v1', solved = {};
+  try { solved = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) { solved = {}; }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(solved)); } catch (e) {} }
+
+  var sections = Array.prototype.slice.call(document.querySelectorAll('.ch'));
+  sections.forEach(function (sec) {
+    sec.querySelectorAll('.q').forEach(function (q) {
+      var tag = q.querySelector('.tag').textContent.trim();
+      var id = sec.id + ':' + tag;
+      var lab = document.createElement('label');
+      lab.className = 'done';
+      var cb = document.createElement('input');
+      cb.type = 'checkbox'; cb.id = 'done-' + sec.id + '-' + tag.replace(/[^\w-]/g, '_');
+      cb.checked = !!solved[id];
+      lab.appendChild(cb); lab.appendChild(document.createTextNode('解けた'));
+      q.querySelector('.qh').appendChild(lab);
+      q.classList.toggle('is-done', cb.checked);
+      cb.addEventListener('change', function () {
+        if (cb.checked) solved[id] = 1; else delete solved[id];
+        q.classList.toggle('is-done', cb.checked);
+        save(); refresh();
+      });
+    });
+  });
+  function refresh() {
+    var all = 0, ok = 0;
+    sections.forEach(function (sec) {
+      var qs = sec.querySelectorAll('.q'), n = qs.length, d = sec.querySelectorAll('.q.is-done').length;
+      all += n; ok += d;
+      var a = document.querySelector('.tabs a[data-t="' + sec.id + '"]');
+      if (a) { a.querySelector('span').textContent = d + '/' + n; a.classList.toggle('all-done', n > 0 && d === n); }
+    });
+    document.getElementById('meterTxt').textContent = '解けた問題 ' + ok + ' / ' + all;
+    document.getElementById('meterBar').style.width = (all ? ok / all * 100 : 0) + '%';
+  }
+  refresh();
+
+  /* ---------- タブ ---------- */
+  var ids = sections.map(function (s) { return s.id; });
+  function show(id, scroll) {
+    if (ids.indexOf(id) < 0) id = 'v1';
+    sections.forEach(function (s) { s.hidden = s.id !== id; });
+    document.querySelectorAll('.tabs a').forEach(function (a) {
+      if (a.dataset.t === id) { a.setAttribute('aria-current', 'page'); var tb = document.getElementById('tabs'); tb.scrollLeft = a.offsetLeft - tb.clientWidth / 2 + a.offsetWidth / 2; }
+      else a.removeAttribute('aria-current');
+    });
+    var i = ids.indexOf(id), np = document.getElementById('nextprev');
+    np.innerHTML = '';
+    if (i > 0) { var p = document.createElement('a'); p.href = '#' + ids[i - 1]; p.textContent = '← ' + sections[i - 1].dataset.title; np.appendChild(p); }
+    var sp = document.createElement('span'); sp.className = 'spacer'; np.appendChild(sp);
+    if (i < ids.length - 1) { var n = document.createElement('a'); n.href = '#' + ids[i + 1]; n.textContent = sections[i + 1].dataset.title + ' →'; np.appendChild(n); }
+    if (scroll) document.querySelector('.tabbar').scrollIntoView({ block: 'start' });
+  }
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('a[href^="#"]');
+    if (!a) return;
+    var id = a.getAttribute('href').slice(1);
+    if (ids.indexOf(id) < 0) return;
+    e.preventDefault();
+    try { history.replaceState(null, '', '#' + id); } catch (err) {}
+    show(id, true);
+  });
+  show((location.hash || '#v1').slice(1), false);
+
+  /* ---------- 赤シート ---------- */
+  var btn = document.getElementById('sheetBtn');
+  btn.addEventListener('click', function () {
+    var on = !document.body.classList.contains('redsheet');
+    document.body.classList.toggle('redsheet', on);
+    btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+    btn.textContent = on ? '赤シートを外す' : '赤シートで隠す';
+    if (!on) document.querySelectorAll('.key.peek').forEach(function (k) { k.classList.remove('peek'); });
+  });
+  document.querySelectorAll('.key').forEach(function (k) {
+    k.setAttribute('tabindex', '0');
+    var t = function () { if (document.body.classList.contains('redsheet')) k.classList.toggle('peek'); };
+    k.addEventListener('click', t);
+    k.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); t(); } });
+  });
+
+})();
+</script>
+</body>
+</html>
