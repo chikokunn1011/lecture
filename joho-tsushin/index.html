@@ -233,7 +233,7 @@ details[open] summary { background: var(--ink); color: var(--paper); }
       <a class="home-link" href="../">← 講義一覧</a>
       <div class="course">情報通信基礎数学 ／ ベクトル解析</div>
       <h1>ベクトル解析 まとめノート</h1>
-      <p class="lead">内積・外積 → ベクトル関数の微分積分 → 勾配 → 発散・回転 → 線積分。講義スライド4回分と演習プリントの全問の解答をまとめた。上のタブを左から順に進めればOK。</p>
+      <p class="lead">内積・外積 → ベクトル関数の微分積分 → 勾配 → 発散・回転 → 線積分 → 面積分。講義スライド5回分と演習プリントの全問の解答をまとめた。上のタブを左から順に進めればOK。</p>
       <div class="euler">$\nabla=\dfrac{\partial}{\partial x}\mathbf{i}+\dfrac{\partial}{\partial y}\mathbf{j}+\dfrac{\partial}{\partial z}\mathbf{k}$</div>
       <p class="euler-note">ナブラ $\nabla$ を $f$ にそのまま掛けると<b>勾配</b>、$\cdot$ で掛けると<b>発散</b>、$\times$ で掛けると<b>回転</b>。後半はぜんぶこの1行の使い回し。</p>
       <div class="status">
@@ -253,6 +253,7 @@ details[open] summary { background: var(--ink); color: var(--paper); }
           <tr><td><a href="#v3">勾配</a></td><td>$\nabla f$、方向微分 $\nabla f\cdot\mathbf{u}$、等位線</td></tr>
           <tr><td><a href="#v4">発散・回転</a></td><td>$\nabla\cdot\mathbf{A}$（数）と $\nabla\times\mathbf{A}$（ベクトル）</td></tr>
           <tr><td><a href="#v5">線積分</a></td><td>曲線の長さ、$\int f\,ds$ と $\int\mathbf{A}\cdot d\mathbf{r}$</td></tr>
+          <tr><td><a href="#v6">面積分</a></td><td>$\iint f\,dS$ と $\iint\mathbf{A}\cdot d\mathbf{S}$（外積を掛ける）</td></tr>
         </table>
       </div>
     </div>
@@ -268,9 +269,10 @@ details[open] summary { background: var(--ink); color: var(--paper); }
       <li><a href="#v3">勾配</a></li>
       <li><a href="#v4">発散・回転</a></li>
       <li><a href="#v5">線積分</a></li>
+      <li><a href="#v6">面積分</a></li>
       <li><a href="#vt">まとめテスト</a></li>
     </ol>
-    <p>各章は「覚える → わかる → 注意 → 解く」の順。「解く」には講義スライドの例題と演習プリントの全問が入っていて、解答はぜんぶ「使う知識 → 途中式（理由つき）→ 結論 → 検算」の形。いちばん点になるのは<b>外積の計算</b>と<b>線積分の3ステップ</b>。</p>
+    <p>各章は「覚える → わかる → 注意 → 解く」の順。「解く」には講義スライドの例題と演習プリントの全問が入っていて、解答はぜんぶ「使う知識 → 途中式（理由つき）→ 結論 → 検算」の形。いちばん点になるのは<b>外積の計算</b>、<b>線積分の3ステップ</b>、<b>面積分の5ステップ</b>。</p>
     <div class="scope">
       <p><b>記号のこと</b>：講義に合わせて、ベクトルは<b>太字</b>の大文字 $\mathbf{A}$、座標軸の単位ベクトルは $\mathbf{i},\mathbf{j},\mathbf{k}$。$\mathbf{A}=A_x\mathbf{i}+A_y\mathbf{j}+A_z\mathbf{k}$ は線形代数の $\begin{pmatrix}A_x\\A_y\\A_z\end{pmatrix}$ と同じもの。$\log$ は自然対数（底 $e$）。</p>
     </div>
@@ -284,6 +286,7 @@ details[open] summary { background: var(--ink); color: var(--paper); }
     <a href="#v3" data-t="v3"><b>3 勾配</b><span></span></a>
     <a href="#v4" data-t="v4"><b>4 発散・回転</b><span></span></a>
     <a href="#v5" data-t="v5"><b>5 線積分</b><span></span></a>
+    <a href="#v6" data-t="v6"><b>6 面積分</b><span></span></a>
     <a href="#vt" data-t="vt"><b>まとめテスト</b><span></span></a>
   </div>
 </nav>
@@ -1035,13 +1038,157 @@ details[open] summary { background: var(--ink); color: var(--paper); }
   </div>
 </section>
 
+<!-- ======================= 6 面積分 ======================= -->
+<section class="ch" id="v6" data-title="面積分">
+  <div class="ch-top"><span class="ch-no">第6章</span><h2>面積分</h2><span class="ch-meta">講義「ベクトル解析(6) 面積分」＋演習「面積分」</span></div>
+  <div class="step"><h3><span class="n">1</span>覚える</h3>
+    <div class="memo">
+      <div class="row"><span class="lbl">面の表し方</span><span class="val">面は<b>2つの変数</b>で表す：$\mathbf{r}(u,v)$。平面なら $x,y$ を変数にして <span class="key">$\mathbf{r}=x\mathbf{i}+y\mathbf{j}+z(x,y)\mathbf{k}$</span>（平面の式を $z=\cdots$ に解いて入れる）。例：$2x+y+z=4$ なら $\mathbf{r}=x\mathbf{i}+y\mathbf{j}+(4-2x-y)\mathbf{k}$</span></div>
+      <div class="row"><span class="lbl">スカラー場の面積分</span><span class="val"><span class="key">$\displaystyle\iint_Sf\,dS=\iint_Df(x,y)\left|\dfrac{\partial\mathbf{r}}{\partial x}\times\dfrac{\partial\mathbf{r}}{\partial y}\right|dx\,dy$</span>（$|\text{外積}|$＝微小な平行四辺形の面積）</span></div>
+      <div class="row"><span class="lbl">ベクトル場の面積分</span><span class="val"><span class="key">$\displaystyle\iint_S\mathbf{A}\cdot d\mathbf{S}=\iint_D\mathbf{A}(x,y)\cdot\left(\dfrac{\partial\mathbf{r}}{\partial x}\times\dfrac{\partial\mathbf{r}}{\partial y}\right)dx\,dy$</span>（外積と<b>内積</b>。絶対値はとらない）</span></div>
+      <div class="row"><span class="lbl">平面の外積（早見）</span><span class="val">$z=c-ax-by$（つまり $ax+by+z=c$）なら <span class="key">$\dfrac{\partial\mathbf{r}}{\partial x}\times\dfrac{\partial\mathbf{r}}{\partial y}=a\mathbf{i}+b\mathbf{j}+\mathbf{k}$</span>。平面の式の<b>係数を並べたもの</b>（$z$ の係数を1にそろえてから）</span></div>
+      <div class="row"><span class="lbl">積分範囲 $D$</span><span class="val">面を $xy$ 平面に<b>真上から落とした影</b>。$x\ge0,y\ge0,z\ge0$ の三角形なら、$z\ge0$ を $y$ について解いて <span class="key">$0\le y\le(\text{$z=0$ のときの $y$})$</span>、$x$ は $y=z=0$ での端まで</span></div>
+      <div class="row"><span class="lbl">解き方5ステップ</span><span class="val">① 平面を $\mathbf{r}(x,y)$ に直す　② 積分範囲 $D$ を調べる　③ 場の $z$ に $z(x,y)$ を代入　④ 偏微分の外積（スカラー場はその絶対値）　⑤ 二重積分（内側 $y$ → 外側 $x$）</span></div>
+    </div>
+  </div>
+  <div class="step"><h3><span class="n">2</span>わかる</h3>
+    <div class="explain">
+      <p><b>線積分の「面」版</b>。線積分は曲線を1つの変数 $u$ で表して $u$ で積分した。面は広がりが2方向あるので変数が2つ要り、積分も二重積分になる。</p>
+      <p><b>スカラー場の面積分＝面に積もったほこりの総量</b>。各点のほこりの量が $f$、面の小さなかけら1枚の面積が $dS$。全部足すと $\iint_Sf\,dS$。$f=1$ なら面の面積そのもの。</p>
+      <p><b>なぜ外積の大きさを掛けるのか</b>。$x$ を $dx$、$y$ を $dy$ だけ動かすと、面の上の点は $\frac{\partial\mathbf{r}}{\partial x}dx$ と $\frac{\partial\mathbf{r}}{\partial y}dy$ だけ動く。この2本のベクトルが作る平行四辺形が面のかけら1枚で、その面積は外積の大きさ $\left|\frac{\partial\mathbf{r}}{\partial x}\times\frac{\partial\mathbf{r}}{\partial y}\right|dx\,dy$（第1章：$|\mathbf{A}\times\mathbf{B}|$＝平行四辺形の面積）。斜めの面は影 $D$ より広いので、その「広がり倍率」を掛けていると思えばいい。</p>
+      <p><b>ベクトル場の面積分＝面を通り抜ける水の量</b>。各点の水の流れが $\mathbf{A}$。面を通り抜けるのは<b>面に垂直な成分</b>だけ（面に沿って流れる分は通り抜けない）。外積 $\frac{\partial\mathbf{r}}{\partial x}\times\frac{\partial\mathbf{r}}{\partial y}$ は面に垂直で、長さがかけらの面積。だから $\mathbf{A}$ との内積で「垂直成分 × 面積」が一度に出る。線積分で $\frac{d\mathbf{r}}{du}$ と内積したのと同じ発想。</p>
+      <p><b>外積の早見の理由</b>：$\mathbf{r}=x\mathbf{i}+y\mathbf{j}+(c-ax-by)\mathbf{k}$ を偏微分すると $\frac{\partial\mathbf{r}}{\partial x}=\mathbf{i}-a\mathbf{k}$、$\frac{\partial\mathbf{r}}{\partial y}=\mathbf{j}-b\mathbf{k}$。外積は $\mathbf{i}$：$0\cdot(-b)-(-a)\cdot1=a$、$\mathbf{j}$：$(-a)\cdot0-1\cdot(-b)=b$、$\mathbf{k}$：$1\cdot1-0\cdot0=1$。だから $a\mathbf{i}+b\mathbf{j}+\mathbf{k}$。平面 $ax+by+z=c$ の法線（垂直なベクトル）が係数を並べたものになるのと同じ話。</p>
+      <div class="fig"><figure><svg viewBox="0 0 290 225" role="img" aria-label="平面 2x+y+z=4 の x,y,z≥0 の部分は頂点 (2,0,0),(0,4,0),(0,0,4) の三角形 S。その xy 平面への影 D は頂点 (0,0),(2,0),(0,4) の三角形"><defs><marker id="ahs6" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="context-stroke"/></marker></defs><polygon points="120,160 72,196 248,160" fill="var(--ok)" fill-opacity=".18" stroke="var(--ok)" stroke-width="1.4" stroke-dasharray="4 3"/><polygon points="72,196 248,160 120,40" fill="var(--marker)" fill-opacity=".6" stroke="var(--red)" stroke-width="2"/><line x1="120" y1="160" x2="52" y2="211" stroke="var(--sub)" stroke-width="1.3" marker-end="url(#ahs6)"/><line x1="120" y1="160" x2="282" y2="160" stroke="var(--sub)" stroke-width="1.3" marker-end="url(#ahs6)"/><line x1="120" y1="160" x2="120" y2="14" stroke="var(--sub)" stroke-width="1.3" marker-end="url(#ahs6)"/><text x="44" y="206" font-size="13" fill="var(--sub)" font-style="italic" font-weight="700">x</text><text x="278" y="176" font-size="13" fill="var(--sub)" font-style="italic" font-weight="700">y</text><text x="128" y="22" font-size="13" fill="var(--sub)" font-style="italic" font-weight="700">z</text><circle cx="72" cy="196" r="3" fill="var(--ink)"/><circle cx="248" cy="160" r="3" fill="var(--ink)"/><circle cx="120" cy="40" r="3" fill="var(--ink)"/><text x="78" y="214" font-size="11" fill="var(--ink)">(2,0,0)</text><text x="222" y="178" font-size="11" fill="var(--ink)">(0,4,0)</text><text x="128" y="44" font-size="11" fill="var(--ink)">(0,0,4)</text><text x="168" y="118" font-size="15" font-weight="700" fill="var(--red)">S</text><text x="134" y="180" font-size="14" font-weight="700" fill="var(--ok)">D（影）</text></svg><figcaption>面 $S$：$2x+y+z=4$（$x,y,z\ge0$）と、その影 $D$</figcaption></figure><figure><svg viewBox="0 0 240 200" role="img" aria-label="xy 平面の三角形 D。x は 0 から 2、各 x で y は 0 から 4−2x。x を固定した縦の帯で y 方向に積分する"><defs><marker id="ahd6" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="context-stroke"/></marker></defs><polygon points="40,170 140,170 40,30" fill="var(--ok)" fill-opacity=".18" stroke="var(--ok)" stroke-width="1.6"/><line x1="30" y1="170" x2="226" y2="170" stroke="var(--sub)" stroke-width="1.3" marker-end="url(#ahd6)"/><line x1="40" y1="182" x2="40" y2="12" stroke="var(--sub)" stroke-width="1.3" marker-end="url(#ahd6)"/><text x="222" y="186" font-size="13" fill="var(--sub)" text-anchor="end" font-style="italic" font-weight="700">x</text><text x="48" y="20" font-size="13" fill="var(--sub)" font-style="italic" font-weight="700">y</text><line x1="80" y1="170" x2="80" y2="86" stroke="var(--red)" stroke-width="2.2"/><path d="M75 92L80 82L85 92z" fill="var(--red)"/><text x="136" y="186" font-size="11" fill="var(--sub)">2</text><text x="28" y="34" font-size="11" fill="var(--sub)">4</text><text x="98" y="96" font-size="12" fill="var(--ink)">y = 4 − 2x</text><text x="86" y="140" font-size="11" fill="var(--red)">x を固定して</text><text x="86" y="154" font-size="11" fill="var(--red)">y: 0 → 4−2x</text></svg><figcaption>$D$：$0\le x\le2$、$0\le y\le4-2x$</figcaption></figure></div>
+    </div>
+  </div>
+  <div class="step"><h3><span class="n">3</span>注意</h3>
+    <div class="redpen">
+      <p><b>$z$ の代入し忘れ</b>場の中の $z$ は必ず $z(x,y)$（平面の式を $z$ について解いたもの）に置きかえる。$z$ が残ったまま $dx\,dy$ で積分したら×。</p>
+      <p><b>スカラー場は絶対値、ベクトル場は内積</b>スカラー場では外積の<b>大きさ</b>（数）を掛ける。ベクトル場では外積<b>そのもの</b>（ベクトル）と内積する。逆にしない。</p>
+      <p><b>$z$ の係数が1でない平面</b>$x+2y+2z=2$ のように $z$ の係数が2なら $z=1-\frac x2-y$ で、外積は $\frac12\mathbf{i}+\mathbf{j}+\mathbf{k}$（係数を2で割る）。$\mathbf{i}+2\mathbf{j}+2\mathbf{k}$ のまま使うと答えが2倍になる。</p>
+      <p><b>積分の順番と範囲</b>内側の $y$ の上限は $x$ を含む式（$4-2x$ など）、外側の $x$ の範囲は数だけ。外側に $x$ が残ったら範囲の取り方が逆。</p>
+      <p><b>向き</b>ベクトル場の面積分は外積の向きで符号が変わる（$\frac{\partial\mathbf{r}}{\partial y}\times\frac{\partial\mathbf{r}}{\partial x}$ にすると逆符号）。講義どおり $\frac{\partial\mathbf{r}}{\partial x}\times\frac{\partial\mathbf{r}}{\partial y}$（$\mathbf{k}$ 成分が $+$、原点から離れる側）を使う。答えがマイナスなら「原点側へ流れ込む量のほうが多い」という意味で、間違いではない。</p>
+    </div>
+  </div>
+  <div class="step"><h3><span class="n">4</span>解く</h3>
+    <div class="probs">
+    <div class="q"><div class="qh"><span class="tag">例題1</span><span class="src">講義スライド「スカラー場の面積分」例題</span></div>
+      <div class="body">平面 $S$：$2x+y+z=4$（$x\ge0,y\ge0,z\ge0$）上で、スカラー場 $f=x-y+z$ を面積分せよ。</div>
+      <details><summary>解答</summary><div class="ans">
+        <div class="use"><b>使う知識</b><ul>
+  <li><b>スカラー場の面積分</b>：$\iint_Sf\,dS=\iint_Df(x,y)\left|\frac{\partial\mathbf{r}}{\partial x}\times\frac{\partial\mathbf{r}}{\partial y}\right|dx\,dy$。</li>
+  <li><b>外積の成分</b>：$\mathbf{i}$：$A_yB_z-A_zB_y$、$\mathbf{j}$：$A_zB_x-A_xB_z$、$\mathbf{k}$：$A_xB_y-A_yB_x$。</li>
+</ul></div>
+<ol class="sol">
+  <li>① $z=4-2x-y$ なので $\mathbf{r}=x\mathbf{i}+y\mathbf{j}+(4-2x-y)\mathbf{k}$ <span class="why">理由：面は2変数で表す。$x,y$ を変数に選び、$z$ を $x,y$ の式にする。</span></li>
+  <li>② $y\ge0,z\ge0$ から $0\le x\le2$、$z\ge0$ から $4-2x-y\ge0$ つまり $0\le y\le4-2x$ <span class="why">理由：$x$ の最大は $y=z=0$ のとき $2x=4$。$y$ の上限は $z=0$ になるところ。</span></li>
+  <li>③ $f=x-y+(4-2x-y)=-x-2y+4$ <span class="why">理由：$f$ の $z$ に $4-2x-y$ を代入。</span></li>
+  <li>④ $\frac{\partial\mathbf{r}}{\partial x}=\mathbf{i}-2\mathbf{k}$、$\frac{\partial\mathbf{r}}{\partial y}=\mathbf{j}-\mathbf{k}$、外積 $=2\mathbf{i}+\mathbf{j}+\mathbf{k}$、大きさ $\sqrt{4+1+1}=\sqrt6$ <span class="why">理由：$\mathbf{i}$：$0\cdot(-1)-(-2)\cdot1=2$、$\mathbf{j}$：$(-2)\cdot0-1\cdot(-1)=1$、$\mathbf{k}$：$1\cdot1-0\cdot0=1$。早見表どおり係数 $(2,1,1)$。</span></li>
+  <li>⑤ 内側：$\int_0^{4-2x}(4-x-2y)\,dy=\left[(4-x)y-y^2\right]_0^{4-2x}=(4-x)(4-2x)-(4-2x)^2=(4-2x)\cdot x=4x-2x^2$ <span class="why">理由：$(4-2x)$ でくくると $(4-x)-(4-2x)=x$。</span></li>
+  <li>外側：$\sqrt6\int_0^2(4x-2x^2)\,dx=\sqrt6\left[2x^2-\frac23x^3\right]_0^2=\sqrt6\left(8-\frac{16}{3}\right)=\frac83\sqrt6$</li>
+</ol>
+<p class="conc"><span class="fin">$\dfrac83\sqrt6$</span>（スライドの答えと一致）</p>
+<p class="chk">検算：$f$ が1次式のときは「重心での $f$ の値 × 面積」でも出る。$S$ の頂点 $(2,0,0),(0,4,0),(0,0,4)$ の重心は $\left(\frac23,\frac43,\frac43\right)$ で $f=\frac23-\frac43+\frac43=\frac23$。$S$ の面積は $\sqrt6\times(D\text{ の面積 }4)=4\sqrt6$。$\frac23\cdot4\sqrt6=\frac83\sqrt6$ ✓</p>
+      </div></details></div>
+
+    <div class="q"><div class="qh"><span class="tag">例題2</span><span class="src">講義スライド「ベクトル場の面積分」例</span></div>
+      <div class="body">平面 $S$：$2x+y+z=4$（$x\ge0,y\ge0,z\ge0$）上で、ベクトル場 $\mathbf{A}=x\mathbf{i}-y\mathbf{j}+z\mathbf{k}$ を面積分せよ。</div>
+      <details><summary>解答</summary><div class="ans">
+        <div class="use"><b>使う知識</b><ul>
+  <li><b>ベクトル場の面積分</b>：$\iint_S\mathbf{A}\cdot d\mathbf{S}=\iint_D\mathbf{A}\cdot\left(\frac{\partial\mathbf{r}}{\partial x}\times\frac{\partial\mathbf{r}}{\partial y}\right)dx\,dy$。</li>
+  <li><b>内積</b>：$\mathbf{A}\cdot\mathbf{B}=A_xB_x+A_yB_y+A_zB_z$。</li>
+</ul></div>
+<ol class="sol">
+  <li>①② 例題1と同じ平面なので $\mathbf{r}=x\mathbf{i}+y\mathbf{j}+(4-2x-y)\mathbf{k}$、$0\le x\le2$、$0\le y\le4-2x$</li>
+  <li>③ $\mathbf{A}=x\mathbf{i}-y\mathbf{j}+(4-2x-y)\mathbf{k}$ <span class="why">理由：$\mathbf{k}$ 成分の $z$ に $4-2x-y$ を代入。</span></li>
+  <li>④ 外積 $\frac{\partial\mathbf{r}}{\partial x}\times\frac{\partial\mathbf{r}}{\partial y}=2\mathbf{i}+\mathbf{j}+\mathbf{k}$（例題1と同じ。絶対値はとらない）</li>
+  <li>内積：$x\cdot2+(-y)\cdot1+(4-2x-y)\cdot1=4-2y$ <span class="why">理由：$2x$ と $-2x$ が消える。</span></li>
+  <li>⑤ 内側：$\int_0^{4-2x}(4-2y)\,dy=\left[4y-y^2\right]_0^{4-2x}=(4-2x)(4-(4-2x))=(4-2x)\cdot2x=8x-4x^2$</li>
+  <li>外側：$\int_0^2(8x-4x^2)\,dx=\left[4x^2-\frac43x^3\right]_0^2=16-\frac{32}{3}=\frac{16}{3}$</li>
+</ol>
+<p class="conc"><span class="fin">$\dfrac{16}{3}$</span>（スライドの答えと一致）</p>
+<p class="chk">検算：被積分関数 $4-2y$ は1次式なので「$D$ の重心での値 × $D$ の面積」。$D$ の頂点 $(0,0),(2,0),(0,4)$ の重心は $\left(\frac23,\frac43\right)$、値は $4-\frac83=\frac43$、面積 $4$。$\frac43\cdot4=\frac{16}{3}$ ✓</p>
+      </div></details></div>
+
+    <div class="q"><div class="qh"><span class="tag">演習6-1</span><span class="src">演習「面積分」1（スカラー場）</span></div>
+      <div class="body">次の平面 $S$（$x\ge0,y\ge0,z\ge0$ の部分）上で、スカラー場 $f$ を面積分せよ。<br>(1) $f=x+y+z$、$S$：$2x+2y+z=4$　(2) $f=x^2+y-z$、$S$：$2x+y+z=2$</div>
+      <details><summary>解答</summary><div class="ans">
+        <div class="use"><b>使う知識</b><ul>
+  <li><b>スカラー場の面積分</b>：$\iint_Sf\,dS=\iint_Df(x,y)\left|\frac{\partial\mathbf{r}}{\partial x}\times\frac{\partial\mathbf{r}}{\partial y}\right|dx\,dy$。</li>
+  <li><b>平面の外積（早見）</b>：$ax+by+z=c$ なら外積 $=a\mathbf{i}+b\mathbf{j}+\mathbf{k}$、大きさ $\sqrt{a^2+b^2+1}$。</li>
+  <li>$\int_0^Ly\,dy=\frac{L^2}{2}$。</li>
+</ul></div>
+<p class="pt">(1)</p>
+<ol class="sol">
+  <li>① $z=4-2x-2y$、$\mathbf{r}=x\mathbf{i}+y\mathbf{j}+(4-2x-2y)\mathbf{k}$</li>
+  <li>② $y=z=0$ で $x=2$ なので $0\le x\le2$。$z\ge0$ から $2y\le4-2x$、つまり $0\le y\le2-x$</li>
+  <li>③ $f=x+y+(4-2x-2y)=4-x-y$</li>
+  <li>④ $\frac{\partial\mathbf{r}}{\partial x}=\mathbf{i}-2\mathbf{k}$、$\frac{\partial\mathbf{r}}{\partial y}=\mathbf{j}-2\mathbf{k}$、外積 $=2\mathbf{i}+2\mathbf{j}+\mathbf{k}$、大きさ $\sqrt{4+4+1}=3$ <span class="why">理由：$\mathbf{i}$：$0\cdot(-2)-(-2)\cdot1=2$、$\mathbf{j}$：$(-2)\cdot0-1\cdot(-2)=2$、$\mathbf{k}$：$1$。</span></li>
+  <li>⑤ 内側：$\int_0^{2-x}(4-x-y)\,dy=(4-x)(2-x)-\frac{(2-x)^2}{2}=\frac{(2-x)(6-x)}{2}$ <span class="why">理由：$(2-x)$ でくくると $(4-x)-\frac{2-x}{2}=\frac{6-x}{2}$。</span></li>
+  <li>外側：$3\int_0^2\frac{(2-x)(6-x)}{2}dx=\frac32\int_0^2(x^2-8x+12)\,dx$</li>
+  <li>$=\frac32\left[\frac{x^3}{3}-4x^2+12x\right]_0^2=\frac32\left(\frac83-16+24\right)=\frac32\cdot\frac{32}{3}=16$</li>
+</ol>
+<p class="conc"><span class="fin">16</span></p>
+<p class="pt">(2)</p>
+<ol class="sol">
+  <li>① $z=2-2x-y$、$\mathbf{r}=x\mathbf{i}+y\mathbf{j}+(2-2x-y)\mathbf{k}$</li>
+  <li>② $y=z=0$ で $x=1$ なので $0\le x\le1$。$z\ge0$ から $0\le y\le2-2x$</li>
+  <li>③ $f=x^2+y-(2-2x-y)=x^2+2x+2y-2$ <span class="why">理由：$-z$ に代入するのでカッコごとマイナス。</span></li>
+  <li>④ 外積 $=2\mathbf{i}+\mathbf{j}+\mathbf{k}$、大きさ $\sqrt6$ <span class="why">理由：$\frac{\partial\mathbf{r}}{\partial x}=\mathbf{i}-2\mathbf{k}$、$\frac{\partial\mathbf{r}}{\partial y}=\mathbf{j}-\mathbf{k}$。例題1と同じ係数。</span></li>
+  <li>⑤ 内側：$\int_0^{2-2x}(x^2+2x-2+2y)\,dy=(x^2+2x-2)(2-2x)+(2-2x)^2$</li>
+  <li>$=(2-2x)(x^2+2x-2+2-2x)=(2-2x)x^2$ <span class="why">理由：$\int_0^L2y\,dy=L^2$。$(2-2x)$ でくくると中身が $x^2$ だけ残る。</span></li>
+  <li>外側：$\sqrt6\int_0^1(2x^2-2x^3)\,dx=\sqrt6\left(\frac23-\frac12\right)=\frac{\sqrt6}{6}$</li>
+</ol>
+<p class="conc"><span class="fin">$\dfrac{\sqrt6}{6}$</span>（$=\frac{1}{\sqrt6}$）</p>
+<p class="chk">検算：(1) $f$ は1次式。頂点 $(2,0,0),(0,2,0),(0,0,4)$ の重心 $\left(\frac23,\frac23,\frac43\right)$ で $f=\frac83$、面積 $3\times(D\text{ の面積 }2)=6$。$\frac83\cdot6=16$ ✓。(2) $f=x^2+(y-z)$ に分ける。$y-z$ は1次式で、重心 $\left(\frac13,\frac23,\frac23\right)$ での値が $0$ なので寄与0。残りは $\sqrt6\iint_Dx^2=\sqrt6\int_0^1x^2(2-2x)dx=\frac{\sqrt6}{6}$ ✓</p>
+      </div></details></div>
+
+    <div class="q"><div class="qh"><span class="tag">演習6-2</span><span class="src">演習「面積分」2（ベクトル場）</span></div>
+      <div class="body">次の平面 $S$（$x\ge0,y\ge0,z\ge0$ の部分）上で、ベクトル場 $\mathbf{A}$ を面積分せよ。<br>(1) $\mathbf{A}=xy\,\mathbf{i}-\mathbf{j}+z\,\mathbf{k}$、$S$：$x+2y+2z=2$　(2) $\mathbf{A}=x^2\mathbf{i}+y^2\mathbf{j}+z^2\mathbf{k}$、$S$：$2x+2y+z=2$</div>
+      <details><summary>解答</summary><div class="ans">
+        <div class="use"><b>使う知識</b><ul>
+  <li><b>ベクトル場の面積分</b>：$\iint_S\mathbf{A}\cdot d\mathbf{S}=\iint_D\mathbf{A}\cdot\left(\frac{\partial\mathbf{r}}{\partial x}\times\frac{\partial\mathbf{r}}{\partial y}\right)dx\,dy$（向きは講義どおり $\mathbf{k}$ 成分が正）。</li>
+  <li><b>平面の外積（早見）</b>：$z=c-ax-by$ なら外積 $=a\mathbf{i}+b\mathbf{j}+\mathbf{k}$。</li>
+  <li>$\int_0^L(L-y)^2dy=\frac{L^3}{3}$、$\int_0^Ly^2dy=\frac{L^3}{3}$。</li>
+</ul></div>
+<p class="pt">(1)</p>
+<ol class="sol">
+  <li>① $2z=2-x-2y$ より $z=1-\frac x2-y$、$\mathbf{r}=x\mathbf{i}+y\mathbf{j}+\left(1-\frac x2-y\right)\mathbf{k}$ <span class="why">理由：$z$ の係数が2なので両辺を2で割る。</span></li>
+  <li>② $y=z=0$ で $x=2$ なので $0\le x\le2$。$z\ge0$ から $0\le y\le1-\frac x2$</li>
+  <li>③ $\mathbf{A}=xy\,\mathbf{i}-\mathbf{j}+\left(1-\frac x2-y\right)\mathbf{k}$</li>
+  <li>④ $\frac{\partial\mathbf{r}}{\partial x}=\mathbf{i}-\frac12\mathbf{k}$、$\frac{\partial\mathbf{r}}{\partial y}=\mathbf{j}-\mathbf{k}$、外積 $=\frac12\mathbf{i}+\mathbf{j}+\mathbf{k}$ <span class="why">理由：$\mathbf{i}$：$0\cdot(-1)-\left(-\frac12\right)\cdot1=\frac12$、$\mathbf{j}$：$\left(-\frac12\right)\cdot0-1\cdot(-1)=1$、$\mathbf{k}$：$1$。</span></li>
+  <li>内積：$\frac{xy}{2}-1+1-\frac x2-y=\frac{xy}{2}-\frac x2-y$ <span class="why">理由：$-1$ と $+1$ が消える。</span></li>
+  <li>⑤ 内側：$L=1-\frac x2=\frac{2-x}{2}$ とおくと $\int_0^L\left(\frac{xy}{2}-\frac x2-y\right)dy=\frac{xL^2}{4}-\frac{xL}{2}-\frac{L^2}{2}$</li>
+  <li>$=\frac{x(2-x)^2}{16}-\frac{x(2-x)}{4}-\frac{(2-x)^2}{8}$</li>
+  <li>$\frac{2-x}{16}$ でくくる：$\frac{2-x}{16}\left\{x(2-x)-4x-2(2-x)\right\}=\frac{2-x}{16}(-x^2-4)=-\frac{(2-x)(x^2+4)}{16}$</li>
+  <li>外側：$-\frac1{16}\int_0^2(2-x)(x^2+4)\,dx=-\frac1{16}\int_0^2(-x^3+2x^2-4x+8)\,dx$</li>
+  <li>$=-\frac1{16}\left(-4+\frac{16}{3}-8+16\right)=-\frac1{16}\cdot\frac{28}{3}=-\frac{7}{12}$</li>
+</ol>
+<p class="conc"><span class="fin">$-\dfrac{7}{12}$</span>（マイナス＝原点側へ通り抜ける量のほうが多い）</p>
+<p class="pt">(2)</p>
+<ol class="sol">
+  <li>① $z=2-2x-2y$、$\mathbf{r}=x\mathbf{i}+y\mathbf{j}+(2-2x-2y)\mathbf{k}$</li>
+  <li>② $0\le x\le1$、$0\le y\le1-x$ <span class="why">理由：$y=z=0$ で $2x=2$。$z\ge0$ から $2y\le2-2x$。</span></li>
+  <li>③ $\mathbf{A}=x^2\mathbf{i}+y^2\mathbf{j}+(2-2x-2y)^2\mathbf{k}=x^2\mathbf{i}+y^2\mathbf{j}+4(1-x-y)^2\mathbf{k}$</li>
+  <li>④ 外積 $=2\mathbf{i}+2\mathbf{j}+\mathbf{k}$ <span class="why">理由：$\frac{\partial\mathbf{r}}{\partial x}=\mathbf{i}-2\mathbf{k}$、$\frac{\partial\mathbf{r}}{\partial y}=\mathbf{j}-2\mathbf{k}$。演習6-1(1) と同じ係数。</span></li>
+  <li>内積：$2x^2+2y^2+4(1-x-y)^2$</li>
+  <li>⑤ 内側：$L=1-x$ とおくと $1-x-y=L-y$ なので $\int_0^L\left\{2x^2+2y^2+4(L-y)^2\right\}dy=2x^2L+\frac{2L^3}{3}+\frac{4L^3}{3}=2x^2L+2L^3$</li>
+  <li>外側：$\int_0^1\left\{2x^2(1-x)+2(1-x)^3\right\}dx=2\left(\frac13-\frac14\right)+2\cdot\frac14=\frac16+\frac12=\frac23$ <span class="why">理由：$\int_0^1(1-x)^3dx=\left[-\frac{(1-x)^4}{4}\right]_0^1=\frac14$。</span></li>
+</ol>
+<p class="conc"><span class="fin">$\dfrac23$</span></p>
+<p class="chk">検算：(1) 変数を $y,z$ に変えて解き直す。$x=2-2y-2z$、外積 $\frac{\partial\mathbf{r}}{\partial y}\times\frac{\partial\mathbf{r}}{\partial z}=\mathbf{i}+2\mathbf{j}+2\mathbf{k}$（同じ向き）、内積 $(2-2y-2z)y-2+2z$ を $0\le y\le1,\ 0\le z\le1-y$ で積分すると $-\frac{7}{12}$ ✓。(2) $D$ は $x,y$ を入れかえても同じ形なので $\iint_Dx^2=\iint_Dy^2=\int_0^1x^2(1-x)dx=\frac1{12}$、さらに $1-x-y$ も対称に同じで $\iint_D(1-x-y)^2=\frac1{12}$。合計 $2\cdot\frac1{12}+2\cdot\frac1{12}+4\cdot\frac1{12}=\frac23$ ✓</p>
+      </div></details></div>
+    </div>
+  </div>
+</section>
+
 <!-- ======================= まとめテスト ======================= -->
 <section class="ch" id="vt" data-title="まとめテスト">
-  <div class="ch-top"><span class="ch-no">まとめ</span><h2>まとめテスト（類題9問）</h2><span class="ch-meta">演習と同じ形で数字を変えた問題。全章から</span></div>
+  <div class="ch-top"><span class="ch-no">まとめ</span><h2>まとめテスト（類題11問）</h2><span class="ch-meta">演習と同じ形で数字を変えた問題。全章から</span></div>
   <div class="step"><h3><span class="n">!</span>やり方</h3>
     <div class="mock-intro">
       <p>紙とペンで解いてから「解答」を開く。目安は1問5分。解けたら「解けた」にチェック（この端末のブラウザにだけ保存される）。</p>
-      <p>外積・勾配・発散・回転・線積分の5パターンがそろっている。迷ったら各章の「覚える」に戻る。</p>
+      <p>外積・勾配・発散・回転・線積分・面積分の6パターンがそろっている。迷ったら各章の「覚える」に戻る。</p>
     </div>
   </div>
   <div class="step"><h3><span class="n">4</span>解く</h3>
@@ -1183,6 +1330,42 @@ details[open] summary { background: var(--ink); color: var(--paper); }
 </ol>
 <p class="conc"><span class="fin">$\dfrac32$</span></p>
 <p class="chk">検算：$\mathbf{A}=\nabla\left(xy+\frac{z^2}{2}\right)$ なので「終点 $(1,1,1)$ の値 − 始点の値」$=1+\frac12-0=\frac32$ ✓</p>
+      </div></details></div>
+
+    <div class="q"><div class="qh"><span class="tag">T10</span><span class="src">第6章（スカラー場）</span></div>
+      <div class="body">平面 $S$：$x+y+z=1$（$x\ge0,y\ge0,z\ge0$）上で、$f=x+2y+z$ を面積分せよ。</div>
+      <details><summary>解答</summary><div class="ans">
+        <div class="use"><b>使う知識</b><ul>
+  <li>$\iint_Sf\,dS=\iint_Df\left|\frac{\partial\mathbf{r}}{\partial x}\times\frac{\partial\mathbf{r}}{\partial y}\right|dx\,dy$。平面 $ax+by+z=c$ の外積は $a\mathbf{i}+b\mathbf{j}+\mathbf{k}$。</li>
+</ul></div>
+<ol class="sol">
+  <li>① $z=1-x-y$、$\mathbf{r}=x\mathbf{i}+y\mathbf{j}+(1-x-y)\mathbf{k}$</li>
+  <li>② $0\le x\le1$、$0\le y\le1-x$ <span class="why">理由：$y=z=0$ で $x=1$。$z\ge0$ から $y\le1-x$。</span></li>
+  <li>③ $f=x+2y+(1-x-y)=1+y$</li>
+  <li>④ $\frac{\partial\mathbf{r}}{\partial x}=\mathbf{i}-\mathbf{k}$、$\frac{\partial\mathbf{r}}{\partial y}=\mathbf{j}-\mathbf{k}$、外積 $\mathbf{i}+\mathbf{j}+\mathbf{k}$、大きさ $\sqrt3$</li>
+  <li>⑤ 内側：$\int_0^{1-x}(1+y)dy=(1-x)+\frac{(1-x)^2}{2}$。外側：$\int_0^1\left\{(1-x)+\frac{(1-x)^2}{2}\right\}dx=\frac12+\frac16=\frac23$</li>
+  <li>$\sqrt3$ を掛けて $\frac23\sqrt3$</li>
+</ol>
+<p class="conc"><span class="fin">$\dfrac{2\sqrt3}{3}$</span></p>
+<p class="chk">検算：$f$ は1次式。重心 $\left(\frac13,\frac13,\frac13\right)$ で $f=\frac43$、$S$ の面積は $\sqrt3\cdot\frac12$。$\frac43\cdot\frac{\sqrt3}{2}=\frac{2\sqrt3}{3}$ ✓</p>
+      </div></details></div>
+
+    <div class="q"><div class="qh"><span class="tag">T11</span><span class="src">第6章（ベクトル場）</span></div>
+      <div class="body">平面 $S$：$2x+y+z=2$（$x\ge0,y\ge0,z\ge0$）上で、$\mathbf{A}=y\,\mathbf{i}+z\,\mathbf{j}+x\,\mathbf{k}$ を面積分せよ（向きは $\frac{\partial\mathbf{r}}{\partial x}\times\frac{\partial\mathbf{r}}{\partial y}$）。</div>
+      <details><summary>解答</summary><div class="ans">
+        <div class="use"><b>使う知識</b><ul>
+  <li>$\iint_S\mathbf{A}\cdot d\mathbf{S}=\iint_D\mathbf{A}\cdot\left(\frac{\partial\mathbf{r}}{\partial x}\times\frac{\partial\mathbf{r}}{\partial y}\right)dx\,dy$。</li>
+</ul></div>
+<ol class="sol">
+  <li>① $z=2-2x-y$、② $0\le x\le1$、$0\le y\le2-2x$</li>
+  <li>③ $\mathbf{A}=y\,\mathbf{i}+(2-2x-y)\mathbf{j}+x\,\mathbf{k}$ <span class="why">理由：$\mathbf{j}$ 成分が $z$ なのでここに代入。</span></li>
+  <li>④ 外積 $=2\mathbf{i}+\mathbf{j}+\mathbf{k}$ <span class="why">理由：平面の係数 $(2,1,1)$。</span></li>
+  <li>内積：$2y+(2-2x-y)+x=2-x+y$</li>
+  <li>⑤ 内側：$\int_0^{2-2x}(2-x+y)dy=(2-x)(2-2x)+\frac{(2-2x)^2}{2}=(2-2x)(3-2x)$</li>
+  <li>外側：$\int_0^1(6-10x+4x^2)dx=6-5+\frac43=\frac73$</li>
+</ol>
+<p class="conc"><span class="fin">$\dfrac73$</span></p>
+<p class="chk">検算：$2-x+y$ は1次式。$D$ の頂点 $(0,0),(1,0),(0,2)$ の重心 $\left(\frac13,\frac23\right)$ で値 $\frac73$、$D$ の面積 $1$。$\frac73\cdot1=\frac73$ ✓</p>
       </div></details></div>
     </div>
   </div>
