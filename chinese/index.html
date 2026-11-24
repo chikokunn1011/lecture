@@ -1,0 +1,967 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>中国語 試験対策ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Sans:wght@400;600&display=swap">
+<style>
+/* 中国語ノート：深い朱色の見出し帯＋金色アクセント。ピンインは声調ごとに色分け */
+:root {
+  --bg: #f6f3ee;
+  --card: #ffffff;
+  --ink: #221c1a;
+  --muted: #6a615c;
+  --line: #ded7cf;
+  --accent: #a8322a;
+  --accent-soft: #f8e8e3;
+  --gold: #a87a12;
+  --head: #4a1414;
+  --head-ink: #f8f0ea;
+  --key: #fff0c4;
+  --good: #22764a;
+  --good-soft: #e5f4ec;
+  --bad: #b3332b;
+  --bad-soft: #fbe9e7;
+  --blank: #ebe6df;
+  --t1: #d0312d; --t2: #d97706; --t3: #1f8a3c; --t4: #2557c7; --t5: #7d7570;
+  --f-body: "Zen Kaku Gothic New", "Hiragino Sans", "Yu Gothic", "Meiryo", sans-serif;
+  --f-zh: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --f-py: "Noto Sans", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #161211; --card: #201a18; --ink: #efe7e3; --muted: #b0a39c; --line: #3a302c;
+    --accent: #f08a7e; --accent-soft: #3a211d; --gold: #e8bf5a; --head: #120b0a; --head-ink: #efe7e3;
+    --key: #3d3410; --good: #6fd39f; --good-soft: #17301f; --bad: #ff8b80; --bad-soft: #3a1d1a;
+    --blank: #2e2623; --t1: #ff6b63; --t2: #ffad42; --t3: #5fd182; --t4: #7aa5ff; --t5: #a89e98; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #161211; --card: #201a18; --ink: #efe7e3; --muted: #b0a39c; --line: #3a302c;
+  --accent: #f08a7e; --accent-soft: #3a211d; --gold: #e8bf5a; --head: #120b0a; --head-ink: #efe7e3;
+  --key: #3d3410; --good: #6fd39f; --good-soft: #17301f; --bad: #ff8b80; --bad-soft: #3a1d1a;
+  --blank: #2e2623; --t1: #ff6b63; --t2: #ffad42; --t3: #5fd182; --t4: #7aa5ff; --t5: #a89e98; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 15.5px; line-height: 1.8; }
+.wrap { max-width: 880px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+a { color: var(--accent); }
+[lang="zh-CN"] { font-family: var(--f-zh); }
+
+.top { background: var(--head); color: var(--head-ink); }
+.top .wrap { padding-block: 14px 26px; }
+.back { color: var(--head-ink); opacity: .8; font-size: 14px; text-decoration: none; }
+.back:hover { opacity: 1; text-decoration: underline; }
+.top h1 { font-weight: 900; font-size: clamp(26px, 5vw, 38px); line-height: 1.25; margin: 14px 0 8px; }
+.top h1 span { color: #f0c35a; }
+.top p { margin: 0; opacity: .85; max-width: 62ch; }
+
+nav.tabs { position: sticky; top: 0; z-index: 5; background: var(--card); border-bottom: 1px solid var(--line); }
+nav.tabs .wrap { display: flex; gap: 6px; overflow-x: auto; padding-block: 8px; scrollbar-width: thin; }
+nav.tabs button { flex: none; font: inherit; font-size: 13.5px; font-weight: 700; color: var(--muted); background: transparent; border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px; cursor: pointer; white-space: nowrap; }
+nav.tabs button:hover { color: var(--ink); border-color: var(--ink); }
+nav.tabs button[aria-selected="true"] { background: var(--head); color: var(--head-ink); border-color: var(--head); }
+nav.tabs button.star::before { content: "★ "; color: var(--gold); }
+nav.tabs button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.pybar { border-top: 1px solid var(--line); }
+.pybar .wrap { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; padding-block: 6px; font-size: 13px; color: var(--muted); }
+.pybar .seg { display: inline-flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.pybar .seg button { font: inherit; font-size: 12.5px; font-weight: 700; border: 0; background: var(--card); color: var(--muted); padding: 2px 10px; cursor: pointer; }
+.pybar .seg button[aria-pressed="true"] { background: var(--head); color: var(--head-ink); }
+.legend span { font-family: var(--f-py); font-weight: 600; margin-right: 6px; }
+
+main { padding-block: 24px 60px; }
+section.tab > h2 { font-weight: 900; font-size: 26px; line-height: 1.35; margin: 0 0 4px; }
+.srcline { color: var(--muted); font-size: 13.5px; margin: 0 0 18px; }
+h3 { font-weight: 900; font-size: 19px; margin: 34px 0 10px; padding-left: 10px; border-left: 5px solid var(--accent); line-height: 1.4; }
+p { margin: 0 0 12px; }
+ul, ol { margin: 0 0 12px; padding-left: 1.4em; }
+li { margin-bottom: 4px; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; margin: 0 0 14px; }
+.key { background: var(--key); border-radius: 10px; padding: 10px 16px; margin: 0 0 12px; }
+.key b:first-child { display: block; font-size: 12.5px; letter-spacing: .05em; margin-bottom: 2px; color: var(--gold); }
+.warn { background: var(--bad-soft); border-left: 4px solid var(--bad); border-radius: 6px; padding: 10px 14px; margin: 0 0 14px; font-size: 14.5px; }
+.warn b:first-child { color: var(--bad); }
+.tip { background: var(--good-soft); border-left: 4px solid var(--good); border-radius: 6px; padding: 10px 14px; margin: 0 0 14px; font-size: 14.5px; }
+.tip b:first-child { color: var(--good); }
+.big-note { background: var(--accent-soft); border: 2px solid var(--accent); border-radius: 12px; padding: 12px 16px; margin: 0 0 16px; }
+.big-note b:first-child { color: var(--accent); }
+table { border-collapse: collapse; width: 100%; font-size: 14.5px; margin: 0 0 14px; }
+.tw { overflow-x: auto; }
+th, td { border: 1px solid var(--line); padding: 6px 10px; text-align: left; vertical-align: middle; }
+th { background: var(--accent-soft); font-weight: 700; }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 12px; margin-bottom: 14px; }
+.grid2 .card { margin: 0; }
+.ctrl { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 12px; }
+.ctrl button, .btn { font: inherit; font-size: 13.5px; font-weight: 700; padding: 4px 12px; border-radius: 8px; border: 1px solid var(--line); background: var(--card); color: var(--ink); cursor: pointer; }
+.ctrl button:hover, .btn:hover { border-color: var(--ink); }
+.ctrl button[aria-pressed="true"] { background: var(--head); color: var(--head-ink); border-color: var(--head); }
+.btn.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+/* ピンイン（ルビ）と声調色 */
+.zh { font-size: 21px; line-height: 2.3; }
+.zh.big { font-size: 24px; }
+.zh .w { display: inline-block; margin-right: .12em; }
+.zh ruby { ruby-position: over; }
+.zh rt { font-family: var(--f-py); font-size: 11.5px; font-weight: 600; letter-spacing: 0; line-height: 1.1; color: var(--muted); }
+.tone-on .t1 { color: var(--t1); } .tone-on .t2 { color: var(--t2); } .tone-on .t3 { color: var(--t3); } .tone-on .t4 { color: var(--t4); } .tone-on .t5 { color: var(--t5); }
+.py-off .zh rt { visibility: hidden; }
+.py-off .zh { cursor: pointer; }
+.py-off .zh.show rt { visibility: visible; }
+.py-off td.py { color: transparent !important; background: var(--blank); cursor: pointer; }
+.py-off td.py span { color: transparent !important; }
+.py-off td.py.show { background: transparent; }
+.py-off.tone-on td.py.show span.t1 { color: var(--t1) !important; } .py-off.tone-on td.py.show span.t2 { color: var(--t2) !important; }
+.py-off.tone-on td.py.show span.t3 { color: var(--t3) !important; } .py-off.tone-on td.py.show span.t4 { color: var(--t4) !important; }
+.py-off.tone-on td.py.show span.t5 { color: var(--t5) !important; }
+.py-off:not(.tone-on) td.py.show span { color: var(--ink) !important; }
+td.py, .py { font-family: var(--f-py); font-weight: 600; }
+
+ul.exs { list-style: none; padding: 0; }
+ul.exs > li { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 6px 14px 8px; margin-bottom: 8px; }
+ul.exs .tr { display: block; font-size: 13.5px; color: var(--muted); line-height: 1.5; }
+
+/* 単語表 */
+table.vocab td.zhw { font-size: 21px; }
+table.vocab td.zhw .say { margin-right: 4px; }
+table.vocab td.py { font-size: 15.5px; }
+table.vocab td.ja { width: 38%; }
+@media (max-width: 520px) { table.vocab { font-size: 13.5px; } table.vocab td { padding: 5px 6px; } table.vocab td.zhw { font-size: 18px; } table.vocab td.py { font-size: 14px; } table.vocab .say { width: 26px; height: 26px; } }
+table.vocab.hide-ja td.ja { color: transparent; background: var(--blank); cursor: pointer; }
+table.vocab.hide-ja td.ja.show { color: var(--ink); background: transparent; }
+.fw { display: flex; flex-wrap: wrap; gap: 4px 10px; }
+.fwi { display: inline-flex; flex-direction: column; align-items: center; min-width: 3.5em; }
+.fwi small { font-size: 12px; color: var(--muted); line-height: 1.2; }
+.fwi .zh { line-height: 2; }
+
+/* 作文・練習 */
+.ex { border: 1px solid var(--line); border-radius: 12px; background: var(--card); margin: 0 0 12px; overflow: hidden; }
+.ex > .q { padding: 12px 18px 6px; display: flex; gap: 8px; align-items: baseline; flex-wrap: wrap; }
+.ex .no { font-weight: 900; color: var(--accent); margin-right: 6px; }
+.ex .jq { flex: 1 1 260px; font-weight: 700; font-size: 16.5px; }
+.ex .memo { font-size: 13px; color: var(--muted); display: inline-flex; gap: 4px; align-items: center; cursor: pointer; white-space: nowrap; }
+.ex.done { border-color: var(--good); }
+.ex.done .no::after { content: " ✓"; color: var(--good); }
+.sk-ctrl { padding: 0 18px; }
+.ex .a { padding: 4px 18px 12px; border-top: 1px dashed var(--line); }
+.ex .pt { font-size: 14.5px; margin: 4px 0 6px; }
+.diff { font-size: 13.5px; color: var(--muted); margin: 0; }
+.diff b { color: var(--ink); margin-right: 6px; }
+.dc { display: inline-block; margin-right: 10px; }
+.dc span { font-size: 18px; color: var(--accent); font-weight: 700; margin-right: 2px; }
+.ansline { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; }
+details.ex summary { cursor: pointer; padding: 10px 18px; list-style: none; font-size: 15.5px; }
+details.ex summary::-webkit-details-marker { display: none; }
+details.ex summary::after { content: "答え ▶"; float: right; font-size: 12.5px; color: var(--accent); font-weight: 700; }
+details.ex[open] summary::after { content: "閉じる ▼"; }
+.zhq { font-size: 19px; }
+.tiles { padding: 6px 18px 12px; }
+.tiles .line { min-height: 46px; border: 2px dashed var(--line); border-radius: 10px; padding: 6px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 8px; }
+.tiles .pool { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+.tiles button.tl { font-family: var(--f-zh); font-size: 19px; padding: 2px 10px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); cursor: pointer; }
+.tiles .line button.tl { background: var(--key); }
+.tiles .res { font-size: 14px; font-weight: 700; }
+.tiles .res.ok { color: var(--good); } .tiles .res.ng { color: var(--bad); }
+
+/* テスト */
+.panel { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; margin-bottom: 16px; }
+.panel .qj { font-size: 19px; font-weight: 700; margin: 6px 0 10px; }
+.panel .meta { font-size: 13px; color: var(--muted); }
+.panel textarea { width: 100%; font-family: var(--f-zh); font-size: 19px; padding: 8px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); min-height: 52px; }
+.score { font-weight: 900; color: var(--accent); font-size: 18px; }
+.prog { font-size: 14px; color: var(--muted); }
+#checks label, .chk label { display: flex; gap: 8px; align-items: flex-start; margin-bottom: 4px; cursor: pointer; }
+#checks label.done span { text-decoration: line-through; color: var(--muted); }
+
+/* 単語クイズ */
+.quiz { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+.quiz .opts-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 10px; }
+.quiz select, .voicebar select { font: inherit; font-size: 14px; padding: 3px 6px; border-radius: 8px; border: 1px solid var(--line); background: var(--card); color: var(--ink); max-width: 100%; }
+.quiz .qword { font-size: 34px; margin: 10px 0 2px; line-height: 1.35; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.quiz .qword.jp { font-size: 21px; font-weight: 700; }
+.quiz .qmeta { font-size: 13px; color: var(--muted); margin-bottom: 10px; }
+.quiz .choices { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 8px; }
+.quiz .choices button { font: inherit; font-size: 15px; text-align: left; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); cursor: pointer; }
+.quiz .choices button.zhc { font-family: var(--f-zh); font-size: 22px; }
+.quiz .choices button.pyc { font-family: var(--f-py); font-weight: 600; font-size: 18px; }
+.quiz .choices button:hover:not(:disabled) { border-color: var(--ink); }
+.quiz .choices button.ok { background: var(--good-soft); border-color: var(--good); }
+.quiz .choices button.ng { background: var(--bad-soft); border-color: var(--bad); }
+.quiz .choices button:disabled { cursor: default; }
+.quiz .status { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 12px; font-size: 14px; }
+.quiz .fb { margin-top: 10px; font-size: 15px; }
+
+/* 読み上げ */
+.say { flex: none; display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; margin-right: 6px; padding: 0; vertical-align: middle; border-radius: 999px; border: 1px solid var(--line); background: var(--card); color: var(--accent); cursor: pointer; }
+.say:hover { border-color: var(--accent); }
+.say:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.say svg { width: 16px; height: 16px; fill: currentColor; }
+.say.on { background: var(--accent); color: var(--card); border-color: var(--accent); }
+.quiz .say { width: 40px; height: 40px; }
+.quiz .say svg { width: 20px; height: 20px; }
+.voicebar { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; font-size: 14px; }
+.no-tts .say, .no-tts .voicebar, .no-tts .tts-only { display: none !important; }
+#tts-none { display: none; }
+.no-tts #tts-none { display: block; }
+
+.pager { display: flex; justify-content: space-between; gap: 10px; margin-top: 30px; }
+.pager button { font: inherit; font-size: 14px; font-weight: 700; border: 1px solid var(--line); background: var(--card); color: var(--ink); border-radius: 10px; padding: 8px 12px; cursor: pointer; max-width: 48%; }
+.pager button:empty { visibility: hidden; }
+
+@media (max-width: 520px) { .card, .ex > .q, .ex .a, .panel, .quiz { padding-left: 12px; padding-right: 12px; } .sk-ctrl, .tiles { padding-left: 12px; padding-right: 12px; } .zh.big { font-size: 22px; } table.vocab td.zhw { font-size: 19px; } }
+@media print {
+  nav.tabs, .pager, .ctrl, .say, .quiz, .panel, .tiles { display: none !important; }
+  section.tab[hidden] { display: block !important; }
+  .ex .a[hidden] { display: block !important; }
+  details > * { display: block; }
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="back" href="../">← 講義一覧</a>
+    <h1>中国語（言語と文化2）<br><span>試験対策ノート</span></h1>
+    <p>総まとめプリントの単語・文法①〜⑱・作文15問をまとめたノート。中国語はすべて簡体字で、上にピンイン（声調ごとに色分け）。🔊ボタンで中国語の発音が聞ける。</p>
+  </div>
+</header>
+
+<nav class="tabs" aria-label="ページの切り替え">
+  <div class="wrap" role="tablist" id="tablist"></div>
+  <div class="pybar"><div class="wrap">
+    <span>ピンイン</span>
+    <span class="seg" id="seg-py"><button type="button" data-py="on" aria-pressed="true">表示</button><button type="button" data-py="off" aria-pressed="false">隠す</button></span>
+    <span>声調の色</span>
+    <span class="seg" id="seg-tone"><button type="button" data-tone="on" aria-pressed="true">ON</button><button type="button" data-tone="off" aria-pressed="false">OFF</button></span>
+    <span class="legend tone-on"><span class="t1">1声</span><span class="t2">2声</span><span class="t3">3声</span><span class="t4">4声</span><span class="t5">軽声</span></span>
+  </div></div>
+</nav>
+
+<main class="wrap">
+
+<!-- ================= はじめに ================= -->
+<section class="tab" id="home" data-title="試験対策の進め方" data-short="はじめに">
+  <h2>試験対策の進め方</h2>
+  <p class="srcline">範囲：総まとめプリントの言語パート（第4〜6課の単語・文法①〜⑱・作文15問）</p>
+
+  <div class="big-note"><b>最重要：作文15問</b>　プリント最後の「中国語に訳しなさい」①〜⑮のうち <b>10問が出る</b>らしい。まずは <a href="#sakubun" data-go="sakubun">★作文15問</a> を全部書けるようにするのが一番点につながる。</div>
+
+  <div class="grid2">
+    <div class="card">
+      <b>このノートの中身</b>
+      <ul>
+        <li><a href="#sakubun" data-go="sakubun">★作文15問</a>：答え・ポイント・簡体字の注意。並べ替え練習と「本番10問テスト」つき</li>
+        <li><a href="#vocab" data-go="vocab">単語</a>：プリントの単語 105語＋作文に出る語</li>
+        <li><a href="#ga" data-go="ga">文法①〜⑥</a>・<a href="#gb" data-go="gb">⑦〜⑫</a>・<a href="#gc" data-go="gc">⑬〜⑱</a>：型・説明・例文（全部ピンインと音声つき）</li>
+        <li><a href="#practice" data-go="practice">練習問題</a>：作文の類題・在/有・会/能/可以・並べ替え・まちがい直し</li>
+        <li><a href="#quiz" data-go="quiz">単語クイズ</a>：意味・簡体字・声調・聞き取りの4種類</li>
+      </ul>
+    </div>
+    <div class="card">
+      <b>ピンインと発音の確認</b>
+      <ul>
+        <li>上のバーの「ピンイン：隠す」にすると、文をタップしたときだけピンインが出る（読めるかテストできる）</li>
+        <li>ピンインの色は声調：<span class="tone-on"><b class="t1">1声</b>・<b class="t2">2声</b>・<b class="t3">3声</b>・<b class="t4">4声</b>・<b class="t5">軽声</b></span></li>
+        <li>🔊 で中国語（普通話）の音声を再生。もう一回押すと止まる</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>おすすめの勉強手順</h3>
+  <ol>
+    <li><b>作文15問</b>を日本語だけ見て、紙に簡体字で書く → 「答えを見る」で答え合わせ（簡体字の形の違いに注意）</li>
+    <li>書けなかった文は <b>並べ替え</b>で語順を確認 → 🔊 で音読して覚える</li>
+    <li>「本番10問テスト」でランダム10問。全部書けたら「覚えた」にチェック</li>
+    <li>作文で使う文法（在・有・連動文・得・会/能・比/没有・不用・了）を <b>文法タブ</b>で確認</li>
+    <li><b>練習問題</b>の作文類題で、同じ型をちがう単語で書けるか確認</li>
+    <li>最後に <b>単語クイズ</b>（意味・声調）で単語をおさらい</li>
+  </ol>
+
+  <h3>発音を聞く</h3>
+  <div class="card">
+    <p style="margin-bottom:8px">ブラウザの読み上げ機能で中国語（zh-CN）の音声を出す。音が出ないときはマナーモードと音量を確認。中国語の声が入っていない端末だと日本語っぽく読まれることがあるので、そのときは「声」から中国語の声を選ぶ。</p>
+    <div class="voicebar">
+      <label>速さ <select id="tts-rate"><option value="0.6">ゆっくり</option><option value="0.8">少しゆっくり</option><option value="1">ふつう</option></select></label>
+      <label>声 <select id="tts-voice"><option value="">端末の標準（中国語）</option></select></label>
+      <button type="button" class="btn" id="tts-test">試しに聞く</button>
+    </div>
+    <p id="tts-none" class="warn" style="margin:8px 0 0"><b>このブラウザは読み上げに対応していない</b>　iPhone なら Safari、Android なら Chrome で開くと使える。</p>
+    <p style="font-size:13px;color:var(--muted);margin:8px 0 0">※ 1文字だけの単語（得・了・还 など）は、機械の読み上げだと別の読み方になることがある。<b>表のピンインが正しい読み</b>。</p>
+  </div>
+
+  <h3>声調の基本</h3>
+  <div class="tw"><table>
+    <tr><th>字</th><th>ピンイン</th><th>声調</th><th>コツ</th></tr>
+    <tr><td><span class="zh" lang="zh-CN" data-say="妈"><span class="w"><ruby>妈<rt class="t1">mā</rt></ruby></span></span></td><td class="py"><span class="t1">mā</span></td><td>1声</td><td>高く平らにのばす</td></tr><tr><td><span class="zh" lang="zh-CN" data-say="麻"><span class="w"><ruby>麻<rt class="t2">má</rt></ruby></span></span></td><td class="py"><span class="t2">má</span></td><td>2声</td><td>低めから一気に上げる（「えっ？」）</td></tr><tr><td><span class="zh" lang="zh-CN" data-say="马"><span class="w"><ruby>马<rt class="t3">mǎ</rt></ruby></span></span></td><td class="py"><span class="t3">mǎ</span></td><td>3声</td><td>低くおさえる（単独では最後少し上がる）</td></tr><tr><td><span class="zh" lang="zh-CN" data-say="骂"><span class="w"><ruby>骂<rt class="t4">mà</rt></ruby></span></span></td><td class="py"><span class="t4">mà</span></td><td>4声</td><td>高いところから一気に下げる</td></tr><tr><td><span class="zh" lang="zh-CN" data-say="吗"><span class="w"><ruby>吗<rt class="t5">ma</rt></ruby></span></span></td><td class="py"><span class="t5">ma</span></td><td>軽声</td><td>前の音節につけて軽く短く</td></tr>
+  </table></div>
+  <h4 style="margin:16px 0 6px">声調が変わるルール（変調）</h4>
+  <div class="tw"><table>
+    <tr><td><span class="zh" lang="zh-CN" data-say="不错"><span class="w"><ruby>不<rt class="t2">bú</rt></ruby><ruby>错<rt class="t4">cuò</rt></ruby></span></span></td><td>不 は4声の前で <b>bú</b>（2声）</td></tr><tr><td><span class="zh" lang="zh-CN" data-say="不太好"><span class="w"><ruby>不<rt class="t2">bú</rt></ruby></span><span class="w"><ruby>太<rt class="t4">tài</rt></ruby></span><span class="w"><ruby>好<rt class="t3">hǎo</rt></ruby></span></span></td><td></td></tr><tr><td><span class="zh" lang="zh-CN" data-say="一般"><span class="w"><ruby>一<rt class="t4">yì</rt></ruby><ruby>般<rt class="t1">bān</rt></ruby></span></span></td><td>一 は1・2・3声の前で <b>yì</b>（4声）</td></tr><tr><td><span class="zh" lang="zh-CN" data-say="一样"><span class="w"><ruby>一<rt class="t2">yí</rt></ruby><ruby>样<rt class="t4">yàng</rt></ruby></span></span></td><td>一 は4声の前で <b>yí</b>（2声）</td></tr><tr><td><span class="zh" lang="zh-CN" data-say="你好"><span class="w"><ruby>你<rt class="t3">nǐ</rt></ruby></span><span class="w"><ruby>好<rt class="t3">hǎo</rt></ruby></span></span></td><td>3声＋3声 → 前が <b>2声</b>（表記は3声のまま）</td></tr>
+  </table></div>
+  <p style="font-size:13.5px;color:var(--muted)">このノートでは <b>不・一</b> は実際に読む声調（変わったあと）で書いている（プリントの「还不错 hái bú cuò」「一般 yìbān」と同じ書き方）。3声＋3声は表記は3声のまま。</p>
+
+  <h3>チェックリスト</h3>
+  <p class="prog" id="prog"></p>
+  <div class="card" id="checks">
+    <label><input type="checkbox" id="ck-s1"><span>作文15問を全部、日本語から簡体字で書けた</span></label>
+    <label><input type="checkbox" id="ck-s2"><span>本番10問テストで 10/10</span></label>
+    <label><input type="checkbox" id="ck-v"><span>単語表をピンイン・意味を隠して一周した</span></label>
+    <label><input type="checkbox" id="ck-g"><span>文法①〜⑱の型を言える</span></label>
+    <label><input type="checkbox" id="ck-p"><span>練習問題を答えを見ずに解いた</span></label>
+    <label><input type="checkbox" id="ck-q1"><span>単語クイズ（簡体字→意味）で 9割以上</span></label>
+    <label><input type="checkbox" id="ck-q2"><span>単語クイズ（声調）で 8割以上</span></label>
+  </div>
+  <p style="font-size:13px;color:var(--muted)">チェックはこの端末のブラウザにだけ保存される。</p>
+</section>
+
+<!-- ================= 作文15問 ================= -->
+<section class="tab" id="sakubun" data-title="作文15問（10問出る）" data-short="作文15問" data-star="1">
+  <h2>作文15問 <small style="font-size:15px;color:var(--accent)">（このうち10問が出る）</small></h2>
+  <p class="srcline">プリント「3、下記の文を中国語に訳しなさい」①〜⑮。日本語を見て、紙に簡体字で書いてから答えを開こう。</p>
+
+  <div class="panel" id="sktest">
+    <b>本番10問テスト</b>
+    <p class="meta" style="margin:2px 0 8px">15問からランダムに10問。日本語を見て書く（入力欄は手書きの代わりに使ってもいいし、紙に書いてもいい）→ 答えを見て自分で○×。</p>
+    <div class="ctrl"><button type="button" class="btn primary" id="sk-start">テストを始める</button><label class="meta" style="display:inline-flex;gap:4px;align-items:center"><input type="checkbox" id="sk-unmem">「覚えた」以外から優先して出す</label></div>
+    <div id="sk-body"></div>
+  </div>
+
+  <div class="ctrl"><button type="button" id="sk-openall">答えを全部開く</button><button type="button" id="sk-closeall">答えを全部閉じる</button><span class="prog" id="sk-prog" style="align-self:center"></span></div>
+  <div class="ex sk" id="s1" data-n="1" data-tiles="[&quot;礼堂&quot;, &quot;里&quot;, &quot;也&quot;, &quot;有&quot;, &quot;小卖部&quot;]" data-end="。">
+  <div class="q"><span class="no">①</span><span class="jq">講堂の中にも売店があります。</span>
+    <label class="memo"><input type="checkbox" data-mem="1">覚えた</label></div>
+  <div class="ctrl sk-ctrl"><button type="button" class="ans-btn">答えを見る</button><button type="button" class="tile-btn">並べ替えで練習</button></div>
+  <div class="tiles" hidden></div>
+  <div class="a" hidden>
+    <div class="ansline"><span class="zh big" lang="zh-CN" data-say="礼堂里也有小卖部。"><span class="w"><ruby>礼<rt class="t3">Lǐ</rt></ruby><ruby>堂<rt class="t2">táng</rt></ruby></span><span class="w"><ruby>里<rt class="t5">li</rt></ruby></span><span class="w"><ruby>也<rt class="t3">yě</rt></ruby></span><span class="w"><ruby>有<rt class="t3">yǒu</rt></ruby></span><span class="w"><ruby>小<rt class="t3">xiǎo</rt></ruby><ruby>卖<rt class="t4">mài</rt></ruby><ruby>部<rt class="t4">bù</rt></ruby></span>。</span></div>
+    <p class="pt">①存在の「有」：<b>場所＋有＋物</b>。「講堂の中」は 礼堂<b>里</b>。「も」は <b>也</b>（動詞の前）。</p><p class="diff"><b>簡体字に注意</b><span class="dc"><span lang="zh-CN">里</span>（日本の字：裏）</span><span class="dc"><span lang="zh-CN">卖</span>（日本の字：売）</span></p>
+  </div>
+</div>
+<div class="ex sk" id="s2" data-n="2" data-tiles="[&quot;教室&quot;, &quot;里&quot;, &quot;有&quot;, &quot;人&quot;, &quot;吗&quot;]" data-end="？">
+  <div class="q"><span class="no">②</span><span class="jq">教室に誰かいますか。</span>
+    <label class="memo"><input type="checkbox" data-mem="2">覚えた</label></div>
+  <div class="ctrl sk-ctrl"><button type="button" class="ans-btn">答えを見る</button><button type="button" class="tile-btn">並べ替えで練習</button></div>
+  <div class="tiles" hidden></div>
+  <div class="a" hidden>
+    <div class="ansline"><span class="zh big" lang="zh-CN" data-say="教室里有人吗？"><span class="w"><ruby>教<rt class="t4">Jiào</rt></ruby><ruby>室<rt class="t4">shì</rt></ruby></span><span class="w"><ruby>里<rt class="t5">li</rt></ruby></span><span class="w"><ruby>有<rt class="t3">yǒu</rt></ruby></span><span class="w"><ruby>人<rt class="t2">rén</rt></ruby></span><span class="w"><ruby>吗<rt class="t5">ma</rt></ruby></span>？</span></div>
+    <p class="pt">①存在の「有」：「誰かいる？」は <b>有人吗？</b>（×谁在吗）。場所は 教室<b>里</b>。</p><p class="diff"><b>簡体字に注意</b><span class="dc"><span lang="zh-CN">里</span>（日本の字：裏）</span><span class="dc"><span lang="zh-CN">吗</span>（日本にない字）</span></p>
+  </div>
+</div>
+<div class="ex sk" id="s3" data-n="3" data-tiles="[&quot;食堂&quot;, &quot;在&quot;, &quot;哪儿&quot;]" data-end="？">
+  <div class="q"><span class="no">③</span><span class="jq">食堂はどこにありますか。</span>
+    <label class="memo"><input type="checkbox" data-mem="3">覚えた</label></div>
+  <div class="ctrl sk-ctrl"><button type="button" class="ans-btn">答えを見る</button><button type="button" class="tile-btn">並べ替えで練習</button></div>
+  <div class="tiles" hidden></div>
+  <div class="a" hidden>
+    <div class="ansline"><span class="zh big" lang="zh-CN" data-say="食堂在哪儿？"><span class="w"><ruby>食<rt class="t2">Shí</rt></ruby><ruby>堂<rt class="t2">táng</rt></ruby></span><span class="w"><ruby>在<rt class="t4">zài</rt></ruby></span><span class="w"><ruby>哪<rt class="t3">nǎr</rt></ruby><ruby>儿<rt class=""></rt></ruby></span>？</span></div>
+    <p class="pt">①存在の「在」：特定の物の場所を聞くので <b>物＋在＋哪儿</b>。吗はつけない（疑問詞があるので）。</p><p class="diff"><b>簡体字に注意</b><span class="dc"><span lang="zh-CN">儿</span>（日本の字：児）</span></p>
+  </div>
+</div>
+<div class="ex sk" id="s4" data-n="4" data-tiles="[&quot;体育馆&quot;, &quot;在&quot;, &quot;教学楼&quot;, &quot;的&quot;, &quot;后边&quot;]" data-end="。">
+  <div class="q"><span class="no">④</span><span class="jq">体育館は講義棟の裏にあります。</span>
+    <label class="memo"><input type="checkbox" data-mem="4">覚えた</label></div>
+  <div class="ctrl sk-ctrl"><button type="button" class="ans-btn">答えを見る</button><button type="button" class="tile-btn">並べ替えで練習</button></div>
+  <div class="tiles" hidden></div>
+  <div class="a" hidden>
+    <div class="ansline"><span class="zh big" lang="zh-CN" data-say="体育馆在教学楼的后边。"><span class="w"><ruby>体<rt class="t3">Tǐ</rt></ruby><ruby>育<rt class="t4">yù</rt></ruby><ruby>馆<rt class="t3">guǎn</rt></ruby></span><span class="w"><ruby>在<rt class="t4">zài</rt></ruby></span><span class="w"><ruby>教<rt class="t4">jiào</rt></ruby><ruby>学<rt class="t2">xué</rt></ruby><ruby>楼<rt class="t2">lóu</rt></ruby></span><span class="w"><ruby>的<rt class="t5">de</rt></ruby></span><span class="w"><ruby>后<rt class="t4">hòu</rt></ruby><ruby>边<rt class="t1">biān</rt></ruby></span>。</span></div>
+    <p class="pt">①存在の「在」＋⑥方位詞：「裏」は <b>后边</b>。講義棟＝<b>教学楼</b>。</p><p class="diff"><b>簡体字に注意</b><span class="dc"><span lang="zh-CN">馆</span>（日本の字：館）</span><span class="dc"><span lang="zh-CN">后</span>（日本の字：後）</span><span class="dc"><span lang="zh-CN">边</span>（日本の字：辺）</span></p>
+  </div>
+</div>
+<div class="ex sk" id="s5" data-n="5" data-tiles="[&quot;我&quot;, &quot;去&quot;, &quot;图书馆&quot;, &quot;做&quot;, &quot;作业&quot;]" data-end="。">
+  <div class="q"><span class="no">⑤</span><span class="jq">私は図書館に行って宿題をします。</span>
+    <label class="memo"><input type="checkbox" data-mem="5">覚えた</label></div>
+  <div class="ctrl sk-ctrl"><button type="button" class="ans-btn">答えを見る</button><button type="button" class="tile-btn">並べ替えで練習</button></div>
+  <div class="tiles" hidden></div>
+  <div class="a" hidden>
+    <div class="ansline"><span class="zh big" lang="zh-CN" data-say="我去图书馆做作业。"><span class="w"><ruby>我<rt class="t3">Wǒ</rt></ruby></span><span class="w"><ruby>去<rt class="t4">qù</rt></ruby></span><span class="w"><ruby>图<rt class="t2">tú</rt></ruby><ruby>书<rt class="t1">shū</rt></ruby><ruby>馆<rt class="t3">guǎn</rt></ruby></span><span class="w"><ruby>做<rt class="t4">zuò</rt></ruby></span><span class="w"><ruby>作<rt class="t4">zuò</rt></ruby><ruby>业<rt class="t4">yè</rt></ruby></span>。</span></div>
+    <p class="pt">③連動文：<b>去＋場所＋動詞</b>（行く→する の順）。宿題をする＝<b>做作业</b>。</p><p class="diff"><b>簡体字に注意</b><span class="dc"><span lang="zh-CN">图</span>（日本の字：図）</span><span class="dc"><span lang="zh-CN">书</span>（日本の字：書）</span><span class="dc"><span lang="zh-CN">馆</span>（日本の字：館）</span><span class="dc"><span lang="zh-CN">业</span>（日本の字：業）</span></p>
+  </div>
+</div>
+<div class="ex sk" id="s6" data-n="6" data-tiles="[&quot;他&quot;, &quot;滑雪&quot;, &quot;滑&quot;, &quot;得&quot;, &quot;怎么样&quot;]" data-end="？">
+  <div class="q"><span class="no">⑥</span><span class="jq">彼のスキーの腕前はどうですか。</span>
+    <label class="memo"><input type="checkbox" data-mem="6">覚えた</label></div>
+  <div class="ctrl sk-ctrl"><button type="button" class="ans-btn">答えを見る</button><button type="button" class="tile-btn">並べ替えで練習</button></div>
+  <div class="tiles" hidden></div>
+  <div class="a" hidden>
+    <div class="ansline"><span class="zh big" lang="zh-CN" data-say="他滑雪滑得怎么样？"><span class="w"><ruby>他<rt class="t1">Tā</rt></ruby></span><span class="w"><ruby>滑<rt class="t2">huá</rt></ruby><ruby>雪<rt class="t3">xuě</rt></ruby></span><span class="w"><ruby>滑<rt class="t2">huá</rt></ruby></span><span class="w"><ruby>得<rt class="t5">de</rt></ruby></span><span class="w"><ruby>怎<rt class="t3">zěn</rt></ruby><ruby>么<rt class="t5">me</rt></ruby><ruby>样<rt class="t4">yàng</rt></ruby></span>？</span></div>
+    <p class="pt">⑪様態補語：<b>滑雪＋滑得＋怎么样</b>。動詞（滑）をくり返すのがポイント。</p><p class="diff"><b>簡体字に注意</b><span class="dc"><span lang="zh-CN">么</span>（日本の字：麼）</span><span class="dc"><span lang="zh-CN">样</span>（日本の字：様）</span></p>
+  </div>
+</div>
+<div class="ex sk" id="s7" data-n="7" data-tiles="[&quot;他&quot;, &quot;会&quot;, &quot;滑冰&quot;, &quot;，&quot;, &quot;但是&quot;, &quot;滑&quot;, &quot;得&quot;, &quot;不&quot;, &quot;太&quot;, &quot;好&quot;]" data-end="。">
+  <div class="q"><span class="no">⑦</span><span class="jq">彼はスケートができますが、あまり上手ではありません。</span>
+    <label class="memo"><input type="checkbox" data-mem="7">覚えた</label></div>
+  <div class="ctrl sk-ctrl"><button type="button" class="ans-btn">答えを見る</button><button type="button" class="tile-btn">並べ替えで練習</button></div>
+  <div class="tiles" hidden></div>
+  <div class="a" hidden>
+    <div class="ansline"><span class="zh big" lang="zh-CN" data-say="他会滑冰，但是滑得不太好。"><span class="w"><ruby>他<rt class="t1">Tā</rt></ruby></span><span class="w"><ruby>会<rt class="t4">huì</rt></ruby></span><span class="w"><ruby>滑<rt class="t2">huá</rt></ruby><ruby>冰<rt class="t1">bīng</rt></ruby></span>，<span class="w"><ruby>但<rt class="t4">dàn</rt></ruby><ruby>是<rt class="t4">shì</rt></ruby></span><span class="w"><ruby>滑<rt class="t2">huá</rt></ruby></span><span class="w"><ruby>得<rt class="t5">de</rt></ruby></span><span class="w"><ruby>不<rt class="t2">bú</rt></ruby></span><span class="w"><ruby>太<rt class="t4">tài</rt></ruby></span><span class="w"><ruby>好<rt class="t3">hǎo</rt></ruby></span>。</span></div>
+    <p class="pt">⑫「会」（習得してできる）＋⑪様態補語。「あまり〜ない」は <b>不太</b>（bú tài）。</p><p class="diff"><b>簡体字に注意</b><span class="dc"><span lang="zh-CN">冰</span>（日本の字：氷）</span></p>
+  </div>
+</div>
+<div class="ex sk" id="s8" data-n="8" data-tiles="[&quot;我&quot;, &quot;特别&quot;, &quot;喜欢&quot;, &quot;古典&quot;, &quot;音乐&quot;]" data-end="。">
+  <div class="q"><span class="no">⑧</span><span class="jq">私はクラシック音楽がとても好きです。</span>
+    <label class="memo"><input type="checkbox" data-mem="8">覚えた</label></div>
+  <div class="ctrl sk-ctrl"><button type="button" class="ans-btn">答えを見る</button><button type="button" class="tile-btn">並べ替えで練習</button></div>
+  <div class="tiles" hidden></div>
+  <div class="a" hidden>
+    <div class="ansline"><span class="zh big" lang="zh-CN" data-say="我特别喜欢古典音乐。"><span class="w"><ruby>我<rt class="t3">Wǒ</rt></ruby></span><span class="w"><ruby>特<rt class="t4">tè</rt></ruby><ruby>别<rt class="t2">bié</rt></ruby></span><span class="w"><ruby>喜<rt class="t3">xǐ</rt></ruby><ruby>欢<rt class="t5">huan</rt></ruby></span><span class="w"><ruby>古<rt class="t3">gǔ</rt></ruby><ruby>典<rt class="t3">diǎn</rt></ruby></span><span class="w"><ruby>音<rt class="t1">yīn</rt></ruby><ruby>乐<rt class="t4">yuè</rt></ruby></span>。</span></div>
+    <p class="pt">⑧喜欢＋名詞。「とても」は <b>特别</b>（很喜欢 でも意味は通じる）。クラシック音楽＝<b>古典音乐</b>。</p><p class="diff"><b>簡体字に注意</b><span class="dc"><span lang="zh-CN">别</span>（日本の字：別）</span><span class="dc"><span lang="zh-CN">欢</span>（日本の字：歓）</span><span class="dc"><span lang="zh-CN">乐</span>（日本の字：楽）</span></p>
+  </div>
+</div>
+<div class="ex sk" id="s9" data-n="9" data-tiles="[&quot;我&quot;, &quot;喜欢&quot;, &quot;做&quot;, &quot;菜&quot;, &quot;，&quot;, &quot;但是&quot;, &quot;做&quot;, &quot;得&quot;, &quot;不&quot;, &quot;好&quot;]" data-end="。">
+  <div class="q"><span class="no">⑨</span><span class="jq">私は料理をするのが好きですが、下手です。</span>
+    <label class="memo"><input type="checkbox" data-mem="9">覚えた</label></div>
+  <div class="ctrl sk-ctrl"><button type="button" class="ans-btn">答えを見る</button><button type="button" class="tile-btn">並べ替えで練習</button></div>
+  <div class="tiles" hidden></div>
+  <div class="a" hidden>
+    <div class="ansline"><span class="zh big" lang="zh-CN" data-say="我喜欢做菜，但是做得不好。"><span class="w"><ruby>我<rt class="t3">Wǒ</rt></ruby></span><span class="w"><ruby>喜<rt class="t3">xǐ</rt></ruby><ruby>欢<rt class="t5">huan</rt></ruby></span><span class="w"><ruby>做<rt class="t4">zuò</rt></ruby></span><span class="w"><ruby>菜<rt class="t4">cài</rt></ruby></span>，<span class="w"><ruby>但<rt class="t4">dàn</rt></ruby><ruby>是<rt class="t4">shì</rt></ruby></span><span class="w"><ruby>做<rt class="t4">zuò</rt></ruby></span><span class="w"><ruby>得<rt class="t5">de</rt></ruby></span><span class="w"><ruby>不<rt class="t4">bù</rt></ruby></span><span class="w"><ruby>好<rt class="t3">hǎo</rt></ruby></span>。</span></div>
+    <p class="pt">⑧喜欢＋動詞句＋⑪様態補語。「下手」は <b>做得不好</b>。</p><p class="diff"><b>簡体字に注意</b><span class="dc"><span lang="zh-CN">欢</span>（日本の字：歓）</span></p>
+  </div>
+</div>
+<div class="ex sk" id="s10" data-n="10" data-tiles="[&quot;未成年人&quot;, &quot;不&quot;, &quot;能&quot;, &quot;喝&quot;, &quot;酒&quot;]" data-end="。">
+  <div class="q"><span class="no">⑩</span><span class="jq">未成年者はお酒を飲んではいけません。</span>
+    <label class="memo"><input type="checkbox" data-mem="10">覚えた</label></div>
+  <div class="ctrl sk-ctrl"><button type="button" class="ans-btn">答えを見る</button><button type="button" class="tile-btn">並べ替えで練習</button></div>
+  <div class="tiles" hidden></div>
+  <div class="a" hidden>
+    <div class="ansline"><span class="zh big" lang="zh-CN" data-say="未成年人不能喝酒。"><span class="w"><ruby>未<rt class="t4">Wèi</rt></ruby><ruby>成<rt class="t2">chéng</rt></ruby><ruby>年<rt class="t2">nián</rt></ruby><ruby>人<rt class="t2">rén</rt></ruby></span><span class="w"><ruby>不<rt class="t4">bù</rt></ruby></span><span class="w"><ruby>能<rt class="t2">néng</rt></ruby></span><span class="w"><ruby>喝<rt class="t1">hē</rt></ruby></span><span class="w"><ruby>酒<rt class="t3">jiǔ</rt></ruby></span>。</span></div>
+    <p class="pt">⑫禁止の <b>不能</b>（〜してはいけない）。お酒を飲む＝<b>喝酒</b>。</p>
+  </div>
+</div>
+<div class="ex sk" id="s11" data-n="11" data-tiles="[&quot;妈妈&quot;, &quot;比&quot;, &quot;爸爸&quot;, &quot;小&quot;, &quot;三&quot;, &quot;岁&quot;]" data-end="。">
+  <div class="q"><span class="no">⑪</span><span class="jq">私の母は父より三歳年下です。</span>
+    <label class="memo"><input type="checkbox" data-mem="11">覚えた</label></div>
+  <div class="ctrl sk-ctrl"><button type="button" class="ans-btn">答えを見る</button><button type="button" class="tile-btn">並べ替えで練習</button></div>
+  <div class="tiles" hidden></div>
+  <div class="a" hidden>
+    <div class="ansline"><span class="zh big" lang="zh-CN" data-say="妈妈比爸爸小三岁。"><span class="w"><ruby>妈<rt class="t1">Mā</rt></ruby><ruby>妈<rt class="t5">ma</rt></ruby></span><span class="w"><ruby>比<rt class="t3">bǐ</rt></ruby></span><span class="w"><ruby>爸<rt class="t4">bà</rt></ruby><ruby>爸<rt class="t5">ba</rt></ruby></span><span class="w"><ruby>小<rt class="t3">xiǎo</rt></ruby></span><span class="w"><ruby>三<rt class="t1">sān</rt></ruby></span><span class="w"><ruby>岁<rt class="t4">suì</rt></ruby></span>。</span></div>
+    <p class="pt">⑯比較：<b>A 比 B ＋ 形容詞 ＋ 差</b>。年下＝<b>小</b>、差の三岁は形容詞のうしろ。我妈妈比我爸爸… としてもOK。</p><p class="diff"><b>簡体字に注意</b><span class="dc"><span lang="zh-CN">妈</span>（日本にない字）</span><span class="dc"><span lang="zh-CN">岁</span>（日本の字：歳）</span></p>
+  </div>
+</div>
+<div class="ex sk" id="s12" data-n="12" data-tiles="[&quot;最近&quot;, &quot;我&quot;, &quot;没有&quot;, &quot;以前&quot;, &quot;那么&quot;, &quot;忙&quot;, &quot;了&quot;]" data-end="。">
+  <div class="q"><span class="no">⑫</span><span class="jq">最近は以前より忙しくなくなりました。</span>
+    <label class="memo"><input type="checkbox" data-mem="12">覚えた</label></div>
+  <div class="ctrl sk-ctrl"><button type="button" class="ans-btn">答えを見る</button><button type="button" class="tile-btn">並べ替えで練習</button></div>
+  <div class="tiles" hidden></div>
+  <div class="a" hidden>
+    <div class="ansline"><span class="zh big" lang="zh-CN" data-say="最近我没有以前那么忙了。"><span class="w"><ruby>最<rt class="t4">Zuì</rt></ruby><ruby>近<rt class="t4">jìn</rt></ruby></span><span class="w"><ruby>我<rt class="t3">wǒ</rt></ruby></span><span class="w"><ruby>没<rt class="t2">méi</rt></ruby><ruby>有<rt class="t3">yǒu</rt></ruby></span><span class="w"><ruby>以<rt class="t3">yǐ</rt></ruby><ruby>前<rt class="t2">qián</rt></ruby></span><span class="w"><ruby>那<rt class="t4">nà</rt></ruby><ruby>么<rt class="t5">me</rt></ruby></span><span class="w"><ruby>忙<rt class="t2">máng</rt></ruby></span><span class="w"><ruby>了<rt class="t5">le</rt></ruby></span>。</span></div>
+    <p class="pt">⑯比較の否定 <b>A 没有 B 那么＋形容詞</b>＋⑮変化の <b>了</b>（〜なくなった）。</p><p class="diff"><b>簡体字に注意</b><span class="dc"><span lang="zh-CN">么</span>（日本の字：麼）</span></p>
+  </div>
+</div>
+<div class="ex sk" id="s13" data-n="13" data-tiles="[&quot;我&quot;, &quot;明天&quot;, &quot;不用&quot;, &quot;去&quot;, &quot;上班&quot;, &quot;了&quot;]" data-end="。">
+  <div class="q"><span class="no">⑬</span><span class="jq">明日、私は出勤する必要がなくなりました。</span>
+    <label class="memo"><input type="checkbox" data-mem="13">覚えた</label></div>
+  <div class="ctrl sk-ctrl"><button type="button" class="ans-btn">答えを見る</button><button type="button" class="tile-btn">並べ替えで練習</button></div>
+  <div class="tiles" hidden></div>
+  <div class="a" hidden>
+    <div class="ansline"><span class="zh big" lang="zh-CN" data-say="我明天不用去上班了。"><span class="w"><ruby>我<rt class="t3">Wǒ</rt></ruby></span><span class="w"><ruby>明<rt class="t2">míng</rt></ruby><ruby>天<rt class="t1">tiān</rt></ruby></span><span class="w"><ruby>不<rt class="t2">bú</rt></ruby><ruby>用<rt class="t4">yòng</rt></ruby></span><span class="w"><ruby>去<rt class="t4">qù</rt></ruby></span><span class="w"><ruby>上<rt class="t4">shàng</rt></ruby><ruby>班<rt class="t1">bān</rt></ruby></span><span class="w"><ruby>了<rt class="t5">le</rt></ruby></span>。</span></div>
+    <p class="pt">⑰必要の否定 <b>不用</b>＋⑮変化の <b>了</b>。出勤する＝<b>上班</b>（去上班）。</p>
+  </div>
+</div>
+<div class="ex sk" id="s14" data-n="14" data-tiles="[&quot;她&quot;, &quot;的&quot;, &quot;成绩&quot;, &quot;和&quot;, &quot;你&quot;, &quot;的&quot;, &quot;一样&quot;, &quot;好&quot;]" data-end="。">
+  <div class="q"><span class="no">⑭</span><span class="jq">彼女の成績はあなたと同様に良い。</span>
+    <label class="memo"><input type="checkbox" data-mem="14">覚えた</label></div>
+  <div class="ctrl sk-ctrl"><button type="button" class="ans-btn">答えを見る</button><button type="button" class="tile-btn">並べ替えで練習</button></div>
+  <div class="tiles" hidden></div>
+  <div class="a" hidden>
+    <div class="ansline"><span class="zh big" lang="zh-CN" data-say="她的成绩和你的一样好。"><span class="w"><ruby>她<rt class="t1">Tā</rt></ruby></span><span class="w"><ruby>的<rt class="t5">de</rt></ruby></span><span class="w"><ruby>成<rt class="t2">chéng</rt></ruby><ruby>绩<rt class="t4">jì</rt></ruby></span><span class="w"><ruby>和<rt class="t2">hé</rt></ruby></span><span class="w"><ruby>你<rt class="t3">nǐ</rt></ruby></span><span class="w"><ruby>的<rt class="t5">de</rt></ruby></span><span class="w"><ruby>一<rt class="t2">yí</rt></ruby><ruby>样<rt class="t4">yàng</rt></ruby></span><span class="w"><ruby>好<rt class="t3">hǎo</rt></ruby></span>。</span></div>
+    <p class="pt">⑯同じの比較 <b>A 和 B 一样＋形容詞</b>。你的（成绩）の成绩は省略。</p><p class="diff"><b>簡体字に注意</b><span class="dc"><span lang="zh-CN">绩</span>（日本の字：績）</span><span class="dc"><span lang="zh-CN">样</span>（日本の字：様）</span></p>
+  </div>
+</div>
+<div class="ex sk" id="s15" data-n="15" data-tiles="[&quot;我&quot;, &quot;会&quot;, &quot;用&quot;, &quot;电脑&quot;, &quot;了&quot;]" data-end="。">
+  <div class="q"><span class="no">⑮</span><span class="jq">私はパソコンを使えるようになりました。</span>
+    <label class="memo"><input type="checkbox" data-mem="15">覚えた</label></div>
+  <div class="ctrl sk-ctrl"><button type="button" class="ans-btn">答えを見る</button><button type="button" class="tile-btn">並べ替えで練習</button></div>
+  <div class="tiles" hidden></div>
+  <div class="a" hidden>
+    <div class="ansline"><span class="zh big" lang="zh-CN" data-say="我会用电脑了。"><span class="w"><ruby>我<rt class="t3">Wǒ</rt></ruby></span><span class="w"><ruby>会<rt class="t4">huì</rt></ruby></span><span class="w"><ruby>用<rt class="t4">yòng</rt></ruby></span><span class="w"><ruby>电<rt class="t4">diàn</rt></ruby><ruby>脑<rt class="t3">nǎo</rt></ruby></span><span class="w"><ruby>了<rt class="t5">le</rt></ruby></span>。</span></div>
+    <p class="pt">⑫「会」（習得してできる）＋⑮変化の <b>了</b>（できるようになった）。パソコン＝<b>电脑</b>。</p><p class="diff"><b>簡体字に注意</b><span class="dc"><span lang="zh-CN">电</span>（日本の字：電）</span><span class="dc"><span lang="zh-CN">脑</span>（日本の字：脳）</span></p>
+  </div>
+</div>
+</section>
+
+<!-- ================= 単語 ================= -->
+<section class="tab" id="vocab" data-title="単語" data-short="単語">
+  <h2>単語</h2>
+  <p class="srcline">プリント「1、単語」の順（ピンインの誤植は直してある）。🔊で発音、上のバーでピンインを隠すとピンイン欄がタップで出るようになる。</p>
+  <div class="ctrl"><button type="button" data-hideja aria-pressed="false">意味を隠す</button><a class="btn" href="#quiz" data-go="quiz" style="text-decoration:none">単語クイズへ →</a></div>
+  <h3>本文の単語</h3>
+  <div class="tw"><table class="vocab"><thead><tr><th class="c-zh">簡体字</th><th class="c-py">ピンイン</th><th class="c-ja">意味</th></tr></thead><tbody><tr data-zh="喂"><td class="zhw" lang="zh-CN" data-say="喂">喂</td><td class="py"><span class="t2">wéi</span></td><td class="ja">もしもし（電話）</td></tr><tr data-zh="现在"><td class="zhw" lang="zh-CN" data-say="现在">现在</td><td class="py"><span class="t4">xiàn</span><span class="t4">zài</span></td><td class="ja">いま</td></tr><tr data-zh="在"><td class="zhw" lang="zh-CN" data-say="在">在</td><td class="py"><span class="t4">zài</span></td><td class="ja">いる、ある</td></tr><tr data-zh="正在～呢"><td class="zhw" lang="zh-CN" data-say="正在呢">正在～呢</td><td class="py"><span class="t4">zhèng</span><span class="t4">zài</span> ～ <span class="t5">ne</span></td><td class="ja">〜している（進行）</td></tr><tr data-zh="宿舍"><td class="zhw" lang="zh-CN" data-say="宿舍">宿舍</td><td class="py"><span class="t4">sù</span><span class="t4">shè</span></td><td class="ja">寮</td></tr><tr data-zh="做"><td class="zhw" lang="zh-CN" data-say="做">做</td><td class="py"><span class="t4">zuò</span></td><td class="ja">やる、する</td></tr><tr data-zh="作业"><td class="zhw" lang="zh-CN" data-say="作业">作业</td><td class="py"><span class="t4">zuò</span><span class="t4">yè</span></td><td class="ja">宿題</td></tr><tr data-zh="有"><td class="zhw" lang="zh-CN" data-say="有">有</td><td class="py"><span class="t3">yǒu</span></td><td class="ja">ある、いる、持っている</td></tr><tr data-zh="两张"><td class="zhw" lang="zh-CN" data-say="两张">两张</td><td class="py"><span class="t3">liǎng</span> <span class="t1">zhāng</span></td><td class="ja">二枚</td></tr><tr data-zh="票"><td class="zhw" lang="zh-CN" data-say="票">票</td><td class="py"><span class="t4">piào</span></td><td class="ja">入場券、チケット</td></tr><tr data-zh="想～"><td class="zhw" lang="zh-CN" data-say="想">想～</td><td class="py"><span class="t3">xiǎng</span> ～</td><td class="ja">〜したい</td></tr><tr data-zh="哎"><td class="zhw" lang="zh-CN" data-say="哎">哎</td><td class="py"><span class="t1">āi</span></td><td class="ja">ねえ、あれ（呼びかけ・驚き）</td></tr><tr data-zh="附近"><td class="zhw" lang="zh-CN" data-say="附近">附近</td><td class="py"><span class="t4">fù</span><span class="t4">jìn</span></td><td class="ja">付近、近所</td></tr><tr data-zh="电影院"><td class="zhw" lang="zh-CN" data-say="电影院">电影院</td><td class="py"><span class="t4">diàn</span><span class="t3">yǐng</span><span class="t4">yuàn</span></td><td class="ja">映画館</td></tr><tr data-zh="忘啦"><td class="zhw" lang="zh-CN" data-say="忘啦">忘啦</td><td class="py"><span class="t4">wàng</span> <span class="t5">la</span></td><td class="ja">忘れたの？</td></tr><tr data-zh="就"><td class="zhw" lang="zh-CN" data-say="就">就</td><td class="py"><span class="t4">jiù</span></td><td class="ja">ほかでもなく、まさに</td></tr><tr data-zh="马路"><td class="zhw" lang="zh-CN" data-say="马路">马路</td><td class="py"><span class="t3">mǎ</span><span class="t4">lù</span></td><td class="ja">道路、大通り</td></tr><tr data-zh="对面"><td class="zhw" lang="zh-CN" data-say="对面">对面</td><td class="py"><span class="t4">duì</span><span class="t4">miàn</span></td><td class="ja">向かい側</td></tr><tr data-zh="商城"><td class="zhw" lang="zh-CN" data-say="商城">商城</td><td class="py"><span class="t1">shāng</span><span class="t2">chéng</span></td><td class="ja">ショッピングモール</td></tr><tr data-zh="里边"><td class="zhw" lang="zh-CN" data-say="里边">里边</td><td class="py"><span class="t3">lǐ</span><span class="t1">biān</span></td><td class="ja">なか</td></tr><tr data-zh="哦"><td class="zhw" lang="zh-CN" data-say="哦">哦</td><td class="py"><span class="t4">ò</span></td><td class="ja">ああ、そうか（気づき）</td></tr><tr data-zh="想起来了"><td class="zhw" lang="zh-CN" data-say="想起来了">想起来了</td><td class="py"><span class="t3">xiǎng</span> <span class="t3">qǐ</span><span class="t2">lái</span> <span class="t5">le</span></td><td class="ja">思い出した</td></tr><tr data-zh="片子"><td class="zhw" lang="zh-CN" data-say="片子">片子</td><td class="py"><span class="t1">piān</span><span class="t5">zi</span></td><td class="ja">映画、フィルム</td></tr><tr data-zh="动漫"><td class="zhw" lang="zh-CN" data-say="动漫">动漫</td><td class="py"><span class="t4">dòng</span><span class="t4">màn</span></td><td class="ja">アニメ・マンガ</td></tr><tr data-zh="上映"><td class="zhw" lang="zh-CN" data-say="上映">上映</td><td class="py"><span class="t4">shàng</span><span class="t4">yìng</span></td><td class="ja">上映する</td></tr><tr data-zh="太～了"><td class="zhw" lang="zh-CN" data-say="太了">太～了</td><td class="py"><span class="t4">tài</span> ～ <span class="t5">le</span></td><td class="ja">あまりにも〜、すごく〜</td></tr><tr data-zh="早就～了"><td class="zhw" lang="zh-CN" data-say="早就了">早就～了</td><td class="py"><span class="t3">zǎo</span> <span class="t4">jiù</span> ～ <span class="t5">le</span></td><td class="ja">とっくに〜している</td></tr><tr data-zh="谢谢"><td class="zhw" lang="zh-CN" data-say="谢谢">谢谢</td><td class="py"><span class="t4">xiè</span><span class="t5">xie</span></td><td class="ja">ありがとう</td></tr><tr data-zh="喜欢"><td class="zhw" lang="zh-CN" data-say="喜欢">喜欢</td><td class="py"><span class="t3">xǐ</span><span class="t5">huan</span></td><td class="ja">〜が好き</td></tr><tr data-zh="文艺"><td class="zhw" lang="zh-CN" data-say="文艺">文艺</td><td class="py"><span class="t2">wén</span><span class="t4">yì</span></td><td class="ja">文学・芸術</td></tr><tr data-zh="还是"><td class="zhw" lang="zh-CN" data-say="还是">还是</td><td class="py"><span class="t2">hái</span><span class="t4">shì</span></td><td class="ja">それとも</td></tr><tr data-zh="体育"><td class="zhw" lang="zh-CN" data-say="体育">体育</td><td class="py"><span class="t3">tǐ</span><span class="t4">yù</span></td><td class="ja">スポーツ</td></tr><tr data-zh="哪项"><td class="zhw" lang="zh-CN" data-say="哪项">哪项</td><td class="py"><span class="t3">nǎ</span> <span class="t4">xiàng</span></td><td class="ja">どの種目</td></tr><tr data-zh="运动"><td class="zhw" lang="zh-CN" data-say="运动">运动</td><td class="py"><span class="t4">yùn</span><span class="t4">dòng</span></td><td class="ja">スポーツ、運動</td></tr><tr data-zh="游泳"><td class="zhw" lang="zh-CN" data-say="游泳">游泳</td><td class="py"><span class="t2">yóu</span><span class="t3">yǒng</span></td><td class="ja">泳ぐ、水泳</td></tr><tr data-zh="得"><td class="zhw" lang="zh-CN" data-say="得">得</td><td class="py"><span class="t5">de</span></td><td class="ja">（様態・程度補語を導く助詞）</td></tr><tr data-zh="还不错"><td class="zhw" lang="zh-CN" data-say="还不错">还不错</td><td class="py"><span class="t2">hái</span> <span class="t2">bú</span><span class="t4">cuò</span></td><td class="ja">まあまあ良い</td></tr><tr data-zh="会"><td class="zhw" lang="zh-CN" data-say="会">会</td><td class="py"><span class="t4">huì</span></td><td class="ja">（習得して）できる</td></tr><tr data-zh="打"><td class="zhw" lang="zh-CN" data-say="打">打</td><td class="py"><span class="t3">dǎ</span></td><td class="ja">（球技などを）する</td></tr><tr data-zh="乒乓球"><td class="zhw" lang="zh-CN" data-say="乒乓球">乒乓球</td><td class="py"><span class="t1">pīng</span><span class="t1">pāng</span><span class="t2">qiú</span></td><td class="ja">卓球</td></tr><tr data-zh="～是～，但是～"><td class="zhw" lang="zh-CN" data-say="是但是">～是～，但是～</td><td class="py">～ <span class="t4">shì</span> ～, <span class="t4">dàn</span><span class="t4">shì</span> ～</td><td class="ja">〜は〜だけど、しかし〜</td></tr><tr data-zh="一般"><td class="zhw" lang="zh-CN" data-say="一般">一般</td><td class="py"><span class="t4">yì</span><span class="t1">bān</span></td><td class="ja">普通、まあまあ</td></tr><tr data-zh="多大"><td class="zhw" lang="zh-CN" data-say="多大">多大</td><td class="py"><span class="t1">duō</span> <span class="t4">dà</span></td><td class="ja">いくつ、何歳</td></tr><tr data-zh="了"><td class="zhw" lang="zh-CN" data-say="了">了</td><td class="py"><span class="t5">le</span></td><td class="ja">〜になった（変化）</td></tr><tr data-zh="照片"><td class="zhw" lang="zh-CN" data-say="照片">照片</td><td class="py"><span class="t4">zhào</span><span class="t4">piàn</span></td><td class="ja">写真</td></tr><tr data-zh="女孩儿"><td class="zhw" lang="zh-CN" data-say="女孩儿">女孩儿</td><td class="py"><span class="t3">nǚ</span><span class="t2">háir</span></td><td class="ja">女の子</td></tr><tr data-zh="比"><td class="zhw" lang="zh-CN" data-say="比">比</td><td class="py"><span class="t3">bǐ</span></td><td class="ja">〜より</td></tr><tr data-zh="小"><td class="zhw" lang="zh-CN" data-say="小">小</td><td class="py"><span class="t3">xiǎo</span></td><td class="ja">若い、小さい</td></tr><tr data-zh="岁"><td class="zhw" lang="zh-CN" data-say="岁">岁</td><td class="py"><span class="t4">suì</span></td><td class="ja">〜歳</td></tr><tr data-zh="刚"><td class="zhw" lang="zh-CN" data-say="刚">刚</td><td class="py"><span class="t1">gāng</span></td><td class="ja">〜したばかり</td></tr><tr data-zh="上"><td class="zhw" lang="zh-CN" data-say="上">上</td><td class="py"><span class="t4">shàng</span></td><td class="ja">（学校に）通う、（授業を）受ける</td></tr><tr data-zh="个子"><td class="zhw" lang="zh-CN" data-say="个子">个子</td><td class="py"><span class="t4">gè</span><span class="t5">zi</span></td><td class="ja">背丈、身長</td></tr><tr data-zh="还"><td class="zhw" lang="zh-CN" data-say="还">还</td><td class="py"><span class="t2">hái</span></td><td class="ja">さらに、まだ</td></tr><tr data-zh="高"><td class="zhw" lang="zh-CN" data-say="高">高</td><td class="py"><span class="t1">gāo</span></td><td class="ja">高い</td></tr><tr data-zh="呢"><td class="zhw" lang="zh-CN" data-say="呢">呢</td><td class="py"><span class="t5">ne</span></td><td class="ja">〜よ、〜ね（語気）</td></tr><tr data-zh="是啊"><td class="zhw" lang="zh-CN" data-say="是啊">是啊</td><td class="py"><span class="t4">shì</span> <span class="t5">a</span></td><td class="ja">そうだね</td></tr><tr data-zh="身高"><td class="zhw" lang="zh-CN" data-say="身高">身高</td><td class="py"><span class="t1">shēn</span><span class="t1">gāo</span></td><td class="ja">身長</td></tr><tr data-zh="米"><td class="zhw" lang="zh-CN" data-say="米">米</td><td class="py"><span class="t3">mǐ</span></td><td class="ja">メートル</td></tr><tr data-zh="矮"><td class="zhw" lang="zh-CN" data-say="矮">矮</td><td class="py"><span class="t3">ǎi</span></td><td class="ja">（背が）低い</td></tr><tr data-zh="应该"><td class="zhw" lang="zh-CN" data-say="应该">应该</td><td class="py"><span class="t1">yīng</span><span class="t1">gāi</span></td><td class="ja">〜すべきだ</td></tr><tr data-zh="让～"><td class="zhw" lang="zh-CN" data-say="让">让～</td><td class="py"><span class="t4">ràng</span> ～</td><td class="ja">〜させる</td></tr><tr data-zh="篮球"><td class="zhw" lang="zh-CN" data-say="篮球">篮球</td><td class="py"><span class="t2">lán</span><span class="t2">qiú</span></td><td class="ja">バスケットボール</td></tr><tr data-zh="呀"><td class="zhw" lang="zh-CN" data-say="呀">呀</td><td class="py"><span class="t5">ya</span></td><td class="ja">〜よ、〜ね（肯定・催促・勧誘の語気）</td></tr><tr data-zh="不过"><td class="zhw" lang="zh-CN" data-say="不过">不过</td><td class="py"><span class="t2">bú</span><span class="t4">guò</span></td><td class="ja">でも、ただ</td></tr><tr data-zh="更"><td class="zhw" lang="zh-CN" data-say="更">更</td><td class="py"><span class="t4">gèng</span></td><td class="ja">さらに、もっと</td></tr><tr data-zh="画"><td class="zhw" lang="zh-CN" data-say="画">画</td><td class="py"><span class="t4">huà</span></td><td class="ja">描く</td></tr><tr data-zh="画儿"><td class="zhw" lang="zh-CN" data-say="画儿">画儿</td><td class="py"><span class="t4">huàr</span></td><td class="ja">絵</td></tr><tr data-zh="将来"><td class="zhw" lang="zh-CN" data-say="将来">将来</td><td class="py"><span class="t1">jiāng</span><span class="t2">lái</span></td><td class="ja">将来</td></tr><tr data-zh="当"><td class="zhw" lang="zh-CN" data-say="当">当</td><td class="py"><span class="t1">dāng</span></td><td class="ja">〜になる（職業など）</td></tr><tr data-zh="设计师"><td class="zhw" lang="zh-CN" data-say="设计师">设计师</td><td class="py"><span class="t4">shè</span><span class="t4">jì</span><span class="t1">shī</span></td><td class="ja">デザイナー</td></tr></tbody></table></div>
+  <h3>文法・練習の単語</h3>
+  <div class="tw"><table class="vocab"><thead><tr><th class="c-zh">簡体字</th><th class="c-py">ピンイン</th><th class="c-ja">意味</th></tr></thead><tbody><tr data-zh="家长"><td class="zhw" lang="zh-CN" data-say="家长">家长</td><td class="py"><span class="t1">jiā</span><span class="t3">zhǎng</span></td><td class="ja">保護者</td></tr><tr data-zh="图书馆"><td class="zhw" lang="zh-CN" data-say="图书馆">图书馆</td><td class="py"><span class="t2">tú</span><span class="t1">shū</span><span class="t3">guǎn</span></td><td class="ja">図書館</td></tr><tr data-zh="教室"><td class="zhw" lang="zh-CN" data-say="教室">教室</td><td class="py"><span class="t4">jiào</span><span class="t4">shì</span></td><td class="ja">教室</td></tr><tr data-zh="食堂"><td class="zhw" lang="zh-CN" data-say="食堂">食堂</td><td class="py"><span class="t2">shí</span><span class="t2">táng</span></td><td class="ja">食堂</td></tr><tr data-zh="体育馆"><td class="zhw" lang="zh-CN" data-say="体育馆">体育馆</td><td class="py"><span class="t3">tǐ</span><span class="t4">yù</span><span class="t3">guǎn</span></td><td class="ja">体育館</td></tr><tr data-zh="滑雪"><td class="zhw" lang="zh-CN" data-say="滑雪">滑雪</td><td class="py"><span class="t2">huá</span><span class="t3">xuě</span></td><td class="ja">スキー（をする）</td></tr><tr data-zh="滑冰"><td class="zhw" lang="zh-CN" data-say="滑冰">滑冰</td><td class="py"><span class="t2">huá</span><span class="t1">bīng</span></td><td class="ja">スケート（をする）</td></tr><tr data-zh="毕业"><td class="zhw" lang="zh-CN" data-say="毕业">毕业</td><td class="py"><span class="t4">bì</span><span class="t4">yè</span></td><td class="ja">卒業する</td></tr><tr data-zh="留学"><td class="zhw" lang="zh-CN" data-say="留学">留学</td><td class="py"><span class="t2">liú</span><span class="t2">xué</span></td><td class="ja">留学する</td></tr><tr data-zh="结婚"><td class="zhw" lang="zh-CN" data-say="结婚">结婚</td><td class="py"><span class="t2">jié</span><span class="t1">hūn</span></td><td class="ja">結婚する</td></tr><tr data-zh="打工"><td class="zhw" lang="zh-CN" data-say="打工">打工</td><td class="py"><span class="t3">dǎ</span><span class="t1">gōng</span></td><td class="ja">アルバイトをする</td></tr><tr data-zh="古典音乐"><td class="zhw" lang="zh-CN" data-say="古典音乐">古典音乐</td><td class="py"><span class="t3">gǔ</span><span class="t3">diǎn</span> <span class="t1">yīn</span><span class="t4">yuè</span></td><td class="ja">クラシック音楽</td></tr><tr data-zh="价格"><td class="zhw" lang="zh-CN" data-say="价格">价格</td><td class="py"><span class="t4">jià</span><span class="t2">gé</span></td><td class="ja">値段</td></tr><tr data-zh="质量"><td class="zhw" lang="zh-CN" data-say="质量">质量</td><td class="py"><span class="t4">zhì</span><span class="t4">liàng</span></td><td class="ja">品質</td></tr><tr data-zh="未成年人"><td class="zhw" lang="zh-CN" data-say="未成年人">未成年人</td><td class="py"><span class="t4">wèi</span><span class="t2">chéng</span><span class="t2">nián</span><span class="t2">rén</span></td><td class="ja">未成年者</td></tr><tr data-zh="年纪"><td class="zhw" lang="zh-CN" data-say="年纪">年纪</td><td class="py"><span class="t2">nián</span><span class="t4">jì</span></td><td class="ja">年齢</td></tr><tr data-zh="经验"><td class="zhw" lang="zh-CN" data-say="经验">经验</td><td class="py"><span class="t1">jīng</span><span class="t4">yàn</span></td><td class="ja">経験</td></tr><tr data-zh="丰富"><td class="zhw" lang="zh-CN" data-say="丰富">丰富</td><td class="py"><span class="t1">fēng</span><span class="t4">fù</span></td><td class="ja">豊富だ</td></tr><tr data-zh="便宜"><td class="zhw" lang="zh-CN" data-say="便宜">便宜</td><td class="py"><span class="t2">pián</span><span class="t5">yi</span></td><td class="ja">（値段が）安い</td></tr><tr data-zh="贵"><td class="zhw" lang="zh-CN" data-say="贵">贵</td><td class="py"><span class="t4">guì</span></td><td class="ja">（値段が）高い</td></tr><tr data-zh="公里"><td class="zhw" lang="zh-CN" data-say="公里">公里</td><td class="py"><span class="t1">gōng</span><span class="t3">lǐ</span></td><td class="ja">キロメートル</td></tr><tr data-zh="长江"><td class="zhw" lang="zh-CN" data-say="长江">长江</td><td class="py"><span class="t2">Cháng</span><span class="t1">jiāng</span></td><td class="ja">長江</td></tr><tr data-zh="珠峰"><td class="zhw" lang="zh-CN" data-say="珠峰">珠峰</td><td class="py"><span class="t1">Zhū</span><span class="t1">fēng</span></td><td class="ja">チョモランマ（エベレスト）</td></tr><tr data-zh="多长"><td class="zhw" lang="zh-CN" data-say="多长">多长</td><td class="py"><span class="t1">duō</span> <span class="t2">cháng</span></td><td class="ja">どれくらい長い</td></tr><tr data-zh="多高"><td class="zhw" lang="zh-CN" data-say="多高">多高</td><td class="py"><span class="t1">duō</span> <span class="t1">gāo</span></td><td class="ja">どれくらい高い</td></tr><tr data-zh="多重"><td class="zhw" lang="zh-CN" data-say="多重">多重</td><td class="py"><span class="t1">duō</span> <span class="t4">zhòng</span></td><td class="ja">どれくらい重い</td></tr><tr data-zh="多少"><td class="zhw" lang="zh-CN" data-say="多少">多少</td><td class="py"><span class="t1">duō</span><span class="t5">shao</span></td><td class="ja">いくつ、どれくらい</td></tr><tr data-zh="忙"><td class="zhw" lang="zh-CN" data-say="忙">忙</td><td class="py"><span class="t2">máng</span></td><td class="ja">忙しい</td></tr><tr data-zh="凉快"><td class="zhw" lang="zh-CN" data-say="凉快">凉快</td><td class="py"><span class="t2">liáng</span><span class="t5">kuai</span></td><td class="ja">涼しい</td></tr><tr data-zh="冷"><td class="zhw" lang="zh-CN" data-say="冷">冷</td><td class="py"><span class="t3">lěng</span></td><td class="ja">寒い</td></tr><tr data-zh="成绩"><td class="zhw" lang="zh-CN" data-say="成绩">成绩</td><td class="py"><span class="t2">chéng</span><span class="t4">jì</span></td><td class="ja">成績</td></tr><tr data-zh="出发"><td class="zhw" lang="zh-CN" data-say="出发">出发</td><td class="py"><span class="t1">chū</span><span class="t1">fā</span></td><td class="ja">出発する</td></tr><tr data-zh="机场"><td class="zhw" lang="zh-CN" data-say="机场">机场</td><td class="py"><span class="t1">jī</span><span class="t3">chǎng</span></td><td class="ja">空港</td></tr><tr data-zh="客人"><td class="zhw" lang="zh-CN" data-say="客人">客人</td><td class="py"><span class="t4">kè</span><span class="t5">ren</span></td><td class="ja">客</td></tr><tr data-zh="舒服"><td class="zhw" lang="zh-CN" data-say="舒服">舒服</td><td class="py"><span class="t1">shū</span><span class="t5">fu</span></td><td class="ja">気分がいい、心地よい</td></tr></tbody></table></div>
+  <h3>作文に出てくる語（単語表にないもの）</h3>
+  <div class="tw"><table class="vocab"><thead><tr><th class="c-zh">簡体字</th><th class="c-py">ピンイン</th><th class="c-ja">意味</th></tr></thead><tbody><tr data-zh="礼堂"><td class="zhw" lang="zh-CN" data-say="礼堂">礼堂</td><td class="py"><span class="t3">lǐ</span><span class="t2">táng</span></td><td class="ja">講堂</td></tr><tr data-zh="小卖部"><td class="zhw" lang="zh-CN" data-say="小卖部">小卖部</td><td class="py"><span class="t3">xiǎo</span><span class="t4">mài</span><span class="t4">bù</span></td><td class="ja">売店</td></tr><tr data-zh="教学楼"><td class="zhw" lang="zh-CN" data-say="教学楼">教学楼</td><td class="py"><span class="t4">jiào</span><span class="t2">xué</span><span class="t2">lóu</span></td><td class="ja">講義棟</td></tr><tr data-zh="后边"><td class="zhw" lang="zh-CN" data-say="后边">后边</td><td class="py"><span class="t4">hòu</span><span class="t1">biān</span></td><td class="ja">うしろ、裏</td></tr><tr data-zh="哪儿"><td class="zhw" lang="zh-CN" data-say="哪儿">哪儿</td><td class="py"><span class="t3">nǎr</span></td><td class="ja">どこ</td></tr><tr data-zh="怎么样"><td class="zhw" lang="zh-CN" data-say="怎么样">怎么样</td><td class="py"><span class="t3">zěn</span><span class="t5">me</span><span class="t4">yàng</span></td><td class="ja">どうですか</td></tr><tr data-zh="特别"><td class="zhw" lang="zh-CN" data-say="特别">特别</td><td class="py"><span class="t4">tè</span><span class="t2">bié</span></td><td class="ja">とても、特に</td></tr><tr data-zh="做菜"><td class="zhw" lang="zh-CN" data-say="做菜">做菜</td><td class="py"><span class="t4">zuò</span> <span class="t4">cài</span></td><td class="ja">料理をする</td></tr><tr data-zh="能"><td class="zhw" lang="zh-CN" data-say="能">能</td><td class="py"><span class="t2">néng</span></td><td class="ja">（条件・許可で）できる</td></tr><tr data-zh="喝酒"><td class="zhw" lang="zh-CN" data-say="喝酒">喝酒</td><td class="py"><span class="t1">hē</span> <span class="t3">jiǔ</span></td><td class="ja">お酒を飲む</td></tr><tr data-zh="最近"><td class="zhw" lang="zh-CN" data-say="最近">最近</td><td class="py"><span class="t4">zuì</span><span class="t4">jìn</span></td><td class="ja">最近</td></tr><tr data-zh="以前"><td class="zhw" lang="zh-CN" data-say="以前">以前</td><td class="py"><span class="t3">yǐ</span><span class="t2">qián</span></td><td class="ja">以前</td></tr><tr data-zh="那么"><td class="zhw" lang="zh-CN" data-say="那么">那么</td><td class="py"><span class="t4">nà</span><span class="t5">me</span></td><td class="ja">そんなに</td></tr><tr data-zh="不用"><td class="zhw" lang="zh-CN" data-say="不用">不用</td><td class="py"><span class="t2">bú</span><span class="t4">yòng</span></td><td class="ja">〜する必要がない</td></tr><tr data-zh="上班"><td class="zhw" lang="zh-CN" data-say="上班">上班</td><td class="py"><span class="t4">shàng</span><span class="t1">bān</span></td><td class="ja">出勤する</td></tr><tr data-zh="一样"><td class="zhw" lang="zh-CN" data-say="一样">一样</td><td class="py"><span class="t2">yí</span><span class="t4">yàng</span></td><td class="ja">同じ</td></tr><tr data-zh="用"><td class="zhw" lang="zh-CN" data-say="用">用</td><td class="py"><span class="t4">yòng</span></td><td class="ja">使う</td></tr><tr data-zh="电脑"><td class="zhw" lang="zh-CN" data-say="电脑">电脑</td><td class="py"><span class="t4">diàn</span><span class="t3">nǎo</span></td><td class="ja">パソコン</td></tr></tbody></table></div>
+  <div class="tip"><b>プリントからの修正</b>　刚 gang → <b>gāng</b>、ベスケットボール → バスケットボール、哎 は代表的な <b>āi</b> だけ載せた。喂（もしもし）は辞書では wèi だけど、電話では <b>wéi</b> と2声で言うのがふつう。还是 は辞書だと háishi（軽声）とも書く。</div>
+</section>
+
+<!-- ================= 文法 ================= -->
+<section class="tab" id="ga" data-title="文法①〜⑥ 在・有・連動文・方位詞" data-short="文法①〜⑥">
+  <h2>文法①〜⑥</h2>
+  <p class="srcline">存在の在・有／所有の有／連動文／前置詞の在／進行の在／方位詞</p>
+  <div class="tip"><b>在と有の見分け方</b>　<b>物が先</b>（特定の物がどこにあるか）→ 在。<b>場所が先</b>（そこに何があるか）→ 有。作文①②は有、③④は在。</div>
+  <h3 id="g1">① 存在の表現「在」</h3><div class="key"><b>型</b>人・物 ＋ 在 ＋ 場所（＋方位詞）</div><p>否定は <b>不在</b> / <b>没（有）在</b>。「〜は（特定の場所）にある・いる」。主語は特定の人・物（他家・图书馆・辞典）。</p><ul class="exs"><li><span class="zh" lang="zh-CN" data-say="他家在横滨。"><span class="w"><ruby>他<rt class="t1">Tā</rt></ruby></span><span class="w"><ruby>家<rt class="t1">jiā</rt></ruby></span><span class="w"><ruby>在<rt class="t4">zài</rt></ruby></span><span class="w"><ruby>横<rt class="t2">Héng</rt></ruby><ruby>滨<rt class="t1">bīn</rt></ruby></span>。</span><span class="tr">彼の家は横浜にある。</span></li><li><span class="zh" lang="zh-CN" data-say="图书馆在教学楼东边。"><span class="w"><ruby>图<rt class="t2">Tú</rt></ruby><ruby>书<rt class="t1">shū</rt></ruby><ruby>馆<rt class="t3">guǎn</rt></ruby></span><span class="w"><ruby>在<rt class="t4">zài</rt></ruby></span><span class="w"><ruby>教<rt class="t4">jiào</rt></ruby><ruby>学<rt class="t2">xué</rt></ruby><ruby>楼<rt class="t2">lóu</rt></ruby></span><span class="w"><ruby>东<rt class="t1">dōng</rt></ruby><ruby>边<rt class="t1">biān</rt></ruby></span>。</span><span class="tr">図書館は講義棟の東側にある。</span></li><li><span class="zh" lang="zh-CN" data-say="辞典不在桌子上。"><span class="w"><ruby>辞<rt class="t2">Cí</rt></ruby><ruby>典<rt class="t3">diǎn</rt></ruby></span><span class="w"><ruby>不<rt class="t2">bú</rt></ruby></span><span class="w"><ruby>在<rt class="t4">zài</rt></ruby></span><span class="w"><ruby>桌<rt class="t1">zhuō</rt></ruby><ruby>子<rt class="t5">zi</rt></ruby></span><span class="w"><ruby>上<rt class="t5">shang</rt></ruby></span>。</span><span class="tr">辞書は机の上にない。</span></li><li><span class="zh" lang="zh-CN" data-say="家长没有在家。"><span class="w"><ruby>家<rt class="t1">Jiā</rt></ruby><ruby>长<rt class="t3">zhǎng</rt></ruby></span><span class="w"><ruby>没<rt class="t2">méi</rt></ruby></span>（<span class="w"><ruby>有<rt class="t3">yǒu</rt></ruby></span>）<span class="w"><ruby>在<rt class="t4">zài</rt></ruby></span><span class="w"><ruby>家<rt class="t1">jiā</rt></ruby></span>。</span><span class="tr">保護者は家にいない。</span></li></ul>
+<h3 id="g1b">① 存在の表現「有」</h3><div class="key"><b>型</b>場所（＋方位詞）＋ 有 ＋（数量詞）人・物</div><p>否定は <b>没有</b>（×不有）。「（場所）に〜がある・いる」。うしろの人・物は不特定（很多杂志・一家咖啡厅）。</p><ul class="exs"><li><span class="zh" lang="zh-CN" data-say="书架上有很多时装杂志。"><span class="w"><ruby>书<rt class="t1">Shū</rt></ruby><ruby>架<rt class="t4">jià</rt></ruby></span><span class="w"><ruby>上<rt class="t5">shang</rt></ruby></span><span class="w"><ruby>有<rt class="t3">yǒu</rt></ruby></span><span class="w"><ruby>很<rt class="t3">hěn</rt></ruby></span><span class="w"><ruby>多<rt class="t1">duō</rt></ruby></span><span class="w"><ruby>时<rt class="t2">shí</rt></ruby><ruby>装<rt class="t1">zhuāng</rt></ruby></span><span class="w"><ruby>杂<rt class="t2">zá</rt></ruby><ruby>志<rt class="t4">zhì</rt></ruby></span>。</span><span class="tr">本棚にはファッション雑誌がたくさんある。</span></li><li><span class="zh" lang="zh-CN" data-say="书店对面有一家咖啡厅。"><span class="w"><ruby>书<rt class="t1">Shū</rt></ruby><ruby>店<rt class="t4">diàn</rt></ruby></span><span class="w"><ruby>对<rt class="t4">duì</rt></ruby><ruby>面<rt class="t4">miàn</rt></ruby></span><span class="w"><ruby>有<rt class="t3">yǒu</rt></ruby></span><span class="w"><ruby>一<rt class="t4">yì</rt></ruby></span><span class="w"><ruby>家<rt class="t1">jiā</rt></ruby></span><span class="w"><ruby>咖<rt class="t1">kā</rt></ruby><ruby>啡<rt class="t1">fēi</rt></ruby><ruby>厅<rt class="t1">tīng</rt></ruby></span>。</span><span class="tr">本屋の向かいに喫茶店が一軒ある。</span></li><li><span class="zh" lang="zh-CN" data-say="体育馆里没有空调。"><span class="w"><ruby>体<rt class="t3">Tǐ</rt></ruby><ruby>育<rt class="t4">yù</rt></ruby><ruby>馆<rt class="t3">guǎn</rt></ruby></span><span class="w"><ruby>里<rt class="t5">li</rt></ruby></span><span class="w"><ruby>没<rt class="t2">méi</rt></ruby><ruby>有<rt class="t3">yǒu</rt></ruby></span><span class="w"><ruby>空<rt class="t1">kōng</rt></ruby><ruby>调<rt class="t2">tiáo</rt></ruby></span>。</span><span class="tr">体育館にはエアコンがない。</span></li></ul>
+<h3 id="g2">② 所有の表現「有」</h3><div class="key"><b>型</b>所有者（主語）＋ 有 ＋（修飾語）所有物（目的語）</div><p>「〜を持っている」。否定は <b>没有</b>。</p><ul class="exs"><li><span class="zh" lang="zh-CN" data-say="我有一部智能手机。"><span class="w"><ruby>我<rt class="t3">Wǒ</rt></ruby></span><span class="w"><ruby>有<rt class="t3">yǒu</rt></ruby></span><span class="w"><ruby>一<rt class="t2">yí</rt></ruby></span><span class="w"><ruby>部<rt class="t4">bù</rt></ruby></span><span class="w"><ruby>智<rt class="t4">zhì</rt></ruby><ruby>能<rt class="t2">néng</rt></ruby></span><span class="w"><ruby>手<rt class="t3">shǒu</rt></ruby><ruby>机<rt class="t1">jī</rt></ruby></span>。</span><span class="tr">私はスマートフォンを1台持っている。</span></li><li><span class="zh" lang="zh-CN" data-say="我有一个心愿。"><span class="w"><ruby>我<rt class="t3">Wǒ</rt></ruby></span><span class="w"><ruby>有<rt class="t3">yǒu</rt></ruby></span><span class="w"><ruby>一<rt class="t2">yí</rt></ruby></span><span class="w"><ruby>个<rt class="t5">ge</rt></ruby></span><span class="w"><ruby>心<rt class="t1">xīn</rt></ruby><ruby>愿<rt class="t4">yuàn</rt></ruby></span>。</span><span class="tr">私にはひとつ願いがある。</span></li><li><span class="zh" lang="zh-CN" data-say="学生每人都有一台平板电脑。"><span class="w"><ruby>学<rt class="t2">Xué</rt></ruby><ruby>生<rt class="t5">sheng</rt></ruby></span><span class="w"><ruby>每<rt class="t3">měi</rt></ruby></span><span class="w"><ruby>人<rt class="t2">rén</rt></ruby></span><span class="w"><ruby>都<rt class="t1">dōu</rt></ruby></span><span class="w"><ruby>有<rt class="t3">yǒu</rt></ruby></span><span class="w"><ruby>一<rt class="t4">yì</rt></ruby></span><span class="w"><ruby>台<rt class="t2">tái</rt></ruby></span><span class="w"><ruby>平<rt class="t2">píng</rt></ruby><ruby>板<rt class="t3">bǎn</rt></ruby></span><span class="w"><ruby>电<rt class="t4">diàn</rt></ruby><ruby>脑<rt class="t3">nǎo</rt></ruby></span>。</span><span class="tr">学生はひとりひとりタブレットを1台持っている。</span></li><li><span class="zh" lang="zh-CN" data-say="今天下午学校没有那位老师的课。"><span class="w"><ruby>今<rt class="t1">Jīn</rt></ruby><ruby>天<rt class="t1">tiān</rt></ruby></span><span class="w"><ruby>下<rt class="t4">xià</rt></ruby><ruby>午<rt class="t3">wǔ</rt></ruby></span><span class="w"><ruby>学<rt class="t2">xué</rt></ruby><ruby>校<rt class="t4">xiào</rt></ruby></span><span class="w"><ruby>没<rt class="t2">méi</rt></ruby><ruby>有<rt class="t3">yǒu</rt></ruby></span><span class="w"><ruby>那<rt class="t4">nà</rt></ruby></span><span class="w"><ruby>位<rt class="t4">wèi</rt></ruby></span><span class="w"><ruby>老<rt class="t3">lǎo</rt></ruby><ruby>师<rt class="t1">shī</rt></ruby></span><span class="w"><ruby>的<rt class="t5">de</rt></ruby></span><span class="w"><ruby>课<rt class="t4">kè</rt></ruby></span>。</span><span class="tr">今日の午後、学校にはあの先生の授業がない。</span></li></ul>
+<h3 id="g3">③ 連動文</h3><div class="key"><b>型</b>S ＋ V1 ＋ O1 ＋ V2 ＋ O2</div><p>動作が起こる<b>順番どおり</b>に動詞を並べる。V1 が V2 の「手段・目的地」、V2 が「目的」になることが多い（去图书馆<b>做作业</b>＝宿題をしに図書館へ行く）。</p><ul class="exs"><li><span class="zh" lang="zh-CN" data-say="我回家吃饭。"><span class="w"><ruby>我<rt class="t3">Wǒ</rt></ruby></span><span class="w"><ruby>回<rt class="t2">huí</rt></ruby></span><span class="w"><ruby>家<rt class="t1">jiā</rt></ruby></span><span class="w"><ruby>吃<rt class="t1">chī</rt></ruby></span><span class="w"><ruby>饭<rt class="t4">fàn</rt></ruby></span>。</span><span class="tr">私は家に帰ってご飯を食べる。</span></li><li><span class="zh" lang="zh-CN" data-say="他去美国留学。"><span class="w"><ruby>他<rt class="t1">Tā</rt></ruby></span><span class="w"><ruby>去<rt class="t4">qù</rt></ruby></span><span class="w"><ruby>美<rt class="t3">Měi</rt></ruby><ruby>国<rt class="t2">guó</rt></ruby></span><span class="w"><ruby>留<rt class="t2">liú</rt></ruby><ruby>学<rt class="t2">xué</rt></ruby></span>。</span><span class="tr">彼はアメリカへ留学に行く。</span></li><li><span class="zh" lang="zh-CN" data-say="老师用中文讲课。"><span class="w"><ruby>老<rt class="t3">Lǎo</rt></ruby><ruby>师<rt class="t1">shī</rt></ruby></span><span class="w"><ruby>用<rt class="t4">yòng</rt></ruby></span><span class="w"><ruby>中<rt class="t1">Zhōng</rt></ruby><ruby>文<rt class="t2">wén</rt></ruby></span><span class="w"><ruby>讲<rt class="t3">jiǎng</rt></ruby><ruby>课<rt class="t4">kè</rt></ruby></span>。</span><span class="tr">先生は中国語で授業をする。</span></li><li><span class="zh" lang="zh-CN" data-say="弟弟踢足球扭了脚。"><span class="w"><ruby>弟<rt class="t4">Dì</rt></ruby><ruby>弟<rt class="t5">di</rt></ruby></span><span class="w"><ruby>踢<rt class="t1">tī</rt></ruby></span><span class="w"><ruby>足<rt class="t2">zú</rt></ruby><ruby>球<rt class="t2">qiú</rt></ruby></span><span class="w"><ruby>扭<rt class="t3">niǔ</rt></ruby><ruby>了<rt class="t5">le</rt></ruby></span><span class="w"><ruby>脚<rt class="t3">jiǎo</rt></ruby></span>。</span><span class="tr">弟はサッカーをして足をくじいた。</span></li></ul>
+<h3 id="g4">④ 前置詞「在」</h3><div class="key"><b>型</b>主語 ＋ 在 ＋ 場所・時間 ＋ 動詞 ＋ 目的語</div><p>「〜で（場所）」「〜に（時間）」。<b>在＋場所は動詞の前</b>に置く（日本語と同じ順番）。</p><ul class="exs"><li><span class="zh" lang="zh-CN" data-say="学生们在食堂吃午饭。"><span class="w"><ruby>学<rt class="t2">Xué</rt></ruby><ruby>生<rt class="t5">sheng</rt></ruby><ruby>们<rt class="t5">men</rt></ruby></span><span class="w"><ruby>在<rt class="t4">zài</rt></ruby></span><span class="w"><ruby>食<rt class="t2">shí</rt></ruby><ruby>堂<rt class="t2">táng</rt></ruby></span><span class="w"><ruby>吃<rt class="t1">chī</rt></ruby></span><span class="w"><ruby>午<rt class="t3">wǔ</rt></ruby><ruby>饭<rt class="t4">fàn</rt></ruby></span>。</span><span class="tr">学生たちは食堂で昼ご飯を食べる。</span></li><li><span class="zh" lang="zh-CN" data-say="我在7号楼206教室上历史课。"><span class="w"><ruby>我<rt class="t3">Wǒ</rt></ruby></span><span class="w"><ruby>在<rt class="t4">zài</rt></ruby></span><span class="w"><ruby>7<rt class="num">qī</rt></ruby></span><span class="w"><ruby>号<rt class="t4">hào</rt></ruby></span><span class="w"><ruby>楼<rt class="t2">lóu</rt></ruby></span><span class="w"><ruby>206<rt class="num">èr líng liù</rt></ruby></span><span class="w"><ruby>教<rt class="t4">jiào</rt></ruby><ruby>室<rt class="t4">shì</rt></ruby></span><span class="w"><ruby>上<rt class="t4">shàng</rt></ruby></span><span class="w"><ruby>历<rt class="t4">lì</rt></ruby><ruby>史<rt class="t3">shǐ</rt></ruby></span><span class="w"><ruby>课<rt class="t4">kè</rt></ruby></span>。</span><span class="tr">私は7号館206教室で歴史の授業を受ける。</span></li><li><span class="zh" lang="zh-CN" data-say="运动会在下星期天举行。"><span class="w"><ruby>运<rt class="t4">Yùn</rt></ruby><ruby>动<rt class="t4">dòng</rt></ruby><ruby>会<rt class="t4">huì</rt></ruby></span><span class="w"><ruby>在<rt class="t4">zài</rt></ruby></span><span class="w"><ruby>下<rt class="t4">xià</rt></ruby></span><span class="w"><ruby>星<rt class="t1">xīng</rt></ruby><ruby>期<rt class="t1">qī</rt></ruby><ruby>天<rt class="t1">tiān</rt></ruby></span><span class="w"><ruby>举<rt class="t3">jǔ</rt></ruby><ruby>行<rt class="t2">xíng</rt></ruby></span>。</span><span class="tr">運動会は来週の日曜日に行われる。</span></li></ul>
+<h3 id="g5">⑤ 副詞「在」（進行）</h3><div class="key"><b>型</b>（正）在 ＋ 動詞 ＋ …（＋呢）</div><p>「〜している最中」。<b>正在・在・呢</b>のどれか1つでも進行になる。否定は <b>没（有）</b>（正在は消える）。</p><ul class="exs"><li><span class="zh" lang="zh-CN" data-say="妈妈正在看电视剧呢。"><span class="w"><ruby>妈<rt class="t1">Mā</rt></ruby><ruby>妈<rt class="t5">ma</rt></ruby></span><span class="w"><ruby>正<rt class="t4">zhèng</rt></ruby><ruby>在<rt class="t4">zài</rt></ruby></span><span class="w"><ruby>看<rt class="t4">kàn</rt></ruby></span><span class="w"><ruby>电<rt class="t4">diàn</rt></ruby><ruby>视<rt class="t4">shì</rt></ruby><ruby>剧<rt class="t4">jù</rt></ruby></span>（<span class="w"><ruby>呢<rt class="t5">ne</rt></ruby></span>）。</span><span class="tr">母はドラマを見ているところだ。</span></li><li><span class="zh" lang="zh-CN" data-say="老师正在上课呢。"><span class="w"><ruby>老<rt class="t3">Lǎo</rt></ruby><ruby>师<rt class="t1">shī</rt></ruby></span>（<span class="w"><ruby>正<rt class="t4">zhèng</rt></ruby></span>）<span class="w"><ruby>在<rt class="t4">zài</rt></ruby></span><span class="w"><ruby>上<rt class="t4">shàng</rt></ruby><ruby>课<rt class="t4">kè</rt></ruby></span><span class="w"><ruby>呢<rt class="t5">ne</rt></ruby></span>。</span><span class="tr">先生は授業中だ。</span></li><li><span class="zh" lang="zh-CN" data-say="外边正在下雨呢。"><span class="w"><ruby>外<rt class="t4">Wài</rt></ruby><ruby>边<rt class="t1">biān</rt></ruby></span>（<span class="w"><ruby>正<rt class="t4">zhèng</rt></ruby><ruby>在<rt class="t4">zài</rt></ruby></span>）<span class="w"><ruby>下<rt class="t4">xià</rt></ruby></span><span class="w"><ruby>雨<rt class="t3">yǔ</rt></ruby></span><span class="w"><ruby>呢<rt class="t5">ne</rt></ruby></span>。</span><span class="tr">外は雨が降っている。</span></li><li><span class="zh" lang="zh-CN" data-say="弟弟没有在做作业。"><span class="w"><ruby>弟<rt class="t4">Dì</rt></ruby><ruby>弟<rt class="t5">di</rt></ruby></span><span class="w"><ruby>没<rt class="t2">méi</rt></ruby></span>（<span class="w"><ruby>有<rt class="t3">yǒu</rt></ruby></span>）（<span class="w"><ruby>在<rt class="t4">zài</rt></ruby></span>）<span class="w"><ruby>做<rt class="t4">zuò</rt></ruby></span><span class="w"><ruby>作<rt class="t4">zuò</rt></ruby><ruby>业<rt class="t4">yè</rt></ruby></span>。</span><span class="tr">弟は宿題をしていない。</span></li></ul>
+<h3 id="g6">⑥ 方位詞</h3><p>場所を表す語のうしろにつけて「〜の上・〜の中」などを表す。<b>A組（単純方位詞）</b>は1字で、名詞のすぐうしろにつく（桌子<b>上</b>・教室<b>里</b>）。<b>B組（合成方位詞）</b>は A組＋<b>边 / 面</b> などで、単独でも使える（<b>后边</b>有一个公园）。</p><p class="srcline">※ 教科書39頁の一覧は手元にないので、よく使うものをまとめた。</p><div class="grid2"><div class="card"><b>A組（単純方位詞）</b><div class="fw"><span class="fwi"><span class="zh" lang="zh-CN" data-say="上"><span class="w"><ruby>上<rt class="t4">shàng</rt></ruby></span></span><small>上</small></span><span class="fwi"><span class="zh" lang="zh-CN" data-say="下"><span class="w"><ruby>下<rt class="t4">xià</rt></ruby></span></span><small>下</small></span><span class="fwi"><span class="zh" lang="zh-CN" data-say="前"><span class="w"><ruby>前<rt class="t2">qián</rt></ruby></span></span><small>前</small></span><span class="fwi"><span class="zh" lang="zh-CN" data-say="后"><span class="w"><ruby>后<rt class="t4">hòu</rt></ruby></span></span><small>後ろ</small></span><span class="fwi"><span class="zh" lang="zh-CN" data-say="里"><span class="w"><ruby>里<rt class="t3">lǐ</rt></ruby></span></span><small>中</small></span><span class="fwi"><span class="zh" lang="zh-CN" data-say="外"><span class="w"><ruby>外<rt class="t4">wài</rt></ruby></span></span><small>外</small></span><span class="fwi"><span class="zh" lang="zh-CN" data-say="左"><span class="w"><ruby>左<rt class="t3">zuǒ</rt></ruby></span></span><small>左</small></span><span class="fwi"><span class="zh" lang="zh-CN" data-say="右"><span class="w"><ruby>右<rt class="t4">yòu</rt></ruby></span></span><small>右</small></span><span class="fwi"><span class="zh" lang="zh-CN" data-say="东"><span class="w"><ruby>东<rt class="t1">dōng</rt></ruby></span></span><small>東</small></span><span class="fwi"><span class="zh" lang="zh-CN" data-say="南"><span class="w"><ruby>南<rt class="t2">nán</rt></ruby></span></span><small>南</small></span><span class="fwi"><span class="zh" lang="zh-CN" data-say="西"><span class="w"><ruby>西<rt class="t1">xī</rt></ruby></span></span><small>西</small></span><span class="fwi"><span class="zh" lang="zh-CN" data-say="北"><span class="w"><ruby>北<rt class="t3">běi</rt></ruby></span></span><small>北</small></span><span class="fwi"><span class="zh" lang="zh-CN" data-say="旁"><span class="w"><ruby>旁<rt class="t2">páng</rt></ruby></span></span><small>そば</small></span></div></div><div class="card"><b>B組（合成方位詞）</b><div class="fw"><span class="fwi"><span class="zh" lang="zh-CN" data-say="上边"><span class="w"><ruby>上<rt class="t4">shàng</rt></ruby><ruby>边<rt class="t1">biān</rt></ruby></span></span><small>上（のほう）</small></span><span class="fwi"><span class="zh" lang="zh-CN" data-say="下边"><span class="w"><ruby>下<rt class="t4">xià</rt></ruby><ruby>边<rt class="t1">biān</rt></ruby></span></span><small>下</small></span><span class="fwi"><span class="zh" lang="zh-CN" data-say="前边"><span class="w"><ruby>前<rt class="t2">qián</rt></ruby><ruby>边<rt class="t1">biān</rt></ruby></span></span><small>前</small></span><span class="fwi"><span class="zh" lang="zh-CN" data-say="后边"><span class="w"><ruby>后<rt class="t4">hòu</rt></ruby><ruby>边<rt class="t1">biān</rt></ruby></span></span><small>後ろ</small></span><span class="fwi"><span class="zh" lang="zh-CN" data-say="里边"><span class="w"><ruby>里<rt class="t3">lǐ</rt></ruby><ruby>边<rt class="t1">biān</rt></ruby></span></span><small>中</small></span><span class="fwi"><span class="zh" lang="zh-CN" data-say="外边"><span class="w"><ruby>外<rt class="t4">wài</rt></ruby><ruby>边<rt class="t1">biān</rt></ruby></span></span><small>外</small></span><span class="fwi"><span class="zh" lang="zh-CN" data-say="左边"><span class="w"><ruby>左<rt class="t3">zuǒ</rt></ruby><ruby>边<rt class="t1">biān</rt></ruby></span></span><small>左</small></span><span class="fwi"><span class="zh" lang="zh-CN" data-say="右边"><span class="w"><ruby>右<rt class="t4">yòu</rt></ruby><ruby>边<rt class="t1">biān</rt></ruby></span></span><small>右</small></span><span class="fwi"><span class="zh" lang="zh-CN" data-say="东边"><span class="w"><ruby>东<rt class="t1">dōng</rt></ruby><ruby>边<rt class="t1">biān</rt></ruby></span></span><small>東</small></span><span class="fwi"><span class="zh" lang="zh-CN" data-say="旁边"><span class="w"><ruby>旁<rt class="t2">páng</rt></ruby><ruby>边<rt class="t1">biān</rt></ruby></span></span><small>そば、横</small></span><span class="fwi"><span class="zh" lang="zh-CN" data-say="对面"><span class="w"><ruby>对<rt class="t4">duì</rt></ruby><ruby>面<rt class="t4">miàn</rt></ruby></span></span><small>向かい</small></span><span class="fwi"><span class="zh" lang="zh-CN" data-say="中间"><span class="w"><ruby>中<rt class="t1">zhōng</rt></ruby><ruby>间<rt class="t1">jiān</rt></ruby></span></span><small>あいだ、真ん中</small></span></div></div></div><div class="tip"><b>ポイント</b>　「〜の中」の 里・上 は名詞のうしろで軽く読む（桌子 shang、教室 li）。B組は <b>的</b> をはさんでもいい：教学楼<b>的</b>后边。</div>
+</section>
+
+<section class="tab" id="gb" data-title="文法⑦〜⑫ 想・喜欢・还是・得・会/能" data-short="文法⑦〜⑫">
+  <h2>文法⑦〜⑫</h2>
+  <p class="srcline">願望の想／好きの喜欢／選択疑問文 还是／離合詞／様態補語 得／会・能・可以</p>
+  <h3 id="g7">⑦ 願望・意志「想」</h3><div class="key"><b>型</b>主語 ＋ 想 ＋ 動詞 ＋ …</div><p>「〜したい、〜するつもり」。否定は <b>不想</b>。</p><ul class="exs"><li><span class="zh" lang="zh-CN" data-say="暑假我想去留学。"><span class="w"><ruby>暑<rt class="t3">Shǔ</rt></ruby><ruby>假<rt class="t4">jià</rt></ruby></span><span class="w"><ruby>我<rt class="t3">wǒ</rt></ruby></span><span class="w"><ruby>想<rt class="t3">xiǎng</rt></ruby></span><span class="w"><ruby>去<rt class="t4">qù</rt></ruby></span><span class="w"><ruby>留<rt class="t2">liú</rt></ruby><ruby>学<rt class="t2">xué</rt></ruby></span>。</span><span class="tr">夏休みに私は留学に行きたい。</span></li><li><span class="zh" lang="zh-CN" data-say="弟弟将来想当飞行员。"><span class="w"><ruby>弟<rt class="t4">Dì</rt></ruby><ruby>弟<rt class="t5">di</rt></ruby></span><span class="w"><ruby>将<rt class="t1">jiāng</rt></ruby><ruby>来<rt class="t2">lái</rt></ruby></span><span class="w"><ruby>想<rt class="t3">xiǎng</rt></ruby></span><span class="w"><ruby>当<rt class="t1">dāng</rt></ruby></span><span class="w"><ruby>飞<rt class="t1">fēi</rt></ruby><ruby>行<rt class="t2">xíng</rt></ruby><ruby>员<rt class="t2">yuán</rt></ruby></span>。</span><span class="tr">弟は将来パイロットになりたい。</span></li><li><span class="zh" lang="zh-CN" data-say="毕业以后想进研究所搞研究。"><span class="w"><ruby>毕<rt class="t4">Bì</rt></ruby><ruby>业<rt class="t4">yè</rt></ruby></span><span class="w"><ruby>以<rt class="t3">yǐ</rt></ruby><ruby>后<rt class="t4">hòu</rt></ruby></span><span class="w"><ruby>想<rt class="t3">xiǎng</rt></ruby></span><span class="w"><ruby>进<rt class="t4">jìn</rt></ruby></span><span class="w"><ruby>研<rt class="t2">yán</rt></ruby><ruby>究<rt class="t1">jiū</rt></ruby><ruby>所<rt class="t3">suǒ</rt></ruby></span><span class="w"><ruby>搞<rt class="t3">gǎo</rt></ruby></span><span class="w"><ruby>研<rt class="t2">yán</rt></ruby><ruby>究<rt class="t1">jiū</rt></ruby></span>。</span><span class="tr">卒業後は研究所に入って研究をしたい。</span></li></ul>
+<h3 id="g8">⑧ 好き嫌い「喜欢」</h3><div class="key"><b>型</b>主語 ＋ 喜欢 ＋ 名詞 ／ 主語 ＋ 喜欢 ＋ 動詞 ＋ 目的語</div><p>うしろに名詞も動詞フレーズも置ける。「とても好き」は <b>很喜欢 / 特别喜欢</b>。</p><ul class="exs"><li><span class="zh" lang="zh-CN" data-say="你喜欢什么？"><span class="w"><ruby>你<rt class="t3">Nǐ</rt></ruby></span><span class="w"><ruby>喜<rt class="t3">xǐ</rt></ruby><ruby>欢<rt class="t5">huan</rt></ruby></span><span class="w"><ruby>什<rt class="t2">shén</rt></ruby><ruby>么<rt class="t5">me</rt></ruby></span>？</span><span class="tr">何が好き？</span></li><li><span class="zh" lang="zh-CN" data-say="我喜欢熊猫。"><span class="w"><ruby>我<rt class="t3">Wǒ</rt></ruby></span><span class="w"><ruby>喜<rt class="t3">xǐ</rt></ruby><ruby>欢<rt class="t5">huan</rt></ruby></span><span class="w"><ruby>熊<rt class="t2">xióng</rt></ruby><ruby>猫<rt class="t1">māo</rt></ruby></span>。</span><span class="tr">パンダが好き。</span></li><li><span class="zh" lang="zh-CN" data-say="你喜欢做什么？"><span class="w"><ruby>你<rt class="t3">Nǐ</rt></ruby></span><span class="w"><ruby>喜<rt class="t3">xǐ</rt></ruby><ruby>欢<rt class="t5">huan</rt></ruby></span><span class="w"><ruby>做<rt class="t4">zuò</rt></ruby></span><span class="w"><ruby>什<rt class="t2">shén</rt></ruby><ruby>么<rt class="t5">me</rt></ruby></span>？</span><span class="tr">何をするのが好き？</span></li><li><span class="zh" lang="zh-CN" data-say="我喜欢踢足球。"><span class="w"><ruby>我<rt class="t3">Wǒ</rt></ruby></span><span class="w"><ruby>喜<rt class="t3">xǐ</rt></ruby><ruby>欢<rt class="t5">huan</rt></ruby></span><span class="w"><ruby>踢<rt class="t1">tī</rt></ruby></span><span class="w"><ruby>足<rt class="t2">zú</rt></ruby><ruby>球<rt class="t2">qiú</rt></ruby></span>。</span><span class="tr">サッカーをするのが好き。</span></li></ul>
+<h3 id="g9">⑨ 選択疑問文「（是）A 还是 B？」</h3><div class="key"><b>型</b>（是）A，还是 B？</div><p>「A それとも B？」。文末に <b>吗をつけない</b>。（ ）の部分は省略できる。</p><ul class="exs"><li><span class="zh" lang="zh-CN" data-say="你是去北京，还是你去上海？"><span class="w"><ruby>你<rt class="t3">Nǐ</rt></ruby></span>（<span class="w"><ruby>是<rt class="t4">shì</rt></ruby></span>）<span class="w"><ruby>去<rt class="t4">qù</rt></ruby></span><span class="w"><ruby>北<rt class="t3">Běi</rt></ruby><ruby>京<rt class="t1">jīng</rt></ruby></span>，<span class="w"><ruby>还<rt class="t2">hái</rt></ruby><ruby>是<rt class="t4">shì</rt></ruby></span>（<span class="w"><ruby>你<rt class="t3">nǐ</rt></ruby></span>）<span class="w"><ruby>去<rt class="t4">qù</rt></ruby></span><span class="w"><ruby>上<rt class="t4">Shàng</rt></ruby><ruby>海<rt class="t3">hǎi</rt></ruby></span>？</span><span class="tr">北京に行くの、それとも上海に行くの？</span></li><li><span class="zh" lang="zh-CN" data-say="是你去北京，还是她去北京？">（<span class="w"><ruby>是<rt class="t4">Shì</rt></ruby></span>）<span class="w"><ruby>你<rt class="t3">nǐ</rt></ruby></span><span class="w"><ruby>去<rt class="t4">qù</rt></ruby></span><span class="w"><ruby>北<rt class="t3">Běi</rt></ruby><ruby>京<rt class="t1">jīng</rt></ruby></span>，<span class="w"><ruby>还<rt class="t2">hái</rt></ruby><ruby>是<rt class="t4">shì</rt></ruby></span><span class="w"><ruby>她<rt class="t1">tā</rt></ruby></span><span class="w"><ruby>去<rt class="t4">qù</rt></ruby></span>（<span class="w"><ruby>北<rt class="t3">Běi</rt></ruby><ruby>京<rt class="t1">jīng</rt></ruby></span>）？</span><span class="tr">北京に行くのは君、それとも彼女？</span></li><li><span class="zh" lang="zh-CN" data-say="你是喝茶，还是你喝咖啡？"><span class="w"><ruby>你<rt class="t3">Nǐ</rt></ruby></span>（<span class="w"><ruby>是<rt class="t4">shì</rt></ruby></span>）<span class="w"><ruby>喝<rt class="t1">hē</rt></ruby></span><span class="w"><ruby>茶<rt class="t2">chá</rt></ruby></span>，<span class="w"><ruby>还<rt class="t2">hái</rt></ruby><ruby>是<rt class="t4">shì</rt></ruby></span>（<span class="w"><ruby>你<rt class="t3">nǐ</rt></ruby></span>）<span class="w"><ruby>喝<rt class="t1">hē</rt></ruby></span><span class="w"><ruby>咖<rt class="t1">kā</rt></ruby><ruby>啡<rt class="t1">fēi</rt></ruby></span>？</span><span class="tr">お茶を飲む、それともコーヒー？</span></li><li><span class="zh" lang="zh-CN" data-say="是你喝茶，还是她喝茶？">（<span class="w"><ruby>是<rt class="t4">Shì</rt></ruby></span>）<span class="w"><ruby>你<rt class="t3">nǐ</rt></ruby></span><span class="w"><ruby>喝<rt class="t1">hē</rt></ruby></span><span class="w"><ruby>茶<rt class="t2">chá</rt></ruby></span>，<span class="w"><ruby>还<rt class="t2">hái</rt></ruby><ruby>是<rt class="t4">shì</rt></ruby></span><span class="w"><ruby>她<rt class="t1">tā</rt></ruby></span><span class="w"><ruby>喝<rt class="t1">hē</rt></ruby></span>（<span class="w"><ruby>茶<rt class="t2">chá</rt></ruby></span>）？</span><span class="tr">お茶を飲むのは君、それとも彼女？</span></li><li><span class="zh" lang="zh-CN" data-say="你是老师，还是你是学生？"><span class="w"><ruby>你<rt class="t3">Nǐ</rt></ruby></span><span class="w"><ruby>是<rt class="t4">shì</rt></ruby></span><span class="w"><ruby>老<rt class="t3">lǎo</rt></ruby><ruby>师<rt class="t1">shī</rt></ruby></span>，<span class="w"><ruby>还<rt class="t2">hái</rt></ruby><ruby>是<rt class="t4">shì</rt></ruby></span>（<span class="w"><ruby>你<rt class="t3">nǐ</rt></ruby></span><span class="w"><ruby>是<rt class="t4">shì</rt></ruby></span>）<span class="w"><ruby>学<rt class="t2">xué</rt></ruby><ruby>生<rt class="t5">sheng</rt></ruby></span>？</span><span class="tr">あなたは先生、それとも学生？</span></li><li><span class="zh" lang="zh-CN" data-say="你是老师，还是她是老师？"><span class="w"><ruby>你<rt class="t3">Nǐ</rt></ruby></span><span class="w"><ruby>是<rt class="t4">shì</rt></ruby></span><span class="w"><ruby>老<rt class="t3">lǎo</rt></ruby><ruby>师<rt class="t1">shī</rt></ruby></span>，<span class="w"><ruby>还<rt class="t2">hái</rt></ruby><ruby>是<rt class="t4">shì</rt></ruby></span><span class="w"><ruby>她<rt class="t1">tā</rt></ruby></span><span class="w"><ruby>是<rt class="t4">shì</rt></ruby></span>（<span class="w"><ruby>老<rt class="t3">lǎo</rt></ruby><ruby>师<rt class="t1">shī</rt></ruby></span>）？</span><span class="tr">先生なのはあなた、それとも彼女？</span></li><li><span class="zh" lang="zh-CN" data-say="饺子好吃，还是面条好吃？"><span class="w"><ruby>饺<rt class="t3">Jiǎo</rt></ruby><ruby>子<rt class="t5">zi</rt></ruby></span><span class="w"><ruby>好<rt class="t3">hǎo</rt></ruby><ruby>吃<rt class="t1">chī</rt></ruby></span>，<span class="w"><ruby>还<rt class="t2">hái</rt></ruby><ruby>是<rt class="t4">shì</rt></ruby></span><span class="w"><ruby>面<rt class="t4">miàn</rt></ruby><ruby>条<rt class="t2">tiáo</rt></ruby></span><span class="w"><ruby>好<rt class="t3">hǎo</rt></ruby><ruby>吃<rt class="t1">chī</rt></ruby></span>？</span><span class="tr">ギョーザがおいしい、それとも麺がおいしい？</span></li></ul>
+<h3 id="g10">⑩ 離合詞</h3><div class="key"><b>型</b>動詞 // 目的語（あいだに回数・時間などが入る）</div><p>1語に見えて実は「動詞＋目的語」。回数・時間・了・得などは<b>あいだに入れる</b>（×打工三次 → ○打三次工）。</p><ul class="exs"><li><span class="zh" lang="zh-CN" data-say="每星期打三次工。"><span class="w"><ruby>每<rt class="t3">Měi</rt></ruby></span><span class="w"><ruby>星<rt class="t1">xīng</rt></ruby><ruby>期<rt class="t1">qī</rt></ruby></span><span class="w"><ruby>打<rt class="t3">dǎ</rt></ruby></span><span class="w"><ruby>三<rt class="t1">sān</rt></ruby></span><span class="w"><ruby>次<rt class="t4">cì</rt></ruby></span><span class="w"><ruby>工<rt class="t1">gōng</rt></ruby></span>。</span><span class="tr">毎週3回アルバイトをする。</span></li></ul>
+<h3 id="g11">⑪ 様態・程度補語「得」</h3><div class="key"><b>型</b>主語 ＋（動詞1）＋ 目的語 ＋ 動詞2 ＋ 得 ＋ 様態・程度補語</div><p>「〜するのが〜だ」。目的語があるときは<b>動詞をくり返す</b>（最初の動詞は省略可）。得のうしろは <b>很好 / 不好 / 不太好 / 怎么样</b> など。</p><ul class="exs"><li><span class="zh" lang="zh-CN" data-say="雨下得很大，风刮得很猛。"><span class="w"><ruby>雨<rt class="t3">Yǔ</rt></ruby></span><span class="w"><ruby>下<rt class="t4">xià</rt></ruby></span><span class="w"><ruby>得<rt class="t5">de</rt></ruby></span><span class="w"><ruby>很<rt class="t3">hěn</rt></ruby></span><span class="w"><ruby>大<rt class="t4">dà</rt></ruby></span>，<span class="w"><ruby>风<rt class="t1">fēng</rt></ruby></span><span class="w"><ruby>刮<rt class="t1">guā</rt></ruby></span><span class="w"><ruby>得<rt class="t5">de</rt></ruby></span><span class="w"><ruby>很<rt class="t3">hěn</rt></ruby></span><span class="w"><ruby>猛<rt class="t3">měng</rt></ruby></span>。</span><span class="tr">雨がひどく降り、風が激しく吹いている。</span></li><li><span class="zh" lang="zh-CN" data-say="他说汉语说得怎么样？"><span class="w"><ruby>他<rt class="t1">Tā</rt></ruby></span>（<span class="w"><ruby>说<rt class="t1">shuō</rt></ruby></span>）<span class="w"><ruby>汉<rt class="t4">Hàn</rt></ruby><ruby>语<rt class="t3">yǔ</rt></ruby></span><span class="w"><ruby>说<rt class="t1">shuō</rt></ruby></span><span class="w"><ruby>得<rt class="t5">de</rt></ruby></span><span class="w"><ruby>怎<rt class="t3">zěn</rt></ruby><ruby>么<rt class="t5">me</rt></ruby><ruby>样<rt class="t4">yàng</rt></ruby></span>？</span><span class="tr">彼の中国語はどう？</span></li><li><span class="zh" lang="zh-CN" data-say="他说汉语说得不错。"><span class="w"><ruby>他<rt class="t1">Tā</rt></ruby></span>（<span class="w"><ruby>说<rt class="t1">shuō</rt></ruby></span>）<span class="w"><ruby>汉<rt class="t4">Hàn</rt></ruby><ruby>语<rt class="t3">yǔ</rt></ruby></span><span class="w"><ruby>说<rt class="t1">shuō</rt></ruby></span><span class="w"><ruby>得<rt class="t5">de</rt></ruby></span><span class="w"><ruby>不<rt class="t2">bú</rt></ruby><ruby>错<rt class="t4">cuò</rt></ruby></span>。</span><span class="tr">彼は中国語を話すのがうまい。</span></li><li><span class="zh" lang="zh-CN" data-say="姐姐滑雪滑得怎么样？"><span class="w"><ruby>姐<rt class="t3">Jiě</rt></ruby><ruby>姐<rt class="t5">jie</rt></ruby></span>（<span class="w"><ruby>滑<rt class="t2">huá</rt></ruby></span>）<span class="w"><ruby>雪<rt class="t3">xuě</rt></ruby></span><span class="w"><ruby>滑<rt class="t2">huá</rt></ruby></span><span class="w"><ruby>得<rt class="t5">de</rt></ruby></span><span class="w"><ruby>怎<rt class="t3">zěn</rt></ruby><ruby>么<rt class="t5">me</rt></ruby><ruby>样<rt class="t4">yàng</rt></ruby></span>？</span><span class="tr">お姉さんのスキーの腕前はどう？</span></li><li><span class="zh" lang="zh-CN" data-say="姐姐滑雪滑得还可以。"><span class="w"><ruby>姐<rt class="t3">Jiě</rt></ruby><ruby>姐<rt class="t5">jie</rt></ruby></span>（<span class="w"><ruby>滑<rt class="t2">huá</rt></ruby></span>）<span class="w"><ruby>雪<rt class="t3">xuě</rt></ruby></span><span class="w"><ruby>滑<rt class="t2">huá</rt></ruby></span><span class="w"><ruby>得<rt class="t5">de</rt></ruby></span><span class="w"><ruby>还<rt class="t2">hái</rt></ruby></span><span class="w"><ruby>可<rt class="t3">kě</rt></ruby><ruby>以<rt class="t3">yǐ</rt></ruby></span>。</span><span class="tr">姉のスキーはまあまあだ。</span></li></ul>
+<h3 id="g12">⑫ 可能・能力「会・能・可以」</h3><div class="key"><b>型</b>会：練習して身につけた「できる」／能・可以：能力の程度・条件・許可の「できる」</div><p><b>会</b>＝習得（泳げる・運転できる）。<b>能</b>＝能力の程度や条件（500m泳げる、用事があって参加できない）。<b>可以</b>＝許可（〜してもいい）。禁止は <b>不能</b>。</p><ul class="exs"><li><span class="zh" lang="zh-CN" data-say="他会做什么？"><span class="w"><ruby>他<rt class="t1">Tā</rt></ruby></span><span class="w"><ruby>会<rt class="t4">huì</rt></ruby></span>（<span class="w"><ruby>做<rt class="t4">zuò</rt></ruby></span>）<span class="w"><ruby>什<rt class="t2">shén</rt></ruby><ruby>么<rt class="t5">me</rt></ruby></span>？</span><span class="tr">彼は何ができる？</span></li><li><span class="zh" lang="zh-CN" data-say="他会打台球。"><span class="w"><ruby>他<rt class="t1">Tā</rt></ruby></span><span class="w"><ruby>会<rt class="t4">huì</rt></ruby></span><span class="w"><ruby>打<rt class="t3">dǎ</rt></ruby></span><span class="w"><ruby>台<rt class="t2">tái</rt></ruby><ruby>球<rt class="t2">qiú</rt></ruby></span>。</span><span class="tr">彼はビリヤードができる。</span></li><li><span class="zh" lang="zh-CN" data-say="你会做什么？"><span class="w"><ruby>你<rt class="t3">Nǐ</rt></ruby></span><span class="w"><ruby>会<rt class="t4">huì</rt></ruby></span>（<span class="w"><ruby>做<rt class="t4">zuò</rt></ruby></span>）<span class="w"><ruby>什<rt class="t2">shén</rt></ruby><ruby>么<rt class="t5">me</rt></ruby></span>？</span><span class="tr">君は何ができる？</span></li><li><span class="zh" lang="zh-CN" data-say="我会拉小提琴。"><span class="w"><ruby>我<rt class="t3">Wǒ</rt></ruby></span><span class="w"><ruby>会<rt class="t4">huì</rt></ruby></span><span class="w"><ruby>拉<rt class="t1">lā</rt></ruby></span><span class="w"><ruby>小<rt class="t3">xiǎo</rt></ruby><ruby>提<rt class="t2">tí</rt></ruby><ruby>琴<rt class="t2">qín</rt></ruby></span>。</span><span class="tr">私はバイオリンが弾ける。</span></li><li><span class="zh" lang="zh-CN" data-say="你能游多远？"><span class="w"><ruby>你<rt class="t3">Nǐ</rt></ruby></span><span class="w"><ruby>能<rt class="t2">néng</rt></ruby></span><span class="w"><ruby>游<rt class="t2">yóu</rt></ruby></span><span class="w"><ruby>多<rt class="t1">duō</rt></ruby></span><span class="w"><ruby>远<rt class="t3">yuǎn</rt></ruby></span>？</span><span class="tr">どのくらい（の距離）泳げる？</span></li><li><span class="zh" lang="zh-CN" data-say="我能游五百米。"><span class="w"><ruby>我<rt class="t3">Wǒ</rt></ruby></span><span class="w"><ruby>能<rt class="t2">néng</rt></ruby></span><span class="w"><ruby>游<rt class="t2">yóu</rt></ruby></span><span class="w"><ruby>五<rt class="t3">wǔ</rt></ruby><ruby>百<rt class="t3">bǎi</rt></ruby></span><span class="w"><ruby>米<rt class="t3">mǐ</rt></ruby></span>。</span><span class="tr">500メートル泳げる。</span></li><li><span class="zh" lang="zh-CN" data-say="明天的会议你能参加吗？"><span class="w"><ruby>明<rt class="t2">Míng</rt></ruby><ruby>天<rt class="t1">tiān</rt></ruby></span><span class="w"><ruby>的<rt class="t5">de</rt></ruby></span><span class="w"><ruby>会<rt class="t4">huì</rt></ruby><ruby>议<rt class="t4">yì</rt></ruby></span><span class="w"><ruby>你<rt class="t3">nǐ</rt></ruby></span><span class="w"><ruby>能<rt class="t2">néng</rt></ruby></span><span class="w"><ruby>参<rt class="t1">cān</rt></ruby><ruby>加<rt class="t1">jiā</rt></ruby></span><span class="w"><ruby>吗<rt class="t5">ma</rt></ruby></span>？</span><span class="tr">明日の会議に出られる？</span></li><li><span class="zh" lang="zh-CN" data-say="明天我有事，不能参加。"><span class="w"><ruby>明<rt class="t2">Míng</rt></ruby><ruby>天<rt class="t1">tiān</rt></ruby></span><span class="w"><ruby>我<rt class="t3">wǒ</rt></ruby></span><span class="w"><ruby>有<rt class="t3">yǒu</rt></ruby></span><span class="w"><ruby>事<rt class="t4">shì</rt></ruby></span>，<span class="w"><ruby>不<rt class="t4">bù</rt></ruby></span><span class="w"><ruby>能<rt class="t2">néng</rt></ruby></span><span class="w"><ruby>参<rt class="t1">cān</rt></ruby><ruby>加<rt class="t1">jiā</rt></ruby></span>。</span><span class="tr">明日は用事があって出られない。</span></li><li><span class="zh" lang="zh-CN" data-say="这儿可以抽烟吗？"><span class="w"><ruby>这<rt class="t4">Zhèr</rt></ruby><ruby>儿<rt class=""></rt></ruby></span><span class="w"><ruby>可<rt class="t3">kě</rt></ruby><ruby>以<rt class="t3">yǐ</rt></ruby></span><span class="w"><ruby>抽<rt class="t1">chōu</rt></ruby><ruby>烟<rt class="t1">yān</rt></ruby></span><span class="w"><ruby>吗<rt class="t5">ma</rt></ruby></span>？</span><span class="tr">ここでタバコを吸ってもいい？</span></li><li><span class="zh" lang="zh-CN" data-say="不行，这儿不能抽烟。"><span class="w"><ruby>不<rt class="t4">Bù</rt></ruby><ruby>行<rt class="t2">xíng</rt></ruby></span>，<span class="w"><ruby>这<rt class="t4">zhèr</rt></ruby><ruby>儿<rt class=""></rt></ruby></span><span class="w"><ruby>不<rt class="t4">bù</rt></ruby></span><span class="w"><ruby>能<rt class="t2">néng</rt></ruby></span><span class="w"><ruby>抽<rt class="t1">chōu</rt></ruby><ruby>烟<rt class="t1">yān</rt></ruby></span>。</span><span class="tr">だめ、ここは禁煙だ。</span></li></ul>
+</section>
+
+<section class="tab" id="gc" data-title="文法⑬〜⑱ 虽然・多＋形容詞・了・比較・不用・让" data-short="文法⑬〜⑱">
+  <h2>文法⑬〜⑱</h2>
+  <p class="srcline">逆接の複文／多＋形容詞／変化の了／比較／当然・必要／使役</p>
+  <h3 id="g13">⑬ 逆接・譲歩の複文</h3><div class="key"><b>型</b>虽然 A，但是／可是 B ／ A 是 A，但是／可是 B</div><p>「Aだけど、B」。<b>虽然…但是…</b> はセットで使う。<b>便宜是便宜</b>（安いことは安い）のように同じ語をくり返す形もある。</p><ul class="exs"><li><span class="zh" lang="zh-CN" data-say="虽然价格很便宜，但是质量很好。"><span class="w"><ruby>虽<rt class="t1">Suī</rt></ruby><ruby>然<rt class="t2">rán</rt></ruby></span><span class="w"><ruby>价<rt class="t4">jià</rt></ruby><ruby>格<rt class="t2">gé</rt></ruby></span><span class="w"><ruby>很<rt class="t3">hěn</rt></ruby></span><span class="w"><ruby>便<rt class="t2">pián</rt></ruby><ruby>宜<rt class="t5">yi</rt></ruby></span>，<span class="w"><ruby>但<rt class="t4">dàn</rt></ruby><ruby>是<rt class="t4">shì</rt></ruby></span><span class="w"><ruby>质<rt class="t4">zhì</rt></ruby><ruby>量<rt class="t4">liàng</rt></ruby></span><span class="w"><ruby>很<rt class="t3">hěn</rt></ruby></span><span class="w"><ruby>好<rt class="t3">hǎo</rt></ruby></span>。</span><span class="tr">値段は安いけれど、品質は良い。</span></li><li><span class="zh" lang="zh-CN" data-say="便宜是便宜，但是质量很好。"><span class="w"><ruby>便<rt class="t2">Pián</rt></ruby><ruby>宜<rt class="t5">yi</rt></ruby></span><span class="w"><ruby>是<rt class="t4">shì</rt></ruby></span><span class="w"><ruby>便<rt class="t2">pián</rt></ruby><ruby>宜<rt class="t5">yi</rt></ruby></span>，<span class="w"><ruby>但<rt class="t4">dàn</rt></ruby><ruby>是<rt class="t4">shì</rt></ruby></span><span class="w"><ruby>质<rt class="t4">zhì</rt></ruby><ruby>量<rt class="t4">liàng</rt></ruby></span><span class="w"><ruby>很<rt class="t3">hěn</rt></ruby></span><span class="w"><ruby>好<rt class="t3">hǎo</rt></ruby></span>。</span><span class="tr">安いことは安いが、品質は良い。</span></li><li><span class="zh" lang="zh-CN" data-say="她虽然年轻，可是经验非常丰富。"><span class="w"><ruby>她<rt class="t1">Tā</rt></ruby></span><span class="w"><ruby>虽<rt class="t1">suī</rt></ruby><ruby>然<rt class="t2">rán</rt></ruby></span><span class="w"><ruby>年<rt class="t2">nián</rt></ruby><ruby>轻<rt class="t1">qīng</rt></ruby></span>，<span class="w"><ruby>可<rt class="t3">kě</rt></ruby><ruby>是<rt class="t4">shì</rt></ruby></span><span class="w"><ruby>经<rt class="t1">jīng</rt></ruby><ruby>验<rt class="t4">yàn</rt></ruby></span><span class="w"><ruby>非<rt class="t1">fēi</rt></ruby><ruby>常<rt class="t2">cháng</rt></ruby></span><span class="w"><ruby>丰<rt class="t1">fēng</rt></ruby><ruby>富<rt class="t4">fù</rt></ruby></span>。</span><span class="tr">彼女は若いけれど、経験はとても豊富だ。</span></li><li><span class="zh" lang="zh-CN" data-say="她年轻是年轻，可是经验非常丰富。"><span class="w"><ruby>她<rt class="t1">Tā</rt></ruby></span><span class="w"><ruby>年<rt class="t2">nián</rt></ruby><ruby>轻<rt class="t1">qīng</rt></ruby></span><span class="w"><ruby>是<rt class="t4">shì</rt></ruby></span><span class="w"><ruby>年<rt class="t2">nián</rt></ruby><ruby>轻<rt class="t1">qīng</rt></ruby></span>，<span class="w"><ruby>可<rt class="t3">kě</rt></ruby><ruby>是<rt class="t4">shì</rt></ruby></span><span class="w"><ruby>经<rt class="t1">jīng</rt></ruby><ruby>验<rt class="t4">yàn</rt></ruby></span><span class="w"><ruby>非<rt class="t1">fēi</rt></ruby><ruby>常<rt class="t2">cháng</rt></ruby></span><span class="w"><ruby>丰<rt class="t1">fēng</rt></ruby><ruby>富<rt class="t4">fù</rt></ruby></span>。</span><span class="tr">彼女は若いことは若いが、経験はとても豊富だ。</span></li></ul>
+<h3 id="g14">⑭ 「多＋形容詞」で数量・程度を聞く</h3><div class="key"><b>型</b>多 ＋ 长 / 高 / 大 / 重 / 远 …？</div><p>「どれくらい〜？」。答えは <b>形容詞＋数量</b>（长 6300 公里）。年齢は <b>你多大？</b>、年配の人には <b>您多大年纪？</b>。</p><ul class="exs"><li><span class="zh" lang="zh-CN" data-say="长江多长？"><span class="w"><ruby>长<rt class="t2">Cháng</rt></ruby><ruby>江<rt class="t1">jiāng</rt></ruby></span><span class="w"><ruby>多<rt class="t1">duō</rt></ruby></span><span class="w"><ruby>长<rt class="t2">cháng</rt></ruby></span>？</span><span class="tr">長江はどれくらいの長さ？</span></li><li><span class="zh" lang="zh-CN" data-say="长江长6,300公里。"><span class="w"><ruby>长<rt class="t2">Cháng</rt></ruby><ruby>江<rt class="t1">jiāng</rt></ruby></span><span class="w"><ruby>长<rt class="t2">cháng</rt></ruby></span><span class="w"><ruby>6,300<rt class="num">liùqiān sānbǎi</rt></ruby></span><span class="w"><ruby>公<rt class="t1">gōng</rt></ruby><ruby>里<rt class="t3">lǐ</rt></ruby></span>。</span><span class="tr">長江は6300キロある。</span></li><li><span class="zh" lang="zh-CN" data-say="珠峰多高？"><span class="w"><ruby>珠<rt class="t1">Zhū</rt></ruby><ruby>峰<rt class="t1">fēng</rt></ruby></span><span class="w"><ruby>多<rt class="t1">duō</rt></ruby></span><span class="w"><ruby>高<rt class="t1">gāo</rt></ruby></span>？</span><span class="tr">チョモランマはどれくらいの高さ？</span></li><li><span class="zh" lang="zh-CN" data-say="珠峰高8,848.86米。"><span class="w"><ruby>珠<rt class="t1">Zhū</rt></ruby><ruby>峰<rt class="t1">fēng</rt></ruby></span><span class="w"><ruby>高<rt class="t1">gāo</rt></ruby></span><span class="w"><ruby>8,848.86<rt class="num">bāqiān bābǎi sìshíbā diǎn bā liù</rt></ruby></span><span class="w"><ruby>米<rt class="t3">mǐ</rt></ruby></span>。</span><span class="tr">チョモランマは8848.86メートルある。</span></li><li><span class="zh" lang="zh-CN" data-say="你多大年纪？"><span class="w"><ruby>你<rt class="t3">Nǐ</rt></ruby></span><span class="w"><ruby>多<rt class="t1">duō</rt></ruby></span><span class="w"><ruby>大<rt class="t4">dà</rt></ruby></span><span class="w"><ruby>年<rt class="t2">nián</rt></ruby><ruby>纪<rt class="t4">jì</rt></ruby></span>？</span><span class="tr">おいくつですか？（年配の人に）</span></li><li><span class="zh" lang="zh-CN" data-say="我八十八岁了。"><span class="w"><ruby>我<rt class="t3">Wǒ</rt></ruby></span><span class="w"><ruby>八<rt class="t1">bā</rt></ruby><ruby>十<rt class="t2">shí</rt></ruby><ruby>八<rt class="t1">bā</rt></ruby></span><span class="w"><ruby>岁<rt class="t4">suì</rt></ruby></span><span class="w"><ruby>了<rt class="t5">le</rt></ruby></span>。</span><span class="tr">88歳になりました。</span></li><li><span class="zh" lang="zh-CN" data-say="你多大？"><span class="w"><ruby>你<rt class="t3">Nǐ</rt></ruby></span><span class="w"><ruby>多<rt class="t1">duō</rt></ruby></span><span class="w"><ruby>大<rt class="t4">dà</rt></ruby></span>？</span><span class="tr">何歳？</span></li><li><span class="zh" lang="zh-CN" data-say="我二十三岁。"><span class="w"><ruby>我<rt class="t3">Wǒ</rt></ruby></span><span class="w"><ruby>二<rt class="t4">èr</rt></ruby><ruby>十<rt class="t2">shí</rt></ruby><ruby>三<rt class="t1">sān</rt></ruby></span><span class="w"><ruby>岁<rt class="t4">suì</rt></ruby></span>。</span><span class="tr">23歳。</span></li><li><span class="zh" lang="zh-CN" data-say="你身高多少？"><span class="w"><ruby>你<rt class="t3">Nǐ</rt></ruby></span><span class="w"><ruby>身<rt class="t1">shēn</rt></ruby><ruby>高<rt class="t1">gāo</rt></ruby></span><span class="w"><ruby>多<rt class="t1">duō</rt></ruby><ruby>少<rt class="t5">shao</rt></ruby></span>？</span><span class="tr">身長はいくつ？</span></li><li><span class="zh" lang="zh-CN" data-say="我一米七十五公分。"><span class="w"><ruby>我<rt class="t3">Wǒ</rt></ruby></span><span class="w"><ruby>一<rt class="t4">yì</rt></ruby></span><span class="w"><ruby>米<rt class="t3">mǐ</rt></ruby></span><span class="w"><ruby>七<rt class="t1">qī</rt></ruby><ruby>十<rt class="t2">shí</rt></ruby><ruby>五<rt class="t3">wǔ</rt></ruby></span><span class="w"><ruby>公<rt class="t1">gōng</rt></ruby><ruby>分<rt class="t1">fēn</rt></ruby></span>。</span><span class="tr">1メートル75センチ。</span></li><li><span class="zh" lang="zh-CN" data-say="你多高？"><span class="w"><ruby>你<rt class="t3">Nǐ</rt></ruby></span><span class="w"><ruby>多<rt class="t1">duō</rt></ruby></span><span class="w"><ruby>高<rt class="t1">gāo</rt></ruby></span>？</span><span class="tr">背はどれくらい？</span></li><li><span class="zh" lang="zh-CN" data-say="我一米七五。"><span class="w"><ruby>我<rt class="t3">Wǒ</rt></ruby></span><span class="w"><ruby>一<rt class="t4">yì</rt></ruby></span><span class="w"><ruby>米<rt class="t3">mǐ</rt></ruby></span><span class="w"><ruby>七<rt class="t1">qī</rt></ruby></span><span class="w"><ruby>五<rt class="t3">wǔ</rt></ruby></span>。</span><span class="tr">175センチ。</span></li><li><span class="zh" lang="zh-CN" data-say="你体重多少？"><span class="w"><ruby>你<rt class="t3">Nǐ</rt></ruby></span><span class="w"><ruby>体<rt class="t3">tǐ</rt></ruby><ruby>重<rt class="t4">zhòng</rt></ruby></span><span class="w"><ruby>多<rt class="t1">duō</rt></ruby><ruby>少<rt class="t5">shao</rt></ruby></span>？</span><span class="tr">体重はいくつ？</span></li><li><span class="zh" lang="zh-CN" data-say="你多重？"><span class="w"><ruby>你<rt class="t3">Nǐ</rt></ruby></span><span class="w"><ruby>多<rt class="t1">duō</rt></ruby></span><span class="w"><ruby>重<rt class="t4">zhòng</rt></ruby></span>？</span><span class="tr">どれくらいの重さ？</span></li><li><span class="zh" lang="zh-CN" data-say="我七十公斤。"><span class="w"><ruby>我<rt class="t3">Wǒ</rt></ruby></span><span class="w"><ruby>七<rt class="t1">qī</rt></ruby><ruby>十<rt class="t2">shí</rt></ruby></span><span class="w"><ruby>公<rt class="t1">gōng</rt></ruby><ruby>斤<rt class="t1">jīn</rt></ruby></span>。</span><span class="tr">70キロ。</span></li></ul>
+<h3 id="g15">⑮ 変化の「了」</h3><div class="key"><b>型</b>文 ＋ 了（文末）</div><p>「〜になった」。状態が変わったことを表す。否定と組むと「〜しなくなった・〜する必要がなくなった」（不用…了）。</p><ul class="exs"><li><span class="zh" lang="zh-CN" data-say="天亮了。"><span class="w"><ruby>天<rt class="t1">Tiān</rt></ruby></span><span class="w"><ruby>亮<rt class="t4">liàng</rt></ruby></span><span class="w"><ruby>了<rt class="t5">le</rt></ruby></span>。</span><span class="tr">夜が明けた。</span></li><li><span class="zh" lang="zh-CN" data-say="天黑了。"><span class="w"><ruby>天<rt class="t1">Tiān</rt></ruby></span><span class="w"><ruby>黑<rt class="t1">hēi</rt></ruby></span><span class="w"><ruby>了<rt class="t5">le</rt></ruby></span>。</span><span class="tr">暗くなった。</span></li><li><span class="zh" lang="zh-CN" data-say="中午十二点了。"><span class="w"><ruby>中<rt class="t1">Zhōng</rt></ruby><ruby>午<rt class="t3">wǔ</rt></ruby></span><span class="w"><ruby>十<rt class="t2">shí</rt></ruby><ruby>二<rt class="t4">èr</rt></ruby></span><span class="w"><ruby>点<rt class="t3">diǎn</rt></ruby></span><span class="w"><ruby>了<rt class="t5">le</rt></ruby></span>。</span><span class="tr">お昼の12時になった。</span></li><li><span class="zh" lang="zh-CN" data-say="妹妹是高中生了。"><span class="w"><ruby>妹<rt class="t4">Mèi</rt></ruby><ruby>妹<rt class="t5">mei</rt></ruby></span><span class="w"><ruby>是<rt class="t4">shì</rt></ruby></span><span class="w"><ruby>高<rt class="t1">gāo</rt></ruby><ruby>中<rt class="t1">zhōng</rt></ruby><ruby>生<rt class="t1">shēng</rt></ruby></span><span class="w"><ruby>了<rt class="t5">le</rt></ruby></span>。</span><span class="tr">妹は高校生になった。</span></li></ul>
+<h3 id="g16">⑯ 比較の表現</h3><div class="key"><b>型</b>肯定：A 比 B ＋ 形容詞（＋差）／否定：A 没有 B（那么）形容詞／同じ：A 和・跟 B（一样）形容詞</div><p>比の文では形容詞の前に <b>很・非常をつけない</b>（×比我很大）。差の量は形容詞のうしろ（大<b>两岁</b>）。否定は <b>不比</b> ではなく <b>没有</b> を使う。</p><ul class="exs"><li><span class="zh" lang="zh-CN" data-say="姐姐比我大两岁。"><span class="w"><ruby>姐<rt class="t3">Jiě</rt></ruby><ruby>姐<rt class="t5">jie</rt></ruby></span><span class="w"><ruby>比<rt class="t3">bǐ</rt></ruby></span><span class="w"><ruby>我<rt class="t3">wǒ</rt></ruby></span><span class="w"><ruby>大<rt class="t4">dà</rt></ruby></span><span class="w"><ruby>两<rt class="t3">liǎng</rt></ruby></span><span class="w"><ruby>岁<rt class="t4">suì</rt></ruby></span>。</span><span class="tr">姉は私より2歳年上だ。</span></li><li><span class="zh" lang="zh-CN" data-say="我比姐姐小两岁。"><span class="w"><ruby>我<rt class="t3">Wǒ</rt></ruby></span><span class="w"><ruby>比<rt class="t3">bǐ</rt></ruby></span><span class="w"><ruby>姐<rt class="t3">jiě</rt></ruby><ruby>姐<rt class="t5">jie</rt></ruby></span><span class="w"><ruby>小<rt class="t3">xiǎo</rt></ruby></span><span class="w"><ruby>两<rt class="t3">liǎng</rt></ruby></span><span class="w"><ruby>岁<rt class="t4">suì</rt></ruby></span>。</span><span class="tr">私は姉より2歳年下だ。</span></li><li><span class="zh" lang="zh-CN" data-say="弟弟比妹妹高七公分。"><span class="w"><ruby>弟<rt class="t4">Dì</rt></ruby><ruby>弟<rt class="t5">di</rt></ruby></span><span class="w"><ruby>比<rt class="t3">bǐ</rt></ruby></span><span class="w"><ruby>妹<rt class="t4">mèi</rt></ruby><ruby>妹<rt class="t5">mei</rt></ruby></span><span class="w"><ruby>高<rt class="t1">gāo</rt></ruby></span><span class="w"><ruby>七<rt class="t1">qī</rt></ruby></span><span class="w"><ruby>公<rt class="t1">gōng</rt></ruby><ruby>分<rt class="t1">fēn</rt></ruby></span>。</span><span class="tr">弟は妹より7センチ高い。</span></li><li><span class="zh" lang="zh-CN" data-say="妹妹比弟弟矮七公分。"><span class="w"><ruby>妹<rt class="t4">Mèi</rt></ruby><ruby>妹<rt class="t5">mei</rt></ruby></span><span class="w"><ruby>比<rt class="t3">bǐ</rt></ruby></span><span class="w"><ruby>弟<rt class="t4">dì</rt></ruby><ruby>弟<rt class="t5">di</rt></ruby></span><span class="w"><ruby>矮<rt class="t3">ǎi</rt></ruby></span><span class="w"><ruby>七<rt class="t1">qī</rt></ruby></span><span class="w"><ruby>公<rt class="t1">gōng</rt></ruby><ruby>分<rt class="t1">fēn</rt></ruby></span>。</span><span class="tr">妹は弟より7センチ低い。</span></li><li><span class="zh" lang="zh-CN" data-say="妹妹没有弟弟那么高。"><span class="w"><ruby>妹<rt class="t4">Mèi</rt></ruby><ruby>妹<rt class="t5">mei</rt></ruby></span><span class="w"><ruby>没<rt class="t2">méi</rt></ruby><ruby>有<rt class="t3">yǒu</rt></ruby></span><span class="w"><ruby>弟<rt class="t4">dì</rt></ruby><ruby>弟<rt class="t5">di</rt></ruby></span>（<span class="w"><ruby>那<rt class="t4">nà</rt></ruby><ruby>么<rt class="t5">me</rt></ruby></span>）<span class="w"><ruby>高<rt class="t1">gāo</rt></ruby></span>。</span><span class="tr">妹は弟ほど背が高くない。</span></li><li><span class="zh" lang="zh-CN" data-say="东京没有北京那么冷。"><span class="w"><ruby>东<rt class="t1">Dōng</rt></ruby><ruby>京<rt class="t1">jīng</rt></ruby></span><span class="w"><ruby>没<rt class="t2">méi</rt></ruby><ruby>有<rt class="t3">yǒu</rt></ruby></span><span class="w"><ruby>北<rt class="t3">Běi</rt></ruby><ruby>京<rt class="t1">jīng</rt></ruby></span>（<span class="w"><ruby>那<rt class="t4">nà</rt></ruby><ruby>么<rt class="t5">me</rt></ruby></span>）<span class="w"><ruby>冷<rt class="t3">lěng</rt></ruby></span>。</span><span class="tr">東京は北京ほど寒くない。</span></li><li><span class="zh" lang="zh-CN" data-say="田村的成绩和中山的成绩一样好。"><span class="w"><ruby>田<rt class="t2">Tián</rt></ruby><ruby>村<rt class="t1">cūn</rt></ruby></span><span class="w"><ruby>的<rt class="t5">de</rt></ruby></span><span class="w"><ruby>成<rt class="t2">chéng</rt></ruby><ruby>绩<rt class="t4">jì</rt></ruby></span><span class="w"><ruby>和<rt class="t2">hé</rt></ruby></span><span class="w"><ruby>中<rt class="t1">Zhōng</rt></ruby><ruby>山<rt class="t1">shān</rt></ruby></span><span class="w"><ruby>的<rt class="t5">de</rt></ruby></span>（<span class="w"><ruby>成<rt class="t2">chéng</rt></ruby><ruby>绩<rt class="t4">jì</rt></ruby></span>）<span class="w"><ruby>一<rt class="t2">yí</rt></ruby><ruby>样<rt class="t4">yàng</rt></ruby></span><span class="w"><ruby>好<rt class="t3">hǎo</rt></ruby></span>。</span><span class="tr">田村さんの成績は中山さんと同じくらい良い。</span></li><li><span class="zh" lang="zh-CN" data-say="草莓的价格跟苹果的价格一样贵。"><span class="w"><ruby>草<rt class="t3">Cǎo</rt></ruby><ruby>莓<rt class="t2">méi</rt></ruby></span><span class="w"><ruby>的<rt class="t5">de</rt></ruby></span><span class="w"><ruby>价<rt class="t4">jià</rt></ruby><ruby>格<rt class="t2">gé</rt></ruby></span><span class="w"><ruby>跟<rt class="t1">gēn</rt></ruby></span><span class="w"><ruby>苹<rt class="t2">píng</rt></ruby><ruby>果<rt class="t3">guǒ</rt></ruby></span><span class="w"><ruby>的<rt class="t5">de</rt></ruby></span>（<span class="w"><ruby>价<rt class="t4">jià</rt></ruby><ruby>格<rt class="t2">gé</rt></ruby></span>）<span class="w"><ruby>一<rt class="t2">yí</rt></ruby><ruby>样<rt class="t4">yàng</rt></ruby></span><span class="w"><ruby>贵<rt class="t4">guì</rt></ruby></span>。</span><span class="tr">イチゴの値段はリンゴと同じくらい高い。</span></li></ul>
+<h3 id="g17">⑰ 当然・必要の助動詞</h3><div class="key"><b>型</b>应该（〜すべき）／要（〜しなければ）／必须（必ず〜しなければ）／得 děi（〜しなければ）</div><p>否定（〜しなくていい）は <b>不用</b>。得は助動詞のときは <b>děi</b> と読む（補語の得 de とちがう）。</p><ul class="exs"><li><span class="zh" lang="zh-CN" data-say="学生应该好好儿学习。"><span class="w"><ruby>学<rt class="t2">Xué</rt></ruby><ruby>生<rt class="t5">sheng</rt></ruby></span><span class="w"><ruby>应<rt class="t1">yīng</rt></ruby><ruby>该<rt class="t1">gāi</rt></ruby></span><span class="w"><ruby>好<rt class="t3">hǎo</rt></ruby><ruby>好<rt class="t1">hāor</rt></ruby><ruby>儿<rt class=""></rt></ruby></span><span class="w"><ruby>学<rt class="t2">xué</rt></ruby><ruby>习<rt class="t2">xí</rt></ruby></span>。</span><span class="tr">学生はしっかり勉強すべきだ。</span></li><li><span class="zh" lang="zh-CN" data-say="你们要牢牢地记住。"><span class="w"><ruby>你<rt class="t3">Nǐ</rt></ruby><ruby>们<rt class="t5">men</rt></ruby></span><span class="w"><ruby>要<rt class="t4">yào</rt></ruby></span><span class="w"><ruby>牢<rt class="t2">láo</rt></ruby><ruby>牢<rt class="t2">láo</rt></ruby></span><span class="w"><ruby>地<rt class="t5">de</rt></ruby></span><span class="w"><ruby>记<rt class="t4">jì</rt></ruby><ruby>住<rt class="t4">zhù</rt></ruby></span>。</span><span class="tr">君たち、しっかり覚えておきなさい。</span></li><li><span class="zh" lang="zh-CN" data-say="天黑以前必须下山！"><span class="w"><ruby>天<rt class="t1">Tiān</rt></ruby></span><span class="w"><ruby>黑<rt class="t1">hēi</rt></ruby></span><span class="w"><ruby>以<rt class="t3">yǐ</rt></ruby><ruby>前<rt class="t2">qián</rt></ruby></span><span class="w"><ruby>必<rt class="t4">bì</rt></ruby><ruby>须<rt class="t1">xū</rt></ruby></span><span class="w"><ruby>下<rt class="t4">xià</rt></ruby></span><span class="w"><ruby>山<rt class="t1">shān</rt></ruby></span>！</span><span class="tr">暗くなる前に必ず下山しなさい！</span></li><li><span class="zh" lang="zh-CN" data-say="明天我得去机场接客人。"><span class="w"><ruby>明<rt class="t2">Míng</rt></ruby><ruby>天<rt class="t1">tiān</rt></ruby></span><span class="w"><ruby>我<rt class="t3">wǒ</rt></ruby></span><span class="w"><ruby>得<rt class="t3">děi</rt></ruby></span><span class="w"><ruby>去<rt class="t4">qù</rt></ruby></span><span class="w"><ruby>机<rt class="t1">jī</rt></ruby><ruby>场<rt class="t3">chǎng</rt></ruby></span><span class="w"><ruby>接<rt class="t1">jiē</rt></ruby></span><span class="w"><ruby>客<rt class="t4">kè</rt></ruby><ruby>人<rt class="t5">ren</rt></ruby></span>。</span><span class="tr">明日私は空港へ客を迎えに行かなければならない。</span></li><li><span class="zh" lang="zh-CN" data-say="明天你不用去机场接客人。"><span class="w"><ruby>明<rt class="t2">Míng</rt></ruby><ruby>天<rt class="t1">tiān</rt></ruby></span><span class="w"><ruby>你<rt class="t3">nǐ</rt></ruby></span><span class="w"><ruby>不<rt class="t2">bú</rt></ruby><ruby>用<rt class="t4">yòng</rt></ruby></span><span class="w"><ruby>去<rt class="t4">qù</rt></ruby></span><span class="w"><ruby>机<rt class="t1">jī</rt></ruby><ruby>场<rt class="t3">chǎng</rt></ruby></span><span class="w"><ruby>接<rt class="t1">jiē</rt></ruby></span><span class="w"><ruby>客<rt class="t4">kè</rt></ruby><ruby>人<rt class="t5">ren</rt></ruby></span>。</span><span class="tr">明日君は空港へ客を迎えに行かなくていい。</span></li></ul>
+<h3 id="g18">⑱ 使役文（兼語文）</h3><div class="key"><b>型</b>主語 ＋ 让・叫・使 ＋ 人 ＋ 動詞…</div><p>「（人）に〜させる」。まん中の人は「させる」の目的語であり、うしろの動詞の主語でもある（兼語）。请（招く・おごる）・选（選ぶ）も同じ形。</p><ul class="exs"><li><span class="zh" lang="zh-CN" data-say="老师让学生回答问题。"><span class="w"><ruby>老<rt class="t3">Lǎo</rt></ruby><ruby>师<rt class="t1">shī</rt></ruby></span><span class="w"><ruby>让<rt class="t4">ràng</rt></ruby></span><span class="w"><ruby>学<rt class="t2">xué</rt></ruby><ruby>生<rt class="t5">sheng</rt></ruby></span><span class="w"><ruby>回<rt class="t2">huí</rt></ruby><ruby>答<rt class="t2">dá</rt></ruby></span><span class="w"><ruby>问<rt class="t4">wèn</rt></ruby><ruby>题<rt class="t2">tí</rt></ruby></span>。</span><span class="tr">先生は学生に質問に答えさせる。</span></li><li><span class="zh" lang="zh-CN" data-say="早上的空气使人觉得很舒服。"><span class="w"><ruby>早<rt class="t3">Zǎo</rt></ruby><ruby>上<rt class="t5">shang</rt></ruby></span><span class="w"><ruby>的<rt class="t5">de</rt></ruby></span><span class="w"><ruby>空<rt class="t1">kōng</rt></ruby><ruby>气<rt class="t4">qì</rt></ruby></span><span class="w"><ruby>使<rt class="t3">shǐ</rt></ruby></span><span class="w"><ruby>人<rt class="t2">rén</rt></ruby></span><span class="w"><ruby>觉<rt class="t2">jué</rt></ruby><ruby>得<rt class="t5">de</rt></ruby></span><span class="w"><ruby>很<rt class="t3">hěn</rt></ruby></span><span class="w"><ruby>舒<rt class="t1">shū</rt></ruby><ruby>服<rt class="t5">fu</rt></ruby></span>。</span><span class="tr">朝の空気は人を心地よくさせる。</span></li><li><span class="zh" lang="zh-CN" data-say="我明天请她吃饭。"><span class="w"><ruby>我<rt class="t3">Wǒ</rt></ruby></span><span class="w"><ruby>明<rt class="t2">míng</rt></ruby><ruby>天<rt class="t1">tiān</rt></ruby></span><span class="w"><ruby>请<rt class="t3">qǐng</rt></ruby></span><span class="w"><ruby>她<rt class="t1">tā</rt></ruby></span><span class="w"><ruby>吃<rt class="t1">chī</rt></ruby></span><span class="w"><ruby>饭<rt class="t4">fàn</rt></ruby></span>。</span><span class="tr">私は明日彼女に食事をおごる。</span></li><li><span class="zh" lang="zh-CN" data-say="大家选他当班长。"><span class="w"><ruby>大<rt class="t4">Dà</rt></ruby><ruby>家<rt class="t1">jiā</rt></ruby></span><span class="w"><ruby>选<rt class="t3">xuǎn</rt></ruby></span><span class="w"><ruby>他<rt class="t1">tā</rt></ruby></span><span class="w"><ruby>当<rt class="t1">dāng</rt></ruby></span><span class="w"><ruby>班<rt class="t1">bān</rt></ruby><ruby>长<rt class="t3">zhǎng</rt></ruby></span>。</span><span class="tr">みんなは彼をクラス委員長に選ぶ。</span></li></ul>
+</section>
+
+<!-- ================= 練習問題 ================= -->
+<section class="tab" id="practice" data-title="練習問題" data-short="練習問題">
+  <h2>練習問題（類題）</h2>
+  <p class="srcline">プリントにない問題。タップで答えが開く。まずは作文の類題から。</p>
+  <h3 id="p1">「在」か「有」か</h3><p>空欄に <b>在</b> か <b>有</b> を入れよう。場所が前＝有、物が前＝在。</p>
+<details class="ex pr"><summary><span class="no">1</span><span lang="zh-CN" class="zhq">银行＿＿邮局旁边。</span></summary>
+<div class="a"><span class="zh big" lang="zh-CN" data-say="银行在邮局旁边。"><span class="w"><ruby>银<rt class="t2">Yín</rt></ruby><ruby>行<rt class="t2">háng</rt></ruby></span><span class="w"><ruby>在<rt class="t4">zài</rt></ruby></span><span class="w"><ruby>邮<rt class="t2">yóu</rt></ruby><ruby>局<rt class="t2">jú</rt></ruby></span><span class="w"><ruby>旁<rt class="t2">páng</rt></ruby><ruby>边<rt class="t1">biān</rt></ruby></span>。</span><p class="pt">銀行は郵便局の隣にある。主語が特定の物（银行）→ <b>在</b>。</p></div></details>
+<details class="ex pr"><summary><span class="no">2</span><span lang="zh-CN" class="zhq">桌子上＿＿一本词典。</span></summary>
+<div class="a"><span class="zh big" lang="zh-CN" data-say="桌子上有一本词典。"><span class="w"><ruby>桌<rt class="t1">Zhuō</rt></ruby><ruby>子<rt class="t5">zi</rt></ruby></span><span class="w"><ruby>上<rt class="t5">shang</rt></ruby></span><span class="w"><ruby>有<rt class="t3">yǒu</rt></ruby></span><span class="w"><ruby>一<rt class="t4">yì</rt></ruby></span><span class="w"><ruby>本<rt class="t3">běn</rt></ruby></span><span class="w"><ruby>词<rt class="t2">cí</rt></ruby><ruby>典<rt class="t3">diǎn</rt></ruby></span>。</span><p class="pt">机の上に辞書が1冊ある。場所が先・物が不特定（一本）→ <b>有</b>。</p></div></details>
+<details class="ex pr"><summary><span class="no">3</span><span lang="zh-CN" class="zhq">我的手机不＿＿书包里。</span></summary>
+<div class="a"><span class="zh big" lang="zh-CN" data-say="我的手机不在书包里。"><span class="w"><ruby>我<rt class="t3">Wǒ</rt></ruby></span><span class="w"><ruby>的<rt class="t5">de</rt></ruby></span><span class="w"><ruby>手<rt class="t3">shǒu</rt></ruby><ruby>机<rt class="t1">jī</rt></ruby></span><span class="w"><ruby>不<rt class="t2">bú</rt></ruby></span><span class="w"><ruby>在<rt class="t4">zài</rt></ruby></span><span class="w"><ruby>书<rt class="t1">shū</rt></ruby><ruby>包<rt class="t1">bāo</rt></ruby></span><span class="w"><ruby>里<rt class="t5">li</rt></ruby></span>。</span><p class="pt">私のスマホはかばんの中にない。否定の 不 と組めるのは <b>在</b>（有の否定は没有）。</p></div></details>
+<details class="ex pr"><summary><span class="no">4</span><span lang="zh-CN" class="zhq">宿舍附近＿＿电影院吗？</span></summary>
+<div class="a"><span class="zh big" lang="zh-CN" data-say="宿舍附近有电影院吗？"><span class="w"><ruby>宿<rt class="t4">Sù</rt></ruby><ruby>舍<rt class="t4">shè</rt></ruby></span><span class="w"><ruby>附<rt class="t4">fù</rt></ruby><ruby>近<rt class="t4">jìn</rt></ruby></span><span class="w"><ruby>有<rt class="t3">yǒu</rt></ruby></span><span class="w"><ruby>电<rt class="t4">diàn</rt></ruby><ruby>影<rt class="t3">yǐng</rt></ruby><ruby>院<rt class="t4">yuàn</rt></ruby></span><span class="w"><ruby>吗<rt class="t5">ma</rt></ruby></span>？</span><p class="pt">寮の近くに映画館ある？ 場所が先 → <b>有</b>。</p></div></details>
+<h3 id="p2">作文の類題（PDFの15問と同じ型）</h3><p>日本語を中国語にしよう。本番の作文と同じ文法を使う。</p>
+<details class="ex pr"><summary><span class="no">1</span>図書館の中にもコンビニがあります。<br><small>コンビニ＝便利店 biànlìdiàn</small></summary>
+<div class="a"><span class="zh big" lang="zh-CN" data-say="图书馆里也有便利店。"><span class="w"><ruby>图<rt class="t2">Tú</rt></ruby><ruby>书<rt class="t1">shū</rt></ruby><ruby>馆<rt class="t3">guǎn</rt></ruby></span><span class="w"><ruby>里<rt class="t5">li</rt></ruby></span><span class="w"><ruby>也<rt class="t3">yě</rt></ruby></span><span class="w"><ruby>有<rt class="t3">yǒu</rt></ruby></span><span class="w"><ruby>便<rt class="t4">biàn</rt></ruby><ruby>利<rt class="t4">lì</rt></ruby><ruby>店<rt class="t4">diàn</rt></ruby></span>。</span><p class="pt">作文①と同じ型：<b>場所＋里＋也有＋物</b>。</p></div></details>
+<details class="ex pr"><summary><span class="no">2</span>体育館に誰かいますか。</summary>
+<div class="a"><span class="zh big" lang="zh-CN" data-say="体育馆里有人吗？"><span class="w"><ruby>体<rt class="t3">Tǐ</rt></ruby><ruby>育<rt class="t4">yù</rt></ruby><ruby>馆<rt class="t3">guǎn</rt></ruby></span><span class="w"><ruby>里<rt class="t5">li</rt></ruby></span><span class="w"><ruby>有<rt class="t3">yǒu</rt></ruby></span><span class="w"><ruby>人<rt class="t2">rén</rt></ruby></span><span class="w"><ruby>吗<rt class="t5">ma</rt></ruby></span>？</span><p class="pt">作文②と同じ型：<b>場所＋里＋有人吗？</b></p></div></details>
+<details class="ex pr"><summary><span class="no">3</span>映画館はどこにありますか。</summary>
+<div class="a"><span class="zh big" lang="zh-CN" data-say="电影院在哪儿？"><span class="w"><ruby>电<rt class="t4">Diàn</rt></ruby><ruby>影<rt class="t3">yǐng</rt></ruby><ruby>院<rt class="t4">yuàn</rt></ruby></span><span class="w"><ruby>在<rt class="t4">zài</rt></ruby></span><span class="w"><ruby>哪<rt class="t3">nǎr</rt></ruby><ruby>儿<rt class=""></rt></ruby></span>？</span><p class="pt">作文③と同じ型：<b>物＋在哪儿？</b></p></div></details>
+<details class="ex pr"><summary><span class="no">4</span>食堂は図書館の向かいにあります。</summary>
+<div class="a"><span class="zh big" lang="zh-CN" data-say="食堂在图书馆的对面。"><span class="w"><ruby>食<rt class="t2">Shí</rt></ruby><ruby>堂<rt class="t2">táng</rt></ruby></span><span class="w"><ruby>在<rt class="t4">zài</rt></ruby></span><span class="w"><ruby>图<rt class="t2">tú</rt></ruby><ruby>书<rt class="t1">shū</rt></ruby><ruby>馆<rt class="t3">guǎn</rt></ruby></span>（<span class="w"><ruby>的<rt class="t5">de</rt></ruby></span>）<span class="w"><ruby>对<rt class="t4">duì</rt></ruby><ruby>面<rt class="t4">miàn</rt></ruby></span>。</span><p class="pt">作文④と同じ型：<b>物＋在＋場所＋方位詞</b>。</p></div></details>
+<details class="ex pr"><summary><span class="no">5</span>私は食堂に行って昼ご飯を食べます。</summary>
+<div class="a"><span class="zh big" lang="zh-CN" data-say="我去食堂吃午饭。"><span class="w"><ruby>我<rt class="t3">Wǒ</rt></ruby></span><span class="w"><ruby>去<rt class="t4">qù</rt></ruby></span><span class="w"><ruby>食<rt class="t2">shí</rt></ruby><ruby>堂<rt class="t2">táng</rt></ruby></span><span class="w"><ruby>吃<rt class="t1">chī</rt></ruby></span><span class="w"><ruby>午<rt class="t3">wǔ</rt></ruby><ruby>饭<rt class="t4">fàn</rt></ruby></span>。</span><p class="pt">作文⑤と同じ連動文：<b>去＋場所＋動詞＋目的語</b>。</p></div></details>
+<details class="ex pr"><summary><span class="no">6</span>彼女の水泳の腕前はどうですか。</summary>
+<div class="a"><span class="zh big" lang="zh-CN" data-say="她游泳游得怎么样？"><span class="w"><ruby>她<rt class="t1">Tā</rt></ruby></span><span class="w"><ruby>游<rt class="t2">yóu</rt></ruby><ruby>泳<rt class="t3">yǒng</rt></ruby></span><span class="w"><ruby>游<rt class="t2">yóu</rt></ruby></span><span class="w"><ruby>得<rt class="t5">de</rt></ruby></span><span class="w"><ruby>怎<rt class="t3">zěn</rt></ruby><ruby>么<rt class="t5">me</rt></ruby><ruby>样<rt class="t4">yàng</rt></ruby></span>？</span><p class="pt">作文⑥と同じ：<b>游泳＋游得＋怎么样</b>（離合詞 游泳 の 游 をくり返す）。</p></div></details>
+<details class="ex pr"><summary><span class="no">7</span>私は卓球ができますが、あまり上手ではありません。</summary>
+<div class="a"><span class="zh big" lang="zh-CN" data-say="我会打乒乓球，但是打得不太好。"><span class="w"><ruby>我<rt class="t3">Wǒ</rt></ruby></span><span class="w"><ruby>会<rt class="t4">huì</rt></ruby></span><span class="w"><ruby>打<rt class="t3">dǎ</rt></ruby></span><span class="w"><ruby>乒<rt class="t1">pīng</rt></ruby><ruby>乓<rt class="t1">pāng</rt></ruby><ruby>球<rt class="t2">qiú</rt></ruby></span>，<span class="w"><ruby>但<rt class="t4">dàn</rt></ruby><ruby>是<rt class="t4">shì</rt></ruby></span><span class="w"><ruby>打<rt class="t3">dǎ</rt></ruby></span><span class="w"><ruby>得<rt class="t5">de</rt></ruby></span><span class="w"><ruby>不<rt class="t2">bú</rt></ruby></span><span class="w"><ruby>太<rt class="t4">tài</rt></ruby></span><span class="w"><ruby>好<rt class="t3">hǎo</rt></ruby></span>。</span><p class="pt">作文⑦と同じ：<b>会＋動詞</b>、<b>動詞＋得＋不太好</b>。</p></div></details>
+<details class="ex pr"><summary><span class="no">8</span>私はアニメがとても好きです。</summary>
+<div class="a"><span class="zh big" lang="zh-CN" data-say="我特别喜欢动漫。"><span class="w"><ruby>我<rt class="t3">Wǒ</rt></ruby></span><span class="w"><ruby>特<rt class="t4">tè</rt></ruby><ruby>别<rt class="t2">bié</rt></ruby></span><span class="w"><ruby>喜<rt class="t3">xǐ</rt></ruby><ruby>欢<rt class="t5">huan</rt></ruby></span><span class="w"><ruby>动<rt class="t4">dòng</rt></ruby><ruby>漫<rt class="t4">màn</rt></ruby></span>。</span><p class="pt">作文⑧と同じ：<b>特别喜欢＋名詞</b>。</p></div></details>
+<details class="ex pr"><summary><span class="no">9</span>私は絵を描くのが好きですが、下手です。</summary>
+<div class="a"><span class="zh big" lang="zh-CN" data-say="我喜欢画画儿，但是画得不好。"><span class="w"><ruby>我<rt class="t3">Wǒ</rt></ruby></span><span class="w"><ruby>喜<rt class="t3">xǐ</rt></ruby><ruby>欢<rt class="t5">huan</rt></ruby></span><span class="w"><ruby>画<rt class="t4">huà</rt></ruby></span><span class="w"><ruby>画<rt class="t4">huàr</rt></ruby><ruby>儿<rt class=""></rt></ruby></span>，<span class="w"><ruby>但<rt class="t4">dàn</rt></ruby><ruby>是<rt class="t4">shì</rt></ruby></span><span class="w"><ruby>画<rt class="t4">huà</rt></ruby></span><span class="w"><ruby>得<rt class="t5">de</rt></ruby></span><span class="w"><ruby>不<rt class="t4">bù</rt></ruby></span><span class="w"><ruby>好<rt class="t3">hǎo</rt></ruby></span>。</span><p class="pt">作文⑨と同じ：<b>喜欢＋動詞句、但是＋動詞得不好</b>。画（描く）＋画儿（絵）。</p></div></details>
+<details class="ex pr"><summary><span class="no">10</span>ここではタバコを吸ってはいけません。</summary>
+<div class="a"><span class="zh big" lang="zh-CN" data-say="这儿不能抽烟。"><span class="w"><ruby>这<rt class="t4">Zhèr</rt></ruby><ruby>儿<rt class=""></rt></ruby></span><span class="w"><ruby>不<rt class="t4">bù</rt></ruby></span><span class="w"><ruby>能<rt class="t2">néng</rt></ruby></span><span class="w"><ruby>抽<rt class="t1">chōu</rt></ruby><ruby>烟<rt class="t1">yān</rt></ruby></span>。</span><p class="pt">作文⑩と同じ禁止の <b>不能</b>。</p></div></details>
+<details class="ex pr"><summary><span class="no">11</span>兄は私より二歳年上です。<br><small>兄＝哥哥 gēge</small></summary>
+<div class="a"><span class="zh big" lang="zh-CN" data-say="哥哥比我大两岁。"><span class="w"><ruby>哥<rt class="t1">Gē</rt></ruby><ruby>哥<rt class="t5">ge</rt></ruby></span><span class="w"><ruby>比<rt class="t3">bǐ</rt></ruby></span><span class="w"><ruby>我<rt class="t3">wǒ</rt></ruby></span><span class="w"><ruby>大<rt class="t4">dà</rt></ruby></span><span class="w"><ruby>两<rt class="t3">liǎng</rt></ruby></span><span class="w"><ruby>岁<rt class="t4">suì</rt></ruby></span>。</span><p class="pt">作文⑪と同じ：<b>A比B＋大＋两岁</b>。「2歳」は 两岁（×二岁）。</p></div></details>
+<details class="ex pr"><summary><span class="no">12</span>今日は昨日ほど寒くありません。</summary>
+<div class="a"><span class="zh big" lang="zh-CN" data-say="今天没有昨天那么冷。"><span class="w"><ruby>今<rt class="t1">Jīn</rt></ruby><ruby>天<rt class="t1">tiān</rt></ruby></span><span class="w"><ruby>没<rt class="t2">méi</rt></ruby><ruby>有<rt class="t3">yǒu</rt></ruby></span><span class="w"><ruby>昨<rt class="t2">zuó</rt></ruby><ruby>天<rt class="t1">tiān</rt></ruby></span><span class="w"><ruby>那<rt class="t4">nà</rt></ruby><ruby>么<rt class="t5">me</rt></ruby></span><span class="w"><ruby>冷<rt class="t3">lěng</rt></ruby></span>。</span><p class="pt">作文⑫の前半と同じ：<b>A没有B那么＋形容詞</b>。</p></div></details>
+<details class="ex pr"><summary><span class="no">13</span>明日、私は学校に行かなくていいです。</summary>
+<div class="a"><span class="zh big" lang="zh-CN" data-say="我明天不用去学校。"><span class="w"><ruby>我<rt class="t3">Wǒ</rt></ruby></span><span class="w"><ruby>明<rt class="t2">míng</rt></ruby><ruby>天<rt class="t1">tiān</rt></ruby></span><span class="w"><ruby>不<rt class="t2">bú</rt></ruby><ruby>用<rt class="t4">yòng</rt></ruby></span><span class="w"><ruby>去<rt class="t4">qù</rt></ruby></span><span class="w"><ruby>学<rt class="t2">xué</rt></ruby><ruby>校<rt class="t4">xiào</rt></ruby></span>。</span><p class="pt">作文⑬と同じ <b>不用</b>（「必要がなくなった」なら文末に 了）。</p></div></details>
+<details class="ex pr"><summary><span class="no">14</span>私の身長は彼と同じくらい高い。</summary>
+<div class="a"><span class="zh big" lang="zh-CN" data-say="我的个子和他的一样高。"><span class="w"><ruby>我<rt class="t3">Wǒ</rt></ruby></span><span class="w"><ruby>的<rt class="t5">de</rt></ruby></span><span class="w"><ruby>个<rt class="t4">gè</rt></ruby><ruby>子<rt class="t5">zi</rt></ruby></span><span class="w"><ruby>和<rt class="t2">hé</rt></ruby></span><span class="w"><ruby>他<rt class="t1">tā</rt></ruby></span><span class="w"><ruby>的<rt class="t5">de</rt></ruby></span><span class="w"><ruby>一<rt class="t2">yí</rt></ruby><ruby>样<rt class="t4">yàng</rt></ruby></span><span class="w"><ruby>高<rt class="t1">gāo</rt></ruby></span>。</span><p class="pt">作文⑭と同じ：<b>A和B一样＋形容詞</b>。</p></div></details>
+<details class="ex pr"><summary><span class="no">15</span>私は泳げるようになりました。</summary>
+<div class="a"><span class="zh big" lang="zh-CN" data-say="我会游泳了。"><span class="w"><ruby>我<rt class="t3">Wǒ</rt></ruby></span><span class="w"><ruby>会<rt class="t4">huì</rt></ruby></span><span class="w"><ruby>游<rt class="t2">yóu</rt></ruby><ruby>泳<rt class="t3">yǒng</rt></ruby></span><span class="w"><ruby>了<rt class="t5">le</rt></ruby></span>。</span><p class="pt">作文⑮と同じ：<b>会＋動詞＋了</b>（できるようになった）。</p></div></details>
+<h3 id="p3">会・能・可以</h3><p>空欄に <b>会・能・可以</b> のどれかを入れよう（答えが2つありうるものは解説に書いた）。</p>
+<details class="ex pr"><summary><span class="no">1</span><span lang="zh-CN" class="zhq">我＿＿说一点儿汉语。</span></summary>
+<div class="a"><span class="zh big" lang="zh-CN" data-say="我会说一点儿汉语。"><span class="w"><ruby>我<rt class="t3">Wǒ</rt></ruby></span><span class="w"><ruby>会<rt class="t4">huì</rt></ruby></span><span class="w"><ruby>说<rt class="t1">shuō</rt></ruby></span><span class="w"><ruby>一<rt class="t4">yì</rt></ruby><ruby>点<rt class="t3">diǎnr</rt></ruby><ruby>儿<rt class=""></rt></ruby></span><span class="w"><ruby>汉<rt class="t4">Hàn</rt></ruby><ruby>语<rt class="t3">yǔ</rt></ruby></span>。</span><p class="pt">少し中国語が話せる。勉強して身につけた → <b>会</b>。</p></div></details>
+<details class="ex pr"><summary><span class="no">2</span><span lang="zh-CN" class="zhq">今天我感冒了，不＿＿去游泳。</span></summary>
+<div class="a"><span class="zh big" lang="zh-CN" data-say="今天我感冒了，不能去游泳。"><span class="w"><ruby>今<rt class="t1">Jīn</rt></ruby><ruby>天<rt class="t1">tiān</rt></ruby></span><span class="w"><ruby>我<rt class="t3">wǒ</rt></ruby></span><span class="w"><ruby>感<rt class="t3">gǎn</rt></ruby><ruby>冒<rt class="t4">mào</rt></ruby></span><span class="w"><ruby>了<rt class="t5">le</rt></ruby></span>，<span class="w"><ruby>不<rt class="t4">bù</rt></ruby></span><span class="w"><ruby>能<rt class="t2">néng</rt></ruby></span><span class="w"><ruby>去<rt class="t4">qù</rt></ruby></span><span class="w"><ruby>游<rt class="t2">yóu</rt></ruby><ruby>泳<rt class="t3">yǒng</rt></ruby></span>。</span><p class="pt">今日は風邪なので泳ぎに行けない。条件でできない → <b>能</b>。</p></div></details>
+<details class="ex pr"><summary><span class="no">3</span><span lang="zh-CN" class="zhq">这儿＿＿拍照吗？</span></summary>
+<div class="a"><span class="zh big" lang="zh-CN" data-say="这儿可以拍照吗？"><span class="w"><ruby>这<rt class="t4">Zhèr</rt></ruby><ruby>儿<rt class=""></rt></ruby></span><span class="w"><ruby>可<rt class="t3">kě</rt></ruby><ruby>以<rt class="t3">yǐ</rt></ruby></span><span class="w"><ruby>拍<rt class="t1">pāi</rt></ruby><ruby>照<rt class="t4">zhào</rt></ruby></span><span class="w"><ruby>吗<rt class="t5">ma</rt></ruby></span>？</span><p class="pt">ここで写真を撮ってもいい？ 許可 → <b>可以</b>（能 も可）。</p></div></details>
+<details class="ex pr"><summary><span class="no">4</span><span lang="zh-CN" class="zhq">他＿＿游一千米。</span></summary>
+<div class="a"><span class="zh big" lang="zh-CN" data-say="他能游一千米。"><span class="w"><ruby>他<rt class="t1">Tā</rt></ruby></span><span class="w"><ruby>能<rt class="t2">néng</rt></ruby></span><span class="w"><ruby>游<rt class="t2">yóu</rt></ruby></span><span class="w"><ruby>一<rt class="t4">yì</rt></ruby><ruby>千<rt class="t1">qiān</rt></ruby></span><span class="w"><ruby>米<rt class="t3">mǐ</rt></ruby></span>。</span><p class="pt">彼は1000メートル泳げる。能力の程度（距離）→ <b>能</b>。</p></div></details>
+<h3 id="p4">並べ替え</h3><p>語を正しい順番に並べよう。</p>
+<details class="ex pr"><summary><span class="no">1</span><span lang="zh-CN" class="zhq">得 / 汉语 / 他 / 很好 / 说 / 说</span></summary>
+<div class="a"><span class="zh big" lang="zh-CN" data-say="他说汉语说得很好。"><span class="w"><ruby>他<rt class="t1">Tā</rt></ruby></span><span class="w"><ruby>说<rt class="t1">shuō</rt></ruby></span><span class="w"><ruby>汉<rt class="t4">Hàn</rt></ruby><ruby>语<rt class="t3">yǔ</rt></ruby></span><span class="w"><ruby>说<rt class="t1">shuō</rt></ruby></span><span class="w"><ruby>得<rt class="t5">de</rt></ruby></span><span class="w"><ruby>很<rt class="t3">hěn</rt></ruby></span><span class="w"><ruby>好<rt class="t3">hǎo</rt></ruby></span>。</span><p class="pt">⑪様態補語：主語＋動詞＋目的語＋<b>動詞＋得</b>＋補語。</p></div></details>
+<details class="ex pr"><summary><span class="no">2</span><span lang="zh-CN" class="zhq">比 / 两岁 / 我 / 大 / 姐姐</span></summary>
+<div class="a"><span class="zh big" lang="zh-CN" data-say="姐姐比我大两岁。"><span class="w"><ruby>姐<rt class="t3">Jiě</rt></ruby><ruby>姐<rt class="t5">jie</rt></ruby></span><span class="w"><ruby>比<rt class="t3">bǐ</rt></ruby></span><span class="w"><ruby>我<rt class="t3">wǒ</rt></ruby></span><span class="w"><ruby>大<rt class="t4">dà</rt></ruby></span><span class="w"><ruby>两<rt class="t3">liǎng</rt></ruby></span><span class="w"><ruby>岁<rt class="t4">suì</rt></ruby></span>。</span><p class="pt">⑯比較：A比B＋形容詞＋<b>差</b>（差は最後）。</p></div></details>
+<details class="ex pr"><summary><span class="no">3</span><span lang="zh-CN" class="zhq">工 / 三次 / 每星期 / 打 / 我</span></summary>
+<div class="a"><span class="zh big" lang="zh-CN" data-say="我每星期打三次工。"><span class="w"><ruby>我<rt class="t3">Wǒ</rt></ruby></span><span class="w"><ruby>每<rt class="t3">měi</rt></ruby></span><span class="w"><ruby>星<rt class="t1">xīng</rt></ruby><ruby>期<rt class="t1">qī</rt></ruby></span><span class="w"><ruby>打<rt class="t3">dǎ</rt></ruby></span><span class="w"><ruby>三<rt class="t1">sān</rt></ruby></span><span class="w"><ruby>次<rt class="t4">cì</rt></ruby></span><span class="w"><ruby>工<rt class="t1">gōng</rt></ruby></span>。</span><p class="pt">⑩離合詞：打<b>三次</b>工（回数は 打 と 工 のあいだ）。</p></div></details>
+<details class="ex pr"><summary><span class="no">4</span><span lang="zh-CN" class="zhq">还是 / 喝咖啡 / 你 / 喝茶</span></summary>
+<div class="a"><span class="zh big" lang="zh-CN" data-say="你喝茶还是喝咖啡？"><span class="w"><ruby>你<rt class="t3">Nǐ</rt></ruby></span><span class="w"><ruby>喝<rt class="t1">hē</rt></ruby></span><span class="w"><ruby>茶<rt class="t2">chá</rt></ruby></span><span class="w"><ruby>还<rt class="t2">hái</rt></ruby><ruby>是<rt class="t4">shì</rt></ruby></span><span class="w"><ruby>喝<rt class="t1">hē</rt></ruby></span><span class="w"><ruby>咖<rt class="t1">kā</rt></ruby><ruby>啡<rt class="t1">fēi</rt></ruby></span>？</span><p class="pt">⑨選択疑問文：A <b>还是</b> B？（吗はつけない）。</p></div></details>
+<details class="ex pr"><summary><span class="no">5</span><span lang="zh-CN" class="zhq">让 / 妈妈 / 我 / 打扫房间</span></summary>
+<div class="a"><span class="zh big" lang="zh-CN" data-say="妈妈让我打扫房间。"><span class="w"><ruby>妈<rt class="t1">Mā</rt></ruby><ruby>妈<rt class="t5">ma</rt></ruby></span><span class="w"><ruby>让<rt class="t4">ràng</rt></ruby></span><span class="w"><ruby>我<rt class="t3">wǒ</rt></ruby></span><span class="w"><ruby>打<rt class="t3">dǎ</rt></ruby><ruby>扫<rt class="t3">sǎo</rt></ruby></span><span class="w"><ruby>房<rt class="t2">fáng</rt></ruby><ruby>间<rt class="t1">jiān</rt></ruby></span>。</span><p class="pt">⑱使役：主語＋<b>让＋人</b>＋動詞。母は私に部屋を掃除させる。</p></div></details>
+<h3 id="p5">まちがい直し</h3><p>どこがまちがいか見つけて直そう。</p>
+<details class="ex pr"><summary><span class="no">1</span><span lang="zh-CN" class="zhq">× 哥哥比我很高。</span></summary>
+<div class="a"><span class="zh big" lang="zh-CN" data-say="哥哥比我高。"><span class="w"><ruby>哥<rt class="t1">Gē</rt></ruby><ruby>哥<rt class="t5">ge</rt></ruby></span><span class="w"><ruby>比<rt class="t3">bǐ</rt></ruby></span><span class="w"><ruby>我<rt class="t3">wǒ</rt></ruby></span><span class="w"><ruby>高<rt class="t1">gāo</rt></ruby></span>。</span><p class="pt">比の文では形容詞に <b>很</b> をつけない。強調したいなら 高得多 / 高多了。</p></div></details>
+<details class="ex pr"><summary><span class="no">2</span><span lang="zh-CN" class="zhq">× 我不有电脑。</span></summary>
+<div class="a"><span class="zh big" lang="zh-CN" data-say="我没有电脑。"><span class="w"><ruby>我<rt class="t3">Wǒ</rt></ruby></span><span class="w"><ruby>没<rt class="t2">méi</rt></ruby><ruby>有<rt class="t3">yǒu</rt></ruby></span><span class="w"><ruby>电<rt class="t4">diàn</rt></ruby><ruby>脑<rt class="t3">nǎo</rt></ruby></span>。</span><p class="pt">有 の否定は必ず <b>没有</b>。</p></div></details>
+<details class="ex pr"><summary><span class="no">3</span><span lang="zh-CN" class="zhq">× 你去北京还是去上海吗？</span></summary>
+<div class="a"><span class="zh big" lang="zh-CN" data-say="你去北京还是去上海？"><span class="w"><ruby>你<rt class="t3">Nǐ</rt></ruby></span><span class="w"><ruby>去<rt class="t4">qù</rt></ruby></span><span class="w"><ruby>北<rt class="t3">Běi</rt></ruby><ruby>京<rt class="t1">jīng</rt></ruby></span><span class="w"><ruby>还<rt class="t2">hái</rt></ruby><ruby>是<rt class="t4">shì</rt></ruby></span><span class="w"><ruby>去<rt class="t4">qù</rt></ruby></span><span class="w"><ruby>上<rt class="t4">Shàng</rt></ruby><ruby>海<rt class="t3">hǎi</rt></ruby></span>？</span><p class="pt">選択疑問文（还是）には <b>吗をつけない</b>。</p></div></details>
+<details class="ex pr"><summary><span class="no">4</span><span lang="zh-CN" class="zhq">× 我每星期打工三次。</span></summary>
+<div class="a"><span class="zh big" lang="zh-CN" data-say="我每星期打三次工。"><span class="w"><ruby>我<rt class="t3">Wǒ</rt></ruby></span><span class="w"><ruby>每<rt class="t3">měi</rt></ruby></span><span class="w"><ruby>星<rt class="t1">xīng</rt></ruby><ruby>期<rt class="t1">qī</rt></ruby></span><span class="w"><ruby>打<rt class="t3">dǎ</rt></ruby></span><span class="w"><ruby>三<rt class="t1">sān</rt></ruby></span><span class="w"><ruby>次<rt class="t4">cì</rt></ruby></span><span class="w"><ruby>工<rt class="t1">gōng</rt></ruby></span>。</span><p class="pt">離合詞は回数を<b>あいだ</b>に入れる。</p></div></details>
+<details class="ex pr"><summary><span class="no">5</span><span lang="zh-CN" class="zhq">× 她说得汉语很好。</span></summary>
+<div class="a"><span class="zh big" lang="zh-CN" data-say="她说汉语说得很好。"><span class="w"><ruby>她<rt class="t1">Tā</rt></ruby></span>（<span class="w"><ruby>说<rt class="t1">shuō</rt></ruby></span>）<span class="w"><ruby>汉<rt class="t4">Hàn</rt></ruby><ruby>语<rt class="t3">yǔ</rt></ruby></span><span class="w"><ruby>说<rt class="t1">shuō</rt></ruby></span><span class="w"><ruby>得<rt class="t5">de</rt></ruby></span><span class="w"><ruby>很<rt class="t3">hěn</rt></ruby></span><span class="w"><ruby>好<rt class="t3">hǎo</rt></ruby></span>。</span><p class="pt">得の直前は動詞。目的語があるときは <b>動詞をくり返して</b> 動詞＋得。</p></div></details>
+</section>
+
+<!-- ================= 単語クイズ ================= -->
+<section class="tab" id="quiz" data-title="単語クイズ" data-short="単語クイズ">
+  <h2>単語クイズ（4択）</h2>
+  <p class="srcline">単語表から出題。まちがえた単語は最後にまとめて出る。</p>
+  <div class="quiz" id="quizbox">
+    <div class="opts-row">
+      <label>種類 <select id="qz-mode">
+        <option value="z2j">簡体字 → 意味</option>
+        <option value="j2z">意味 → 簡体字</option>
+        <option value="tone">声調（正しいピンインを選ぶ）</option>
+        <option value="listen" class="tts-only">聞き取り（音 → 簡体字）</option>
+      </select></label>
+      <label>範囲 <select id="qz-range">
+        <option value="all">全部</option>
+        <option value="a">本文の単語</option>
+        <option value="b">文法・練習の単語</option>
+      </select></label>
+      <label>問題数 <select id="qz-num">
+        <option value="10">10問</option>
+        <option value="20">20問</option>
+        <option value="0">全部</option>
+      </select></label>
+      <button type="button" class="btn primary" id="qz-start">スタート</button>
+    </div>
+    <div id="qz-body"><p style="color:var(--muted);margin:8px 0 0">種類と範囲を選んで「スタート」。</p></div>
+  </div>
+</section>
+
+<div class="pager"><button type="button" id="prev"></button><button type="button" id="next"></button></div>
+</main>
+
+<script>
+var QUIZ = [{"zh": "喂", "py": "wéi", "ja": "もしもし（電話）", "c": "a", "s": [[["wei", 2, false]]], "say": "喂"}, {"zh": "现在", "py": "xiànzài", "ja": "いま", "c": "a", "s": [[["xian", 4, false], ["zai", 4, false]]], "say": "现在"}, {"zh": "在", "py": "zài", "ja": "いる、ある", "c": "a", "s": [[["zai", 4, false]]], "say": "在"}, {"zh": "正在～呢", "py": "zhèngzài ～ ne", "ja": "〜している（進行）", "c": "a", "s": [[["zheng", 4, false], ["zai", 4, false]], [["ne", 5, false]]], "say": "正在呢"}, {"zh": "宿舍", "py": "sùshè", "ja": "寮", "c": "a", "s": [[["su", 4, false], ["she", 4, false]]], "say": "宿舍"}, {"zh": "做", "py": "zuò", "ja": "やる、する", "c": "a", "s": [[["zuo", 4, false]]], "say": "做"}, {"zh": "作业", "py": "zuòyè", "ja": "宿題", "c": "a", "s": [[["zuo", 4, false], ["ye", 4, false]]], "say": "作业"}, {"zh": "有", "py": "yǒu", "ja": "ある、いる、持っている", "c": "a", "s": [[["you", 3, false]]], "say": "有"}, {"zh": "两张", "py": "liǎng zhāng", "ja": "二枚", "c": "a", "s": [[["liang", 3, false]], [["zhang", 1, false]]], "say": "两张"}, {"zh": "票", "py": "piào", "ja": "入場券、チケット", "c": "a", "s": [[["piao", 4, false]]], "say": "票"}, {"zh": "想～", "py": "xiǎng ～", "ja": "〜したい", "c": "a", "s": [[["xiang", 3, false]]], "say": "想"}, {"zh": "哎", "py": "āi", "ja": "ねえ、あれ（呼びかけ・驚き）", "c": "a", "s": [[["ai", 1, false]]], "say": "哎"}, {"zh": "附近", "py": "fùjìn", "ja": "付近、近所", "c": "a", "s": [[["fu", 4, false], ["jin", 4, false]]], "say": "附近"}, {"zh": "电影院", "py": "diànyǐngyuàn", "ja": "映画館", "c": "a", "s": [[["dian", 4, false], ["ying", 3, false], ["yuan", 4, false]]], "say": "电影院"}, {"zh": "忘啦", "py": "wàng la", "ja": "忘れたの？", "c": "a", "s": [[["wang", 4, false]], [["la", 5, false]]], "say": "忘啦"}, {"zh": "就", "py": "jiù", "ja": "ほかでもなく、まさに", "c": "a", "s": [[["jiu", 4, false]]], "say": "就"}, {"zh": "马路", "py": "mǎlù", "ja": "道路、大通り", "c": "a", "s": [[["ma", 3, false], ["lu", 4, false]]], "say": "马路"}, {"zh": "对面", "py": "duìmiàn", "ja": "向かい側", "c": "a", "s": [[["dui", 4, false], ["mian", 4, false]]], "say": "对面"}, {"zh": "商城", "py": "shāngchéng", "ja": "ショッピングモール", "c": "a", "s": [[["shang", 1, false], ["cheng", 2, false]]], "say": "商城"}, {"zh": "里边", "py": "lǐbiān", "ja": "なか", "c": "a", "s": [[["li", 3, false], ["bian", 1, false]]], "say": "里边"}, {"zh": "哦", "py": "ò", "ja": "ああ、そうか（気づき）", "c": "a", "s": [[["o", 4, false]]], "say": "哦"}, {"zh": "想起来了", "py": "xiǎng qǐlái le", "ja": "思い出した", "c": "a", "s": [[["xiang", 3, false]], [["qi", 3, false], ["lai", 2, false]], [["le", 5, false]]], "say": "想起来了"}, {"zh": "片子", "py": "piānzi", "ja": "映画、フィルム", "c": "a", "s": [[["pian", 1, false], ["zi", 5, false]]], "say": "片子"}, {"zh": "动漫", "py": "dòngmàn", "ja": "アニメ・マンガ", "c": "a", "s": [[["dong", 4, false], ["man", 4, false]]], "say": "动漫"}, {"zh": "上映", "py": "shàngyìng", "ja": "上映する", "c": "a", "s": [[["shang", 4, false], ["ying", 4, false]]], "say": "上映"}, {"zh": "太～了", "py": "tài ～ le", "ja": "あまりにも〜、すごく〜", "c": "a", "s": [[["tai", 4, false]], [["le", 5, false]]], "say": "太了"}, {"zh": "早就～了", "py": "zǎo jiù ～ le", "ja": "とっくに〜している", "c": "a", "s": [[["zao", 3, false]], [["jiu", 4, false]], [["le", 5, false]]], "say": "早就了"}, {"zh": "谢谢", "py": "xièxie", "ja": "ありがとう", "c": "a", "s": [[["xie", 4, false], ["xie", 5, false]]], "say": "谢谢"}, {"zh": "喜欢", "py": "xǐhuan", "ja": "〜が好き", "c": "a", "s": [[["xi", 3, false], ["huan", 5, false]]], "say": "喜欢"}, {"zh": "文艺", "py": "wényì", "ja": "文学・芸術", "c": "a", "s": [[["wen", 2, false], ["yi", 4, false]]], "say": "文艺"}, {"zh": "还是", "py": "háishì", "ja": "それとも", "c": "a", "s": [[["hai", 2, false], ["shi", 4, false]]], "say": "还是"}, {"zh": "体育", "py": "tǐyù", "ja": "スポーツ", "c": "a", "s": [[["ti", 3, false], ["yu", 4, false]]], "say": "体育"}, {"zh": "哪项", "py": "nǎ xiàng", "ja": "どの種目", "c": "a", "s": [[["na", 3, false]], [["xiang", 4, false]]], "say": "哪项"}, {"zh": "运动", "py": "yùndòng", "ja": "スポーツ、運動", "c": "a", "s": [[["yun", 4, false], ["dong", 4, false]]], "say": "运动"}, {"zh": "游泳", "py": "yóuyǒng", "ja": "泳ぐ、水泳", "c": "a", "s": [[["you", 2, false], ["yong", 3, false]]], "say": "游泳"}, {"zh": "得", "py": "de", "ja": "（様態・程度補語を導く助詞）", "c": "a", "s": [[["de", 5, false]]], "say": "得"}, {"zh": "还不错", "py": "hái búcuò", "ja": "まあまあ良い", "c": "a", "s": [[["hai", 2, false]], [["bu", 2, false], ["cuo", 4, false]]], "say": "还不错"}, {"zh": "会", "py": "huì", "ja": "（習得して）できる", "c": "a", "s": [[["hui", 4, false]]], "say": "会"}, {"zh": "打", "py": "dǎ", "ja": "（球技などを）する", "c": "a", "s": [[["da", 3, false]]], "say": "打"}, {"zh": "乒乓球", "py": "pīngpāngqiú", "ja": "卓球", "c": "a", "s": [[["ping", 1, false], ["pang", 1, false], ["qiu", 2, false]]], "say": "乒乓球"}, {"zh": "～是～，但是～", "py": "～ shì ～, dànshì ～", "ja": "〜は〜だけど、しかし〜", "c": "a", "s": [[["shi", 4, false]], [["dan", 4, false], ["shi", 4, false]]], "say": "是但是"}, {"zh": "一般", "py": "yìbān", "ja": "普通、まあまあ", "c": "a", "s": [[["yi", 4, false], ["ban", 1, false]]], "say": "一般"}, {"zh": "多大", "py": "duō dà", "ja": "いくつ、何歳", "c": "a", "s": [[["duo", 1, false]], [["da", 4, false]]], "say": "多大"}, {"zh": "了", "py": "le", "ja": "〜になった（変化）", "c": "a", "s": [[["le", 5, false]]], "say": "了"}, {"zh": "照片", "py": "zhàopiàn", "ja": "写真", "c": "a", "s": [[["zhao", 4, false], ["pian", 4, false]]], "say": "照片"}, {"zh": "女孩儿", "py": "nǚháir", "ja": "女の子", "c": "a", "s": [[["nü", 3, false], ["hair", 2, false]]], "say": "女孩儿"}, {"zh": "比", "py": "bǐ", "ja": "〜より", "c": "a", "s": [[["bi", 3, false]]], "say": "比"}, {"zh": "小", "py": "xiǎo", "ja": "若い、小さい", "c": "a", "s": [[["xiao", 3, false]]], "say": "小"}, {"zh": "岁", "py": "suì", "ja": "〜歳", "c": "a", "s": [[["sui", 4, false]]], "say": "岁"}, {"zh": "刚", "py": "gāng", "ja": "〜したばかり", "c": "a", "s": [[["gang", 1, false]]], "say": "刚"}, {"zh": "上", "py": "shàng", "ja": "（学校に）通う、（授業を）受ける", "c": "a", "s": [[["shang", 4, false]]], "say": "上"}, {"zh": "个子", "py": "gèzi", "ja": "背丈、身長", "c": "a", "s": [[["ge", 4, false], ["zi", 5, false]]], "say": "个子"}, {"zh": "还", "py": "hái", "ja": "さらに、まだ", "c": "a", "s": [[["hai", 2, false]]], "say": "还"}, {"zh": "高", "py": "gāo", "ja": "高い", "c": "a", "s": [[["gao", 1, false]]], "say": "高"}, {"zh": "呢", "py": "ne", "ja": "〜よ、〜ね（語気）", "c": "a", "s": [[["ne", 5, false]]], "say": "呢"}, {"zh": "是啊", "py": "shì a", "ja": "そうだね", "c": "a", "s": [[["shi", 4, false]], [["a", 5, false]]], "say": "是啊"}, {"zh": "身高", "py": "shēngāo", "ja": "身長", "c": "a", "s": [[["shen", 1, false], ["gao", 1, false]]], "say": "身高"}, {"zh": "米", "py": "mǐ", "ja": "メートル", "c": "a", "s": [[["mi", 3, false]]], "say": "米"}, {"zh": "矮", "py": "ǎi", "ja": "（背が）低い", "c": "a", "s": [[["ai", 3, false]]], "say": "矮"}, {"zh": "应该", "py": "yīnggāi", "ja": "〜すべきだ", "c": "a", "s": [[["ying", 1, false], ["gai", 1, false]]], "say": "应该"}, {"zh": "让～", "py": "ràng ～", "ja": "〜させる", "c": "a", "s": [[["rang", 4, false]]], "say": "让"}, {"zh": "篮球", "py": "lánqiú", "ja": "バスケットボール", "c": "a", "s": [[["lan", 2, false], ["qiu", 2, false]]], "say": "篮球"}, {"zh": "呀", "py": "ya", "ja": "〜よ、〜ね（肯定・催促・勧誘の語気）", "c": "a", "s": [[["ya", 5, false]]], "say": "呀"}, {"zh": "不过", "py": "búguò", "ja": "でも、ただ", "c": "a", "s": [[["bu", 2, false], ["guo", 4, false]]], "say": "不过"}, {"zh": "更", "py": "gèng", "ja": "さらに、もっと", "c": "a", "s": [[["geng", 4, false]]], "say": "更"}, {"zh": "画", "py": "huà", "ja": "描く", "c": "a", "s": [[["hua", 4, false]]], "say": "画"}, {"zh": "画儿", "py": "huàr", "ja": "絵", "c": "a", "s": [[["huar", 4, false]]], "say": "画儿"}, {"zh": "将来", "py": "jiānglái", "ja": "将来", "c": "a", "s": [[["jiang", 1, false], ["lai", 2, false]]], "say": "将来"}, {"zh": "当", "py": "dāng", "ja": "〜になる（職業など）", "c": "a", "s": [[["dang", 1, false]]], "say": "当"}, {"zh": "设计师", "py": "shèjìshī", "ja": "デザイナー", "c": "a", "s": [[["she", 4, false], ["ji", 4, false], ["shi", 1, false]]], "say": "设计师"}, {"zh": "家长", "py": "jiāzhǎng", "ja": "保護者", "c": "b", "s": [[["jia", 1, false], ["zhang", 3, false]]], "say": "家长"}, {"zh": "图书馆", "py": "túshūguǎn", "ja": "図書館", "c": "b", "s": [[["tu", 2, false], ["shu", 1, false], ["guan", 3, false]]], "say": "图书馆"}, {"zh": "教室", "py": "jiàoshì", "ja": "教室", "c": "b", "s": [[["jiao", 4, false], ["shi", 4, false]]], "say": "教室"}, {"zh": "食堂", "py": "shítáng", "ja": "食堂", "c": "b", "s": [[["shi", 2, false], ["tang", 2, false]]], "say": "食堂"}, {"zh": "体育馆", "py": "tǐyùguǎn", "ja": "体育館", "c": "b", "s": [[["ti", 3, false], ["yu", 4, false], ["guan", 3, false]]], "say": "体育馆"}, {"zh": "滑雪", "py": "huáxuě", "ja": "スキー（をする）", "c": "b", "s": [[["hua", 2, false], ["xue", 3, false]]], "say": "滑雪"}, {"zh": "滑冰", "py": "huábīng", "ja": "スケート（をする）", "c": "b", "s": [[["hua", 2, false], ["bing", 1, false]]], "say": "滑冰"}, {"zh": "毕业", "py": "bìyè", "ja": "卒業する", "c": "b", "s": [[["bi", 4, false], ["ye", 4, false]]], "say": "毕业"}, {"zh": "留学", "py": "liúxué", "ja": "留学する", "c": "b", "s": [[["liu", 2, false], ["xue", 2, false]]], "say": "留学"}, {"zh": "结婚", "py": "jiéhūn", "ja": "結婚する", "c": "b", "s": [[["jie", 2, false], ["hun", 1, false]]], "say": "结婚"}, {"zh": "打工", "py": "dǎgōng", "ja": "アルバイトをする", "c": "b", "s": [[["da", 3, false], ["gong", 1, false]]], "say": "打工"}, {"zh": "古典音乐", "py": "gǔdiǎn yīnyuè", "ja": "クラシック音楽", "c": "b", "s": [[["gu", 3, false], ["dian", 3, false]], [["yin", 1, false], ["yue", 4, false]]], "say": "古典音乐"}, {"zh": "价格", "py": "jiàgé", "ja": "値段", "c": "b", "s": [[["jia", 4, false], ["ge", 2, false]]], "say": "价格"}, {"zh": "质量", "py": "zhìliàng", "ja": "品質", "c": "b", "s": [[["zhi", 4, false], ["liang", 4, false]]], "say": "质量"}, {"zh": "未成年人", "py": "wèichéngniánrén", "ja": "未成年者", "c": "b", "s": [[["wei", 4, false], ["cheng", 2, false], ["nian", 2, false], ["ren", 2, false]]], "say": "未成年人"}, {"zh": "年纪", "py": "niánjì", "ja": "年齢", "c": "b", "s": [[["nian", 2, false], ["ji", 4, false]]], "say": "年纪"}, {"zh": "经验", "py": "jīngyàn", "ja": "経験", "c": "b", "s": [[["jing", 1, false], ["yan", 4, false]]], "say": "经验"}, {"zh": "丰富", "py": "fēngfù", "ja": "豊富だ", "c": "b", "s": [[["feng", 1, false], ["fu", 4, false]]], "say": "丰富"}, {"zh": "便宜", "py": "piányi", "ja": "（値段が）安い", "c": "b", "s": [[["pian", 2, false], ["yi", 5, false]]], "say": "便宜"}, {"zh": "贵", "py": "guì", "ja": "（値段が）高い", "c": "b", "s": [[["gui", 4, false]]], "say": "贵"}, {"zh": "公里", "py": "gōnglǐ", "ja": "キロメートル", "c": "b", "s": [[["gong", 1, false], ["li", 3, false]]], "say": "公里"}, {"zh": "长江", "py": "Chángjiāng", "ja": "長江", "c": "b", "s": [[["chang", 2, true], ["jiang", 1, false]]], "say": "长江"}, {"zh": "珠峰", "py": "Zhūfēng", "ja": "チョモランマ（エベレスト）", "c": "b", "s": [[["zhu", 1, true], ["feng", 1, false]]], "say": "珠峰"}, {"zh": "多长", "py": "duō cháng", "ja": "どれくらい長い", "c": "b", "s": [[["duo", 1, false]], [["chang", 2, false]]], "say": "多长"}, {"zh": "多高", "py": "duō gāo", "ja": "どれくらい高い", "c": "b", "s": [[["duo", 1, false]], [["gao", 1, false]]], "say": "多高"}, {"zh": "多重", "py": "duō zhòng", "ja": "どれくらい重い", "c": "b", "s": [[["duo", 1, false]], [["zhong", 4, false]]], "say": "多重"}, {"zh": "多少", "py": "duōshao", "ja": "いくつ、どれくらい", "c": "b", "s": [[["duo", 1, false], ["shao", 5, false]]], "say": "多少"}, {"zh": "忙", "py": "máng", "ja": "忙しい", "c": "b", "s": [[["mang", 2, false]]], "say": "忙"}, {"zh": "凉快", "py": "liángkuai", "ja": "涼しい", "c": "b", "s": [[["liang", 2, false], ["kuai", 5, false]]], "say": "凉快"}, {"zh": "冷", "py": "lěng", "ja": "寒い", "c": "b", "s": [[["leng", 3, false]]], "say": "冷"}, {"zh": "成绩", "py": "chéngjì", "ja": "成績", "c": "b", "s": [[["cheng", 2, false], ["ji", 4, false]]], "say": "成绩"}, {"zh": "出发", "py": "chūfā", "ja": "出発する", "c": "b", "s": [[["chu", 1, false], ["fa", 1, false]]], "say": "出发"}, {"zh": "机场", "py": "jīchǎng", "ja": "空港", "c": "b", "s": [[["ji", 1, false], ["chang", 3, false]]], "say": "机场"}, {"zh": "客人", "py": "kèren", "ja": "客", "c": "b", "s": [[["ke", 4, false], ["ren", 5, false]]], "say": "客人"}, {"zh": "舒服", "py": "shūfu", "ja": "気分がいい、心地よい", "c": "b", "s": [[["shu", 1, false], ["fu", 5, false]]], "say": "舒服"}];
+var SK = [{"ja": "講堂の中にも売店があります。", "html": "<span class=\"zh big\" lang=\"zh-CN\" data-say=\"礼堂里也有小卖部。\"><span class=\"w\"><ruby>礼<rt class=\"t3\">Lǐ<\/rt><\/ruby><ruby>堂<rt class=\"t2\">táng<\/rt><\/ruby><\/span><span class=\"w\"><ruby>里<rt class=\"t5\">li<\/rt><\/ruby><\/span><span class=\"w\"><ruby>也<rt class=\"t3\">yě<\/rt><\/ruby><\/span><span class=\"w\"><ruby>有<rt class=\"t3\">yǒu<\/rt><\/ruby><\/span><span class=\"w\"><ruby>小<rt class=\"t3\">xiǎo<\/rt><\/ruby><ruby>卖<rt class=\"t4\">mài<\/rt><\/ruby><ruby>部<rt class=\"t4\">bù<\/rt><\/ruby><\/span>。<\/span>", "n": 1}, {"ja": "教室に誰かいますか。", "html": "<span class=\"zh big\" lang=\"zh-CN\" data-say=\"教室里有人吗？\"><span class=\"w\"><ruby>教<rt class=\"t4\">Jiào<\/rt><\/ruby><ruby>室<rt class=\"t4\">shì<\/rt><\/ruby><\/span><span class=\"w\"><ruby>里<rt class=\"t5\">li<\/rt><\/ruby><\/span><span class=\"w\"><ruby>有<rt class=\"t3\">yǒu<\/rt><\/ruby><\/span><span class=\"w\"><ruby>人<rt class=\"t2\">rén<\/rt><\/ruby><\/span><span class=\"w\"><ruby>吗<rt class=\"t5\">ma<\/rt><\/ruby><\/span>？<\/span>", "n": 2}, {"ja": "食堂はどこにありますか。", "html": "<span class=\"zh big\" lang=\"zh-CN\" data-say=\"食堂在哪儿？\"><span class=\"w\"><ruby>食<rt class=\"t2\">Shí<\/rt><\/ruby><ruby>堂<rt class=\"t2\">táng<\/rt><\/ruby><\/span><span class=\"w\"><ruby>在<rt class=\"t4\">zài<\/rt><\/ruby><\/span><span class=\"w\"><ruby>哪<rt class=\"t3\">nǎr<\/rt><\/ruby><ruby>儿<rt class=\"\"><\/rt><\/ruby><\/span>？<\/span>", "n": 3}, {"ja": "体育館は講義棟の裏にあります。", "html": "<span class=\"zh big\" lang=\"zh-CN\" data-say=\"体育馆在教学楼的后边。\"><span class=\"w\"><ruby>体<rt class=\"t3\">Tǐ<\/rt><\/ruby><ruby>育<rt class=\"t4\">yù<\/rt><\/ruby><ruby>馆<rt class=\"t3\">guǎn<\/rt><\/ruby><\/span><span class=\"w\"><ruby>在<rt class=\"t4\">zài<\/rt><\/ruby><\/span><span class=\"w\"><ruby>教<rt class=\"t4\">jiào<\/rt><\/ruby><ruby>学<rt class=\"t2\">xué<\/rt><\/ruby><ruby>楼<rt class=\"t2\">lóu<\/rt><\/ruby><\/span><span class=\"w\"><ruby>的<rt class=\"t5\">de<\/rt><\/ruby><\/span><span class=\"w\"><ruby>后<rt class=\"t4\">hòu<\/rt><\/ruby><ruby>边<rt class=\"t1\">biān<\/rt><\/ruby><\/span>。<\/span>", "n": 4}, {"ja": "私は図書館に行って宿題をします。", "html": "<span class=\"zh big\" lang=\"zh-CN\" data-say=\"我去图书馆做作业。\"><span class=\"w\"><ruby>我<rt class=\"t3\">Wǒ<\/rt><\/ruby><\/span><span class=\"w\"><ruby>去<rt class=\"t4\">qù<\/rt><\/ruby><\/span><span class=\"w\"><ruby>图<rt class=\"t2\">tú<\/rt><\/ruby><ruby>书<rt class=\"t1\">shū<\/rt><\/ruby><ruby>馆<rt class=\"t3\">guǎn<\/rt><\/ruby><\/span><span class=\"w\"><ruby>做<rt class=\"t4\">zuò<\/rt><\/ruby><\/span><span class=\"w\"><ruby>作<rt class=\"t4\">zuò<\/rt><\/ruby><ruby>业<rt class=\"t4\">yè<\/rt><\/ruby><\/span>。<\/span>", "n": 5}, {"ja": "彼のスキーの腕前はどうですか。", "html": "<span class=\"zh big\" lang=\"zh-CN\" data-say=\"他滑雪滑得怎么样？\"><span class=\"w\"><ruby>他<rt class=\"t1\">Tā<\/rt><\/ruby><\/span><span class=\"w\"><ruby>滑<rt class=\"t2\">huá<\/rt><\/ruby><ruby>雪<rt class=\"t3\">xuě<\/rt><\/ruby><\/span><span class=\"w\"><ruby>滑<rt class=\"t2\">huá<\/rt><\/ruby><\/span><span class=\"w\"><ruby>得<rt class=\"t5\">de<\/rt><\/ruby><\/span><span class=\"w\"><ruby>怎<rt class=\"t3\">zěn<\/rt><\/ruby><ruby>么<rt class=\"t5\">me<\/rt><\/ruby><ruby>样<rt class=\"t4\">yàng<\/rt><\/ruby><\/span>？<\/span>", "n": 6}, {"ja": "彼はスケートができますが、あまり上手ではありません。", "html": "<span class=\"zh big\" lang=\"zh-CN\" data-say=\"他会滑冰，但是滑得不太好。\"><span class=\"w\"><ruby>他<rt class=\"t1\">Tā<\/rt><\/ruby><\/span><span class=\"w\"><ruby>会<rt class=\"t4\">huì<\/rt><\/ruby><\/span><span class=\"w\"><ruby>滑<rt class=\"t2\">huá<\/rt><\/ruby><ruby>冰<rt class=\"t1\">bīng<\/rt><\/ruby><\/span>，<span class=\"w\"><ruby>但<rt class=\"t4\">dàn<\/rt><\/ruby><ruby>是<rt class=\"t4\">shì<\/rt><\/ruby><\/span><span class=\"w\"><ruby>滑<rt class=\"t2\">huá<\/rt><\/ruby><\/span><span class=\"w\"><ruby>得<rt class=\"t5\">de<\/rt><\/ruby><\/span><span class=\"w\"><ruby>不<rt class=\"t2\">bú<\/rt><\/ruby><\/span><span class=\"w\"><ruby>太<rt class=\"t4\">tài<\/rt><\/ruby><\/span><span class=\"w\"><ruby>好<rt class=\"t3\">hǎo<\/rt><\/ruby><\/span>。<\/span>", "n": 7}, {"ja": "私はクラシック音楽がとても好きです。", "html": "<span class=\"zh big\" lang=\"zh-CN\" data-say=\"我特别喜欢古典音乐。\"><span class=\"w\"><ruby>我<rt class=\"t3\">Wǒ<\/rt><\/ruby><\/span><span class=\"w\"><ruby>特<rt class=\"t4\">tè<\/rt><\/ruby><ruby>别<rt class=\"t2\">bié<\/rt><\/ruby><\/span><span class=\"w\"><ruby>喜<rt class=\"t3\">xǐ<\/rt><\/ruby><ruby>欢<rt class=\"t5\">huan<\/rt><\/ruby><\/span><span class=\"w\"><ruby>古<rt class=\"t3\">gǔ<\/rt><\/ruby><ruby>典<rt class=\"t3\">diǎn<\/rt><\/ruby><\/span><span class=\"w\"><ruby>音<rt class=\"t1\">yīn<\/rt><\/ruby><ruby>乐<rt class=\"t4\">yuè<\/rt><\/ruby><\/span>。<\/span>", "n": 8}, {"ja": "私は料理をするのが好きですが、下手です。", "html": "<span class=\"zh big\" lang=\"zh-CN\" data-say=\"我喜欢做菜，但是做得不好。\"><span class=\"w\"><ruby>我<rt class=\"t3\">Wǒ<\/rt><\/ruby><\/span><span class=\"w\"><ruby>喜<rt class=\"t3\">xǐ<\/rt><\/ruby><ruby>欢<rt class=\"t5\">huan<\/rt><\/ruby><\/span><span class=\"w\"><ruby>做<rt class=\"t4\">zuò<\/rt><\/ruby><\/span><span class=\"w\"><ruby>菜<rt class=\"t4\">cài<\/rt><\/ruby><\/span>，<span class=\"w\"><ruby>但<rt class=\"t4\">dàn<\/rt><\/ruby><ruby>是<rt class=\"t4\">shì<\/rt><\/ruby><\/span><span class=\"w\"><ruby>做<rt class=\"t4\">zuò<\/rt><\/ruby><\/span><span class=\"w\"><ruby>得<rt class=\"t5\">de<\/rt><\/ruby><\/span><span class=\"w\"><ruby>不<rt class=\"t4\">bù<\/rt><\/ruby><\/span><span class=\"w\"><ruby>好<rt class=\"t3\">hǎo<\/rt><\/ruby><\/span>。<\/span>", "n": 9}, {"ja": "未成年者はお酒を飲んではいけません。", "html": "<span class=\"zh big\" lang=\"zh-CN\" data-say=\"未成年人不能喝酒。\"><span class=\"w\"><ruby>未<rt class=\"t4\">Wèi<\/rt><\/ruby><ruby>成<rt class=\"t2\">chéng<\/rt><\/ruby><ruby>年<rt class=\"t2\">nián<\/rt><\/ruby><ruby>人<rt class=\"t2\">rén<\/rt><\/ruby><\/span><span class=\"w\"><ruby>不<rt class=\"t4\">bù<\/rt><\/ruby><\/span><span class=\"w\"><ruby>能<rt class=\"t2\">néng<\/rt><\/ruby><\/span><span class=\"w\"><ruby>喝<rt class=\"t1\">hē<\/rt><\/ruby><\/span><span class=\"w\"><ruby>酒<rt class=\"t3\">jiǔ<\/rt><\/ruby><\/span>。<\/span>", "n": 10}, {"ja": "私の母は父より三歳年下です。", "html": "<span class=\"zh big\" lang=\"zh-CN\" data-say=\"妈妈比爸爸小三岁。\"><span class=\"w\"><ruby>妈<rt class=\"t1\">Mā<\/rt><\/ruby><ruby>妈<rt class=\"t5\">ma<\/rt><\/ruby><\/span><span class=\"w\"><ruby>比<rt class=\"t3\">bǐ<\/rt><\/ruby><\/span><span class=\"w\"><ruby>爸<rt class=\"t4\">bà<\/rt><\/ruby><ruby>爸<rt class=\"t5\">ba<\/rt><\/ruby><\/span><span class=\"w\"><ruby>小<rt class=\"t3\">xiǎo<\/rt><\/ruby><\/span><span class=\"w\"><ruby>三<rt class=\"t1\">sān<\/rt><\/ruby><\/span><span class=\"w\"><ruby>岁<rt class=\"t4\">suì<\/rt><\/ruby><\/span>。<\/span>", "n": 11}, {"ja": "最近は以前より忙しくなくなりました。", "html": "<span class=\"zh big\" lang=\"zh-CN\" data-say=\"最近我没有以前那么忙了。\"><span class=\"w\"><ruby>最<rt class=\"t4\">Zuì<\/rt><\/ruby><ruby>近<rt class=\"t4\">jìn<\/rt><\/ruby><\/span><span class=\"w\"><ruby>我<rt class=\"t3\">wǒ<\/rt><\/ruby><\/span><span class=\"w\"><ruby>没<rt class=\"t2\">méi<\/rt><\/ruby><ruby>有<rt class=\"t3\">yǒu<\/rt><\/ruby><\/span><span class=\"w\"><ruby>以<rt class=\"t3\">yǐ<\/rt><\/ruby><ruby>前<rt class=\"t2\">qián<\/rt><\/ruby><\/span><span class=\"w\"><ruby>那<rt class=\"t4\">nà<\/rt><\/ruby><ruby>么<rt class=\"t5\">me<\/rt><\/ruby><\/span><span class=\"w\"><ruby>忙<rt class=\"t2\">máng<\/rt><\/ruby><\/span><span class=\"w\"><ruby>了<rt class=\"t5\">le<\/rt><\/ruby><\/span>。<\/span>", "n": 12}, {"ja": "明日、私は出勤する必要がなくなりました。", "html": "<span class=\"zh big\" lang=\"zh-CN\" data-say=\"我明天不用去上班了。\"><span class=\"w\"><ruby>我<rt class=\"t3\">Wǒ<\/rt><\/ruby><\/span><span class=\"w\"><ruby>明<rt class=\"t2\">míng<\/rt><\/ruby><ruby>天<rt class=\"t1\">tiān<\/rt><\/ruby><\/span><span class=\"w\"><ruby>不<rt class=\"t2\">bú<\/rt><\/ruby><ruby>用<rt class=\"t4\">yòng<\/rt><\/ruby><\/span><span class=\"w\"><ruby>去<rt class=\"t4\">qù<\/rt><\/ruby><\/span><span class=\"w\"><ruby>上<rt class=\"t4\">shàng<\/rt><\/ruby><ruby>班<rt class=\"t1\">bān<\/rt><\/ruby><\/span><span class=\"w\"><ruby>了<rt class=\"t5\">le<\/rt><\/ruby><\/span>。<\/span>", "n": 13}, {"ja": "彼女の成績はあなたと同様に良い。", "html": "<span class=\"zh big\" lang=\"zh-CN\" data-say=\"她的成绩和你的一样好。\"><span class=\"w\"><ruby>她<rt class=\"t1\">Tā<\/rt><\/ruby><\/span><span class=\"w\"><ruby>的<rt class=\"t5\">de<\/rt><\/ruby><\/span><span class=\"w\"><ruby>成<rt class=\"t2\">chéng<\/rt><\/ruby><ruby>绩<rt class=\"t4\">jì<\/rt><\/ruby><\/span><span class=\"w\"><ruby>和<rt class=\"t2\">hé<\/rt><\/ruby><\/span><span class=\"w\"><ruby>你<rt class=\"t3\">nǐ<\/rt><\/ruby><\/span><span class=\"w\"><ruby>的<rt class=\"t5\">de<\/rt><\/ruby><\/span><span class=\"w\"><ruby>一<rt class=\"t2\">yí<\/rt><\/ruby><ruby>样<rt class=\"t4\">yàng<\/rt><\/ruby><\/span><span class=\"w\"><ruby>好<rt class=\"t3\">hǎo<\/rt><\/ruby><\/span>。<\/span>", "n": 14}, {"ja": "私はパソコンを使えるようになりました。", "html": "<span class=\"zh big\" lang=\"zh-CN\" data-say=\"我会用电脑了。\"><span class=\"w\"><ruby>我<rt class=\"t3\">Wǒ<\/rt><\/ruby><\/span><span class=\"w\"><ruby>会<rt class=\"t4\">huì<\/rt><\/ruby><\/span><span class=\"w\"><ruby>用<rt class=\"t4\">yòng<\/rt><\/ruby><\/span><span class=\"w\"><ruby>电<rt class=\"t4\">diàn<\/rt><\/ruby><ruby>脑<rt class=\"t3\">nǎo<\/rt><\/ruby><\/span><span class=\"w\"><ruby>了<rt class=\"t5\">le<\/rt><\/ruby><\/span>。<\/span>", "n": 15}];
+(function () {
+  var root = document.documentElement;
+  function ls(k, v) { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) { return null; } }
+  function shuffle(a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+
+  // ---- タブ ----
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('section.tab'));
+  var list = document.getElementById('tablist');
+  var prev = document.getElementById('prev'), next = document.getElementById('next');
+  var buttons = tabs.map(function (s) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.setAttribute('role', 'tab'); b.textContent = s.dataset.short;
+    if (s.dataset.star) b.className = 'star';
+    b.addEventListener('click', function () { show(s.id, true); });
+    list.appendChild(b);
+    return b;
+  });
+  function show(id, push) {
+    var idx = tabs.findIndex(function (s) { return s.id === id; });
+    if (idx < 0) idx = 0;
+    tabs.forEach(function (s, i) { s.hidden = i !== idx; });
+    buttons.forEach(function (b, i) { b.setAttribute('aria-selected', i === idx ? 'true' : 'false'); });
+    buttons[idx].scrollIntoView({ block: 'nearest', inline: 'center' });
+    prev.textContent = ''; next.textContent = ''; prev.onclick = next.onclick = null;
+    if (idx > 0) { prev.textContent = '← ' + tabs[idx - 1].dataset.title; prev.onclick = function () { show(tabs[idx - 1].id, true); }; }
+    if (idx < tabs.length - 1) { next.textContent = tabs[idx + 1].dataset.title + ' →'; next.onclick = function () { show(tabs[idx + 1].id, true); }; }
+    if (push) { history.replaceState(null, '', '#' + tabs[idx].id); window.scrollTo(0, 0); }
+    stopTts();
+  }
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('[data-go]');
+    if (a) { e.preventDefault(); show(a.dataset.go, true); }
+  });
+  window.addEventListener('hashchange', function () { show(location.hash.slice(1), false); });
+
+  // ---- ピンイン表示・声調色 ----
+  var PKEY = 'zh-py-v1', pset = { py: 'on', tone: 'on' };
+  try { var sv = JSON.parse(ls(PKEY) || '{}'); if (sv.py) pset.py = sv.py; if (sv.tone) pset.tone = sv.tone; } catch (e) {}
+  function applyPy() {
+    root.classList.toggle('py-off', pset.py === 'off');
+    root.classList.toggle('tone-on', pset.tone === 'on');
+    document.querySelectorAll('#seg-py button').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.py === pset.py ? 'true' : 'false'); });
+    document.querySelectorAll('#seg-tone button').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.tone === pset.tone ? 'true' : 'false'); });
+    document.querySelectorAll('.zh.show, td.py.show').forEach(function (x) { x.classList.remove('show'); });
+  }
+  document.querySelectorAll('#seg-py button').forEach(function (b) { b.addEventListener('click', function () { pset.py = b.dataset.py; ls(PKEY, JSON.stringify(pset)); applyPy(); }); });
+  document.querySelectorAll('#seg-tone button').forEach(function (b) { b.addEventListener('click', function () { pset.tone = b.dataset.tone; ls(PKEY, JSON.stringify(pset)); applyPy(); }); });
+  applyPy();
+  document.addEventListener('click', function (e) {
+    if (!root.classList.contains('py-off')) return;
+    if (e.target.closest('.say')) return;
+    var z = e.target.closest('.zh, td.py');
+    if (z) z.classList.toggle('show');
+  });
+
+  // ---- 単語表：意味を隠す ----
+  document.querySelectorAll('[data-hideja]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var on = btn.getAttribute('aria-pressed') !== 'true';
+      btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+      btn.textContent = on ? '意味を表示' : '意味を隠す';
+      document.querySelectorAll('table.vocab').forEach(function (t) { t.classList.toggle('hide-ja', on); t.querySelectorAll('td.ja').forEach(function (td) { td.classList.remove('show'); }); });
+    });
+  });
+  document.addEventListener('click', function (e) {
+    var td = e.target.closest('table.vocab.hide-ja td.ja');
+    if (td) td.classList.add('show');
+  });
+
+  // ---- チェックリスト ----
+  var CKEY = 'zh-checks-v1', ck = {};
+  try { ck = JSON.parse(ls(CKEY) || '{}') || {}; } catch (e) {}
+  var boxes = Array.prototype.slice.call(document.querySelectorAll('#checks input'));
+  function renderCk() {
+    var n = 0;
+    boxes.forEach(function (b) { b.parentNode.classList.toggle('done', b.checked); if (b.checked) n++; });
+    document.getElementById('prog').textContent = n + ' / ' + boxes.length + ' 完了';
+  }
+  boxes.forEach(function (b) { b.checked = !!ck[b.id]; b.addEventListener('change', function () { ck[b.id] = b.checked; ls(CKEY, JSON.stringify(ck)); renderCk(); }); });
+  renderCk();
+
+  // ---- 作文：覚えた・答え・並べ替え ----
+  var MKEY = 'zh-sakubun-v1', mem = {};
+  try { mem = JSON.parse(ls(MKEY) || '{}') || {}; } catch (e) {}
+  var cards = Array.prototype.slice.call(document.querySelectorAll('.ex.sk'));
+  function renderMem() {
+    var n = 0;
+    cards.forEach(function (c) { var on = !!mem[c.dataset.n]; c.classList.toggle('done', on); c.querySelector('[data-mem]').checked = on; if (on) n++; });
+    document.getElementById('sk-prog').textContent = '覚えた：' + n + ' / ' + cards.length;
+  }
+  cards.forEach(function (c) {
+    c.querySelector('[data-mem]').addEventListener('change', function (e) { mem[c.dataset.n] = e.target.checked; ls(MKEY, JSON.stringify(mem)); renderMem(); });
+    var a = c.querySelector('.a'), ab = c.querySelector('.ans-btn');
+    ab.addEventListener('click', function () { a.hidden = !a.hidden; ab.textContent = a.hidden ? '答えを見る' : '答えを隠す'; });
+    var tb = c.querySelector('.tile-btn'), tw = c.querySelector('.tiles');
+    tb.addEventListener('click', function () {
+      if (!tw.hidden) { tw.hidden = true; return; }
+      tw.hidden = false; buildTiles(c, tw);
+    });
+  });
+  renderMem();
+  document.getElementById('sk-openall').addEventListener('click', function () { cards.forEach(function (c) { c.querySelector('.a').hidden = false; c.querySelector('.ans-btn').textContent = '答えを隠す'; }); });
+  document.getElementById('sk-closeall').addEventListener('click', function () { cards.forEach(function (c) { c.querySelector('.a').hidden = true; c.querySelector('.ans-btn').textContent = '答えを見る'; }); });
+
+  function buildTiles(c, tw) {
+    var ans = JSON.parse(c.dataset.tiles), end = c.dataset.end;
+    var order = shuffle(ans.map(function (t, i) { return i; }));
+    if (ans.length > 1 && order.every(function (v, i) { return v === i; })) order.reverse();
+    tw.innerHTML = '';
+    var line = el('div', 'line'), pool = el('div', 'pool'), res = el('div', 'res');
+    var hint = el('div', '', '下の語をタップして正しい順に並べる（' + (end || '') + 'は最後に自動でつく）');
+    hint.style.cssText = 'font-size:12.5px;color:var(--muted);margin-bottom:4px';
+    var picked = [];
+    function draw() {
+      line.innerHTML = ''; pool.innerHTML = '';
+      picked.forEach(function (i, k) { var b = el('button', 'tl', ans[i]); b.type = 'button'; b.lang = 'zh-CN'; b.onclick = function () { picked.splice(k, 1); draw(); }; line.appendChild(b); });
+      order.forEach(function (i) { if (picked.indexOf(i) >= 0) return; var b = el('button', 'tl', ans[i]); b.type = 'button'; b.lang = 'zh-CN'; b.onclick = function () { picked.push(i); draw(); }; pool.appendChild(b); });
+      res.className = 'res'; res.textContent = '';
+      if (picked.length === ans.length) {
+        var s = picked.map(function (i) { return ans[i]; }).join('');
+        if (s === ans.join('')) { res.className = 'res ok'; res.textContent = '○ 正解！ ' + s + end; }
+        else { res.className = 'res ng'; res.textContent = '× ちがう。語をタップすると戻せる'; }
+      }
+    }
+    var reset = el('button', 'btn', 'やり直す'); reset.type = 'button'; reset.onclick = function () { picked = []; order = shuffle(order); draw(); };
+    tw.appendChild(hint); tw.appendChild(line); tw.appendChild(pool); tw.appendChild(res); tw.appendChild(reset);
+    draw();
+  }
+
+  // ---- 本番10問テスト ----
+  var skBody = document.getElementById('sk-body');
+  document.getElementById('sk-start').addEventListener('click', function () {
+    var pri = document.getElementById('sk-unmem').checked;
+    var pool = shuffle(SK);
+    if (pri) { pool.sort(function (a, b) { return (mem[a.n] ? 1 : 0) - (mem[b.n] ? 1 : 0); }); }
+    var qs = pool.slice(0, 10), cur = 0, right = 0, missed = [];
+    function ask() {
+      skBody.innerHTML = '';
+      if (cur >= qs.length) return done();
+      var q = qs[cur];
+      skBody.appendChild(el('div', 'meta', (cur + 1) + ' / ' + qs.length + '　（プリントの' + '①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮'[q.n - 1] + '）'));
+      skBody.appendChild(el('div', 'qj', q.ja));
+      var ta = el('textarea'); ta.lang = 'zh-CN'; ta.placeholder = 'ここに書く（紙に書いてもOK）'; skBody.appendChild(ta);
+      var ctl = el('div', 'ctrl'); ctl.style.marginTop = '8px';
+      var show = el('button', 'btn primary', '答えを見る'); show.type = 'button'; ctl.appendChild(show); skBody.appendChild(ctl);
+      show.onclick = function () {
+        ctl.innerHTML = '';
+        var a = el('div', 'ansline'); a.innerHTML = q.html; skBody.insertBefore(a, ctl); addSay(a);
+        var ok = el('button', 'btn', '○ 書けた'), ng = el('button', 'btn', '× まちがえた'); ok.type = ng.type = 'button';
+        ok.onclick = function () { right++; cur++; ask(); };
+        ng.onclick = function () { missed.push(q); cur++; ask(); };
+        ctl.appendChild(ok); ctl.appendChild(ng);
+      };
+      ta.focus({ preventScroll: true });
+    }
+    function done() {
+      skBody.innerHTML = '';
+      var p = el('p'); p.innerHTML = '結果：<span class="score">' + right + ' / ' + qs.length + '</span>' + (right === qs.length ? '　満点！' : '');
+      skBody.appendChild(p);
+      if (missed.length) {
+        skBody.appendChild(el('p', 'meta', 'まちがえた文（もう一回書いてみよう）'));
+        missed.forEach(function (q) { var d = el('div'); d.style.marginBottom = '8px'; d.appendChild(el('div', '', q.ja)); var a = el('div', 'ansline'); a.innerHTML = q.html; d.appendChild(a); addSay(a); skBody.appendChild(d); });
+      }
+      var again = el('button', 'btn primary', 'もう一回'); again.type = 'button'; again.onclick = function () { document.getElementById('sk-start').click(); }; skBody.appendChild(again);
+    }
+    ask();
+  });
+
+  // ---- 単語クイズ ----
+  function mark(b, t) { // 音節の声調記号をつける
+    var v = b, i;
+    if (t < 1 || t > 4) return v;
+    var marks = { a: 'āáǎà', e: 'ēéěè', i: 'īíǐì', o: 'ōóǒò', u: 'ūúǔù', 'ü': 'ǖǘǚǜ' };
+    var idx = -1;
+    if ((i = v.indexOf('a')) >= 0) idx = i; else if ((i = v.indexOf('e')) >= 0) idx = i; else if ((i = v.indexOf('ou')) >= 0) idx = i;
+    else { for (i = v.length - 1; i >= 0; i--) { if ('aeiouü'.indexOf(v[i]) >= 0) { idx = i; break; } } }
+    if (idx < 0) return v;
+    return v.slice(0, idx) + marks[v[idx]][t - 1] + v.slice(idx + 1);
+  }
+  function render(s) { // s: [[ [base,tone,cap], ...], ...]
+    return s.map(function (w) { return w.map(function (x) { var r = mark(x[0], x[1]); if (x[2]) r = r.charAt(0).toUpperCase() + r.slice(1); return r; }).join(''); }).join(' ');
+  }
+  function toneVariants(q, n) {
+    var orig = render(q.s), out = [], seen = {}; seen[orig] = 1;
+    var flat = []; q.s.forEach(function (w, wi) { w.forEach(function (x, xi) { if (x[1] <= 4 && x[0] !== 'r') flat.push([wi, xi]); }); });
+    var tries = 0;
+    while (out.length < n && tries++ < 200 && flat.length) {
+      var c = JSON.parse(JSON.stringify(q.s));
+      var k = 1 + (Math.random() < .35 && flat.length > 1 ? 1 : 0);
+      shuffle(flat).slice(0, k).forEach(function (p) { var x = c[p[0]][p[1]]; var t; do { t = 1 + Math.floor(Math.random() * 4); } while (t === x[1]); x[1] = t; });
+      var r = render(c); if (!seen[r]) { seen[r] = 1; out.push(r); }
+    }
+    return out;
+  }
+  var qzBody = document.getElementById('qz-body');
+  document.getElementById('qz-start').addEventListener('click', function () {
+    var mode = document.getElementById('qz-mode').value, range = document.getElementById('qz-range').value, num = +document.getElementById('qz-num').value;
+    var bank = QUIZ.filter(function (x) { return range === 'all' || x.c === range; });
+    if (mode === 'tone') bank = bank.filter(function (x) { return x.s.some(function (w) { return w.some(function (y) { return y[1] <= 4; }); }); });
+    var pool = shuffle(bank); if (num) pool = pool.slice(0, num);
+    var cur = 0, right = 0, missed = [];
+    function ask() {
+      qzBody.innerHTML = '';
+      if (cur >= pool.length) return finish();
+      var q = pool[cur];
+      var opts;
+      if (mode === 'tone') {
+        opts = shuffle([render(q.s)].concat(toneVariants(q, 3)));
+      } else {
+        var others = shuffle(QUIZ.filter(function (x) { return x !== q && x.ja !== q.ja && x.zh !== q.zh; })).slice(0, 3);
+        opts = shuffle([q].concat(others));
+      }
+      var correct = mode === 'tone' ? render(q.s) : q;
+      var qw = el('div', 'qword');
+      if (mode === 'z2j' || mode === 'tone') { var z = el('span', '', q.zh); z.lang = 'zh-CN'; qw.appendChild(z); }
+      if (mode === 'j2z') { qw.className = 'qword jp'; qw.textContent = q.ja; }
+      if (mode === 'listen') { qw.appendChild(el('span', 'meta', '🔊 を押して聞く')); }
+      if (mode !== 'j2z' && mode !== 'tone') qw.appendChild(sayBtn(function () { return q.say; }, '読み上げ'));
+      qzBody.appendChild(el('div', 'qmeta', (cur + 1) + ' / ' + pool.length + (mode === 'tone' ? '　意味：' + q.ja : '')));
+      qzBody.appendChild(qw);
+      var box = el('div', 'choices');
+      opts.forEach(function (o) {
+        var label = mode === 'tone' ? o : (mode === 'z2j' ? o.ja : o.zh);
+        var b = el('button', mode === 'tone' ? 'pyc' : (mode === 'z2j' ? '' : 'zhc'), label); b.type = 'button';
+        if (mode !== 'tone' && mode !== 'z2j') b.lang = 'zh-CN';
+        b.onclick = function () {
+          var good = o === correct;
+          if (good) right++; else missed.push(q);
+          Array.prototype.forEach.call(box.children, function (c, i) { c.disabled = true; if (opts[i] === correct) c.classList.add('ok'); });
+          if (!good) b.classList.add('ng');
+          var fb = el('div', 'fb'); fb.innerHTML = (good ? '<b style="color:var(--good)">○ 正解</b>　' : '<b style="color:var(--bad)">× 不正解</b>　');
+          var zz = el('span', '', q.zh); zz.lang = 'zh-CN'; zz.style.fontSize = '20px'; fb.appendChild(zz);
+          fb.appendChild(document.createTextNode('　' + render(q.s) + '　' + q.ja + ' '));
+          fb.appendChild(sayBtn(function () { return q.say; }, '読み上げ'));
+          qzBody.appendChild(fb);
+          var nx = el('button', 'btn primary', cur + 1 < pool.length ? '次へ' : '結果を見る'); nx.type = 'button'; nx.style.marginTop = '10px';
+          nx.onclick = function () { cur++; ask(); }; qzBody.appendChild(nx); nx.focus({ preventScroll: true });
+          if (mode !== 'j2z') speak(q.say);
+        };
+        box.appendChild(b);
+      });
+      qzBody.appendChild(box);
+      if (mode === 'listen') setTimeout(function () { speak(q.say); }, 250);
+    }
+    function finish() {
+      qzBody.innerHTML = '';
+      var p = el('p'); p.innerHTML = '結果：<span class="score">' + right + ' / ' + pool.length + '</span>（' + Math.round(right / Math.max(1, pool.length) * 100) + '%）'; qzBody.appendChild(p);
+      if (missed.length) {
+        qzBody.appendChild(el('p', 'meta', 'まちがえた単語'));
+        var t = el('table'); missed.forEach(function (x) { var tr = el('tr'); var a = el('td', '', x.zh); a.lang = 'zh-CN'; a.style.fontSize = '19px'; tr.appendChild(a); tr.appendChild(el('td', 'py', render(x.s))); tr.appendChild(el('td', '', x.ja)); t.appendChild(tr); });
+        qzBody.appendChild(t);
+      }
+      var again = el('button', 'btn primary', 'もう一回'); again.type = 'button'; again.onclick = function () { document.getElementById('qz-start').click(); }; qzBody.appendChild(again);
+    }
+    ask();
+  });
+
+  // ---- 読み上げ（Web Speech API, zh-CN）----
+  var synth = window.speechSynthesis, ttsOK = !!synth && typeof SpeechSynthesisUtterance !== 'undefined';
+  var ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/></svg>';
+  var playing = null, voices = [];
+  var TKEY = 'zh-tts-v1', tts = { rate: '0.8', voice: '' };
+  try { var tv = JSON.parse(ls(TKEY) || '{}'); if (tv.rate) tts.rate = tv.rate; if (tv.voice) tts.voice = tv.voice; } catch (e) {}
+  var rateSel = document.getElementById('tts-rate'), voiceSel = document.getElementById('tts-voice');
+  function stopTts() { if (!ttsOK) return; synth.cancel(); if (playing) playing.classList.remove('on'); playing = null; }
+  function speak(text, btn) {
+    if (!ttsOK) return;
+    if (btn && playing === btn) { stopTts(); return; }
+    stopTts();
+    var u = new SpeechSynthesisUtterance(text);
+    u.lang = 'zh-CN'; u.rate = +tts.rate;
+    var v = voices.filter(function (x) { return x.name === (voiceSel.value || tts.voice); })[0] || voices[0];
+    if (v) { u.voice = v; u.lang = v.lang; }
+    if (btn) { playing = btn; btn.classList.add('on'); }
+    u.onend = u.onerror = function () { if (btn) btn.classList.remove('on'); if (playing === btn) playing = null; };
+    synth.speak(u);
+  }
+  function sayBtn(getText, label) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'say'; b.innerHTML = ICON; b.setAttribute('aria-label', label || '読み上げ');
+    b.addEventListener('click', function (e) { e.stopPropagation(); speak(getText(), b); });
+    return b;
+  }
+  function addSay(scope) {
+    scope.querySelectorAll('[data-say]').forEach(function (x) {
+      if (x.dataset.sayDone) return; x.dataset.sayDone = '1';
+      var t = x.dataset.say;
+      var b = sayBtn(function () { return t; }, t + ' を読み上げ');
+      if (x.tagName === 'TD') x.insertBefore(b, x.firstChild); else x.parentNode.insertBefore(b, x);
+    });
+  }
+  if (!ttsOK) { root.classList.add('no-tts'); }
+  else {
+    rateSel.value = tts.rate;
+    rateSel.addEventListener('change', function () { tts.rate = rateSel.value; ls(TKEY, JSON.stringify(tts)); });
+    function loadVoices() {
+      var all = synth.getVoices().filter(function (v) { return /^(zh|cmn)/i.test(v.lang); });
+      if (!all.length) return;
+      // 普通話（中国大陸）→ 台湾 → 香港（広東語）の順
+      function rank(v) { var l = v.lang.replace('_', '-'); return /CN|Hans|cmn/i.test(l) ? 0 : /TW|Hant/i.test(l) ? 1 : /HK|yue/i.test(l) ? 3 : 2; }
+      all.sort(function (a, b) { return rank(a) - rank(b) || (b.localService - a.localService); });
+      voices = all;
+      voiceSel.innerHTML = '';
+      all.forEach(function (v) { var o = document.createElement('option'); o.value = v.name; o.textContent = v.name + '（' + v.lang + '）'; voiceSel.appendChild(o); });
+      if (tts.voice && all.some(function (v) { return v.name === tts.voice; })) voiceSel.value = tts.voice;
+    }
+    loadVoices();
+    if ('onvoiceschanged' in synth) synth.addEventListener('voiceschanged', loadVoices);
+    voiceSel.addEventListener('change', function () { tts.voice = voiceSel.value; ls(TKEY, JSON.stringify(tts)); });
+    document.getElementById('tts-test').addEventListener('click', function () { speak('你好！我们一起学习汉语吧。'); });
+    // 作文カードの答えは開いたときに見えるので、ボタンは最初から入れておく
+    addSay(document);
+  }
+  window.addSay = addSay;
+
+  show(location.hash.slice(1) || 'home', false);
+})();
+</script>
+</body>
+</html>
